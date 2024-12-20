@@ -13,6 +13,21 @@
     display: none;
   }
 
+  html {
+    scroll-behavior: smooth;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
   body {
     @apply bg-background text-foreground font-sans;
     margin: 0;
@@ -34,80 +49,73 @@
       var(--dot-color);   
   }
 
-  /* Chrome, Safari and Opera */
-  body::-webkit-scrollbar {
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  #__next {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  main {
+    flex-grow: 1;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  footer {
+    flex-shrink: 0;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-}
 
-html {
-  scroll-behavior: smooth;
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 
-#__next {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+  .glow-button {
+    position: relative;
+    overflow: hidden;
+  }
 
-main {
-  flex-grow: 1;
-}
+  .glow-button::before {
+    content: '';
+    position: absolute;
+    top: var(--y, 50%);
+    left: var(--x, 50%);
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 109, 91, 0.3) 0%, transparent 60%);
+    transition: opacity 0.2s, transform 0.2s;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 0;
+  }
 
-footer {
-  margin-top: auto;
-  position: relative;
-  clear: both;
-  bottom: -50px;
-  height: 60px; /* Ensure the footer has a fixed height */
-  margin-top: 100px;
-}
+  .glow-button:hover::before {
+    opacity: 1;
+  }
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
+  .glow-button > * {
+    position: relative;
+    z-index: 1;
+  }
 
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-.glow-button {
-  position: relative;
-  overflow: hidden;
-}
-
-.glow-button::before {
-  content: '';
-  position: absolute;
-  top: var(--y, 50%);
-  left: var(--x, 50%);
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(0, 109, 91, 0.3) 0%, transparent 60%);
-  transition: opacity 0.2s, transform 0.2s;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  opacity: 0;
-  z-index: 0;
-}
-
-.glow-button:hover::before {
-  opacity: 1;
-}
-
-.glow-button > * {
-  position: relative;
-  z-index: 1;
-}
-
-.brandname {
-  font-family: Julius Sans One, sans-serif;
-  font-weight: 400;
-  font-size:2.5rem;
-  color: #FFFFFF;
+  .brandname {
+    font-family: 'Julius Sans One', sans-serif;
+    font-weight: 400;
+    font-size: 2.5rem;
+    color: #fff;
+  }
 }
