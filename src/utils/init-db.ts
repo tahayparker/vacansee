@@ -1,28 +1,11 @@
-import sqlite3 from 'sqlite3';
-import { open, Database } from 'sqlite';
 import fs from 'fs';
 import path from 'path';
 import Papa from 'papaparse';
+import { createClient } from '@supabase/supabase-js';
 
-const dbFile = path.resolve(process.cwd(), 'classes.db');
-
-const createTable = async (db: Database) => {
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS classes (
-      SubCode TEXT,
-      Class TEXT,
-      Day TEXT,
-      StartTime TEXT,
-      EndTime TEXT,
-      Room TEXT,
-      Teacher TEXT
-    )
-  `);
-};
-
-const clearTable = async (db: Database) => {
-  await db.exec('DELETE FROM classes');
-};
+const supabaseUrl = process.env.SUPABASE_URL as string;
+const supabaseKey = process.env.SUPABASE_KEY as string;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 interface ClassData {
   SubCode: string;
@@ -34,29 +17,50 @@ interface ClassData {
   Teacher: string;
 }
 
-const insertData = async (db: Database, data: ClassData[]) => {
-  const insert = 'INSERT INTO classes (SubCode, Class, Day, StartTime, EndTime, Room, Teacher) VALUES (?, ?, ?, ?, ?, ?, ?)';
-  for (const row of data) {
-    await db.run(insert, [row.SubCode, row.Class, row.Day, row.StartTime, row.EndTime, row.Room, row.Teacher]);
+const createTable = async () => {
+  const { error } = await supabase.from('classes').select('*').limit(1);
+  if (error) {
+    const { error: createError } = await supabase.rpc('create_table', {
+      table_name: 'classes',
+      columns: [
+        { name: 'SubCode', type: 'text' },
+        { name: 'Class', type: 'text' },
+        { name: 'Day', type: 'text' },
+        { name: 'StartTime', type: 'text' },
+        { name: 'EndTime', type: 'text' },
+        { name: 'Room', type: 'text' },
+        { name: 'Teacher', type: 'text' }
+      ]
+    });
+    if (createError) {
+      console.error('Error creating table:', createError);
+    }
+  }
+};
+
+const clearTable = async () => {
+  const { error } = await supabase.from('classes').delete().neq('id', 0);
+  if (error) {
+    console.error('Error clearing table:', error);
+  }
+};
+
+const insertData = async (data: ClassData[]) => {
+  const { error } = await supabase.from('classes').insert(data);
+  if (error) {
+    console.error('Error inserting data:', error);
   }
 };
 
 const initDB = async () => {
-  const db = await open({
-    filename: dbFile,
-    driver: sqlite3.Database
-  });
-
-  await createTable(db);
-  await clearTable(db); // Clear existing data
+  await createTable();
+  await clearTable(); // Clear existing data
 
   const csvFilePath = path.resolve(process.cwd(), 'public', 'classes.csv');
   const csvText = fs.readFileSync(csvFilePath, 'utf8');
   const parsedData = Papa.parse<ClassData>(csvText, { header: true }).data;
 
-  await insertData(db, parsedData as ClassData[]);
-
-  await db.close();
+  await insertData(parsedData as ClassData[]);
 };
 
 export default initDB;
