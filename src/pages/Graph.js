@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import '../styles/Graph.css';
+import './Graph.module.css';
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const timeIntervals = [
@@ -71,7 +71,7 @@ const Graph = () => {
           </div>
         )}
       </main>
-      <Footer />
+      <Footer className={styles.Footer} />
     </div>
   );
 };
