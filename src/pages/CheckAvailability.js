@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import './CheckAvailability.module.css';
 
 const CheckAvailability = () => {
   const [room, setRoom] = useState('');
@@ -66,8 +65,8 @@ const CheckAvailability = () => {
 
     return () => {
       buttons.forEach(button => {
-        button.removeEventListener('mousemove', () => {});
-        button.removeEventListener('mouseleave', () => {});
+        button.removeEventListener('mousemove', () => { });
+        button.removeEventListener('mouseleave', () => { });
       });
     };
   }, []);
