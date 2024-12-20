@@ -12,6 +12,7 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
     "@simplewebauthn/server": "^13.0.0",
+    "@supabase/supabase-js": "^2.47.10",
     "@vercel/analytics": "^1.4.1",
     "bcryptjs": "^2.4.3",
     "fs": "^0.0.1-security",
@@ -21,8 +22,7 @@
     "react-dev-utils": "^10.0.0",
     "react-dom": "^19.0.0",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7",
-    "ts-node": "^10.9.2"
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -36,6 +36,7 @@
     "eslint-config-next": "15.1.1",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
   }
 }
