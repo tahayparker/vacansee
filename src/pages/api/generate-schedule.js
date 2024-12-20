@@ -72,11 +72,8 @@ async function generateScheduleData() {
 
       for (let i = 0; i < timeSlots.length; i++) {
         
-        // Change startTime and endTime to 1 minute past the slot time. e.g. 08:30 -> 08:31
-        const startTime = timeSlots[i];
-        const endTime = timeSlots[i + 1] || timeSlots[i]; // Handle the last slot
-
-        const available = await checkRoomAvailability(room, day, startTime, endTime);
+        const startTime = timeSlots[i].replace(/:(\d+)$/, (_, m) => ':' + (parseInt(m) + 1).toString().padStart(2, '0'));
+        const available = await checkRoomAvailability(room, day, startTime, startTime);
         roomData.availability.push(available ? 1 : 0);  // 1 for available, 0 for unavailable
       }
 
