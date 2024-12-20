@@ -1,11 +1,11 @@
-.table-container {
+.tableContainer {
   max-height: 70vh; /* Adjust this value as needed */
   overflow: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
 }
 
-.table-container::-webkit-scrollbar { 
+.tableContainer::-webkit-scrollbar { 
   display: none;  /* Safari and Chrome */
 }
 
@@ -39,10 +39,9 @@ table td.sticky {
 }
 
 .footer  {
-    margin-top: auto !important;
-    position: relative;
+    position: relative !important;
     clear: both !important;
-    bottom: 0px !important;
+    bottom: -50px !important;
     height: 60px !important; /* Ensure the footer has a fixed height */
     margin-top: 100px !important;
   }
