@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import '../styles/CheckAvailability.css';
+import './CheckAvailability.module.css';
 
 const CheckAvailability = () => {
   const [room, setRoom] = useState('');
