@@ -1,8 +1,22 @@
+import Link from 'next/link';
+
 const Footer = () => {
   return (
-    <footer className="w-full h-16 bg-background text-foreground fixed bottom-0 left-0 z-10 backdrop-blur-md bg-opacity-60 mt-4">
-      <div className="flex items-center justify-center h-full px-4">
-        <p className="text-sm">© 2023 Your Company</p>
+    <footer className="w-full h-16 bg-background text-foreground backdrop-blur-md bg-opacity-60">
+      <div className="flex items-center justify-between h-full px-4">
+        <div className="flex items-center gap-6">
+          <Link href="/about" legacyBehavior>
+            <a className="text-sm hover:underline">About</a>
+          </Link>
+          <Link href="/terms" legacyBehavior>
+            <a className="text-sm hover:underline">Terms</a>
+          </Link>
+        </div>
+        <div className="flex items-center">
+          <p className="text-sm">
+            Made with <span className="text-black">🖤</span> by TP
+          </p>
+        </div>
       </div>
     </footer>
   );
