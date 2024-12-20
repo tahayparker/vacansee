@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import './Graph.module.css';
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const timeIntervals = [
-  '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', 
-  '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', 
-  '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', 
+  '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00',
+  '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00',
+  '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00',
   '20:30', '21:00', '21:30', '22:00', '22:30'
 ];
 
@@ -31,7 +30,7 @@ const Graph = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start text-foreground pt-32 pb-12">
       <Header />
-      <main className="flex-grow w-full max-w-6xl mx-auto text-center">
+      <main className="flex-grow w-full max-w-6xl mx-auto text-center mb-32"> {/* Added mb-32 for margin */}
         <h1 className="text-4xl font-bold mb-12">Room Availability</h1>
         <div className="tabs mb-8 flex justify-center space-x-2">
           {daysOfWeek.map((day, index) => (
@@ -45,7 +44,51 @@ const Graph = () => {
           ))}
         </div>
         {scheduleData.length > 0 && (
-          <div className="table-container overflow-auto">
+          <div className="tableContainer overflow-auto">
+            <style jsx>
+              {`
+.tableContainer {
+  max-height: 70vh; /* Adjust this value as needed */
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.tableContainer::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.hide-scrollbar::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+table th.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: black; /* Ensure the background color is retained */
+}
+
+table th.sticky.left-0 {
+  z-index: 20;
+  background-color: black; /* Ensure the background color is retained */
+}
+
+table td.sticky {
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  background-color: black; /* Ensure the background color is retained */
+  color: white; /* Ensure the text color is white */
+}
+
+              `}
+            </style>
             <table className="min-w-full border-collapse table-fixed">
               <thead>
                 <tr>
@@ -71,7 +114,8 @@ const Graph = () => {
           </div>
         )}
       </main>
-      <Footer className={styles.Footer} />
+      <Footer>
+      </Footer>
     </div>
   );
 };
