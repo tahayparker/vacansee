@@ -58,7 +58,14 @@ const Home = () => {
           </Link>
         </div>
       </main>
-      <Footer />
+      <Footer id="foot">
+      <style jsx> {`
+      #foot {
+      bottom: -45px !important;
+      }
+      `}
+      </style>
+      </Footer>
       <Analytics />
     </div>
   );
