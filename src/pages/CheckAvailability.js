@@ -2,6 +2,30 @@ import { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+const styles = {
+  timeInput: {
+    WebkitAppearance: 'none',
+    MozAppearance: 'textfield',
+    "&::-webkit-calendar-picker-indicator": {
+      filter: "invert(1)",
+      marginRight: "-12px"
+    }
+  },
+  selectInput: {
+    paddingRight: "30px",
+    marginRight: "1rem",
+    backgroundPosition: "right 1rem center",
+    backgroundRepeat: "no-repeat",
+    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E")`,
+    MozAppearance: "none",
+    WebkitAppearance: "none"
+  },
+  glowButton: {
+    position: "relative",
+    overflow: "hidden"
+  }
+};
+
 const CheckAvailability = () => {
   const [room, setRoom] = useState('');
   const [day, setDay] = useState('');
@@ -141,7 +165,8 @@ const CheckAvailability = () => {
               id="day"
               value={day}
               onChange={(e) => setDay(e.target.value)}
-              className="w-full px-6 py-3 border border-[#482f1f] rounded-md bg-[#121212] text-white select-input"
+              className="w-full px-6 py-3 border border-[#482f1f] rounded-md bg-[#121212] text-white"
+              style={styles.selectInput}
             >
               <option value="">Select a day</option>
               <option value="Monday">Monday</option>
@@ -160,7 +185,11 @@ const CheckAvailability = () => {
               id="startTime"
               value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
-              className="w-full px-6 py-3 border border-[#482f1f] rounded-md bg-[#121212] text-white time-input"
+              className="w-full px-6 py-3 border border-[#482f1f] rounded-md bg-[#121212] text-white"
+              style={{
+                WebkitAppearance: 'none',
+                MozAppearance: 'textfield',
+              }}
             />
           </div>
           <div>
@@ -170,17 +199,25 @@ const CheckAvailability = () => {
               id="endTime"
               value={endTime}
               onChange={(e) => setEndTime(e.target.value)}
-              className="w-full px-6 py-3 border border-[#482f1f] rounded-md bg-[#121212] text-white time-input"
+              className="w-full px-6 py-3 border border-[#482f1f] rounded-md bg-[#121212] text-white"
+              style={{
+                WebkitAppearance: 'none',
+                MozAppearance: 'textfield',
+              }}
             />
           </div>
           <div className="col-span-2 flex justify-between">
-            <button type="submit" className="glow-button w-1/2 px-4 py-2 border-2 border-green-700 text-green-700 rounded-md hover:text-green-700 transition duration-200">
+            <button 
+              type="submit" 
+              className="glow-button w-1/2 px-4 py-2 border-2 border-green-700 text-green-700 rounded-md hover:text-green-700 transition duration-200"
+              style={styles.glowButton}
+            >
               Check Availability
             </button>
-            <button type="button" onClick={handleNow} className="glow-button w-1/4 px-4 py-2 border-2 border-[#482f1f] text-white rounded-md hover:text-white transition duration-200 mx-2">
+            <button type="button" onClick={handleNow} className="glow-button w-1/4 px-4 py-2 border-2 border-[#482f1f] text-white rounded-md hover:text-white transition duration-200 mx-2" style={styles.glowButton}>
               Now
             </button>
-            <button type="button" onClick={handleReset} className="glow-button w-1/4 px-4 py-2 border-2 border-red-700 text-red-700 rounded-md hover:text-red-700 transition duration-200">
+            <button type="button" onClick={handleReset} className="glow-button w-1/4 px-4 py-2 border-2 border-red-700 text-red-700 rounded-md hover:text-red-700 transition duration-200" style={styles.glowButton}>
               Reset
             </button>
           </div>
@@ -218,6 +255,15 @@ const CheckAvailability = () => {
         )}
       </main>
       <Footer />
+      <style jsx>{`
+        input[type="time"]::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+          margin-right: -12px;
+        }
+        input[type="time"] {
+          color-scheme: dark;
+        }
+      `}</style>
     </div>
   );
 };
