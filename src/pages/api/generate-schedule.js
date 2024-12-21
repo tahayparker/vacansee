@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { open } from 'sqlite';
+import sqlite3 from 'sqlite3';
 import fs from 'fs';
-
-const prisma = new PrismaClient();
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const timeSlots = [
@@ -13,38 +12,44 @@ const timeSlots = [
 
 // Function to check room availability
 async function checkRoomAvailability(room, day, startTime, endTime) {
+  const db = await open({
+    filename: 'classes.db',
+    driver: sqlite3.Database,
+  });
+
   try {
-    const result = await prisma.class.findMany({
-      where: {
-        Room: room,
-        Day: day,
-        NOT: {
-          OR: [
-            { EndTime: { lte: startTime } },
-            { StartTime: { gte: endTime } },
-          ],
-        },
-      },
-    });
+    const query = `
+      SELECT * FROM classes
+      WHERE Room = ?
+      AND Day = ?
+      AND NOT (EndTime <= ? OR StartTime >= ?)
+    `;
+    const result = await db.all(query, [room, day, startTime, endTime]);
     return result.length === 0; // If no results, the room is available
   } catch (error) {
     console.error(error);
     return false; // In case of an error, assume not available
+  } finally {
+    await db.close();
   }
 }
 
 // Function to generate schedule data
 async function generateScheduleData() {
   const fetchRooms = async () => {
+    const db = await open({
+      filename: 'classes.db',
+      driver: sqlite3.Database,
+    });
+
     try {
-      const rooms = await prisma.class.findMany({
-        distinct: ['Room'],
-        select: { Room: true },
-      });
+      const rooms = await db.all('SELECT DISTINCT Room FROM classes');
       return rooms.map((room) => room.Room);
     } catch (error) {
       console.error(error);
       return [];
+    } finally {
+      await db.close();
     }
   }
 
@@ -66,8 +71,12 @@ async function generateScheduleData() {
       };
 
       for (let i = 0; i < timeSlots.length; i++) {
-        const startTime = timeSlots[i].replace(/:(\d+)$/, (_, m) => ':' + (parseInt(m) + 1).toString().padStart(2, '0'));
-        const available = await checkRoomAvailability(room, day, startTime, startTime);
+        
+        // Change startTime and endTime to 1 minute past the slot time. e.g. 08:30 -> 08:31
+        const startTime = timeSlots[i];
+        const endTime = timeSlots[i + 1] || timeSlots[i]; // Handle the last slot
+
+        const available = await checkRoomAvailability(room, day, startTime, endTime);
         roomData.availability.push(available ? 1 : 0);  // 1 for available, 0 for unavailable
       }
 
@@ -87,15 +96,5 @@ async function saveScheduleData() {
   console.log('Schedule data generated and saved.');
 }
 
-// Default export function to handle API route
-export default async function handler(req, res) {
-  try {
-    await saveScheduleData();
-    res.status(200).json({ message: 'Schedule data generated and saved.' });
-  } catch (error) {
-    console.error('Error generating schedule data:', error);
-    res.status(500).json({ error: 'Error generating schedule data.' });
-  } finally {
-    await prisma.$disconnect();
-  }
-}
+// Run the script to generate and save the data
+saveScheduleData().catch((error) => console.error('Error generating schedule data:', error));
