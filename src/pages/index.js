@@ -34,7 +34,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-foreground pt-32 pb-12">
+    <div className="min-h-screen flex flex-col items-center justify-center text-foreground pt-32 pb-0">
       <Header />
       <main className="flex-grow w-full max-w-3xl mx-auto text-center">
         <Image src={logo} alt="Logo" width={300} height={300} className="mx-auto mb-8" />
