@@ -12,7 +12,7 @@ const timeIntervals = [
 
 const Graph = () => {
   const [scheduleData, setScheduleData] = useState([]);
-  const [selectedDay, setSelectedDay] = useState(0);  // Default to Monday
+  const [selectedDay, setSelectedDay] = useState(0);
 
   useEffect(() => {
     fetch('/api/schedule')
@@ -21,6 +21,32 @@ const Graph = () => {
       .catch((error) => console.error('Error fetching schedule:', error));
   }, []);
 
+  useEffect(() => {
+    const buttons = document.querySelectorAll('.day-button');
+
+    buttons.forEach(button => {
+      button.addEventListener('mousemove', (e) => {
+        const rect = button.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        button.style.setProperty('--x', `${x}px`);
+        button.style.setProperty('--y', `${y}px`);
+      });
+
+      button.addEventListener('mouseleave', () => {
+        button.style.setProperty('--x', `50%`);
+        button.style.setProperty('--y', `50%`);
+      });
+    });
+
+    return () => {
+      buttons.forEach(button => {
+        button.removeEventListener('mousemove', () => {});
+        button.removeEventListener('mouseleave', () => {});
+      });
+    };
+  }, [selectedDay]);
+
   const getCellColor = (avail) => {
     return avail === 1 ? 'bg-green-700' : 'bg-red-700';
   };
@@ -28,94 +54,116 @@ const Graph = () => {
   const getRoomName = (room) => room.split('-')[0];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start text-foreground pt-32 pb-12">
+    <div className="min-h-screen flex flex-col page-transition">
       <Header />
-      <main className="flex-grow w-full max-w-6xl mx-auto text-center mb-32"> {/* Added mb-32 for margin */}
-        <h1 className="text-4xl font-bold mb-12">Room Availability</h1>
-        <div className="tabs mb-8 flex justify-center space-x-2">
-          {daysOfWeek.map((day, index) => (
-            <button
-              key={index}
-              className={`px-4 py-2 rounded-full transition-all duration-200 ease-in-out ${selectedDay === index ? 'bg-blue-700 text-white' : 'bg-[#121212] text-gray-300 hover:bg-gray-600'}`}
-              onClick={() => setSelectedDay(index)}
-            >
-              {day}
-            </button>
-          ))}
-        </div>
-        {scheduleData.length > 0 && (
-          <div className="tableContainer overflow-auto">
-            <style jsx>
-              {`
-.tableContainer {
-  max-height: 70vh; /* Adjust this value as needed */
-  overflow: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-}
+      <main className="flex-grow w-full px-4 md:px-8 mx-auto pt-20">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-4xl font-bold mb-8 text-center animate-[slideUp_0.5s_ease-out]">
+            Room Availability Graph
+          </h1>
+          
+          <div className="mb-8 overflow-x-auto hide-scrollbar animate-[fadeIn_0.5s_ease-out]">
+            <div className="flex justify-center space-x-2 min-w-max md:min-w-0 pb-2">
+              {daysOfWeek.map((day, index) => (
+                <button
+                  key={index}
+                  className={`day-button px-6 py-3 rounded-full whitespace-nowrap transition-all duration-300 ease-in-out border-2 relative overflow-hidden hover-scale ${
+                    selectedDay === index 
+                      ? 'text-white border-[#006D5B]' 
+                      : 'text-gray-300 border-[#482f1f]'
+                  }`}
+                  onClick={() => setSelectedDay(index)}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {day}
+                </button>
+              ))}
+            </div>
+          </div>
 
-.tableContainer::-webkit-scrollbar { 
-  display: none;  /* Safari and Chrome */
-}
-
-.hide-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-}
-
-.hide-scrollbar::-webkit-scrollbar { 
-  display: none;  /* Safari and Chrome */
-}
-
-table th.sticky {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: black; /* Ensure the background color is retained */
-}
-
-table th.sticky.left-0 {
-  z-index: 20;
-  background-color: black; /* Ensure the background color is retained */
-}
-
-table td.sticky {
-  position: sticky;
-  left: 0;
-  z-index: 10;
-  background-color: black; /* Ensure the background color is retained */
-  color: white; /* Ensure the text color is white */
-}
-
-              `}
-            </style>
-            <table className="min-w-full border-collapse table-fixed">
-              <thead>
-                <tr>
-                  <th className="sticky top-0 left-0 bg-black text-white z-20 w-24">Room</th>
-                  {timeIntervals.map((time) => (
-                    <th key={time} className="sticky top-0 bg-black text-white z-10 px-2 py-1 border w-24">{time}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {scheduleData[selectedDay].rooms
-                  .sort((a, b) => getRoomName(a.room).localeCompare(getRoomName(b.room)))
-                  .map((roomData, index) => (
-                    <tr key={index}>
-                      <td className="sticky left-0 bg-black text-white z-10 px-2 py-1 border w-24">{getRoomName(roomData.room)}</td>
-                      {roomData.availability.map((avail, idx) => (
-                        <td key={idx} className={`px-2 py-1 border w-24 ${getCellColor(avail)}`}></td>
+          {scheduleData.length > 0 && (
+            <div className="relative animate-[slideUp_0.5s_ease-out]">
+              <div className="w-full overflow-auto max-h-[70vh] pb-16 hide-scrollbar">
+                <table className="border-collapse w-full [&_td]:border-black [&_th]:border-black">
+                  <thead>
+                    <tr>
+                      <th className="sticky left-0 top-0 bg-black text-white z-20 min-w-[100px] px-4 py-2 border-2 text-right first-th">Room</th>
+                      {timeIntervals.map((time, index) => (
+                        <th 
+                          key={time} 
+                          className={`sticky top-0 bg-black text-white z-10 px-4 py-2 border-2 ${
+                            index === timeIntervals.length - 1 ? 'last-th' : ''
+                          }`}
+                        >
+                          {time}
+                        </th>
                       ))}
                     </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                  </thead>
+                  <tbody>
+                    {scheduleData[selectedDay].rooms
+                      .sort((a, b) => getRoomName(a.room).localeCompare(getRoomName(b.room)))
+                      .map((roomData, index) => (
+                        <tr key={index}>
+                          <td className="sticky left-0 bg-black text-white z-10 px-4 py-2 border-2 text-right">{getRoomName(roomData.room)}</td>
+                          {roomData.availability.map((avail, idx) => (
+                            <td key={idx} className={`px-4 py-2 border-2 min-w-[80px] ${getCellColor(avail)}`}></td>
+                          ))}
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
       </main>
-      <Footer>
-      </Footer>
+      <Footer className="mt-auto" />
+      <style jsx global>{`
+        .hide-scrollbar {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+
+        .day-button::before {
+          content: '';
+          position: absolute;
+          top: var(--y, 50%);
+          left: var(--x, 50%);
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(0, 109, 91, 0.3) 0%, transparent 60%);
+          transition: opacity 0.2s;
+          transform: translate(-50%, -50%);
+          pointer-events: none;
+          opacity: 0;
+          z-index: 0;
+        }
+
+        .day-button:hover::before {
+          opacity: 1;
+        }
+
+        .day-button > * {
+          position: relative;
+          z-index: 1;
+        }
+
+        .first-th::before,
+        .last-th::before {
+          content: '';
+          position: absolute;
+          top: -10px;
+          left: 0;
+          width: 100%;
+          height: 10px;
+          background-color: black;
+          z-index: 30;
+        }
+      `}</style>
     </div>
   );
 };
