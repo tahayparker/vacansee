@@ -1,33 +1,28 @@
-import sqlite3 from 'sqlite3';
-import { open } from 'sqlite';
+import fs from 'fs';
+import path from 'path';
 
 export default async function handler(req, res) {
   const { room, day, startTime, endTime } = req.query;
 
-  // Open a connection to the database
-  const db = await open({
-    filename: 'classes.db',
-    driver: sqlite3.Database,
-  });
-
   try {
-    // Query to check room availability based on the given time range
-    const query = `
-      SELECT * FROM classes
-      WHERE Room = ?
-      AND Day = ?
-      AND NOT (EndTime <= ? OR StartTime >= ?)
-    `;
-    const result = await db.all(query, [room, day, startTime, endTime]);
+    const filePath = path.resolve(process.cwd(), 'public', 'classes.json');
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const classes = JSON.parse(fileContents);
 
-    const isAvailable = result.length === 0;
-    
+    const result = classes.filter(
+      (cls) =>
+        cls.Room === room &&
+        cls.Day === day &&
+        !(
+          (cls.EndTime <= startTime) ||
+          (cls.StartTime >= endTime)
+        )
+    );
+
+    const isAvailable = result.length === 0; // If no result, the room is available
     res.status(200).json({ available: isAvailable });
   } catch (error) {
-    console.error(error);
+    console.error('Error checking availability:', error);
     res.status(500).json({ error: 'Internal Server Error' });
-  } finally {
-    // Close the database connection
-    await db.close();
   }
 }
