@@ -4,12 +4,12 @@ import Footer from '../components/Footer';
 
 const CurrentlyAvailable = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col page-transition">
       <Header />
-      <main className="flex-1 w-full max-w-6xl mx-auto px-4">
+      <main className="flex-grow w-full max-w-6xl mx-auto px-4 pb-16">
         <RoomList />
       </main>
-      <Footer />
+      <Footer className="mt-auto" />
     </div>
   );
 };
