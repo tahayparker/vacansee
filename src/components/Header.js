@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import Button from './Button';
 
 const Header = ({ hideLogoOnHome }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -70,16 +71,10 @@ const Header = ({ hideLogoOnHome }) => {
           <nav className="hidden md:flex items-center gap-4">
             {navLinks.map((link) => (
               <Link key={link.path} href={link.path} legacyBehavior>
-                <a
-                  className={`px-3 py-1 rounded-full transition-all duration-200 ease-in-out border-2 hover:border-[#006D5B] ${
-                    router.pathname === link.path 
-                      ? 'border-[#006D5B] text-[#006D5B]' 
-                      : 'border-[#482f1f] text-white'
-                  }`}
-                >
-                  <span className="text-sm font-semibold">
+                <a>
+                  <Button isActive={router.pathname === link.path}>
                     {link.label}
-                  </span>
+                  </Button>
                 </a>
               </Link>
             ))}
