@@ -29,8 +29,12 @@ const RoomList = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start text-foreground pt-32 pb-12">
       <main className="flex-grow w-full max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-4 text-center">Currently Available Rooms</h1>
-        <p className="text-lg mb-4 text-center">As of {currentDay}, {currentTime}</p>
+        <h1 className="text-4xl font-bold mb-4 text-center animate-[slideUp_0.5s_ease-out]">
+          Currently Available Rooms
+        </h1>
+        <p className="text-lg mb-4 text-center animate-[fadeIn_0.5s_ease-out]">
+          As of {currentDay}, {currentTime}
+        </p>
         <ul
           className="w-full grid gap-4 px-4"
           style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${minWidth}px, 1fr))` }}
@@ -38,7 +42,12 @@ const RoomList = () => {
           {rooms.map((room, index) => (
             <li
               key={index}
-              className="bg-[#121212] rounded-lg shadow-lg p-4 border border-[#482f1f]"
+              className="bg-[#121212] rounded-lg shadow-lg p-4 border border-[#482f1f] hover-scale transition-all duration-300 list-animation"
+              style={{ 
+                animationDelay: `${index * 0.05}s`,
+                transform: 'translateY(0)',
+                opacity: 1
+              }}
             >
               {room}
             </li>
