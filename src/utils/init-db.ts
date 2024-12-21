@@ -1,11 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import Papa from 'papaparse';
-import { createClient } from '@supabase/supabase-js';
+import { PrismaClient } from '@prisma/client';
 
-const supabaseUrl = process.env.SUPABASE_URL as string;
-const supabaseKey = process.env.SUPABASE_KEY as string;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const prisma = new PrismaClient();
 
 interface ClassData {
   SubCode: string;
@@ -17,48 +15,37 @@ interface ClassData {
   Teacher: string;
 }
 
-const createTable = async () => {
-  const { error } = await supabase.from('classes').select('*').limit(1);
-  if (error) {
-    const { error: createError } = await supabase.rpc('create_table', {
-      table_name: 'classes',
-      columns: [
-        { name: 'SubCode', type: 'text' },
-        { name: 'Class', type: 'text' },
-        { name: 'Day', type: 'text' },
-        { name: 'StartTime', type: 'text' },
-        { name: 'EndTime', type: 'text' },
-        { name: 'Room', type: 'text' },
-        { name: 'Teacher', type: 'text' }
-      ]
-    });
-    if (createError) {
-      console.error('Error creating table:', createError);
-    }
-  }
-};
-
 const clearTable = async () => {
-  const { error } = await supabase.from('classes').delete().neq('id', 0);
-  if (error) {
+  try {
+    await prisma.class.deleteMany({});
+    console.log('Table cleared');
+  } catch (error) {
     console.error('Error clearing table:', error);
   }
 };
 
 const insertData = async (data: ClassData[]) => {
-  const { error } = await supabase.from('classes').insert(data);
-  if (error) {
+  try {
+    if (data.length === 0) {
+      throw new Error('No data to insert');
+    }
+    await prisma.class.createMany({
+      data: data,
+    });
+    console.log('Data inserted successfully');
+  } catch (error) {
     console.error('Error inserting data:', error);
   }
 };
 
 const initDB = async () => {
-  await createTable();
   await clearTable(); // Clear existing data
 
   const csvFilePath = path.resolve(process.cwd(), 'public', 'classes.csv');
   const csvText = fs.readFileSync(csvFilePath, 'utf8');
   const parsedData = Papa.parse<ClassData>(csvText, { header: true }).data;
+
+  console.log('Parsed Data:', parsedData); // Debugging log
 
   await insertData(parsedData as ClassData[]);
 };
@@ -69,4 +56,6 @@ initDB().then(() => {
   console.log('Database initialized');
 }).catch((err) => {
   console.error('Error initializing database:', err);
+}).finally(() => {
+  prisma.$disconnect();
 });
