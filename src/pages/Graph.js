@@ -22,27 +22,31 @@ const Graph = () => {
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const buttons = document.querySelectorAll('.day-button');
+    const handleMouseMove = (e, button) => {
+      const rect = button.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      button.style.setProperty('--x', `${x}px`);
+      button.style.setProperty('--y', `${y}px`);
+    };
+
+    const handleMouseLeave = (button) => {
+      button.style.setProperty('--x', `50%`);
+      button.style.setProperty('--y', `50%`);
+    };
 
     buttons.forEach(button => {
-      button.addEventListener('mousemove', (e) => {
-        const rect = button.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        button.style.setProperty('--x', `${x}px`);
-        button.style.setProperty('--y', `${y}px`);
-      });
-
-      button.addEventListener('mouseleave', () => {
-        button.style.setProperty('--x', `50%`);
-        button.style.setProperty('--y', `50%`);
-      });
+      button.addEventListener('mousemove', (e) => handleMouseMove(e, button));
+      button.addEventListener('mouseleave', () => handleMouseLeave(button));
     });
 
     return () => {
       buttons.forEach(button => {
-        button.removeEventListener('mousemove', () => {});
-        button.removeEventListener('mouseleave', () => {});
+        button.removeEventListener('mousemove', (e) => handleMouseMove(e, button));
+        button.removeEventListener('mouseleave', () => handleMouseLeave(button));
       });
     };
   }, [selectedDay]);
@@ -58,7 +62,7 @@ const Graph = () => {
       <Header />
       <main className="flex-grow w-full px-4 md:px-8 mx-auto pt-20">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 text-center animate-[slideUp_0.5s_ease-out]">
+          <h1 className="text-4xl font-bold mb-8 mt-12 text-center text-white animate-[slideUp_0.5s_ease-out]">
             Room Availability Graph
           </h1>
           
@@ -81,7 +85,7 @@ const Graph = () => {
             </div>
           </div>
 
-          {scheduleData.length > 0 && (
+          {scheduleData.length > 0 && scheduleData[selectedDay]?.rooms && (
             <div className="relative animate-[slideUp_0.5s_ease-out]">
               <div className="w-full overflow-auto max-h-[70vh] pb-16 hide-scrollbar">
                 <table className="border-collapse w-full [&_td]:border-black [&_th]:border-black">
