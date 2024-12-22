@@ -17,7 +17,7 @@ const Footer = () => {
           </Link>
         </div>
         <div className="flex items-center">
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-gray-600">
             Made with <span className="text-[#006D5B]">🖤</span> by TP
           </p>
         </div>
