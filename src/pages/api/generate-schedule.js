@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import fs from 'fs';
-
-// Initialize Prisma client
-const prisma = new PrismaClient();
+import path from 'path';
+import { parse } from 'csv-parse/sync';
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const timeSlots = [
@@ -12,86 +10,69 @@ const timeSlots = [
   '20:30', '21:00', '21:30', '22:00', '22:30'
 ];
 
-export const config = {
-  maxDuration: 60,
-};
-
-// Function to check room availability
-async function checkRoomAvailability(room, day, startTime, endTime) {
-  try {
-    const result = await prisma.class.findMany({
-      where: {
-        Room: room,
-        Day: day,
-        NOT: {
-          OR: [
-            { EndTime: { lte: startTime } },
-            { StartTime: { gte: endTime } }
-          ]
-        }
-      }
-    });
-    return result.length === 0;
-  } catch (error) {
-    console.error('Error checking room availability:', error);
-    return false;
-  }
+// Function to check if a time slot is within a class's time range
+function isTimeSlotOccupied(classStartTime, classEndTime, timeSlot) {
+  return timeSlot >= classStartTime && timeSlot <= classEndTime;
 }
 
-// Function to generate schedule data
+// Function to generate schedule data from CSV
 async function generateScheduleData() {
-  const fetchRooms = async () => {
-    try {
-      const rooms = await prisma.class.findMany({
-        select: {
-          Room: true
-        },
-        distinct: ['Room']
-      });
-      return rooms.map((room) => room.Room);
-    } catch (error) {
-      console.error('Error fetching rooms:', error);
-      return [];
-    }
-  }
+  try {
+    // Read CSV file
+    const csvPath = path.join(process.cwd(), 'public', 'classes.csv');
+    const fileContent = fs.readFileSync(csvPath, 'utf-8');
+    
+    // Parse CSV
+    const records = parse(fileContent, {
+      columns: true,
+      skip_empty_lines: true,
+      delimiter: ',',
+    });
 
-  const roomNames = await fetchRooms();
-  const schedule = [];
+    // Get unique rooms
+    const roomSet = new Set(records.map(record => record.Room));
+    const rooms = Array.from(roomSet);
 
-  for (let day of daysOfWeek) {
-    const dayData = {
+    // Initialize schedule structure
+    const schedule = daysOfWeek.map(day => ({
       day,
-      rooms: []
-    };
-
-    for (let room of roomNames) {
-      const roomData = {
+      rooms: rooms.map(room => ({
         room,
-        availability: []
-      };
+        availability: timeSlots.map(() => 1) // Initially all slots available
+      }))
+    }));
 
-      for (let i = 0; i < timeSlots.length; i++) {
+    // Mark occupied time slots
+    records.forEach(record => {
+      const dayIndex = daysOfWeek.indexOf(record.Day);
+      if (dayIndex === -1) return;
 
-        const startTime = timeSlots[i].replace(/:(\d+)$/, (_, m) => ':' + (parseInt(m) + 1).toString().padStart(2, '0'));
+      const roomData = schedule[dayIndex].rooms.find(r => r.room === record.Room);
+      if (!roomData) return;
 
-        const available = await checkRoomAvailability(room, day, startTime, startTime);
-        roomData.availability.push(available ? 1 : 0);
-      }
+      const startTime = record.StartTime.substring(0, 5); // Get HH:MM format
+      const endTime = record.EndTime.substring(0, 5);
 
-      dayData.rooms.push(roomData);
-    }
+      timeSlots.forEach((timeSlot, index) => {
+        if (isTimeSlotOccupied(startTime, endTime, timeSlot)) {
+          roomData.availability[index] = 0;
+        }
+      });
+    });
 
-    schedule.push(dayData);
+    return schedule;
+  } catch (error) {
+    console.error('Error generating schedule:', error);
+    throw error;
   }
-
-  return schedule;
 }
 
 // Save generated data to a file
 async function saveScheduleData() {
   try {
     const scheduleData = await generateScheduleData();
-    fs.writeFileSync('./scheduleData.json', JSON.stringify(scheduleData, null, 2));
+    const filePath = path.join(process.cwd(), 'public', 'scheduleData.json');
+    fs.writeFileSync(filePath, JSON.stringify(scheduleData, null, 2));
     return scheduleData;
   } catch (error) {
     console.error('Error saving schedule data:', error);
@@ -101,13 +82,29 @@ async function saveScheduleData() {
 
 // API Route Handler
 export default async function handler(req, res) {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
-    const scheduleData = await saveScheduleData();
-    res.status(200).json({ message: 'Schedule generated successfully', data: scheduleData });
+    const filePath = path.join(process.cwd(), 'public', 'scheduleData.json');
+    let scheduleData;
+    
+    if (fs.existsSync(filePath)) {
+      scheduleData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    } else {
+      scheduleData = await saveScheduleData();
+    }
+    
+    res.status(200).json(scheduleData);
   } catch (error) {
     console.error('Error in API route:', error);
-    res.status(500).json({ error: 'Failed to generate schedule' });
-  } finally {
-    await prisma.$disconnect();
+    res.status(500).json({ error: 'Failed to fetch schedule' });
   }
 }
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
