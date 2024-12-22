@@ -1,0 +1,1856 @@
+
+> my-nextjs-app@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.1.1 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.117:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 828ms
+ ○ Compiling /CurrentlyAvailable ...
+ ✓ Compiled /CurrentlyAvailable in 1534ms
+ GET /CurrentlyAvailable 200 in 1636ms
+ ✓ Compiled /api/initdb in 37ms
+Table cleared
+Parsed Data: [
+  {
+    SubCode: 'ACCY122',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '4.44-Classroom B',
+    Teacher: 'Khairul Kamarudin'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Khairul Kamarudin'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Khairul Kamarudin'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.45-Classroom B',
+    Teacher: 'Khairul Kamarudin'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '6.38-Classroom B',
+    Teacher: 'Yosra Ghani'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'Yosra Ghani'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '4.48-Classroom B',
+    Teacher: 'Yosra Ghani'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'Yosra Ghani'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.19-Classroom A',
+    Teacher: 'Marryam Yasir'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '4.48-Classroom B',
+    Teacher: 'Marryam Yasir'
+  },
+  {
+    SubCode: 'ACCY305',
+    Class: 'Lecture',
+    Day: 'Monday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Muhabie Mengistu'
+  },
+  {
+    SubCode: 'ACCY305',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '6.39-Classroom A',
+    Teacher: 'Muhabie Mengistu'
+  },
+  {
+    SubCode: 'ACCY305',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '11:30:00',
+    EndTime: '13:30:00',
+    Room: '5.18-Classroom A',
+    Teacher: 'Marryam Yasir'
+  },
+  {
+    SubCode: 'ACCY328',
+    Class: 'Lecture',
+    Day: 'Thursday',
+    StartTime: '11:30:00',
+    EndTime: '13:30:00',
+    Room: '5.134-Classroom A 5.13 & 5.14',
+    Teacher: 'Muhabie Mengistu'
+  },
+  {
+    SubCode: 'ACCY328',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '4.48-Classroom B',
+    Teacher: 'Muhabie Mengistu'
+  },
+  {
+    SubCode: 'ACCY328',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.134-Classroom A 5.13 & 5.14',
+    Teacher: 'Muhabie Mengistu'
+  },
+  {
+    SubCode: 'ACCY801',
+    Class: 'Lecture',
+    Day: 'Thursday',
+    StartTime: '18:00:00',
+    EndTime: '22:00:00',
+    Room: '4.45-Classroom B',
+    Teacher: 'Namrata Gupta'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial A',
+    Day: 'Monday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '5.17-Classroom VC',
+    Teacher: 'Nancy El Sobkey'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial A',
+    Day: 'Tuesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '5.10-Classroom B',
+    Teacher: 'Katia Freywat'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial A',
+    Day: 'Monday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.17-Classroom VC',
+    Teacher: 'Nancy El Sobkey'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial A',
+    Day: 'Tuesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.10-Classroom B',
+    Teacher: 'Katia Freywat'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial B',
+    Day: 'Wednesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.10-Classroom B',
+    Teacher: 'Nancy El Sobkey'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial B',
+    Day: 'Thursday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.18-Classroom A',
+    Teacher: 'Katia Freywat'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial B',
+    Day: 'Wednesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Nancy El Sobkey'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial B',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '5.18-Classroom A',
+    Teacher: 'Katia Freywat'
+  },
+  {
+    SubCode: 'ARTS317',
+    Class: 'Lecture',
+    Day: 'Monday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.134-Classroom A 5.13 & 5.14',
+    Teacher: 'Feras Hamza'
+  },
+  {
+    SubCode: 'ARTS317',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.10-Classroom B',
+    Teacher: 'Dana Charkaoui'
+  },
+  {
+    SubCode: 'ARTS317',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '3.46-Classroom A',
+    Teacher: 'Dana Charkaoui'
+  },
+  {
+    SubCode: 'ARTS317',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '3.46-Classroom A',
+    Teacher: 'Dana Charkaoui'
+  },
+  {
+    SubCode: 'ARTS317',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.19-Classroom A',
+    Teacher: 'Dana Charkaoui'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Lecture',
+    Day: 'Friday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Yiyang Bian'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '09:30:00',
+    EndTime: '11:30:00',
+    Room: '5.134-Classroom A 5.13 & 5.14',
+    Teacher: 'Yiyang Bian'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.42-Computer Lab (Single Screen)',
+    Teacher: 'Yiyang Bian'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '4.42-Computer Lab (Single Screen)',
+    Teacher: 'Nada Tchantchane'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '4.42-Computer Lab (Single Screen)',
+    Teacher: 'Nada Tchantchane'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '1.52-Computer Lab Single',
+    Teacher: 'Nikita Kirplani'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '1.52-Computer Lab Single',
+    Teacher: 'Nikita Kirplani'
+  },
+  {
+    SubCode: 'BALA302',
+    Class: 'Lecture',
+    Day: 'Friday',
+    StartTime: '16:30:00',
+    EndTime: '18:30:00',
+    Room: '5.134-Classroom A 5.13 & 5.14',
+    Teacher: 'Prithvi Bhattacharya'
+  },
+  {
+    SubCode: 'BALA302',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '4.42-Computer Lab (Single Screen)',
+    Teacher: 'Prithvi Bhattacharya'
+  },
+  {
+    SubCode: 'BCM112',
+    Class: 'Lecture',
+    Day: 'Monday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '4.467-Classroom A 4.46 & 4.47',
+    Teacher: 'Michael Mallory'
+  },
+  {
+    SubCode: 'BCM112',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '3.42-Classroom B',
+    Teacher: 'Negin Chabook'
+  },
+  {
+    SubCode: 'BCM112',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '6.33-Classroom B',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM112',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM112',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '5.12-Informal Classroom',
+    Teacher: 'Negin Chabook'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Lecture',
+    Day: 'Monday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '6.32-Classroom B',
+    Teacher: 'Deborah Hardt'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Lecture',
+    Day: 'Monday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Deborah Hardt'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '6.28-Seminar/Tutorial',
+    Teacher: 'Negin Chabook'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '6.29-Multipurpose - Teaching & Research',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.29-Multipurpose - Teaching & Research',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '16:30:00',
+    EndTime: '18:30:00',
+    Room: '6.29-Multipurpose - Teaching & Research',
+    Teacher: 'Negin Chabook'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '6.28-Seminar/Tutorial',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '3.42-Classroom B',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM116',
+    Class: 'Computer Lab',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM116',
+    Class: 'Computer Lab',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM116',
+    Class: 'Computer Lab',
+    Day: 'Friday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM116',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '6.39-Classroom A',
+    Teacher: 'Noor Yusoff'
+  },
+  {
+    SubCode: 'BCM206',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '6.38-Classroom B',
+    Teacher: 'Michael Mallory'
+  },
+  {
+    SubCode: 'BCM206',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '3.45-Classroom B',
+    Teacher: 'Negin Chabook'
+  },
+  {
+    SubCode: 'BCM206',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '6.33-Classroom B',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '0.17-Lecture Theatre',
+    Teacher: 'Noor Yusoff'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '3.42-Classroom B',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.28-Seminar/Tutorial',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.33-Classroom B',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM289',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '4.467-Classroom A 4.46 & 4.47',
+    Teacher: 'Deborah Hardt'
+  },
+  {
+    SubCode: 'BCM289',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM289',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '11:30:00',
+    EndTime: '13:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM289',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM300',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '6.39-Classroom A',
+    Teacher: 'Noor Yusoff'
+  },
+  {
+    SubCode: 'BCM300',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.45-Classroom B',
+    Teacher: 'Jad Yammine'
+  },
+  {
+    SubCode: 'BCM300',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.39-Classroom A',
+    Teacher: 'Jad Yammine'
+  },
+  {
+    SubCode: 'BCM333',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '5.19-Classroom A',
+    Teacher: 'Aaron Anderson'
+  },
+  {
+    SubCode: 'BCM333',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.19-Classroom A',
+    Teacher: 'Aaron Anderson'
+  },
+  {
+    SubCode: 'BCM333',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '6.28-Seminar/Tutorial',
+    Teacher: 'Aaron Anderson'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '3.44-Classroom B',
+    Teacher: 'Avneet Kaur'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '6.32-Classroom B',
+    Teacher: 'Sadaf Khurshid'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Nikita Kirplani'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.467-Classroom A 4.46 & 4.47',
+    Teacher: 'BUS 030 TBA1'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '6.32-Classroom B',
+    Teacher: 'Nada Tchantchane'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '6.345-Classroom A 6.34 & 6.35',
+    Teacher: 'Sneh Lohia'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'BUS 030 TBA1'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Nada Tchantchane'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.345-Classroom A 6.34 & 6.35',
+    Teacher: 'Sneh Lohia'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '4.52-Classroom A',
+    Teacher: 'BUS 030 TBA1'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Nada Tchantchane'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.17-Classroom VC',
+    Teacher: 'Sneh Lohia'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '16:30:00',
+    EndTime: '18:30:00',
+    Room: '0.17-Lecture Theatre',
+    Teacher: 'Flevy Lasrado'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Lecture',
+    Day: 'Friday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '0.17-Lecture Theatre',
+    Teacher: 'Mahshid Baghestani'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.38-Classroom B',
+    Teacher: 'Shaimaa Elsaid'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '16:30:00',
+    EndTime: '18:30:00',
+    Room: '6.33-Classroom B',
+    Teacher: 'Shaimaa Elsaid'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'Shaimaa Elsaid'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'Shaimaa Elsaid'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Soha Chahine'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'Soha Chahine'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.10-Classroom B',
+    Teacher: 'Mahshid Baghestani'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Ghada Abu Ashour'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Ghada Abu Ashour'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.19-Classroom A',
+    Teacher: 'Mahshid Baghestani'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.17-Classroom VC',
+    Teacher: 'Bus 101 Adjunct A'
+  },
+  ... 748 more items
+]
+Table cleared
+Parsed Data: [
+  {
+    SubCode: 'ACCY122',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '4.44-Classroom B',
+    Teacher: 'Khairul Kamarudin'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Khairul Kamarudin'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Khairul Kamarudin'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.45-Classroom B',
+    Teacher: 'Khairul Kamarudin'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '6.38-Classroom B',
+    Teacher: 'Yosra Ghani'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'Yosra Ghani'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '4.48-Classroom B',
+    Teacher: 'Yosra Ghani'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'Yosra Ghani'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.19-Classroom A',
+    Teacher: 'Marryam Yasir'
+  },
+  {
+    SubCode: 'ACCY122',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '4.48-Classroom B',
+    Teacher: 'Marryam Yasir'
+  },
+  {
+    SubCode: 'ACCY305',
+    Class: 'Lecture',
+    Day: 'Monday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Muhabie Mengistu'
+  },
+  {
+    SubCode: 'ACCY305',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '6.39-Classroom A',
+    Teacher: 'Muhabie Mengistu'
+  },
+  {
+    SubCode: 'ACCY305',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '11:30:00',
+    EndTime: '13:30:00',
+    Room: '5.18-Classroom A',
+    Teacher: 'Marryam Yasir'
+  },
+  {
+    SubCode: 'ACCY328',
+    Class: 'Lecture',
+    Day: 'Thursday',
+    StartTime: '11:30:00',
+    EndTime: '13:30:00',
+    Room: '5.134-Classroom A 5.13 & 5.14',
+    Teacher: 'Muhabie Mengistu'
+  },
+  {
+    SubCode: 'ACCY328',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '4.48-Classroom B',
+    Teacher: 'Muhabie Mengistu'
+  },
+  {
+    SubCode: 'ACCY328',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.134-Classroom A 5.13 & 5.14',
+    Teacher: 'Muhabie Mengistu'
+  },
+  {
+    SubCode: 'ACCY801',
+    Class: 'Lecture',
+    Day: 'Thursday',
+    StartTime: '18:00:00',
+    EndTime: '22:00:00',
+    Room: '4.45-Classroom B',
+    Teacher: 'Namrata Gupta'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial A',
+    Day: 'Monday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '5.17-Classroom VC',
+    Teacher: 'Nancy El Sobkey'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial A',
+    Day: 'Tuesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '5.10-Classroom B',
+    Teacher: 'Katia Freywat'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial A',
+    Day: 'Monday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.17-Classroom VC',
+    Teacher: 'Nancy El Sobkey'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial A',
+    Day: 'Tuesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.10-Classroom B',
+    Teacher: 'Katia Freywat'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial B',
+    Day: 'Wednesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.10-Classroom B',
+    Teacher: 'Nancy El Sobkey'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial B',
+    Day: 'Thursday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.18-Classroom A',
+    Teacher: 'Katia Freywat'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial B',
+    Day: 'Wednesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Nancy El Sobkey'
+  },
+  {
+    SubCode: 'ARA101',
+    Class: 'Tutorial B',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '5.18-Classroom A',
+    Teacher: 'Katia Freywat'
+  },
+  {
+    SubCode: 'ARTS317',
+    Class: 'Lecture',
+    Day: 'Monday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.134-Classroom A 5.13 & 5.14',
+    Teacher: 'Feras Hamza'
+  },
+  {
+    SubCode: 'ARTS317',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.10-Classroom B',
+    Teacher: 'Dana Charkaoui'
+  },
+  {
+    SubCode: 'ARTS317',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '3.46-Classroom A',
+    Teacher: 'Dana Charkaoui'
+  },
+  {
+    SubCode: 'ARTS317',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '3.46-Classroom A',
+    Teacher: 'Dana Charkaoui'
+  },
+  {
+    SubCode: 'ARTS317',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.19-Classroom A',
+    Teacher: 'Dana Charkaoui'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Lecture',
+    Day: 'Friday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Yiyang Bian'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '09:30:00',
+    EndTime: '11:30:00',
+    Room: '5.134-Classroom A 5.13 & 5.14',
+    Teacher: 'Yiyang Bian'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.42-Computer Lab (Single Screen)',
+    Teacher: 'Yiyang Bian'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '4.42-Computer Lab (Single Screen)',
+    Teacher: 'Nada Tchantchane'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '4.42-Computer Lab (Single Screen)',
+    Teacher: 'Nada Tchantchane'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '1.52-Computer Lab Single',
+    Teacher: 'Nikita Kirplani'
+  },
+  {
+    SubCode: 'BALA201',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '1.52-Computer Lab Single',
+    Teacher: 'Nikita Kirplani'
+  },
+  {
+    SubCode: 'BALA302',
+    Class: 'Lecture',
+    Day: 'Friday',
+    StartTime: '16:30:00',
+    EndTime: '18:30:00',
+    Room: '5.134-Classroom A 5.13 & 5.14',
+    Teacher: 'Prithvi Bhattacharya'
+  },
+  {
+    SubCode: 'BALA302',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '4.42-Computer Lab (Single Screen)',
+    Teacher: 'Prithvi Bhattacharya'
+  },
+  {
+    SubCode: 'BCM112',
+    Class: 'Lecture',
+    Day: 'Monday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '4.467-Classroom A 4.46 & 4.47',
+    Teacher: 'Michael Mallory'
+  },
+  {
+    SubCode: 'BCM112',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '3.42-Classroom B',
+    Teacher: 'Negin Chabook'
+  },
+  {
+    SubCode: 'BCM112',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '6.33-Classroom B',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM112',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM112',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '5.12-Informal Classroom',
+    Teacher: 'Negin Chabook'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Lecture',
+    Day: 'Monday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '6.32-Classroom B',
+    Teacher: 'Deborah Hardt'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Lecture',
+    Day: 'Monday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Deborah Hardt'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '6.28-Seminar/Tutorial',
+    Teacher: 'Negin Chabook'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '6.29-Multipurpose - Teaching & Research',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.29-Multipurpose - Teaching & Research',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '16:30:00',
+    EndTime: '18:30:00',
+    Room: '6.29-Multipurpose - Teaching & Research',
+    Teacher: 'Negin Chabook'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '6.28-Seminar/Tutorial',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM113',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '3.42-Classroom B',
+    Teacher: 'Hamda Al Khaja'
+  },
+  {
+    SubCode: 'BCM116',
+    Class: 'Computer Lab',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM116',
+    Class: 'Computer Lab',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM116',
+    Class: 'Computer Lab',
+    Day: 'Friday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM116',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '6.39-Classroom A',
+    Teacher: 'Noor Yusoff'
+  },
+  {
+    SubCode: 'BCM206',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '6.38-Classroom B',
+    Teacher: 'Michael Mallory'
+  },
+  {
+    SubCode: 'BCM206',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '3.45-Classroom B',
+    Teacher: 'Negin Chabook'
+  },
+  {
+    SubCode: 'BCM206',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '6.33-Classroom B',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '0.17-Lecture Theatre',
+    Teacher: 'Noor Yusoff'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '3.42-Classroom B',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.28-Seminar/Tutorial',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM222',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.33-Classroom B',
+    Teacher: 'Rahaf Nassif'
+  },
+  {
+    SubCode: 'BCM289',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '4.467-Classroom A 4.46 & 4.47',
+    Teacher: 'Deborah Hardt'
+  },
+  {
+    SubCode: 'BCM289',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '13:30:00',
+    EndTime: '15:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM289',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '11:30:00',
+    EndTime: '13:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM289',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.15-MAC Lab',
+    Teacher: 'Daniel Chedid'
+  },
+  {
+    SubCode: 'BCM300',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '6.39-Classroom A',
+    Teacher: 'Noor Yusoff'
+  },
+  {
+    SubCode: 'BCM300',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.45-Classroom B',
+    Teacher: 'Jad Yammine'
+  },
+  {
+    SubCode: 'BCM300',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.39-Classroom A',
+    Teacher: 'Jad Yammine'
+  },
+  {
+    SubCode: 'BCM333',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '5.19-Classroom A',
+    Teacher: 'Aaron Anderson'
+  },
+  {
+    SubCode: 'BCM333',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.19-Classroom A',
+    Teacher: 'Aaron Anderson'
+  },
+  {
+    SubCode: 'BCM333',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '6.28-Seminar/Tutorial',
+    Teacher: 'Aaron Anderson'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '3.44-Classroom B',
+    Teacher: 'Avneet Kaur'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '6.32-Classroom B',
+    Teacher: 'Sadaf Khurshid'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Lecture',
+    Day: 'Tuesday',
+    StartTime: '15:30:00',
+    EndTime: '17:30:00',
+    Room: '5.11-Classroom B',
+    Teacher: 'Nikita Kirplani'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.467-Classroom A 4.46 & 4.47',
+    Teacher: 'BUS 030 TBA1'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '6.32-Classroom B',
+    Teacher: 'Nada Tchantchane'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '6.345-Classroom A 6.34 & 6.35',
+    Teacher: 'Sneh Lohia'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'BUS 030 TBA1'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Nada Tchantchane'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.345-Classroom A 6.34 & 6.35',
+    Teacher: 'Sneh Lohia'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '4.52-Classroom A',
+    Teacher: 'BUS 030 TBA1'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Nada Tchantchane'
+  },
+  {
+    SubCode: 'BUS030',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.17-Classroom VC',
+    Teacher: 'Sneh Lohia'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Lecture',
+    Day: 'Wednesday',
+    StartTime: '16:30:00',
+    EndTime: '18:30:00',
+    Room: '0.17-Lecture Theatre',
+    Teacher: 'Flevy Lasrado'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Lecture',
+    Day: 'Friday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '0.17-Lecture Theatre',
+    Teacher: 'Mahshid Baghestani'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '6.38-Classroom B',
+    Teacher: 'Shaimaa Elsaid'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '16:30:00',
+    EndTime: '18:30:00',
+    Room: '6.33-Classroom B',
+    Teacher: 'Shaimaa Elsaid'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'Shaimaa Elsaid'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'Shaimaa Elsaid'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Monday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Soha Chahine'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '4.50-Classroom B',
+    Teacher: 'Soha Chahine'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Tuesday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '5.10-Classroom B',
+    Teacher: 'Mahshid Baghestani'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '14:30:00',
+    EndTime: '16:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Ghada Abu Ashour'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Thursday',
+    StartTime: '12:30:00',
+    EndTime: '14:30:00',
+    Room: '3.48-Classroom B',
+    Teacher: 'Ghada Abu Ashour'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Friday',
+    StartTime: '10:30:00',
+    EndTime: '12:30:00',
+    Room: '5.19-Classroom A',
+    Teacher: 'Mahshid Baghestani'
+  },
+  {
+    SubCode: 'BUS101',
+    Class: 'Tutorial',
+    Day: 'Wednesday',
+    StartTime: '08:30:00',
+    EndTime: '10:30:00',
+    Room: '5.17-Classroom VC',
+    Teacher: 'Bus 101 Adjunct A'
+  },
+  ... 748 more items
+]
+Data inserted successfully
+Database initialized
+Data inserted successfully
+ GET /api/initdb 200 in 123ms
+ ✓ Compiled /api/rooms in 24ms
+ GET /api/rooms 200 in 35ms
+ GET /api/rooms 304 in 22ms
+ ✓ Compiled / in 271ms
+ GET /api/rooms 304 in 26ms
+ GET /api/rooms 304 in 29ms
+ ✓ Compiled in 122ms
+ ✓ Compiled in 69ms
+ ○ Compiling /CheckAvailability ...
+ ✓ Compiled /CheckAvailability in 974ms
+ ✓ Compiled /api/room in 58ms
+ GET /api/room 304 in 23ms
+ GET /api/room 304 in 19ms
+ ○ Compiling /Graph ...
+ ✓ Compiled /Graph in 869ms
+ ✓ Compiled /api/schedule in 91ms
+ GET /api/schedule 304 in 16ms
+ GET /api/schedule 304 in 14ms
+ GET /api/room 304 in 30ms
+ GET /api/room 304 in 30ms
+ ✓ Compiled /api/check-availability in 84ms
+ GET /api/check-availability?room=0.17-Lecture%20Theatre&day=Monday&startTime=17:29&endTime=17:30 200 in 33ms
+ GET /api/check-availability?room=0.17-Lecture%20Theatre&day=Monday&startTime=17:30&endTime=17:30 200 in 21ms
+ GET /api/check-availability?room=0.17-Lecture%20Theatre&day=Monday&startTime=17:30&endTime=17:30 304 in 24ms
+ GET /api/check-availability?room=0.17-Lecture%20Theatre&day=Monday&startTime=17:31&endTime=17:31 200 in 26ms
+ GET /api/rooms 304 in 26ms
+ GET /api/rooms 304 in 17ms
+ GET /api/schedule 304 in 28ms
+ GET /api/schedule 304 in 32ms
