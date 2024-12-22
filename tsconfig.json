@@ -28,5 +28,10 @@
   ],
   "exclude": [
     "node_modules"
-  ]
-}
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}, "src/pages/api/generate-schedule.js"
