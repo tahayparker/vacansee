@@ -1,14 +1,15 @@
-datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+}
+
 model Class {
-  id        Int      @id @default(autoincrement())
+  id        String    @id @default(cuid())
   SubCode   String
   Class     String
   Day       String
@@ -16,4 +17,8 @@ model Class {
   EndTime   String
   Room      String
   Teacher   String
+
+  @@index([EndTime], map: "idx_classes_endtime")
+  @@index([StartTime], map: "idx_classes_starttime")
+  @@index([Day], map: "idx_classes_day")
 }
