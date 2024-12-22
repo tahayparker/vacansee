@@ -12,6 +12,10 @@ const timeSlots = [
   '20:30', '21:00', '21:30', '22:00', '22:30'
 ];
 
+export const config = {
+  maxDuration: 60,
+};
+
 // Function to check room availability
 async function checkRoomAvailability(room, day, startTime, endTime) {
   try {
