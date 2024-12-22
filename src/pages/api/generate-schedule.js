@@ -1,5 +1,4 @@
-import { open } from 'sqlite';
-import sqlite3 from 'sqlite3';
+import prisma from '../../lib/db';
 import fs from 'fs';
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -12,49 +11,44 @@ const timeSlots = [
 
 // Function to check room availability
 async function checkRoomAvailability(room, day, startTime, endTime) {
-  const db = await open({
-    filename: 'classes.db',
-    driver: sqlite3.Database,
-  });
-
   try {
-    const query = `
-      SELECT * FROM classes
-      WHERE Room = ?
-      AND Day = ?
-      AND NOT (EndTime <= ? OR StartTime >= ?)
-    `;
-    const result = await db.all(query, [room, day, startTime, endTime]);
+    const result = await prisma.class.findMany({
+      where: {
+        Room: room,
+        Day: day,
+        NOT: {
+          OR: [
+            { EndTime: { lte: startTime } },
+            { StartTime: { gte: endTime } }
+          ]
+        }
+      }
+    });
     return result.length === 0; // If no results, the room is available
   } catch (error) {
     console.error(error);
     return false; // In case of an error, assume not available
-  } finally {
-    await db.close();
   }
 }
 
 // Function to generate schedule data
 async function generateScheduleData() {
   const fetchRooms = async () => {
-    const db = await open({
-      filename: 'classes.db',
-      driver: sqlite3.Database,
-    });
-
     try {
-      const rooms = await db.all('SELECT DISTINCT Room FROM classes');
+      const rooms = await prisma.class.findMany({
+        select: {
+          Room: true
+        },
+        distinct: ['Room']
+      });
       return rooms.map((room) => room.Room);
     } catch (error) {
       console.error(error);
       return [];
-    } finally {
-      await db.close();
     }
   }
 
   const roomNames = await fetchRooms();
-
   const schedule = [];
 
   // Loop through each day and room, then check availability for each time slot
@@ -71,8 +65,6 @@ async function generateScheduleData() {
       };
 
       for (let i = 0; i < timeSlots.length; i++) {
-        
-        // Change startTime and endTime to 1 minute past the slot time. e.g. 08:30 -> 08:31
         const startTime = timeSlots[i];
         const endTime = timeSlots[i + 1] || timeSlots[i]; // Handle the last slot
 
@@ -98,3 +90,13 @@ async function saveScheduleData() {
 
 // Run the script to generate and save the data
 saveScheduleData().catch((error) => console.error('Error generating schedule data:', error));
+
+export default async function handler(req, res) {
+  try {
+    await saveScheduleData();
+    res.status(200).json({ message: 'Schedule generated successfully' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to generate schedule' });
+  }
+}
