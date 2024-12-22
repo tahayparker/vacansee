@@ -13,12 +13,27 @@ const timeIntervals = [
 const Graph = () => {
   const [scheduleData, setScheduleData] = useState([]);
   const [selectedDay, setSelectedDay] = useState(0);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch('/api/schedule')
-      .then((response) => response.json())
-      .then((data) => setScheduleData(data))
-      .catch((error) => console.error('Error fetching schedule:', error));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Fetched schedule data:', data);
+        if (!Array.isArray(data)) {
+          throw new Error('Invalid data format');
+        }
+        setScheduleData(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching schedule:', error);
+        setError(error.message);
+      });
   }, []);
 
   useEffect(() => {
@@ -50,6 +65,26 @@ const Graph = () => {
       });
     };
   }, [selectedDay]);
+
+  if (!scheduleData.length) {
+    return <div className="min-h-screen flex flex-col page-transition">
+      <Header />
+      <main className="flex-grow w-full px-4 md:px-8 mx-auto pt-20">
+        <div className="text-white text-center">Loading schedule data...</div>
+      </main>
+      <Footer className="mt-auto" />
+    </div>;
+  }
+
+  if (error) {
+    return <div className="min-h-screen flex flex-col page-transition">
+      <Header />
+      <main className="flex-grow w-full px-4 md:px-8 mx-auto pt-20">
+        <div className="text-red-500 text-center">Error loading schedule: {error}</div>
+      </main>
+      <Footer className="mt-auto" />
+    </div>;
+  }
 
   const getCellColor = (avail) => {
     return avail === 1 ? 'bg-green-700' : 'bg-red-700';
