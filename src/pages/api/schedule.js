@@ -3,7 +3,7 @@ import path from 'path';
 
 export default async function handler(req, res) {
   try {
-    const schedulePath = path.join(process.cwd(), 'public', 'scheduleData.json');
+    const schedulePath = path.join(process.cwd(), 'scheduleData.json');
     if (!fs.existsSync(schedulePath)) {
       throw new Error('Schedule data file not found');
     }
