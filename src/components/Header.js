@@ -96,7 +96,7 @@ const Header = ({ hideLogoOnHome }) => {
 
         {/* Mobile Navigation Menu */}
         <nav
-          className={`fixed top-0 right-0 bottom-0 w-64 bg-background shadow-xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] ${
+          className={`fixed top-0 right-0 bottom-0 w-64 bg-[#1a1a1a] shadow-xl transform transition-transform duration-300 ease-in-out md:hidden z-[60] ${
             menuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -104,10 +104,10 @@ const Header = ({ hideLogoOnHome }) => {
             {navLinks.map((link) => (
               <Link key={link.path} href={link.path} legacyBehavior>
                 <a
-                  className={`py-3 px-4 mb-2 rounded-lg transition-all duration-200 ease-in-out ${
+                  className={`py-3 px-4 mb-2 rounded-lg transition-all duration-200 ease-in-out text-white ${
                     router.pathname === link.path
-                      ? 'bg-foreground/10'
-                      : 'hover:bg-foreground/5'
+                      ? 'bg-[#006D5B]/20'
+                      : 'hover:bg-[#006D5B]/10'
                   }`}
                   onClick={() => {
                     setMenuOpen(false);
