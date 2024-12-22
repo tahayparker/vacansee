@@ -1,9 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Papa from 'papaparse';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '../lib/db';
 
 interface ClassData {
   SubCode: string;
@@ -43,11 +41,34 @@ const initDB = async () => {
 
   const csvFilePath = path.resolve(process.cwd(), 'public', 'classes.csv');
   const csvText = fs.readFileSync(csvFilePath, 'utf8');
-  const parsedData = Papa.parse<ClassData>(csvText, { header: true }).data;
 
-  console.log('Parsed Data:', parsedData); // Debugging log
+  const parsedData = Papa.parse<ClassData>(csvText, {
+    header: true,
+    transformHeader: (header) => header.trim(),
+    transform: (value) => value.trim(),
+    complete: (results) => {
+      results.data.forEach((row) => {
+        const keys = Object.keys(row);
+        if (keys.length > 7) { // Assuming 7 is the number of expected columns
+          const extraData = keys.slice(7).map(key => (row as unknown as Record<string, string>)[key]).join(' ');
+          row.Teacher += ` ${extraData}`; // Concatenate extra data to the last column
+          keys.slice(7).forEach(key => delete (row as unknown as Record<string, string>)[key]);
+        }
+      });
+    }
+  }).data;
 
-  await insertData(parsedData as ClassData[]);
+  // Log parsed data for debugging
+  console.log('Parsed Data:', parsedData);
+
+  // Filter out any empty rows that might be parsed
+  const validData = parsedData.filter((row) => row.SubCode && row.Class && row.Day && row.StartTime && row.EndTime && row.Room && row.Teacher);
+
+  if (validData.length === 0) {
+    throw new Error('No valid data found in CSV');
+  }
+
+  await insertData(validData as ClassData[]);
 };
 
 export default initDB;
