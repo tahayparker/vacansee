@@ -1,16 +1,11 @@
-'use client';
 import { useState, useEffect, useRef } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const styles = {
   timeInput: {
     WebkitAppearance: 'none',
-    MozAppearance: 'textfield',
-    "&::-webkit-calendar-picker-indicator": {
-      filter: "invert(1)",
-      marginRight: "-12px"
-    }
+    MozAppearance: 'textfield'
   },
   selectInput: {
     paddingRight: "30px",
@@ -77,27 +72,31 @@ const CheckAvailability = () => {
   useEffect(() => {
     const buttons = document.querySelectorAll('.glow-button');
 
-    buttons.forEach(button => {
-      button.addEventListener('mousemove', (e) => {
-        const rect = button.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        button.style.setProperty('--x', `${x}px`);
-        button.style.setProperty('--y', `${y}px`);
-      });
-
-      button.addEventListener('mouseleave', () => {
-        button.style.setProperty('--x', `50%`);
-        button.style.setProperty('--y', `50%`);
-      });
-    });
-
-    return () => {
-      buttons.forEach(button => {
-        button.removeEventListener('mousemove', () => { });
-        button.removeEventListener('mouseleave', () => { });
-      });
+    const handleMouseMove = (e, button) => {
+      const rect = button.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      button.style.setProperty('--x', `${x}px`);
+      button.style.setProperty('--y', `${y}px`);
     };
+
+    const handleMouseLeave = (button) => {
+      button.style.setProperty('--x', '50%');
+      button.style.setProperty('--y', '50%');
+    };
+
+    buttons.forEach(button => {
+      const mouseMoveHandler = (e) => handleMouseMove(e, button);
+      const mouseLeaveHandler = () => handleMouseLeave(button);
+
+      button.addEventListener('mousemove', mouseMoveHandler);
+      button.addEventListener('mouseleave', mouseLeaveHandler);
+
+      return () => {
+        button.removeEventListener('mousemove', mouseMoveHandler);
+        button.removeEventListener('mouseleave', mouseLeaveHandler);
+      };
+    });
   }, []);
 
   const handleCheck = async (e) => {
@@ -133,11 +132,9 @@ const CheckAvailability = () => {
   return (
     <div className="min-h-screen flex flex-col page-transition">
       <Header />
-      <main className="flex-grow w-full px-4 mx-auto">
-        <div className="max-w-3xl w-full mx-auto mt-32 pb-16">
-          <h1 className="text-4xl font-bold mb-12 text-center animate-[slideUp_0.5s_ease-out]">
-            Check Room Availability
-          </h1>
+      <main className="flex-grow w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <h1 className="text-4xl font-bold mb-8 mt-12 text-center text-white">Check Room Availability</h1>
+        <div className="max-w-3xl w-full mx-auto mt-16 pb-16">
           <form onSubmit={handleCheck} className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-[fadeIn_0.5s_ease-out]">
             <div className="relative form-element" ref={dropdownRef} style={{ animationDelay: '0.1s' }}>
               <label htmlFor="room" className="block text-sm font-medium text-gray-300">Room</label>
