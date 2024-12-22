@@ -13,14 +13,13 @@ const RoomList = () => {
       setRooms(data);
 
       const longestRoomName = data.reduce((max: string, room: string) => (room.length > max.length ? room : max), '');
-      setMinWidth(longestRoomName.length * 10);
+      setMinWidth(longestRoomName.length * 6);
     };
 
     fetchRooms();
   }, []);
 
   useEffect(() => {
-    // Set the current time and day only on the client side
     const now = new Date();
     setCurrentTime(now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
     setCurrentDay(now.toLocaleDateString('en-GB', { weekday: 'long' }));
@@ -34,24 +33,28 @@ const RoomList = () => {
       <p className="text-lg mb-4 text-center animate-[fadeIn_0.5s_ease-out] text-white">
         As of {currentDay}, {currentTime}
       </p>
-      <ul
-        className="w-full grid gap-4 px-4"
-        style={{ gridTemplateColumns: `repeat(auto-fit, minmax(${minWidth}px, 1fr))` }}
-      >
-        {rooms.map((room, index) => (
-          <li
-            key={index}
-            className="bg-[#121212] text-white rounded-lg shadow-lg p-4 border border-[#482f1f] hover-scale transition-all duration-300 list-animation"
-            style={{ 
-              animationDelay: `${index * 0.05}s`,
-              transform: 'translateY(0)',
-              opacity: 1
-            }}
-          >
-            {room}
-          </li>
-        ))}
-      </ul>
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <ul
+          className="grid gap-4"
+          style={{ 
+            gridTemplateColumns: `repeat(auto-fit, minmax(${Math.max(minWidth, 140)}px, 1fr))`,
+          }}
+        >
+          {rooms.map((room, index) => (
+            <li
+              key={index}
+              className="bg-[#00000000] text-white md:text-left text-center rounded-lg shadow-lg p-3 border border-[#482f1f] hover-scale transition-all duration-300 list-animation"
+              style={{ 
+                animationDelay: `${index * 0.05}s`,
+                transform: 'translateY(0)',
+                opacity: 1
+              }}
+            >
+              {room}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
