@@ -36,6 +36,7 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header hideLogoOnHome={true} />
+      <Analytics />
       <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-3xl mx-auto text-center">
           <div className="transform transition-all duration-700 hover:scale-105"
