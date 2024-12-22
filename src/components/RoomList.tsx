@@ -43,7 +43,7 @@ const RoomList = () => {
           {rooms.map((room, index) => (
             <li
               key={index}
-              className="bg-[#00000000] text-white md:text-left text-center rounded-lg shadow-lg p-3 border border-[#482f1f] hover-scale transition-all duration-300 list-animation"
+              className="bg-[#00000000] text-white text-center rounded-lg shadow-lg p-3 border border-[#482f1f] hover-scale transition-all duration-300 list-animation flex items-center justify-center"
               style={{ 
                 animationDelay: `${index * 0.05}s`,
                 transform: 'translateY(0)',
