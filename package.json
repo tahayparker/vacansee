@@ -7,7 +7,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate && tsx src/pages/api/generate-schedule.js"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
