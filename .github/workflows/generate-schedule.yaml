@@ -15,50 +15,37 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up environment variables
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"  # Match your desired Python version
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: pip install asyncpg
+
+      # Step 4: Set up environment variables
       - name: Set up environment variables
         run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
 
-      # Step 3: Set up Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-
-      # Step 4: Install dependencies
-      - name: Install dependencies
-        run: npm install
-
-      # Step 5: Install ts-node for TypeScript execution
-      - name: Install ts-node
-        run: npm install -g ts-node
-
-      # Step 6: Generate Prisma client (if needed)
-      - name: Generate Prisma client
-        run: npx prisma generate
-
-      # Step 7: Check the current working directory
-      - name: Check current working directory
-        run: pwd
-
-      # Step 8: Run the TypeScript script
+      # Step 5: Run the Python script
       - name: Generate schedule JSON
-        run: ts-node src/pages/api/generate-schedule.ts
+        run: python generate_schedule.py
 
-      # Step 9: Configure Git for committing changes
+      # Step 6: Configure Git for committing changes
       - name: Configure Git
         run: |
           git config user.name "Taha Parker via GitHub Actions"
           git config user.email "98612931+tahayparker@users.noreply.github.com"
 
-      # Step 10: Commit the updated JSON file to the root directory
+      # Step 7: Commit the updated JSON file to the root directory
       - name: Commit changes
         run: |
           git add scheduleData.json
           git commit -m "Update scheduleData.json triggered by classes.csv update"
 
-      # Step 11: Push the changes back to the repository
-      - name: Push changes
+      # Step 8: Push changes back to the repository
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
