@@ -3,9 +3,8 @@ name: Generate Schedule JSON
 on:
   push:
     paths:
-      - "public/classes.csv" # Trigger the workflow when classes.csv is updated
-
-  workflow_dispatch:
+      - "public/classes.csv"  # Trigger the workflow when classes.csv is updated
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 jobs:
   generate-json:
@@ -14,18 +13,18 @@ jobs:
     steps:
       # Step 1: Check out the repository
       - name: Checkout repository
-        uses:
-          actions/checkout@v3
+        uses: actions/checkout@v3
 
-      # Step 2: Read .env file to get DATABASE_URL
-      - name: Read .env file
-        run: echo "${{secrets.DATABASE_URL }}" > .env
+      # Step 2: Set up environment variables from secrets
+      - name: Set up .env file from secrets
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
 
       # Step 3: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 22 # Match your project's Node.js version
+          node-version: 18  # Match your project's Node.js version
 
       # Step 4: Install dependencies
       - name: Install dependencies
