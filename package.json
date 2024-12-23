@@ -13,6 +13,7 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
     "@prisma/client": "^6.1.0",
+    "@prisma/extension-accelerate": "^1.2.1",
     "@radix-ui/react-tabs": "^1.1.2",
     "@simplewebauthn/server": "^13.0.0",
     "@supabase/supabase-js": "^2.47.10",
