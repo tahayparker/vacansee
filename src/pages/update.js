@@ -21,8 +21,8 @@ export async function getServerSideProps(context) {
   };
 }
 
-const Update = ({ session: serverSession }) => {
-  const { data: session, status } = useSession();
+export default function Update({ session: serverSession }) {
+  const { data: clientSession, status } = useSession();
   const router = useRouter();
   const [updateStatus, setUpdateStatus] = useState('idle');
   const [error, setError] = useState(null);
@@ -38,7 +38,6 @@ const Update = ({ session: serverSession }) => {
       setUpdateStatus('updating');
       setError(null);
 
-      // Call the update API
       const response = await fetch('/api/update-timetable', {
         method: 'POST',
         headers: {
@@ -60,6 +59,7 @@ const Update = ({ session: serverSession }) => {
     }
   };
 
+  // Show loading state while checking session
   if (status === 'loading') {
     return (
       <div className="min-h-screen flex flex-col">
@@ -72,9 +72,14 @@ const Update = ({ session: serverSession }) => {
     );
   }
 
-  const currentSession = session || serverSession;
+  // Use server session as fallback
+  const session = clientSession || serverSession;
 
-  if (!currentSession) {
+  // Redirect if no session
+  if (!session) {
+    if (typeof window !== 'undefined') {
+      router.push('/auth/signin');
+    }
     return null;
   }
 
@@ -85,7 +90,7 @@ const Update = ({ session: serverSession }) => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-white">Update Timetables</h1>
           <div className="flex items-center gap-4">
-            <span className="text-gray-300">Signed in as {currentSession.user.name}</span>
+            <span className="text-gray-300">Signed in as {session.user.name}</span>
             <button
               onClick={() => signOut()}
               className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full hover:bg-red-700/10 transition-all duration-200"
@@ -139,6 +144,4 @@ const Update = ({ session: serverSession }) => {
       <Footer />
     </div>
   );
-};
-
-export default Update; 
+} 
