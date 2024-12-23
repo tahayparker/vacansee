@@ -9,13 +9,16 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
-      // You can add additional validation here
-      // For example, only allow specific GitHub users
-      return true;
+    async signIn({ user }) {
+      // Only allow specific GitHub users
+      const ALLOWED_USERS = ['tahayparker'];
+      return ALLOWED_USERS.includes(user.login);
     },
-    async session({ session, token }) {
-      return session;
+    async jwt({ token: _token, user }) {
+      if (user) {
+        _token.login = user.login;
+      }
+      return _token;
     },
   },
   pages: {
