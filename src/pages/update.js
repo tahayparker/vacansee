@@ -1,10 +1,27 @@
-import { useSession, signOut } from 'next-auth/react';
+import { useSession, signOut, getSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const Update = () => {
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session }
+  };
+}
+
+const Update = ({ session: serverSession }) => {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [updateStatus, setUpdateStatus] = useState('idle');
@@ -55,7 +72,9 @@ const Update = () => {
     );
   }
 
-  if (!session) {
+  const currentSession = session || serverSession;
+
+  if (!currentSession) {
     return null;
   }
 
@@ -66,7 +85,7 @@ const Update = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold text-white">Update Timetables</h1>
           <div className="flex items-center gap-4">
-            <span className="text-gray-300">Signed in as {session.user.name}</span>
+            <span className="text-gray-300">Signed in as {currentSession.user.name}</span>
             <button
               onClick={() => signOut()}
               className="px-4 py-2 border-2 border-red-700 text-red-700 rounded-full hover:bg-red-700/10 transition-all duration-200"
@@ -80,7 +99,7 @@ const Update = () => {
           <div className="space-y-4">
             <h2 className="text-xl font-semibold text-white">Update Process</h2>
             <p className="text-gray-300">
-              Click the button below to update the timetable data. Make sure you're logged into UOW Dubai in your browser.
+              Click the button below to update the timetable data. Make sure you&apos;re logged into UOW Dubai in your browser.
             </p>
           </div>
 
