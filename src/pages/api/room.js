@@ -9,6 +9,9 @@ export default async function handler(req, res) {
       distinct: ['Room'],
       orderBy: {
         Room: 'asc'
+      },
+      cacheStrategy: {
+        swr: 60 * 60 * 24 // 24 hours
       }
     });
 
