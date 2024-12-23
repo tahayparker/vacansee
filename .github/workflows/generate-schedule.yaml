@@ -3,8 +3,8 @@ name: Generate Schedule JSON
 on:
   push:
     paths:
-      - "public/classes.csv"  # Trigger the workflow when classes.csv is updated
-  workflow_dispatch:  # Allows manual trigger from GitHub UI
+      - "public/classes.csv" # Trigger the workflow when classes.csv is updated
+  workflow_dispatch:
 
 jobs:
   generate-json:
@@ -15,16 +15,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up environment variables from secrets
-      - name: Set up .env file from secrets
-        run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
+      # Step 2: Set up environment variables
+      - name: Set up environment variables
+        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
 
       # Step 3: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 22  # Match your project's Node.js version
+          node-version: 22
 
       # Step 4: Install dependencies
       - name: Install dependencies
@@ -34,23 +33,31 @@ jobs:
       - name: Install ts-node
         run: npm install -g ts-node
 
-      # Step 6: Run the JSON generation script
-      - name: Generate schedule JSON
-        run: ts-node src/pages/api/generate-schedule.ts
+      # Step 6: Generate Prisma client (if needed)
+      - name: Generate Prisma client
+        run: npx prisma generate
 
-      # Step 7: Configure Git for committing changes
+      # Step 7: Check the current working directory
+      - name: Check current working directory
+        run: pwd
+
+      # Step 8: Run the TypeScript script
+      - name: Generate schedule JSON
+        run: ts-node src/generate-schedule.ts
+
+      # Step 9: Configure Git for committing changes
       - name: Configure Git
         run: |
           git config user.name "Taha Parker via GitHub Actions"
           git config user.email "98612931+tahayparker@users.noreply.github.com"
 
-      # Step 8: Commit the updated JSON file to the root directory
+      # Step 10: Commit the updated JSON file to the root directory
       - name: Commit changes
         run: |
           git add scheduleData.json
           git commit -m "Update scheduleData.json triggered by classes.csv update"
 
-      # Step 9: Push the changes back to the repository
+      # Step 11: Push the changes back to the repository
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
