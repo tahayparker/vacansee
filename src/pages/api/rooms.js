@@ -21,6 +21,9 @@ const getFreeRooms = async (req, res) => {
       distinct: ['Room'],
       orderBy: {
         Room: 'asc'
+      },
+      cacheStrategy: {
+        swr: 60 * 60 // 1 hour
       }
     });
 
