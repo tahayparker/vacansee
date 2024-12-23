@@ -32,10 +32,10 @@ jobs:
       # Get current working directory
       - name: Get current working directory
         run: pwd
-        
+
       # Step 5: Run the Python script
       - name: Generate schedule JSON
-        run: python generate_schedule.py
+        run: python scripts/generate_schedule.py
 
       # Step 6: Configure Git for committing changes
       - name: Configure Git
