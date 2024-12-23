@@ -4,12 +4,12 @@ generator client {
 
 // prisma/schema.prisma
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Class {
-  id        String    @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   SubCode   String
   Class     String
   Day       String
@@ -18,7 +18,5 @@ model Class {
   Room      String
   Teacher   String
 
-  @@index([EndTime], map: "idx_classes_endtime")
-  @@index([StartTime], map: "idx_classes_starttime")
-  @@index([Day], map: "idx_classes_day")
+  @@map("classes")
 }
