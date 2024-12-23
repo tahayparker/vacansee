@@ -20,10 +20,10 @@ const timeSlots = [
   '20:30', '21:00', '21:30', '22:00', '22:30'
 ];
 
-// Debugging helper
-const logDebug = (message: string, data: any = null): void => {
+// Debugging helper with proper typing
+const logDebug = (message: string, data?: Record<string, unknown> | unknown[]): void => {
   console.log(`[DEBUG] ${message}`);
-  if (data !== null) {
+  if (data !== undefined) {
     console.log(JSON.stringify(data, null, 2));
   }
 };
