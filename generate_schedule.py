@@ -14,8 +14,6 @@ TIME_SLOTS = [
 ]
 
 DB_URL = os.getenv("DATABASE_URL")
-print(DB_URL)
-input()
 
 async def fetch_rooms(connection):
     print("Fetching unique room names from database...")
