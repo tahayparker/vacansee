@@ -30,23 +30,27 @@ jobs:
       - name: Install ts-node
         run: npm install -g ts-node
 
-      # Step 5: Run the JSON generation script
+      # Step 5: Read .env file to get DATABASE_URL
+      - name: Read .env file
+        run: echo "DATABASE_URL=$(cat .env | grep DATABASE_URL | cut -d '=' -f2)" >> $GITHUB_ENV
+
+      # Step 6: Run the JSON generation script
       - name: Generate schedule JSON
         run: ts-node src/generate-schedule.ts
 
-      # Step 6: Configure Git for committing changes
+      # Step 7: Configure Git for committing changes
       - name: Configure Git
         run: |
           git config user.name "Taha Parker via GitHub Actions"
           git config user.email "98612931+tahayparker@users.noreply.github.com"
 
-      # Step 7: Commit the updated JSON file to the root directory
+      # Step 8: Commit the updated JSON file to the root directory
       - name: Commit changes
         run: |
           git add scheduleData.json
           git commit -m "Update scheduleData.json triggered by classes.csv update"
 
-      # Step 8: Push the changes back to the repository
+      # Step 9: Push the changes back to the repository
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
