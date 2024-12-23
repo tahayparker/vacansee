@@ -43,7 +43,7 @@ jobs:
 
       # Step 8: Run the TypeScript script
       - name: Generate schedule JSON
-        run: ts-node src/generate-schedule.ts
+        run: ts-node src/pages/api/generate-schedule.ts
 
       # Step 9: Configure Git for committing changes
       - name: Configure Git
