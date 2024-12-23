@@ -19,7 +19,7 @@ jobs:
 
       # Step 2: Read .env file to get DATABASE_URL
       - name: Read .env file
-        run: echo "DATABASE_URL=$(cat .env | grep DATABASE_URL | cut -d '=' -f2)" >> $GITHUB_ENV
+        run: echo "${{secrets.DATABASE_URL }}" > .env
 
       # Step 3: Set up Node.js
       - name: Set up Node.js
