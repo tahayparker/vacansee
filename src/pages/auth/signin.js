@@ -30,7 +30,7 @@ export default function SignIn() {
           <div className="mt-8">
             <button
               onClick={handleSignIn}
-              className="group relative w-full flex justify-center py-3 px-4 border-2 border-[#006D5B] text-[#006D5B] font-medium rounded-full hover:bg-[#006D5B]/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#006D5B] transition-all duration-200"
+              className="w-full flex justify justify-center py-3 px-4 border-2 border-[#006D5B] text-[#006D5B] hover:bg-[#006D5B]/10 font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#006D5B] transition-all duration-200"
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
