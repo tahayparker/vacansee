@@ -1,137 +1,96 @@
 import argparse
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium_stealth import stealth
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException
 import json
-import csv
+import requests
+from bs4 import BeautifulSoup
+import re
 import sys
-import time
-import traceback
+import csv
+
+rooms = [{"0.17":"0.17-Lecture Theatre"}, {"0.201":"0.201-Concrete / Geo Tech Lab"}, {"1.38":"1.38-Circuits Lab"}, {"1.48":"1.48-Thermal Lab"}, {"1.49":"1.49-Manufacturing & Workshop Lab"}, {"1.52":"1.52-Computer Lab Single"}, {"1.53":"1.53-Chemistry & Materials Science Lab"}, {"2.5":"2.50-Computer Lab Single"}, {"2.51":"2.51-Project Lab"}, {"3.42":"3.42-Classroom B"}, {"3.44":"3.44-Classroom B"}, {"3.45":"3.45-Classroom B"}, {"3.46":"3.46-Classroom A"}, {"3.47":"3.47-Game Dev Lab Dual Screens"}, {"3.48":"3.48-Classroom B"}, {"3.52":"3.52-Computer Lab (Network)"}, {"3.53":"3.53-Physics/Robotics Lab"}, {"4.42":"4.42-Computer Lab (Single Screen)"}, {"4.44":"4.44-Classroom B"}, {"4.45":"4.45-Classroom B"}, {"4.467":"4.467-Classroom A 4.46 & 4.47"}, {"4.48":"4.48-Classroom B"}, {"4.5":"4.50-Classroom B"}, {"4.51":"4.51-Tutorial Room"}, {"4.52":"4.52-Classroom A"}, {"4.53":"4.53-Seminar/Tutorial"}, {"5.08":"5.08-Seminar / Tutorial"}, {"5.1":"5.10-Classroom B"}, {"5.11":"5.11-Classroom B"}, {"5.12":"5.12-Informal Classroom"}, {"5.134":"5.134-Classroom A 5.13 & 5.14"}, {"5.15":"5.15-MAC Lab"}, {"5.17":"5.17-Classroom VC"}, {"5.18":"5.18-Classroom A"}, {"5.19":"5.19-Classroom A"}, {"6.28":"6.28-Seminar/Tutorial"}, {"6.29":"6.29-Multipurpose - Teaching & Research"}, {"6.3":"6.30-Multipurpose - Teaching & Research"}, {"6.32":"6.32-Classroom B"}, {"6.33":"6.33-Classroom B"}, {"6.345":"6.345-Classroom A 6.34 & 6.35"}, {"6.36":"6.36-Computer Lab (Single Screen)"}, {"6.38":"6.38-Classroom B"}, {"6.39":"6.39-Classroom A"}, {"6.4":"6.40-Computer Lab Single"}, {"Consultation":"Consultation"}, {"Online":"Online"}]
 
 def scrape_timetable(output_path):
-    driver = None
     try:
-        print("Setting up Chrome options...")
-        options = Options()
-        options.add_argument('--headless')
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--window-size=1920,1080')
-        options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_experimental_option('useAutomationExtension', False)
+        print("Fetching timetable data...")
         
-        print("Initializing Chrome driver...")
-        service = Service()
-        driver = webdriver.Chrome(service=service, options=options)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5'
+        }
         
-        # Apply stealth settings
-        stealth(driver,
-            languages=["en-US", "en"],
-            vendor="Google Inc.",
-            platform="Win32",
-            webgl_vendor="Intel Inc.",
-            renderer="Intel Iris OpenGL Engine",
-            fix_hairline=True,
-        )
+        response = requests.get('https://my.uowdubai.ac.ae/timetable/viewer', headers=headers, timeout=30)
+        response.raise_for_status()
         
-        wait = WebDriverWait(driver, 30)
+        print("Parsing page content...")
+        soup = BeautifulSoup(response.text, 'html.parser')
+        scripts = soup.find_all('script')
         
-        print("Setting up page load timeout...")
-        driver.set_page_load_timeout(30)
-        
-        print("Navigating to timetable viewer...")
-        driver.get('https://my.uowdubai.ac.ae/timetable/viewer')
-        
-        # Wait for Cloudflare to clear
-        print("Waiting for page to load completely...")
-        time.sleep(10)
-        
-        print(f"Current URL: {driver.current_url}")
-        
-        # Print page source for debugging
-        print("Page source snippet:")
-        print(driver.page_source[:500])
-        
-        # First check if we're on the login page
-        if 'login.microsoftonline.com' in driver.current_url:
-            print("Detected Microsoft login page. Please log in manually first.")
-            raise ValueError("Authentication required. Please log in to UOW Dubai first.")
-        
-        print("Waiting for timetable data...")
-        try:
-            # Wait for the page to be fully loaded
-            wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-            
-            # Check for timetable data
-            wait.until(lambda d: d.execute_script(
-                "return typeof timetableData !== 'undefined' && timetableData !== null"
-            ))
-        except TimeoutException:
-            print("Timeout waiting for timetableData. Current page state:")
-            print(f"URL: {driver.current_url}")
-            print("Page source snippet:")
-            print(driver.page_source[:500])
-            raise
-        
-        print("Extracting timetable data...")
-        timetable_data = driver.execute_script("return timetableData")
+        timetable_data = None
+        for script in scripts:
+            if script.string and 'timetableData' in script.string:
+                match = re.search(r'timetableData\s*=\s*(\[.*?\]);', script.string, re.DOTALL)
+                if match:
+                    timetable_data = json.loads(match.group(1))
+                    break
         
         if not timetable_data:
-            print("No timetable data found. Page state:")
-            print(f"URL: {driver.current_url}")
-            print("Page source snippet:")
-            print(driver.page_source[:500])
-            raise ValueError("No timetable data found in the page")
+            print("No timetable data found in the page")
+            print("Page content snippet:")
+            print(response.text[:500])
+            return False
         
-        print(f"Found {len(timetable_data)} timetable entries")
+        print(f"Found {len(timetable_data)} raw entries")
         
-        # Headers for the CSV file
+        # CSV Headers
         headers = ["SubCode", "Class", "Day", "StartTime", "EndTime", "Room", "Teacher"]
         
-        # Write to CSV file
-        print(f"Writing data to {output_path}...")
-        with open(output_path, mode="w", newline="", encoding="utf-8") as csvfile:
+        # Transform and write the data
+        valid_entries = 0
+        with open(output_path, mode='w', newline='', encoding='utf-8') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=headers)
             writer.writeheader()
             
             for entry in timetable_data:
+                if not entry.get('subject_code'):
+                    continue
+                    
                 row = {
-                    "SubCode": entry.get("subject_code", "").replace(" ", ""),
-                    "Class": entry.get("type_with_section", "").strip(),
-                    "Day": entry.get("week_day", ""),
-                    "StartTime": entry.get("start_time", ""),
-                    "EndTime": entry.get("end_time", ""),
-                    "Room": entry.get("location", ""),
-                    "Teacher": entry.get("lecturer", ""),
+                    'SubCode': entry['subject_code'].replace(' ', ''),
+                    'Class': entry['type_with_section'].strip(),
+                    'Day': entry['week_day'],
+                    'StartTime': entry['start_time'],
+                    'EndTime': entry['end_time'],
+                    'Room': entry['location'],
+                    'Teacher': entry['lecturer']
                 }
-                writer.writerow(row)
+
+                # If a room number has a ; in it, split it into two different rows
+                # E.g. 6.345-Classroom A 6.34 & 6.35;6.40-Computer Lab Si --> 6.345-Classroom A 6.34 & 6.35, 6.40-Computer Lab Single
+                # Make sure to put both rows
+                if ';' in row['Room']:
+                    rooms = row['Room'].split(';')
+                    for room in rooms:
+                        row['Room'] = room
+                        # Since the full name will be cut off, use the first part of the room name and get the full name from the rooms list
+                        row['Room'] = next((r['name'] for r in rooms if r['id'] == room.split('-')[0]), None)
+                        writer.writerow(row)
+                else:
+                    writer.writerow(row)
+                valid_entries += 1
         
-        print("Successfully scraped timetable data")
+        print(f"Processed {valid_entries} valid entries")
+        print(f"Successfully saved data to {output_path}")
         return True
         
-    except WebDriverException as e:
-        print(f"WebDriver error: {str(e)}", file=sys.stderr)
-        print("WebDriver error details:", file=sys.stderr)
-        print(traceback.format_exc(), file=sys.stderr)
+    except requests.RequestException as e:
+        print(f"Request error: {str(e)}", file=sys.stderr)
         return False
     except Exception as e:
         print(f"Error: {str(e)}", file=sys.stderr)
-        print("Full traceback:", file=sys.stderr)
+        print("Full error details:", file=sys.stderr)
+        import traceback
         print(traceback.format_exc(), file=sys.stderr)
         return False
-    finally:
-        if driver:
-            try:
-                print("Closing Chrome driver...")
-                driver.quit()
-            except Exception as e:
-                print(f"Error closing driver: {str(e)}", file=sys.stderr)
 
 def main():
     parser = argparse.ArgumentParser(description='Scrape UOW Dubai timetable data')

@@ -69,8 +69,10 @@ const Graph = () => {
   if (!scheduleData.length) {
     return <div className="min-h-screen flex flex-col page-transition">
       <Header />
-      <main className="flex-grow w-full px-4 md:px-8 mx-auto pt-20">
-        <div className="text-white text-center">Loading schedule data...</div>
+      <main className="flex-grow w-full px-4 md:px-8 mx-auto pt-20 mt-12">
+        <div className="flex items-center justify-center">
+          <div className="animate-spin mt-12 rounded-full h-12 w-12 border-b-2 border-[#006D5B]"></div>
+        </div>
       </main>
       <Footer className="mt-auto" />
     </div>;
