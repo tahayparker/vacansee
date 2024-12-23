@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '@/lib/db';
+import prisma from '../../lib/db';
 import fs from 'fs/promises';
 
 interface RoomData {
