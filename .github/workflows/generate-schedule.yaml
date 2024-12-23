@@ -3,8 +3,8 @@ name: Generate Schedule JSON
 on:
   push:
     paths:
-      - 'public/classes.csv'  # Trigger the workflow when classes.csv is updated
-  
+      - "public/classes.csv" # Trigger the workflow when classes.csv is updated
+
   workflow_dispatch:
 
 jobs:
@@ -14,25 +14,26 @@ jobs:
     steps:
       # Step 1: Check out the repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses:
+          actions/checkout@v3
 
-      # Step 2: Set up Node.js
+      # Step 2: Read .env file to get DATABASE_URL
+      - name: Read .env file
+        run: echo "DATABASE_URL=$(cat .env | grep DATABASE_URL | cut -d '=' -f2)" >> $GITHUB_ENV
+
+      # Step 3: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # Match your project's Node.js version
+          node-version: 22 # Match your project's Node.js version
 
-      # Step 3: Install dependencies
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Install ts-node for TypeScript execution
+      # Step 5: Install ts-node for TypeScript execution
       - name: Install ts-node
         run: npm install -g ts-node
-
-      # Step 5: Read .env file to get DATABASE_URL
-      - name: Read .env file
-        run: echo "DATABASE_URL=$(cat .env | grep DATABASE_URL | cut -d '=' -f2)" >> $GITHUB_ENV
 
       # Step 6: Run the JSON generation script
       - name: Generate schedule JSON
