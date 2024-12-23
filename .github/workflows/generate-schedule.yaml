@@ -29,6 +29,10 @@ jobs:
       - name: Set up environment variables
         run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
 
+      # Get current working directory
+      - name: Get current working directory
+        run: pwd
+        
       # Step 5: Run the Python script
       - name: Generate schedule JSON
         run: python generate_schedule.py
