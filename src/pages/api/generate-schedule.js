@@ -49,6 +49,9 @@ async function checkRoomAvailability(room, day, startTime, endTime) {
                         { StartTime: { gte: endTime } }
                     ]
                 }
+            },
+            cacheStrategy: {
+                swr: 60 * 60 // 1 hour
             }
         });
         const isAvailable = result.length === 0;
