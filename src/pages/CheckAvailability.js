@@ -156,7 +156,7 @@ const CheckAvailability = () => {
                         setRoom(r);
                         setDropdownVisible(false);
                       }}
-                      className="px-6 py-3 cursor-pointer transition-all duration-200 hover:text-[#006D5B] border-l-2 border-transparent hover:border-[#006D5B]"
+                      className="px-6 py-3 cursor-pointer text-white transition-all duration-200 hover:text-[#006D5B] border-l-2 border-transparent hover:border-[#006D5B]"
                     >
                       {r}
                     </li>
