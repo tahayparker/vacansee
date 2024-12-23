@@ -11,8 +11,10 @@ const CurrentlyAvailable = () => {
     const fetchData = async () => {
       // Set loading to true before fetching
       setLoading(true);
-      // Simulate a delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Fetch data from the API
+      const response = await fetch('/api/rooms');
+      const data = await response.json();
+      console.log(data);
       // Set loading to false after fetching
       setLoading(false);
     };
