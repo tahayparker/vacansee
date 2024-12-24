@@ -16,10 +16,11 @@ const RoomList = () => {
 
     const response = await fetch(`/api/rooms?day=${encodeURIComponent(day)}&time=${encodeURIComponent(time)}`);
     const data = await response.json();
-    setRooms(data);
+    const filteredRooms = data.filter((room: string) => !room.includes('Consultation') && !room.includes('Online'));
+    setRooms(filteredRooms);
 
-    const longestRoomName = data.reduce((max: string, room: string) => (room.length > max.length ? room : max), '');
-    setMinWidth(longestRoomName.length * 6);
+    const longestRoomName = filteredRooms.reduce((max: string, room: string) => (room.length > max.length ? room : max), '');
+    setMinWidth(longestRoomName.length * 12 + 48);
   };
 
   useEffect(() => {
@@ -41,21 +42,23 @@ const RoomList = () => {
       <p className="text-lg mb-4 text-center animate-[fadeIn_0.5s_ease-out] text-white">
         As of {currentDay}, {currentTime}
       </p>
-      <div className="w-full max-w-6xl mx-auto px-4">
+      <div className="w-full max-w-6xl mx-auto px-2 sm:px-4">
         <ul
-          className="grid gap-4"
+          className="grid gap-4 mx-auto"
           style={{ 
-            gridTemplateColumns: `repeat(auto-fit, minmax(${Math.max(minWidth, 140)}px, 1fr))`,
+            gridTemplateColumns: `repeat(auto-fit, minmax(min(${Math.max(minWidth, 300)}px, 100%), 1fr))`,
+            maxWidth: '960px'
           }}
         >
           {rooms.map((room, index) => (
             <li
               key={index}
-              className="bg-[#00000000] text-white text-center rounded-lg shadow-lg p-3 border border-[#482f1f] hover-scale transition-all duration-300 list-animation flex items-center justify-center"
+              className="bg-[#00000000] text-white text-center rounded-lg shadow-lg p-3 border border-[#482f1f] hover-scale transition-all duration-300 list-animation flex items-center justify-center whitespace-nowrap overflow-hidden"
               style={{ 
                 animationDelay: `${index * 0.05}s`,
                 transform: 'translateY(0)',
-                opacity: 1
+                opacity: 1,
+                minWidth: 0 // Prevent flex item from overflowing
               }}
             >
               {room}
