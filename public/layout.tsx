@@ -1,1 +1,0 @@
-<meta name="apple-mobile-web-app-title" content="Vacan.see" />
