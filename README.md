@@ -15,11 +15,11 @@ A modern web application designed to help students find available rooms on campu
 ## Tech Stack 💻
 
 - **Frontend**: Next.js, TypeScript, TailwindCSS
-- **Backend**: Next.js API Routes, Prisma
+- **Backend**: Next.js API Routes, [Prisma](https://www.prisma.io/orm)
 - **Database**: PostgreSQL hosted on [Neon](https://neon.tech)
-- **Deployment**: Vercel
-- **Data Updates**: GitHub Actions
-- **Styling**: Tailwind CSS with custom animations
+- **Deployment**: [Vercel](https://vercel.com)
+- **Data Updates**: [GitHub Actions](https://github.com/actions)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with custom animations
 - **Badges**: [ForTheBadge](https://forthebadge.com)
 - **AI Assistance**: [Cursor AI](https://www.cursor.com/), [GitHub Copilot](https://copilot.github.com/), [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai)
 
