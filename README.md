@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# vacan.see 🎓
 
-## Getting Started
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-resentment.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/for-you.svg)](https://forthebadge.com)
 
-First, run the development server:
+A modern web application designed to help students find available rooms on campus. Built with Next.js, Prisma, and TypeScript.
 
+## Features 🚀
+
+- **Real-time Room Availability** - Check which rooms are currently available
+- **Room Search** - Search for specific rooms and their availability
+- **Visual Timetable** - View room schedules in an interactive graph
+- **Automatic Updates** - Timetable data is automatically updated daily
+- **Mobile Responsive** - Works seamlessly on all devices
+
+## Tech Stack 💻
+
+- **Frontend**: Next.js, TypeScript, TailwindCSS
+- **Backend**: Next.js API Routes, Prisma
+- **Database**: PostgreSQL hosted on [Neon](https://neon.tech)
+- **Deployment**: Vercel
+- **Data Updates**: GitHub Actions
+- **Styling**: Tailwind CSS with custom animations
+- **Badges**: [ForTheBadge](https://forthebadge.com)
+- **AI Assistance**: [Cursor AI](https://www.cursor.com/), [GitHub Copilot](https://copilot.github.com/), [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai)
+
+## Getting Started 🏁
+
+### Prerequisites
+
+- Node.js 16+ 
+- npm or yarn
+- PostgreSQL database
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/tahayparker/vacan.see.git
+cd vacansee
+```
+
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up environment variables
+```bash
+# Create a .env file with the following variables
+DATABASE_URL="postgresql://username:password@localhost:5432/vacansee"
+```
+
+4. Initialize the database
+```bash
+npx prisma db push
+```
+
+5. Run the development server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Automatic Updates ⚡
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The timetable data is automatically updated every day at 00:00 GST (04:00 UTC) using GitHub Actions. The workflow:
+1. Scrapes the latest timetable data
+2. Updates the database
+3. Generates a new schedule JSON
+4. Commits the changes
 
-## Learn More
+## Contributing 🤝
 
-To learn more about Next.js, take a look at the following resources:
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Inspiration ✨
 
-## Deploy on Vercel
+- Built for my friends so they can stop eating my head and finally use a website to search empty rooms
+- Inspired by the need for an easier way to find available rooms
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Acknowledgments 🙏
+- Thank you Mom Dad for not kicking me out of the house
+- Thank you Claude & OpenAI engineers for making a really good product
+- Thank you Cursor devs for making a really really amazing product, and for the free trial
+- Thank you UOWD for finally getting rid of the PDF timetable and switching to the [website](https://my.uowdubai.ac.ae/timetable/viewer) instead (please keep it open for non-authenticated users, otherwise this project will die </3)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Contact 📧
+
+Taha Parker - [@tahayparker](https://github.com/tahayparker)
+
+Project Link: [https://github.com/tahayparker/vacansee](https://github.com/tahayparker/vacan.see)
+
+
+[![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/powered-by-black-magic.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/it-works-dont-ask-me-how.svg)](https://forthebadge.com)
