@@ -13,6 +13,7 @@ const Header = ({ hideLogoOnHome }) => {
     { path: '/CheckAvailability', label: 'Check Availability' },
     { path: '/Graph', label: 'Graph' },
     { path: '/RoomDetails', label: 'Room Details' },
+    { path: '/CustomGraph', label: 'Custom Graph' }
   ];
 
   const toggleMenu = () => {
