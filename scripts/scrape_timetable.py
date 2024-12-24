@@ -13,38 +13,57 @@ rooms = [{"0.17":"0.17-Lecture Theatre"}, {"0.201":"0.201-Concrete / Geo Tech La
 def get_random_user_agent():
     user_agents = [
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0'
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0'
     ]
     return random.choice(user_agents)
 
-def fetch_with_retry(url, max_retries=5):
-    session = requests.Session()
-    
+def get_browser_headers():
+    user_agent = get_random_user_agent()
     headers = {
-        'User-Agent': get_random_user_agent(),
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
+        'User-Agent': user_agent,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
         'Accept-Encoding': 'gzip, deflate, br',
         'Connection': 'keep-alive',
         'Upgrade-Insecure-Requests': '1',
         'Sec-Fetch-Dest': 'document',
         'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-Site': 'same-origin',
         'Sec-Fetch-User': '?1',
         'DNT': '1',
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
+        'Sec-CH-UA': '" Not A;Brand";v="99", "Chromium";v="120", "Google Chrome";v="120"',
+        'Sec-CH-UA-Mobile': '?0',
+        'Sec-CH-UA-Platform': '"Windows"',
+        'Cache-Control': 'max-age=0',
+        'TE': 'trailers',
+        'Referer': 'https://my.uowdubai.ac.ae/',
+        'Origin': 'https://my.uowdubai.ac.ae'
     }
+    return headers
+
+def fetch_with_retry(url, max_retries=5):
+    session = requests.Session()
+    
+    # First, visit the homepage to get cookies
+    try:
+        home_url = 'https://my.uowdubai.ac.ae/'
+        session.get(home_url, headers=get_browser_headers(), timeout=30)
+        # Add a realistic delay like a human would
+        time.sleep(random.uniform(2, 4))
+    except:
+        pass
     
     for attempt in range(max_retries):
         try:
-            # Add random delay between attempts
             if attempt > 0:
-                time.sleep(random.uniform(2, 5))
+                # Add random delay between attempts that looks more human-like
+                time.sleep(random.uniform(3, 7))
             
             print(f"Attempt {attempt + 1} of {max_retries}...")
+            
+            headers = get_browser_headers()
             response = session.get(url, headers=headers, timeout=30)
             
             # Print response details for debugging
@@ -59,9 +78,10 @@ def fetch_with_retry(url, max_retries=5):
             if attempt == max_retries - 1:
                 raise
             
-            # If we get a 403, try with a different user agent
+            # If we get a 403, wait longer and try with completely new session
             if isinstance(e, requests.exceptions.HTTPError) and e.response.status_code == 403:
-                headers['User-Agent'] = get_random_user_agent()
+                session = requests.Session()
+                time.sleep(random.uniform(5, 10))
 
 def scrape_timetable(output_path):
     try:
