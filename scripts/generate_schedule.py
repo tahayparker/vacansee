@@ -20,6 +20,8 @@ async def fetch_rooms(connection):
     query = """
         SELECT DISTINCT "Room"
         FROM "classes"
+        WHERE "Room" NOT LIKE '%Consultation%'
+        AND "Room" NOT LIKE '%Online%'
         ORDER BY "Room" ASC;
     """
     rows = await connection.fetch(query)
