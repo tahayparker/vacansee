@@ -5,22 +5,59 @@ import Footer from '../components/Footer';
 
 const CurrentlyAvailable = () => {
   const [loading, setLoading] = useState(true);
+  const [rooms, setRooms] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Simulate API call
     const fetchData = async () => {
-      // Set loading to true before fetching
-      setLoading(true);
-      // Fetch data from the API
-      const response = await fetch('/api/rooms');
-      const data = await response.json();
-      console.log(data);
-      // Set loading to false after fetching
-      setLoading(false);
+      try {
+        console.log('Starting to fetch rooms data...');
+        setLoading(true);
+        setError(null);
+
+        console.log('Making API request to /api/rooms...');
+        const response = await fetch('/api/rooms', {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+        });
+        
+        console.log('API Response status:', response.status);
+        console.log('API Response headers:', response.headers);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        console.log('Parsing response as JSON...');
+        const data = await response.json();
+        console.log('Received data:', data);
+
+        setRooms(data);
+        console.log('Successfully set rooms data');
+      } catch (err) {
+        console.error('Detailed error information:', {
+          message: err.message,
+          stack: err.stack,
+          response: err.response,
+        });
+        setError(`Failed to load available rooms: ${err.message}`);
+      } finally {
+        console.log('Finishing fetch operation, setting loading to false');
+        setLoading(false);
+      }
     };
 
     fetchData();
+
+    // Cleanup function to handle component unmounting
+    return () => {
+      console.log('Component unmounting, cleaning up...');
+    };
   }, []);
+
+  console.log('Render state:', { loading, error, roomsCount: rooms.length });
 
   return (
     <div className="min-h-screen flex flex-col page-transition">
@@ -31,8 +68,18 @@ const CurrentlyAvailable = () => {
             <div className="flex items-center justify-center">
               <div className="animate-spin mt-12 rounded-full h-12 w-12 border-b-2 border-[#006D5B]"></div>
             </div>
+          ) : error ? (
+            <div className="text-red-600 mt-12 text-center p-4 bg-red-50 rounded-lg">
+              <p>{error}</p>
+              <button 
+                onClick={() => window.location.reload()} 
+                className="mt-4 px-4 py-2 bg-red-100 hover:bg-red-200 rounded-md text-red-700"
+              >
+                Try Again
+              </button>
+            </div>
           ) : (
-            <RoomList />
+            <RoomList rooms={rooms} />
           )}
         </div>
       </main>
