@@ -20,7 +20,7 @@ const RoomList = () => {
     setRooms(filteredRooms);
 
     const longestRoomName = filteredRooms.reduce((max: string, room: string) => (room.length > max.length ? room : max), '');
-    setMinWidth(longestRoomName.length * 12 + 48);
+    setMinWidth(longestRoomName.length * 10);
   };
 
   useEffect(() => {
