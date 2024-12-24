@@ -9,10 +9,10 @@ const Header = ({ hideLogoOnHome }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const navLinks = [
-    { path: '/', label: 'Home' },
     { path: '/CurrentlyAvailable', label: 'Currently Available' },
     { path: '/CheckAvailability', label: 'Check Availability' },
     { path: '/Graph', label: 'Graph' },
+    { path: '/RoomDetails', label: 'Room Details' },
   ];
 
   const toggleMenu = () => {
