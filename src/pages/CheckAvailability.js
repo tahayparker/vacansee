@@ -267,17 +267,33 @@ const CheckAvailability = () => {
                     <p className="text-green-200 ml-2">Room is available</p>
                   </>
                 ) : (
-                  <>
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M7.5 0C3.36 0 0 3.36 0 7.5C0 11.64 3.36 15 7.5 15C11.64 15 15 11.64 15 7.5C15 3.36 11.64 0 7.5 0ZM11.25 10.185L10.185 11.25L7.5 8.565L4.815 11.25L3.75 10.185L6.435 7.5L3.75 4.815L4.815 3.75L7.5 6.435L10.185 3.75L11.25 4.815L8.565 7.5L11.25 10.185Z"
-                        fill="#EF4444"
-                      />
-                    </svg>
-                    <p className="text-red-200 ml-2">Room is not available</p>
-                  </>
+                  <div className="flex flex-col">
+                    <div className="flex items-center">
+                      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M7.5 0C3.36 0 0 3.36 0 7.5C0 11.64 3.36 15 7.5 15C11.64 15 15 11.64 15 7.5C15 3.36 11.64 0 7.5 0ZM11.25 10.185L10.185 11.25L7.5 8.565L4.815 11.25L3.75 10.185L6.435 7.5L3.75 4.815L4.815 3.75L7.5 6.435L10.185 3.75L11.25 4.815L8.565 7.5L11.25 10.185Z"
+                          fill="#EF4444"
+                        />
+                      </svg>
+                      <p className="text-red-200 font-medium ml-2">Room is not available</p>
+                    </div>
+                    {availability.classes && availability.classes.length > 0 ? (
+                      <ul className="mt-3 space-y-1.5">
+                        {availability.classes.map((classInfo, index) => (
+                          <li key={index} className="text-red-200/80 text-sm pl-3 border-l border-red-800">
+                            <div>{classInfo.subject} | {classInfo.professor}</div>
+                            <div className="text-red-200/60 text-xs mt-0.5">
+                              {classInfo.startTime} - {classInfo.endTime}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-red-200/80 text-sm mt-2">No class details available</p>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
