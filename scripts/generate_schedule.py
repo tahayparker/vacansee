@@ -80,7 +80,7 @@ async def generate_schedule_data():
 async def save_schedule_data():
     print("Saving schedule data to JSON file...")
     schedule_data = await generate_schedule_data()
-    output_path = Path("../scheduleData.json")
+    output_path = Path("./public/scheduleData.json")
     with output_path.open("w") as file:
         json.dump(schedule_data, file, indent=2)
     print(f"Schedule data saved to {output_path.resolve()}")
