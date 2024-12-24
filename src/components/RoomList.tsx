@@ -6,23 +6,31 @@ const RoomList = () => {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDay, setCurrentDay] = useState('');
 
-  useEffect(() => {
-    const fetchRooms = async () => {
-      const response = await fetch('/api/rooms');
-      const data = await response.json();
-      setRooms(data);
-
-      const longestRoomName = data.reduce((max: string, room: string) => (room.length > max.length ? room : max), '');
-      setMinWidth(longestRoomName.length * 6);
-    };
-
-    fetchRooms();
-  }, []);
-
-  useEffect(() => {
+  const fetchRooms = async () => {
     const now = new Date();
+    const day = now.toLocaleString('en-US', { weekday: 'long' });
+    const time = now.toLocaleTimeString('en-US', { hour12: false });
+    
     setCurrentTime(now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
     setCurrentDay(now.toLocaleDateString('en-GB', { weekday: 'long' }));
+
+    const response = await fetch(`/api/rooms?day=${encodeURIComponent(day)}&time=${encodeURIComponent(time)}`);
+    const data = await response.json();
+    setRooms(data);
+
+    const longestRoomName = data.reduce((max: string, room: string) => (room.length > max.length ? room : max), '');
+    setMinWidth(longestRoomName.length * 6);
+  };
+
+  useEffect(() => {
+    fetchRooms(); // Initial fetch
+
+    // Update every minute
+    const interval = setInterval(() => {
+      fetchRooms();
+    }, 60000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
