@@ -15,8 +15,13 @@ const CurrentlyAvailable = () => {
         setLoading(true);
         setError(null);
 
-        console.log('Making API request to /api/rooms...');
-        const response = await fetch('/api/rooms', {
+        // Get current day and time
+        const now = new Date();
+        const day = now.toLocaleString('en-US', { weekday: 'long' });
+        const time = now.toLocaleTimeString('en-US', { hour12: false });
+
+        console.log('Making API request to /api/rooms with params:', { day, time });
+        const response = await fetch(`/api/rooms?day=${encodeURIComponent(day)}&time=${encodeURIComponent(time)}`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
@@ -51,9 +56,13 @@ const CurrentlyAvailable = () => {
 
     fetchData();
 
+    // Set up an interval to refresh data every minute
+    const interval = setInterval(fetchData, 60000);
+
     // Cleanup function to handle component unmounting
     return () => {
       console.log('Component unmounting, cleaning up...');
+      clearInterval(interval);
     };
   }, []);
 
