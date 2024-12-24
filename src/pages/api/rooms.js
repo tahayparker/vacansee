@@ -2,25 +2,34 @@ import prisma from '../../lib/db';
 
 const getFreeRooms = async (req, res) => {
   try {
-    // Get current day and time
-    const currentDay = new Date().toLocaleString('en-US', { weekday: 'long' });
-    const currentTime = new Date().toLocaleTimeString('en-US', { hour12: false }); // HH:mm:ss format
+    const { day, time } = req.query;
+    
+    if (!day || !time) {
+      return res.status(400).json({ error: 'Day and time parameters are required' });
+    }
 
-    // Fetch rooms that are free
+    console.log('Client day:', day);
+    console.log('Client time:', time);
+    
+    // First, get currently occupied rooms
+    const occupiedRooms = await prisma.class.findMany({
+      where: {
+        Day: day,
+        StartTime: { lte: time },
+        EndTime: { gte: time },
+      },
+      select: {
+        Room: true,
+      },
+    }, { cacheStrategy: { swr: 60 } });
+
+    const occupiedRoomsList = occupiedRooms.map(c => c.Room);
+
+    // Then, fetch rooms that are free
     const freeRooms = await prisma.class.findMany({
       where: {
         Room: {
-          notIn: await prisma.class.findMany({
-              where: {
-                Day: currentDay,
-                StartTime: { lte: currentTime },
-                EndTime: { gte: currentTime },
-              },
-              select: {
-                Room: true,
-              },
-            })
-            .then(classes => classes.map(c => c.Room)), // Extract Room values
+          notIn: occupiedRoomsList,
         },
       },
       select: {
@@ -30,7 +39,7 @@ const getFreeRooms = async (req, res) => {
       orderBy: {
         Room: 'asc', // Sort Rooms in ascending order
       },
-    });
+    }, { cacheStrategy: { swr: 60 } });
 
     // Ensure a valid response structure
     res.status(200).json(freeRooms.length ? freeRooms.map(room => room.Room) : []);
