@@ -349,9 +349,9 @@ ECON100,Tutorial,Wednesday,12:30,14:30,5.11-Classroom B,Raghida Araji
 ECON100,Tutorial,Wednesday,15:30,17:30,6.39-Classroom A,Raghida Araji
 ECON100,Tutorial,Tuesday,10:30,12:30,4.45-Classroom B,ECON_Adjunct2
 ECON100,Tutorial,Wednesday,08:30,10:30,3.45-Classroom B,ECON_Adjunct3
-ECON100,Tutorial,Tuesday,14:30,16:30,4.45-Classroom B,ECON_Adjunct3
+ECON100,Tutorial,Tuesday,14:30,16:30,4.45-Classroom B,Raghida Araji
 ECON100,Tutorial,Thursday,08:30,10:30,4.52-Classroom A,ECON_Adjunct3
-ECON100,Tutorial,Tuesday,12:30,14:30,3.45-Classroom B,ECON_Adjunct3
+ECON100,Tutorial,Tuesday,12:30,14:30,3.45-Classroom B,Raghida Araji
 ECON251,Lecture,Monday,11:30,13:30,6.345-Classroom A 6.34 & 6.35,Jaeyoung Cho
 ECON251,Tutorial,Monday,14:30,16:30,4.52-Classroom A,Jaeyoung Cho
 ECON353,Lecture,Thursday,10:30,12:30,4.44-Classroom B,Prithvi Bhattacharya
@@ -396,7 +396,9 @@ ECTE471,Computer Lab,Wednesday,16:30,18:30,2.51-Project Lab,Kiyan Afsari
 ECTE471,Computer Lab,Wednesday,14:30,16:30,2.51-Project Lab,Kiyan Afsari
 ECTE471,Workshop,Monday,12:30,16:30,5.19-Classroom A,Abdsamad Benkrid
 ECTE474,Computer Lab,Friday,09:30,12:30,3.52-Computer Lab (Network),Kiyan Afsari
+ECTE474,Computer Lab,Friday,14:30,17:30,6.36-Computer Lab (Single Screen),Kiyan Afsari
 ECTE474,Lecture,Wednesday,08:30,10:30,4.52-Classroom A,Obada Al Khatib
+ECTE474,Tutorial,Thursday,08:30,10:30,5.10-Classroom B,Abeer El Khouly
 ECTE474,Tutorial,Thursday,10:30,12:30,4.52-Classroom A,Abeer El Khouly
 ECTE498,Computer Lab,Monday,16:30,17:30,3.48-Classroom B,Haile Rajamani;Karol Sikora
 EDGP920,Consultation,Monday,21:30,22:00,Consultation,Afnan Boutrid
@@ -563,7 +565,7 @@ MARK217,Tutorial,Tuesday,15:30,17:30,6.29-Multipurpose - Teaching & Research,Pra
 MARK217,Tutorial,Wednesday,12:30,14:30,4.52-Classroom A,Vidhi Sharma
 MARK217,Tutorial,Tuesday,13:30,15:30,6.29-Multipurpose - Teaching & Research,Vidhi Sharma
 MARK217,Tutorial,Wednesday,10:30,12:30,4.52-Classroom A,Vidhi Sharma
-MARK221,Lecture,Tuesday,08:30,10:30,3.46-Classroom A,Dina Elnidani
+MARK221,Lecture,Tuesday,08:30,10:30,6.32-Classroom B,Dina Elnidani
 MARK221,Tutorial,Thursday,12:30,14:30,5.10-Classroom B,Odelia Mathews
 MARK221,Tutorial,Thursday,08:30,10:30,3.48-Classroom B,Dina Elnidani
 MARK221,Tutorial,Friday,10:30,12:30,4.50-Classroom B,Odelia Mathews
@@ -649,10 +651,14 @@ MBA908,Lecture A,Saturday,09:00,17:00,4.45-Classroom B,Arijit Sikdar
 MBA908,Lecture B,Sunday,09:00,17:00,4.45-Classroom B,Arijit Sikdar
 MBA909,Lecture A,Saturday,09:00,17:00,4.48-Classroom B,Mohan Guruswamy
 MBA909,Lecture B,Sunday,09:00,17:00,4.48-Classroom B,Mohan Guruswamy
-MBAS902,Lecture A,Saturday,09:00,16:00,6.345-Classroom A 6.34 & 6.35;6.40-Computer Lab Si,Ziang Wang
-MBAS902,Lecture B,Sunday,09:00,16:00,6.345-Classroom A 6.34 & 6.35;6.40-Computer Lab Si,Ziang Wang
-MBAS904,Lecture A,Saturday,09:00,16:00,6.345-Classroom A 6.34 & 6.35;6.40-Computer Lab Si,Yiyang Bian
-MBAS904,Lecture B,Sunday,09:00,16:00,6.345-Classroom A 6.34 & 6.35;6.40-Computer Lab Si,Yiyang Bian
+MBAS902,Lecture A,Saturday,09:00,16:00,6.345-Classroom A 6.34 & 6.35,Ziang Wang
+MBAS902,Lecture A,Saturday,09:00,16:00,6.40-Computer Lab Single,Ziang Wang
+MBAS902,Lecture B,Sunday,09:00,16:00,6.345-Classroom A 6.34 & 6.35,Ziang Wang
+MBAS902,Lecture B,Sunday,09:00,16:00,6.40-Computer Lab Single,Ziang Wang
+MBAS904,Lecture A,Saturday,09:00,16:00,6.345-Classroom A 6.34 & 6.35,Yiyang Bian
+MBAS904,Lecture A,Saturday,09:00,16:00,6.40-Computer Lab Single,Yiyang Bian
+MBAS904,Lecture B,Sunday,09:00,16:00,6.345-Classroom A 6.34 & 6.35,Yiyang Bian
+MBAS904,Lecture B,Sunday,09:00,16:00,6.40-Computer Lab Single,Yiyang Bian
 MDT902,Lecture A,Saturday,10:00,16:00,3.42-Classroom B,Obada Al Khatib
 MDT902,Lecture B,Sunday,10:00,16:00,3.42-Classroom B,Obada Al Khatib
 MDT903,Lecture A,Saturday,10:00,16:00,3.44-Classroom B,Farhad Oroumchian
@@ -663,14 +669,14 @@ MDT999,Lecture A,Saturday,10:00,16:00,4.44-Classroom B,Mai El Barachi
 MDT999,Lecture A,Saturday,10:00,16:00,4.48-Classroom B,George Tsaramirsis
 MDT999,Lecture B,Sunday,10:00,16:00,4.44-Classroom B,Mai El Barachi
 MDT999,Lecture B,Sunday,10:00,16:00,4.48-Classroom B,George Tsaramirsis
-MECH203,Computer Lab,Monday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
-MECH203,Computer Lab,Monday,10:30,12:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
-MECH203,Computer Lab,Tuesday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
-MECH203,Computer Lab,Tuesday,10:30,12:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
-MECH203,Computer Lab,Wednesday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
-MECH203,Computer Lab,Thursday,10:30,12:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
-MECH203,Workshop,Monday,08:30,10:30,6.40-Computer Lab Single,Abdulqader Hasan;Ahmed Mohamed
-MECH203,Workshop,Monday,10:30,12:30,6.40-Computer Lab Single,Abdulqader Hasan;Ahmed Mohamed
+MECH203,Computer Lab,Monday,08:30,10:30,6.40-Computer Lab Single,Abdulqader Hasan;Ahmed Mohamed
+MECH203,Computer Lab,Monday,10:30,12:30,6.40-Computer Lab Single,Abdulqader Hasan;Ahmed Mohamed
+MECH203,Workshop,Monday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
+MECH203,Workshop,Monday,10:30,12:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
+MECH203,Workshop,Tuesday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
+MECH203,Workshop,Tuesday,10:30,12:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
+MECH203,Workshop,Wednesday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
+MECH203,Workshop,Thursday,10:30,12:30,1.49-Manufacturing & Workshop Lab,Abdulqader Hasan;Ahmed Mohamed
 MECH226,Computer Lab,Friday,08:30,10:30,1.48-Thermal Lab,Ahmed Mohamed
 MECH226,Computer Lab,Friday,10:30,12:30,1.48-Thermal Lab,Ahmed Mohamed
 MECH226,Lecture,Monday,16:30,18:30,4.45-Classroom B,Umar Asghar
