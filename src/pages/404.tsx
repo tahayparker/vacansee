@@ -48,7 +48,7 @@ export default function Custom404() {
             Looks like this room vacan.hid!🎩✨
           </p>
           <p className="text-md mb-8 text-center animate-[fadeIn_0.5s_ease-out_0.2s] text-gray-300">
-            Maybe it's on a coffee break, or perhaps it's playing hide and seek? 🤔☕
+            Maybe it&apos;s on a coffee break, or perhaps it&apos;s playing hide and seek? 🤔☕
           </p>
           <div className="w-full max-w-6xl mx-auto px-4">
             <div className="flex justify-center">
@@ -63,7 +63,7 @@ export default function Custom404() {
                   background: 'rgba(0, 0, 0, 0.3)'
                 }}
               >
-                Let's Find a Room That Exists! 🚀
+                Let&apos;s Find a Room That Exists! 🚀
               </Link>
             </div>
           </div>
