@@ -56,13 +56,9 @@ const CurrentlyAvailable = () => {
 
     fetchData();
 
-    // Set up an interval to refresh data every minute
-    const interval = setInterval(fetchData, 60000);
-
     // Cleanup function to handle component unmounting
     return () => {
       console.log('Component unmounting, cleaning up...');
-      clearInterval(interval);
     };
   }, []);
 
