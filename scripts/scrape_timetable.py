@@ -1,6 +1,6 @@
 import argparse
 import json
-import requests
+import cloudscraper
 from bs4 import BeautifulSoup
 import re
 import sys
@@ -8,80 +8,51 @@ import csv
 import time
 import random
 
-rooms = [{"0.17":"0.17-Lecture Theatre"}, {"0.201":"0.201-Concrete / Geo Tech Lab"}, {"1.38":"1.38-Circuits Lab"}, {"1.48":"1.48-Thermal Lab"}, {"1.49":"1.49-Manufacturing & Workshop Lab"}, {"1.52":"1.52-Computer Lab Single"}, {"1.53":"1.53-Chemistry & Materials Science Lab"}, {"2.5":"2.50-Computer Lab Single"}, {"2.51":"2.51-Project Lab"}, {"3.42":"3.42-Classroom B"}, {"3.44":"3.44-Classroom B"}, {"3.45":"3.45-Classroom B"}, {"3.46":"3.46-Classroom A"}, {"3.47":"3.47-Game Dev Lab Dual Screens"}, {"3.48":"3.48-Classroom B"}, {"3.52":"3.52-Computer Lab (Network)"}, {"3.53":"3.53-Physics/Robotics Lab"}, {"4.42":"4.42-Computer Lab (Single Screen)"}, {"4.44":"4.44-Classroom B"}, {"4.45":"4.45-Classroom B"}, {"4.467":"4.467-Classroom A 4.46 & 4.47"}, {"4.48":"4.48-Classroom B"}, {"4.5":"4.50-Classroom B"}, {"4.51":"4.51-Tutorial Room"}, {"4.52":"4.52-Classroom A"}, {"4.53":"4.53-Seminar/Tutorial"}, {"5.08":"5.08-Seminar / Tutorial"}, {"5.1":"5.10-Classroom B"}, {"5.11":"5.11-Classroom B"}, {"5.12":"5.12-Informal Classroom"}, {"5.134":"5.134-Classroom A 5.13 & 5.14"}, {"5.15":"5.15-MAC Lab"}, {"5.17":"5.17-Classroom VC"}, {"5.18":"5.18-Classroom A"}, {"5.19":"5.19-Classroom A"}, {"6.28":"6.28-Seminar/Tutorial"}, {"6.29":"6.29-Multipurpose - Teaching & Research"}, {"6.3":"6.30-Multipurpose - Teaching & Research"}, {"6.32":"6.32-Classroom B"}, {"6.33":"6.33-Classroom B"}, {"6.345":"6.345-Classroom A 6.34 & 6.35"}, {"6.36":"6.36-Computer Lab (Single Screen)"}, {"6.38":"6.38-Classroom B"}, {"6.39":"6.39-Classroom A"}, {"6.4":"6.40-Computer Lab Single"}, {"Consultation":"Consultation"}, {"Online":"Online"}]
-
-def get_random_user_agent():
-    user_agents = [
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0',
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15',
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0'
-    ]
-    return random.choice(user_agents)
-
-def get_browser_headers():
-    user_agent = get_random_user_agent()
-    headers = {
-        'User-Agent': user_agent,
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Connection': 'keep-alive',
-        'Upgrade-Insecure-Requests': '1',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'same-origin',
-        'Sec-Fetch-User': '?1',
-        'DNT': '1',
-        'Sec-CH-UA': '" Not A;Brand";v="99", "Chromium";v="120", "Google Chrome";v="120"',
-        'Sec-CH-UA-Mobile': '?0',
-        'Sec-CH-UA-Platform': '"Windows"',
-        'Cache-Control': 'max-age=0',
-        'TE': 'trailers',
-        'Referer': 'https://my.uowdubai.ac.ae/',
-        'Origin': 'https://my.uowdubai.ac.ae'
-    }
-    return headers
+# Convert rooms list to a more usable dictionary format
+ROOMS = {}
+for room_dict in [{"0.17":"0.17-Lecture Theatre"}, {"0.201":"0.201-Concrete / Geo Tech Lab"}, {"1.38":"1.38-Circuits Lab"}, {"1.48":"1.48-Thermal Lab"}, {"1.49":"1.49-Manufacturing & Workshop Lab"}, {"1.52":"1.52-Computer Lab Single"}, {"1.53":"1.53-Chemistry & Materials Science Lab"}, {"2.50":"2.50-Computer Lab Single"}, {"2.51":"2.51-Project Lab"}, {"3.42":"3.42-Classroom B"}, {"3.44":"3.44-Classroom B"}, {"3.45":"3.45-Classroom B"}, {"3.46":"3.46-Classroom A"}, {"3.47":"3.47-Game Dev Lab Dual Screens"}, {"3.48":"3.48-Classroom B"}, {"3.52":"3.52-Computer Lab (Network)"}, {"3.53":"3.53-Physics/Robotics Lab"}, {"4.42":"4.42-Computer Lab (Single Screen)"}, {"4.44":"4.44-Classroom B"}, {"4.45":"4.45-Classroom B"}, {"4.467":"4.467-Classroom A 4.46 & 4.47"}, {"4.48":"4.48-Classroom B"}, {"4.50":"4.50-Classroom B"}, {"4.51":"4.51-Tutorial Room"}, {"4.52":"4.52-Classroom A"}, {"4.53":"4.53-Seminar/Tutorial"}, {"5.08":"5.08-Seminar / Tutorial"}, {"5.10":"5.10-Classroom B"}, {"5.11":"5.11-Classroom B"}, {"5.12":"5.12-Informal Classroom"}, {"5.134":"5.134-Classroom A 5.13 & 5.14"}, {"5.15":"5.15-MAC Lab"}, {"5.17":"5.17-Classroom VC"}, {"5.18":"5.18-Classroom A"}, {"5.19":"5.19-Classroom A"}, {"6.28":"6.28-Seminar/Tutorial"}, {"6.29":"6.29-Multipurpose - Teaching & Research"}, {"6.30":"6.30-Multipurpose - Teaching & Research"}, {"6.32":"6.32-Classroom B"}, {"6.33":"6.33-Classroom B"}, {"6.345":"6.345-Classroom A 6.34 & 6.35"}, {"6.36":"6.36-Computer Lab (Single Screen)"}, {"6.38":"6.38-Classroom B"}, {"6.39":"6.39-Classroom A"}, {"6.40":"6.40-Computer Lab Single"}, {"Consultation":"Consultation"}, {"Online":"Online"}]:
+    for key, value in room_dict.items():
+        ROOMS[key] = value
 
 def fetch_with_retry(url, max_retries=5):
-    session = requests.Session()
-    
-    # First, visit the homepage to get cookies
-    try:
-        home_url = 'https://my.uowdubai.ac.ae/'
-        session.get(home_url, headers=get_browser_headers(), timeout=30)
-        # Add a realistic delay like a human would
-        time.sleep(random.uniform(2, 4))
-    except:
-        pass
+    # Create a cloudscraper session
+    scraper = cloudscraper.create_scraper(
+        browser={
+            'browser': 'chrome',
+            'platform': 'windows',
+            'mobile': False
+        },
+        delay=10
+    )
     
     for attempt in range(max_retries):
         try:
             if attempt > 0:
-                # Add random delay between attempts that looks more human-like
                 time.sleep(random.uniform(3, 7))
             
             print(f"Attempt {attempt + 1} of {max_retries}...")
             
-            headers = get_browser_headers()
-            response = session.get(url, headers=headers, timeout=30)
+            response = scraper.get(url, timeout=30)
             
-            # Print response details for debugging
             print(f"Status Code: {response.status_code}")
             print(f"Response Headers: {dict(response.headers)}")
             
             response.raise_for_status()
             return response
             
-        except requests.exceptions.RequestException as e:
+        except Exception as e:
             print(f"Attempt {attempt + 1} failed: {str(e)}")
             if attempt == max_retries - 1:
                 raise
             
-            # If we get a 403, wait longer and try with completely new session
-            if isinstance(e, requests.exceptions.HTTPError) and e.response.status_code == 403:
-                session = requests.Session()
-                time.sleep(random.uniform(5, 10))
+            scraper = cloudscraper.create_scraper(
+                browser={
+                    'browser': 'chrome',
+                    'platform': 'windows',
+                    'mobile': False
+                }
+            )
+            time.sleep(random.uniform(5, 10))
 
 def scrape_timetable(output_path):
     try:
@@ -140,11 +111,15 @@ def scrape_timetable(output_path):
                 if ';' in row['Room']:
                     rooms = row['Room'].split(';')
                     for room in rooms:
-                        row['Room'] = room
-                        # Since the full name will be cut off, use the first part of the room name and get the full name from the rooms list
-                        row['Room'] = next((r['name'] for r in rooms if r['id'] == room.split('-')[0]), None)
-                        writer.writerow(row)
+                        room = room.strip()
+                        new_row = row.copy()
+                        # Get the room code (before the dash if it exists)
+                        room_code = room.split('-')[0].strip()
+                        new_row['Room'] = ROOMS.get(room_code, room)
+                        writer.writerow(new_row)
                 else:
+                    room_code = row['Room'].split('-')[0].strip()
+                    row['Room'] = ROOMS.get(room_code, row['Room'])
                     writer.writerow(row)
                 valid_entries += 1
         
@@ -152,9 +127,6 @@ def scrape_timetable(output_path):
         print(f"Successfully saved data to {output_path}")
         return True
         
-    except requests.RequestException as e:
-        print(f"Request error: {str(e)}", file=sys.stderr)
-        return False
     except Exception as e:
         print(f"Error: {str(e)}", file=sys.stderr)
         print("Full error details:", file=sys.stderr)
