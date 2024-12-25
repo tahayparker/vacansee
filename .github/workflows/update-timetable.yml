@@ -59,12 +59,20 @@ jobs:
         if: steps.check_changes.outputs.csv_changed == 'true'
         run: curl -X POST https://vacansee.vercel.app/api/initdb
 
-      - name: Generate schedule JSON
-        if: steps.check_changes.outputs.csv_changed == 'true'
-        run: python scripts/generate_schedule.py
+      - name: Check for JSON file and generate if needed
+        id: check_json
+        run: |
+          if [ ! -f public/scheduleData.json ] || [ "${{ steps.check_changes.outputs.csv_changed }}" == "true" ]; then
+            echo "JSON file does not exist or CSV changed, will generate it"
+            echo "should_generate=true" >> $GITHUB_OUTPUT
+            python scripts/generate_schedule.py
+          else
+            echo "JSON file exists and no CSV changes"
+            echo "should_generate=false" >> $GITHUB_OUTPUT
+          fi
         
       - name: Commit and push JSON changes
-        if: steps.check_changes.outputs.csv_changed == 'true'
+        if: steps.check_json.outputs.should_generate == 'true'
         run: |
           git config user.name "Taha Parker via GitHub Actions"
           git config user.email "98612931+tahayparker@users.noreply.github.com"
