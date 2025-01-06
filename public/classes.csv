@@ -27,9 +27,9 @@ ARA101,Tutorial A,Monday,11:30,13:30,5.11-Classroom B,Katia Freywat
 ARA101,Tutorial B,Wednesday,08:30,10:30,5.10-Classroom B,Nancy El Sobkey
 ARA101,Tutorial B,Thursday,08:30,10:30,5.18-Classroom A,Katia Freywat
 ARA101,Tutorial B,Wednesday,10:30,12:30,3.48-Classroom B,Nancy El Sobkey
-ARA101,Tutorial B,Thursday,12:30,14:30,5.18-Classroom A,Katia Freywat
+ARA101,Tutorial B,Thursday,12:30,14:30,4.50-Classroom B,Katia Freywat
 ARA101,Tutorial B,Tuesday,08:30,10:30,3.46-Classroom A,Nancy El Sobkey
-ARA101,Tutorial B,Thursday,14:30,16:30,6.38-Classroom B,Katia Freywat
+ARA101,Tutorial B,Thursday,14:30,16:30,4.50-Classroom B,Katia Freywat
 ARTS317,Lecture,Monday,10:30,12:30,5.134-Classroom A 5.13 & 5.14,Feras Hamza
 ARTS317,Tutorial,Thursday,10:30,12:30,5.10-Classroom B,Dana Charkaoui
 ARTS317,Tutorial,Thursday,12:30,14:30,3.46-Classroom A,Dana Charkaoui
@@ -135,7 +135,7 @@ CONV000,Tutorial,Wednesday,13:30,15:30,4.53-Seminar/Tutorial,Alison Webster;Sabi
 CSCI203,Computer Lab,Tuesday,14:30,16:30,2.50-Computer Lab Single,Priya Aswani
 CSCI203,Computer Lab,Monday,11:30,13:30,6.36-Computer Lab (Single Screen),Priya Aswani
 CSCI203,Computer Lab,Wednesday,10:30,12:30,6.36-Computer Lab (Single Screen),Priya Aswani
-CSCI203,Computer Lab,Monday,14:30,16:30,1.52-Computer Lab Single,Abdellatif Tchantchane
+CSCI203,Computer Lab,Monday,14:30,16:30,3.52-Computer Lab (Network),Halim Khelalfa
 CSCI203,Computer Lab,Thursday,10:30,12:30,3.52-Computer Lab (Network),Priya Aswani
 CSCI203,Computer Lab,Wednesday,12:30,14:30,6.36-Computer Lab (Single Screen),Priya Aswani
 CSCI203,Computer Lab,Wednesday,08:30,10:30,1.52-Computer Lab Single,Sara Majeed
@@ -146,12 +146,10 @@ CSCI203,Computer Lab,Tuesday,12:30,14:30,3.47-Game Dev Lab Dual Screens,Sara Maj
 CSCI203,Computer Lab,Thursday,14:30,16:30,6.40-Computer Lab Single,Halim Khelalfa
 CSCI203,Lecture A,Monday,09:30,11:30,6.345-Classroom A 6.34 & 6.35,Abdellatif Tchantchane
 CSCI203,Lecture A,Tuesday,12:30,14:30,4.44-Classroom B,Abdellatif Tchantchane
-CSCI203,Lecture A,Wednesday,16:30,18:30,6.345-Classroom A 6.34 & 6.35,Halim Khelalfa
 CSCI203,Lecture A,Tuesday,16:30,18:30,4.44-Classroom B,Halim Khelalfa
 CSCI203,Lecture B,Thursday,14:30,16:30,3.44-Classroom B,Abdellatif Tchantchane
 CSCI203,Lecture B,Thursday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Abdellatif Tchantchane
 CSCI203,Lecture B,Thursday,08:30,10:30,4.44-Classroom B,Halim Khelalfa
-CSCI203,Lecture B,Thursday,10:30,12:30,3.44-Classroom B,Halim Khelalfa
 CSCI291,Computer Lab,Wednesday,10:30,12:30,3.52-Computer Lab (Network),Ashna Sreejith
 CSCI291,Computer Lab,Thursday,10:30,12:30,4.42-Computer Lab (Single Screen),Ashna Sreejith
 CSCI291,Lecture,Thursday,14:30,16:30,5.11-Classroom B,Mohamed Salem
@@ -260,7 +258,7 @@ CSIT127,Tutorial,Wednesday,13:30,14:30,6.29-Multipurpose - Teaching & Research,P
 CSIT127,Tutorial,Wednesday,12:30,13:30,6.39-Classroom A,Pradnya Bhagwat
 CSIT127,Tutorial,Thursday,11:30,12:30,3.46-Classroom A,Pradnya Bhagwat
 CSIT214,Computer Lab,Monday,16:30,18:30,6.40-Computer Lab Single,Omar Daoudi
-CSIT214,Computer Lab,Tuesday,12:30,14:30,2.50-Computer Lab Single,Zeenath Khan
+CSIT214,Computer Lab,Tuesday,12:30,14:30,2.50-Computer Lab Single,Abdullah El Nokiti
 CSIT214,Computer Lab,Tuesday,14:30,16:30,6.40-Computer Lab Single,Abdullah El Nokiti
 CSIT214,Computer Lab,Tuesday,10:30,12:30,2.50-Computer Lab Single,Priya Aswani
 CSIT214,Computer Lab,Thursday,08:30,10:30,6.40-Computer Lab Single,Priya Aswani
@@ -343,8 +341,8 @@ ECON100,Tutorial,Tuesday,12:30,14:30,3.45-Classroom B,Raghida Araji
 ECON251,Lecture,Monday,11:30,13:30,6.345-Classroom A 6.34 & 6.35,Jaeyoung Cho
 ECON251,Tutorial,Monday,14:30,16:30,4.52-Classroom A,Jaeyoung Cho
 ECON251,Tutorial,Wednesday,15:30,17:30,5.134-Classroom A 5.13 & 5.14,Avneet Kaur
-ECON353,Lecture,Thursday,10:30,12:30,4.44-Classroom B,Prithvi Bhattacharya
-ECON353,Tutorial,Tuesday,13:30,15:30,5.18-Classroom A,Prithvi Bhattacharya
+ECON353,Lecture,Thursday,08:30,10:30,4.52-Classroom A,Prithvi Bhattacharya
+ECON353,Tutorial,Thursday,10:30,12:30,4.52-Classroom A,Prithvi Bhattacharya
 ECTE202,Computer Lab,Wednesday,08:30,10:30,2.50-Computer Lab Single,Ayesha Quresha
 ECTE202,Computer Lab,Friday,10:30,12:30,2.50-Computer Lab Single,Ayesha Quresha
 ECTE202,Computer Lab,Friday,08:30,10:30,2.50-Computer Lab Single,Eva Barbulescu
@@ -388,7 +386,7 @@ ECTE474,Computer Lab,Friday,09:30,12:30,3.52-Computer Lab (Network),Kiyan Afsari
 ECTE474,Computer Lab,Friday,14:30,17:30,6.36-Computer Lab (Single Screen),Kiyan Afsari
 ECTE474,Lecture,Wednesday,08:30,10:30,4.52-Classroom A,Obada Al Khatib
 ECTE474,Tutorial,Thursday,08:30,10:30,5.10-Classroom B,Abeer El Khouly
-ECTE474,Tutorial,Thursday,10:30,12:30,4.52-Classroom A,Abeer El Khouly
+ECTE474,Tutorial,Thursday,10:30,12:30,4.45-Classroom B,Abeer El Khouly
 ECTE498,Computer Lab,Monday,16:30,17:30,3.48-Classroom B,Haile Rajamani;Karol Sikora
 EDGP920,Consultation,Monday,21:30,22:00,Consultation,Afnan Boutrid
 EDGP940,Consultation,Monday,21:00,21:30,Consultation,Muna Amr
