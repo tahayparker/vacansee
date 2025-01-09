@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import AuthWrapper from '../components/AuthWrapper';
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const timeIntervals = [
@@ -209,4 +210,10 @@ const Graph = () => {
   );
 };
 
-export default Graph;
+export default function ProtectedGraph() {
+  return (
+    <AuthWrapper>
+      <Graph />
+    </AuthWrapper>
+  );
+}
