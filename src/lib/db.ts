@@ -16,6 +16,4 @@ const prisma = globalForPrisma.prisma ?? new PrismaClient({
 
 const acceleratedPrisma = prisma.$extends(withAccelerate());
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
-
 export default acceleratedPrisma;
