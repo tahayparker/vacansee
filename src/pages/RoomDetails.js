@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -17,7 +17,7 @@ const RoomDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const capacityMap = {
+  const capacityMap = useMemo(() => ({
     '3.42': '37',
     '3.44': '110',
     '3.45': '42',
@@ -47,7 +47,7 @@ const RoomDetails = () => {
     '6.345': '110',
     '6.38': '42',
     '6.39': '60'
-  };
+  }), []);
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -87,7 +87,7 @@ const RoomDetails = () => {
     };
 
     fetchRooms();
-  }, []);
+  }, [capacityMap]);
 
   useEffect(() => {
     // Add the styles to the document
