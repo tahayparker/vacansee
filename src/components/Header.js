@@ -4,10 +4,19 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from './Button';
+import { useSession, signOut } from 'next-auth/react';
+
+const styles = {
+  glowButton: {
+    position: "relative",
+    overflow: "hidden"
+  }
+};
 
 const Header = ({ hideLogoOnHome }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
   const navLinks = [
     { path: '/CurrentlyAvailable', label: 'Currently Available' },
     { path: '/CheckAvailability', label: 'Check Availability' },
@@ -79,6 +88,24 @@ const Header = ({ hideLogoOnHome }) => {
                 </a>
               </Link>
             ))}
+
+            {session && (
+              <div className="flex items-center space-x-4 ml-4 border-l border-[#482f1f] pl-4">
+                <span className="text-gray-400 text-sm">{session.user?.email}</span>
+                <button
+                  onClick={() => signOut()}
+                  className="glow-button px-4 py-2 border-2 border-red-700 text-red-700 rounded-full hover:text-red-700 transition-all duration-200 flex items-center text-sm"
+                  style={styles.glowButton}
+                >
+                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M16 17L21 12L16 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Sign Out
+                </button>
+              </div>
+            )}
           </nav>
           <style jsx>{`
             .nav-link {
@@ -91,6 +118,30 @@ const Header = ({ hideLogoOnHome }) => {
             .nav-link.active {
               border-color: #006D5B;
               color: #006D5B;
+            }
+
+            .glow-button::before {
+              content: '';
+              position: absolute;
+              top: var(--y, 50%);
+              left: var(--x, 50%);
+              width: 200%;
+              height: 200%;
+              background: radial-gradient(circle, rgba(220, 38, 38, 0.3) 0%, transparent 60%);
+              transition: opacity 0.2s;
+              transform: translate(-50%, -50%);
+              pointer-events: none;
+              opacity: 0;
+              z-index: 0;
+            }
+
+            .glow-button:hover::before {
+              opacity: 1;
+            }
+
+            .glow-button > * {
+              position: relative;
+              z-index: 1;
             }
           `}</style>
         </div>
@@ -119,6 +170,28 @@ const Header = ({ hideLogoOnHome }) => {
                 </a>
               </Link>
             ))}
+
+            {session && (
+              <div className="mt-4 px-4">
+                <span className="text-gray-400 text-sm block mb-2">{session.user?.email}</span>
+                <button
+                  onClick={() => {
+                    signOut();
+                    setMenuOpen(false);
+                    document.body.style.overflow = 'auto';
+                  }}
+                  className="glow-button w-full px-4 py-2 border-2 border-red-700 text-red-700 rounded-full hover:text-red-700 transition-all duration-200 flex items-center justify-center text-sm"
+                  style={styles.glowButton}
+                >
+                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M16 17L21 12L16 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Sign Out
+                </button>
+              </div>
+            )}
           </div>
         </nav>
       </header>
