@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import RoomList from '../components/RoomList';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import AuthWrapper from '../components/AuthWrapper';
 
 const CurrentlyAvailable = () => {
   const [loading, setLoading] = useState(true);
@@ -93,4 +94,10 @@ const CurrentlyAvailable = () => {
   );
 };
 
-export default CurrentlyAvailable;
+export default function ProtectedCurrentlyAvailable() {
+  return (
+    <AuthWrapper>
+      <CurrentlyAvailable />
+    </AuthWrapper>
+  );
+}
