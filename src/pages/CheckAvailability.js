@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import AuthWrapper from '../components/AuthWrapper';
 
 const styles = {
   timeInput: {
@@ -364,4 +365,10 @@ const CheckAvailability = () => {
   );
 };
 
-export default CheckAvailability;
+export default function ProtectedCheckAvailability() {
+  return (
+    <AuthWrapper>
+      <CheckAvailability />
+    </AuthWrapper>
+  );
+}
