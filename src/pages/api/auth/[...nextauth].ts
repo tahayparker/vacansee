@@ -24,6 +24,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     error: '/unauthorized',
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default NextAuth(authOptions); 
