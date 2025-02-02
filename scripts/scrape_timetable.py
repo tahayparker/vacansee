@@ -121,6 +121,18 @@ def scrape_timetable(output_path):
                     room_code = row['Room'].split('-')[0].strip()
                     row['Room'] = ROOMS.get(room_code, row['Room'])
                     writer.writerow(row)
+
+                # IF the teacher column has a ; in it, split it into two different rows
+                if ';' in row['Teacher']:
+                    teachers = row['Teacher'].split(';')
+                    for teacher in teachers:
+                        teacher = teacher.strip()
+                        new_row = row.copy()
+                        new_row['Teacher'] = teacher
+                        writer.writerow(new_row)
+                else:
+                    writer.writerow(row)
+
                 valid_entries += 1
         
         print(f"Processed {valid_entries} valid entries")

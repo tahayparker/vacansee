@@ -58,37 +58,18 @@ const initDB = async () => {
       throw new Error('CSV file is empty');
     }
 
-    const parsedData = Papa.parse<ClassData>(csvText, {
-      header: true,
-      transformHeader: (header) => header.trim(),
-      transform: (value) => value.trim(),
-      complete: (results) => {
-        if (results.errors.length > 0) {
-          console.error('CSV parsing errors:', results.errors);
-        }
-        results.data.forEach((row) => {
-          const keys = Object.keys(row);
-          if (keys.length > 7) { // Assuming 7 is the number of expected columns
-            const extraData = keys.slice(7).map(key => (row as unknown as Record<string, string>)[key]).join(' ');
-            row.Teacher += ` ${extraData}`; // Concatenate extra data to the last column
-            keys.slice(7).forEach(key => delete (row as unknown as Record<string, string>)[key]);
-          }
-        });
-      }
-    }).data;
+    const parsedDataRaw = Papa.parse<string[]>(csvText, { header: false }).data;
+    const rowsWithoutHeader = parsedDataRaw.slice(1); // remove header row
 
-    // Log parsed data for debugging
-    console.log('Number of rows parsed:', parsedData.length);
-
-    // Filter out any empty rows that might be parsed
-    const validData = parsedData.filter((row) => {
-      const isValid = row.SubCode && row.Class && row.Day && 
-                     row.StartTime && row.EndTime && row.Room && row.Teacher;
-      if (!isValid) {
-        console.log('Invalid row found:', row);
-      }
-      return isValid;
-    });
+    const validData = rowsWithoutHeader.map((row) => ({
+      SubCode: row[0],
+      Class: row[1],
+      Day: row[2],
+      StartTime: row[3],
+      EndTime: row[4],
+      Room: row[5],
+      Teacher: row[6]
+    })).filter((row) => row.SubCode && row.Class && row.Day && row.StartTime && row.EndTime && row.Room && row.Teacher);
 
     console.log('Number of valid rows:', validData.length);
 
