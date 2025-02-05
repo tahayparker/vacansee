@@ -24,7 +24,12 @@ jobs:
           pip install requests beautifulsoup4 cloudscraper asyncpg
 
       - name: Set up environment variables
-        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+        run: |
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
 
       - name: Generate new timetable data
         run: python scripts/scrape_timetable.py --output public/classes.csv
@@ -41,8 +46,8 @@ jobs:
           git push
 
       - name: Initialize the DB
-        run: curl -X POST https://vacansee.vercel.app/api/initdb
-
+        run: python scripts/upload_timetable.py
+        
       - name: Check for JSON file and generate if needed
         id: check_json
         run: |
