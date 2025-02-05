@@ -107,30 +107,25 @@ def scrape_timetable(output_path):
                     'Teacher': entry['lecturer']
                 }
 
-                # If a room number has a ; in it, split it into two different rows
-                if ';' in row['Room']:
-                    rooms = row['Room'].split(';')
+                if ';' in row['Room'] or ';' in row['Teacher']:
+                    # Get all rooms and teachers
+                    rooms = row['Room'].split(';') if ';' in row['Room'] else [row['Room']]
+                    teachers = row['Teacher'].split(';') if ';' in row['Teacher'] else [row['Teacher']]
+                    
+                    # Create combinations of rooms and teachers
                     for room in rooms:
                         room = room.strip()
-                        new_row = row.copy()
-                        # Get the room code (before the dash if it exists)
                         room_code = room.split('-')[0].strip()
-                        new_row['Room'] = ROOMS.get(room_code, room)
-                        writer.writerow(new_row)
+                        room_name = ROOMS.get(room_code, room)
+                        
+                        for teacher in teachers:
+                            new_row = row.copy()
+                            new_row['Room'] = room_name
+                            new_row['Teacher'] = teacher.strip()
+                            writer.writerow(new_row)
                 else:
                     room_code = row['Room'].split('-')[0].strip()
                     row['Room'] = ROOMS.get(room_code, row['Room'])
-                    writer.writerow(row)
-
-                # IF the teacher column has a ; in it, split it into two different rows
-                if ';' in row['Teacher']:
-                    teachers = row['Teacher'].split(';')
-                    for teacher in teachers:
-                        teacher = teacher.strip()
-                        new_row = row.copy()
-                        new_row['Teacher'] = teacher
-                        writer.writerow(new_row)
-                else:
                     writer.writerow(row)
 
                 valid_entries += 1
