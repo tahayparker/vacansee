@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AuthWrapper from '../components/AuthWrapper';
+import Fuse from 'fuse.js';
 
 const styles = {
   timeInput: {
@@ -34,6 +35,7 @@ const CheckAvailability = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [error, setError] = useState('');
   const dropdownRef = useRef(null);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   useEffect(() => {
     // Fetch room names from the database or a predefined list
@@ -52,10 +54,16 @@ const CheckAvailability = () => {
   }, []);
 
   useEffect(() => {
-    // Filter rooms based on user input
-    setFilteredRooms(
-      rooms.filter((r) => r.toLowerCase().includes(room.toLowerCase()))
-    );
+    // Initialize Fuse with the rooms array
+    const fuse = new Fuse(rooms, { 
+        includeScore: true,
+        keys: ['name'], // Assuming rooms are strings, you can adjust if they are objects
+        threshold: 0.3 // Adjust threshold for fuzziness
+    });
+
+    // Filter rooms based on user input using Fuse
+    const results = fuse.search(room);
+    setFilteredRooms(results.map(result => result.item));
   }, [room, rooms]);
 
   useEffect(() => {
@@ -69,6 +77,50 @@ const CheckAvailability = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [dropdownRef]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+        if (dropdownVisible) {
+            if (event.key === 'ArrowDown') {
+                setSelectedIndex((prevIndex) => {
+                    const newIndex = Math.min(prevIndex + 1, filteredRooms.length - 1);
+                    scrollToSelected(newIndex);
+                    return newIndex;
+                });
+            } else if (event.key === 'ArrowUp') {
+                setSelectedIndex((prevIndex) => {
+                    const newIndex = Math.max(prevIndex - 1, 0);
+                    scrollToSelected(newIndex);
+                    return newIndex;
+                });
+            } else if (event.key === 'Enter' && selectedIndex >= 0) {
+                setRoom(filteredRooms[selectedIndex]);
+                setDropdownVisible(false);
+            }
+        }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [dropdownVisible, filteredRooms, selectedIndex]);
+
+  const scrollToSelected = (index) => {
+    const dropdown = dropdownRef.current;
+    const selectedItem = dropdown.children[index];
+    if (selectedItem) {
+        const dropdownRect = dropdown.getBoundingClientRect();
+        const itemRect = selectedItem.getBoundingClientRect();
+
+        // Check if the selected item is out of view
+        if (itemRect.bottom > dropdownRect.bottom) {
+            dropdown.scrollTop += itemRect.bottom - dropdownRect.bottom;
+        } else if (itemRect.top < dropdownRect.top) {
+            dropdown.scrollTop -= dropdownRect.top - itemRect.top;
+        }
+    }
+  };
 
   useEffect(() => {
     const buttons = document.querySelectorAll('.glow-button');
@@ -107,7 +159,7 @@ const CheckAvailability = () => {
       return;
     }
     setError('');
-    const response = await fetch(`/api/check-availability?room=${room}&day=${day}&startTime=${startTime}&endTime=${endTime}`);
+    const response = await fetch(`/api/check-availability?room=${encodeURIComponent(room)}&day=${day}&startTime=${startTime}&endTime=${endTime}`);
     const data = await response.json();
     setAvailability(data);
   };
@@ -144,12 +196,15 @@ const CheckAvailability = () => {
                 id="room"
                 value={room}
                 onChange={(e) => setRoom(e.target.value)}
-                onFocus={() => setDropdownVisible(true)}
+                onFocus={() => {
+                    setDropdownVisible(true);
+                    setSelectedIndex(-1);
+                }}
                 placeholder="Enter room name"
                 className="w-full px-6 py-3 border border-[#482f1f] rounded-md bg-[#121212] text-white transition-all duration-200 hover:border-[#006D5B] focus:border-[#006D5B] focus:outline-none focus:ring-1 focus:ring-[#006D5B]"
               />
               {dropdownVisible && filteredRooms.length > 0 && (
-                <ul className="absolute z-10 w-full bg-[#121212] border border-[#482f1f] rounded-md mt-1 max-h-48 overflow-y-auto scrollbar-hide">
+                <ul className="absolute z-10 w-full bg-[#121212] border border-[#482f1f] rounded-md mt-1 max-h-48 overflow-y-auto scrollbar-hide" style={{ backgroundColor: '#121212', opacity: 1 }}>
                   {filteredRooms.map((r, index) => (
                     <li
                       key={index}
@@ -157,7 +212,7 @@ const CheckAvailability = () => {
                         setRoom(r);
                         setDropdownVisible(false);
                       }}
-                      className="px-6 py-3 cursor-pointer text-white transition-all duration-200 hover:text-[#006D5B] border-l-2 border-transparent hover:border-[#006D5B]"
+                      className={`px-6 py-3 cursor-pointer transition-all duration-200 hover:text-[#006D5B] border-l-2 border-transparent hover:border-[#006D5B] ${selectedIndex === index ? 'text-[#006D5B]' : 'text-white'}`}
                     >
                       {r}
                     </li>
