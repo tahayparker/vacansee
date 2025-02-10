@@ -23,6 +23,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     error: '/unauthorized',
+    signIn: '/auth/signin',
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
