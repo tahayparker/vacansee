@@ -3,6 +3,8 @@ import prisma from '../../lib/db';
 export default async function handler(req, res) {
   const { room, day, startTime, endTime } = req.query;
 
+  console.log('Checking availability for:', { room, day, startTime, endTime });
+
   try {
     // Query to check room availability based on the given time range
     const result = await prisma.class.findMany({
