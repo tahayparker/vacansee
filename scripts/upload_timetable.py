@@ -1,3 +1,5 @@
+import os
+import csv
 import psycopg2
 
 # Connect to the database
