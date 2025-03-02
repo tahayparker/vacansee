@@ -38,6 +38,7 @@ jobs:
         run: rm -rf debug_page.html
 
       - name: Commit and push CSV changes
+        continue-on-error: true
         run: |
           git config user.name "Taha Parker via GitHub Actions"
           git config user.email "98612931+tahayparker@users.noreply.github.com"
