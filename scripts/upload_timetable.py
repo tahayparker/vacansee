@@ -28,7 +28,7 @@ with open('public/classes.csv', 'r') as f:
         print(row) # Print the row
         cur.execute('INSERT INTO classes ("SubCode", "Class", "Day", "StartTime", "EndTime", "Room", "Teacher") VALUES (%s, %s, %s, %s, %s, %s, %s)',row) # Insert the row into the table
         i += 1
-        print("Row {i} inserted successfully")
+        print(f"Row {i} inserted successfully")
 
 conn.commit() # Commit the transaction
 cur.close() # Close the cursor
