@@ -1,3 +1,5 @@
+import psycopg2
+
 # Connect to the database
 conn = psycopg2.connect(
     dbname=os.getenv("DB_NAME"),
