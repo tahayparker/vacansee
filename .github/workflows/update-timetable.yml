@@ -1,11 +1,9 @@
 name: Update Timetable Data
-
 on:
   schedule:
     # Run every day at 0000 UTC+4
-    - cron: '0 16 * * *'
+    - cron: '0 16 * **'
   workflow_dispatch:  # Allow manual trigger
-
 jobs:
   update-timetable:
     runs-on: ubuntu-latest
@@ -14,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Fetch the last 2 commits to compare changes
+          fetch-depth: 0  # Fetch full history for comprehensive comparison
         
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -25,7 +23,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 cloudscraper asyncpg psycopg2
-
+      
       - name: Set up environment variables
         run: |
           echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
@@ -33,24 +31,38 @@ jobs:
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
           echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
-
-      - name: Generate new timetable data
-        run: python scripts/scrape_timetable.py --output public/classes.csv
       
-      - name: Check for CSV changes
+      - name: Generate new timetable data
+        run: python scripts/scrape_timetable.py --output scripts/generated_classes.csv
+      
+      - name: Compare Generated CSV with Repository CSV
         id: check_changes
         run: |
-          if git diff --quiet HEAD^ HEAD public/classes.csv; then
-            echo "No changes in CSV file"
+          # Ensure file exists before generation
+          touch public/classes.csv
+          
+          # Compare files with more details
+          if diff -q public/classes.csv scripts/generated_classes.csv >/dev/null; then
+            echo "No changes detected"
             echo "csv_changed=false" >> $GITHUB_OUTPUT
           else
-            echo "CSV file has changed"
+            echo "Changes detected"
             echo "csv_changed=true" >> $GITHUB_OUTPUT
+            
+            # Count line and content differences
+            line_diff=$(diff -u public/classes.csv scripts/generated_classes.csv | grep -E "^\+" | wc -l)
+            echo "Lines added/changed: $line_diff"
+            echo "line_changes=$line_diff" >> $GITHUB_OUTPUT
+            
+            # Copy generated file to public directory
+            cp scripts/generated_classes.csv public/classes.csv
           fi
-
+      
       - name: Delete debug files
-        run: rm -rf debug_page.html
-
+        run: |
+          rm -rf debug_page.html
+          rm -f scripts/generated_classes.csv
+      
       - name: Commit and push CSV changes
         if: steps.check_changes.outputs.csv_changed == 'true'
         run: |
@@ -59,11 +71,11 @@ jobs:
           git add public/classes.csv
           git commit -m "Update timetable CSV data [skip ci]"
           git push
-
+      
       - name: Initialize the DB
         if: steps.check_changes.outputs.csv_changed == 'true'
         run: python scripts/upload_timetable.py
-
+      
       - name: Check for JSON file and generate if needed
         id: check_json
         run: |
