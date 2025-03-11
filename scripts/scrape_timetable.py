@@ -1,13 +1,14 @@
 import argparse
+import csv
 import json
-import cloudscraper
-from bs4 import BeautifulSoup
+import random
 import re
 import sys
-import csv
 import time
-import random
 from datetime import datetime
+
+import cloudscraper
+from bs4 import BeautifulSoup
 
 ROOMS = {
     "0.17": "0.17-Lecture Theatre",
@@ -16,7 +17,10 @@ ROOMS = {
 }
 
 class TimetableScraper:
+    """ UOW Dubai timetable scraper """
+
     def __init__(self):
+        """ Initialize scraper with cloudscraper instance """
         self.scraper = self.create_scraper()
         self.semester_cache = {}
         self.headers = {
@@ -27,6 +31,7 @@ class TimetableScraper:
         }
 
     def create_scraper(self):
+        """ Create a new cloudscraper instance with random user agent """
         return cloudscraper.create_scraper(
             browser={
                 'browser': 'chrome',
@@ -38,6 +43,7 @@ class TimetableScraper:
         )
 
     def get_current_semester_text(self):
+        """ Return the current semester text """
         today = datetime.now()
         year = today.year
         return {
@@ -47,6 +53,7 @@ class TimetableScraper:
         }.get(True, f"Autumn {year}")
 
     def fetch_page(self, url, max_retries=5):
+        """ Fetch a page with retries and random user agent """
         for attempt in range(max_retries):
             try:
                 response = self.scraper.get(url, headers=self.headers, timeout=30)
@@ -67,12 +74,14 @@ class TimetableScraper:
                 time.sleep(random.uniform(5, 15))
 
     def random_user_agent(self):
+        """ Return a random user agent string """
         return random.choice([
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36...",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15...",
         ])
 
     def extract_semester_ids(self, html):
+        """ Extract semester IDs from the base page """
         soup = BeautifulSoup(html, 'html.parser')
         semesters = {}
 
@@ -85,6 +94,7 @@ class TimetableScraper:
         return semesters
 
     def get_target_semester_id(self, html):
+        """ Find the semester ID that matches the current semester """
         current_semester = self.get_current_semester_text()
         semesters = self.extract_semester_ids(html)
 
@@ -97,6 +107,7 @@ class TimetableScraper:
         return next(iter(semesters.values()), None)
 
     def extract_timetable_data(self, html):
+        """ Extract timetable data from the final page """
         soup = BeautifulSoup(html, 'html.parser')
         scripts = soup.find_all('script')
 
@@ -108,6 +119,7 @@ class TimetableScraper:
         return None
 
     def process_data(self, raw_data, output_path):
+        """ Process raw timetable data and write to CSV """
         with open(output_path, 'w', newline='', encoding='utf-8') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=[
                 "SubCode", "Class", "Day", "StartTime",
@@ -139,6 +151,7 @@ class TimetableScraper:
                         })
 
     def scrape(self, output_path):
+        """ Scrape timetable data and write to CSV """
         try:
             # Step 1: Get base page to find semester IDs
             base_response = self.fetch_page('https://my.uowdubai.ac.ae/timetable/viewer')
@@ -164,6 +177,7 @@ class TimetableScraper:
             return False
 
 def main():
+    """ Main entry point """
     parser = argparse.ArgumentParser(description='Scrape UOW Dubai timetable data')
     parser.add_argument('--output', required=True, help='Output CSV file path')
     args = parser.parse_args()
