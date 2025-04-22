@@ -1,0 +1,59 @@
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Rooms {
+  id        Int    @id @default(autoincrement())
+  Name      String
+  ShortCode String
+  Capacity  Int?
+}
+
+model SignInLog {
+  id           String       @id
+  email        String
+  name         String?
+  authProvider AuthProvider
+  timestamp    DateTime
+  success      Boolean
+}
+
+model Teacher {
+  id    Int    @id @default(autoincrement())
+  Name  String
+  Email String
+  Phone String
+}
+
+model Timings {
+  id        Int    @id @default(autoincrement())
+  SubCode   String
+  Class     String
+  Day       String
+  StartTime String
+  EndTime   String
+  Room      String
+  Teacher   String
+}
+
+model AllowedEmail {
+  email     String   @id @unique // Email is the primary key and must be unique
+  createdAt DateTime @default(now()) @map("created_at") // Track when added
+  // Optional: Add updatedAt if you might modify entries later
+  // updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("allowed_emails") // Maps this model to the 'allowed_emails' table in the public schema
+}
+
+
+enum AuthProvider {
+  GOOGLE
+  GITHUB
+  UNDETERMINED
+}
