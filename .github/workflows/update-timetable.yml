@@ -1,0 +1,140 @@
+name: Update Timetable Data
+
+on:
+  schedule:
+    # Run every 4 hours
+    - cron: '0 */4 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  update-timetable:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install supabase cloudscraper beautifulsoup4 python-dotenv httpx postgrest
+
+      - name: Set up Supabase environment variables
+        env:
+          SUPABASE_URL_SECRET: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY_SECRET: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          echo "Setting Supabase environment variables..."
+          if [ -z "$SUPABASE_URL_SECRET" ]; then echo "Error: SUPABASE_URL secret not set."; exit 1; fi
+          if [ -z "$SUPABASE_SERVICE_KEY_SECRET" ]; then echo "Error: SUPABASE_SERVICE_ROLE_KEY secret not set."; exit 1; fi
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> $GITHUB_ENV
+          echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" >> $GITHUB_ENV
+          echo "Supabase variables configured."
+
+      - name: Generate new timetable CSV data (Step 1)
+        id: scrape # Add id for potential future reference if needed
+        run: |
+          echo "Running timetable scraper..."
+          python scripts/scrape_timetable.py --output public/classes.csv
+          exit_code=$?
+          echo "Scraper finished with exit code $exit_code."
+          # Fail the job only if exit code is non-zero AND not 1
+          if [ $exit_code -ne 0 ] && [ $exit_code -ne 1 ]; then
+            echo "::error::Scraper failed with critical exit code $exit_code!"
+            exit $exit_code
+          fi
+          # If exit code was 1, the workflow continues
+
+      - name: Compare Generated CSV with Repository CSV
+        id: check_csv_changes
+        run: |
+          echo "Comparing generated classes.csv with repository version..."
+          if [ ! -f public/classes.csv ]; then
+            echo "::warning::Generated public/classes.csv not found. Skipping comparison and commit."
+            # Set output to false if file doesn't exist, prevent commit attempt
+            echo "csv_changed=false" >> $GITHUB_OUTPUT
+          else
+            # Stage the potentially new/modified file to compare against HEAD
+            git add public/classes.csv
+            if git diff --quiet HEAD -- public/classes.csv; then
+              echo "No changes detected in classes.csv"
+              echo "csv_changed=false" >> $GITHUB_OUTPUT
+              # Unstage if no changes found
+              git reset public/classes.csv
+            else
+              echo "Changes detected in classes.csv"
+              echo "csv_changed=true" >> $GITHUB_OUTPUT
+              # Keep the file staged for commit
+            fi
+          fi
+
+      - name: Commit and push CSV changes
+        # Only commit if changes were actually detected
+        if: steps.check_csv_changes.outputs.csv_changed == 'true'
+        run: |
+          echo "Committing and pushing classes.csv changes..."
+          git config user.name "Taha Parker via GitHub Actions"
+          git config user.email "98612931+tahayparker@users.noreply.github.com"
+          # File should already be staged from comparison step
+          git commit -m "Update timetable CSV data [skip ci]"
+          git push
+
+      - name: Upload Timetable to DB (Step 2)
+        id: upload # Add id
+        # This step runs regardless of CSV changes now
+        run: |
+          echo "Running timetable upload script..."
+          python scripts/upload_timetable.py
+          exit_code=$?
+          echo "Upload script finished with exit code $exit_code."
+          # Fail the job only if exit code is non-zero AND not 1
+          if [ $exit_code -ne 0 ] && [ $exit_code -ne 1 ]; then
+            echo "::error::Upload script failed with critical exit code $exit_code!"
+            exit $exit_code
+          fi
+
+      - name: Generate Schedule JSON (Step 3)
+        id: generate_json # Add id
+        # This step runs regardless of CSV changes now
+        run: |
+          echo "Running schedule generation script..."
+          python scripts/generate_schedule.py
+          exit_code=$?
+          echo "Schedule generation finished with exit code $exit_code."
+          # Fail the job only if exit code is non-zero AND not 1
+          if [ $exit_code -ne 0 ] && [ $exit_code -ne 1 ]; then
+            echo "::error::Schedule generation failed with critical exit code $exit_code!"
+            exit $exit_code
+          fi
+          # Always assume we might need to commit the JSON after generation
+          echo "should_check_commit_json=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push JSON changes
+        # Check if the previous step indicated we should check for commits
+        if: steps.generate_json.outputs.should_check_commit_json == 'true'
+        run: |
+          echo "Checking for scheduleData.json changes..."
+          # Stage the potentially new/modified JSON file
+          git add public/scheduleData.json
+          # Check if there are staged changes to commit before committing
+          if ! git diff --staged --quiet; then
+            echo "Changes detected in scheduleData.json. Committing..."
+            git config user.name "Taha Parker via GitHub Actions"
+            git config user.email "98612931+tahayparker@users.noreply.github.com"
+            git commit -m "Update timetable JSON data [skip ci]"
+            git push
+          else
+            echo "No JSON changes to commit (file might be identical or generation failed before check)."
+          fi
+
+      - name: Cleanup # Optional: Add any other cleanup if needed
+        run: |
+          echo "Workflow finished."
+          # rm -f some_other_temp_file.log # Example
