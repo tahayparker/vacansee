@@ -10,7 +10,6 @@ import {
   Clock,
   Search,
   Grid3x3,
-  SlidersHorizontal, // Re-added Custom Graph icon based on previous context
   BadgeInfo,
   LogIn,
   UserRound,
@@ -27,7 +26,7 @@ import localFont from 'next/font/local'; // Import next/font/local
 
 // Configure the local font loader
 const qurovaFont = localFont({
-  src: '../../fonts/Qurova.ttf', // Adjust the path as necessary
+  src: '../../public/fonts/Qurova.ttf', // Adjust the path as necessary
   weight: '600', // Corresponds to Semibold
   display: 'swap', // Good practice for font loading
 });
@@ -38,7 +37,6 @@ const navItems = [
   { name: "Available Soon", href: "/available-soon", icon: Clock },
   { name: "Check Availability", href: "/check", icon: Search },
   { name: "Graph", href: "/graph", icon: Grid3x3 },
-  { name: "Custom Graph", href: "/custom-graph", icon: SlidersHorizontal }, // Re-added
   { name: "Room Details", href: "/rooms", icon: BadgeInfo },
 ];
 type NavItemType = typeof navItems[0];
