@@ -26,7 +26,7 @@ import localFont from 'next/font/local'; // Import next/font/local
 
 // Configure the local font loader
 const qurovaFont = localFont({
-  src: '../../public/fonts/Qurova-Semibold.ttf', // Adjust the path as necessary
+  src: '../../public/fonts/Qurova-SemiBold.otf', // Adjust the path as necessary
   weight: '600', // Corresponds to Semibold
   display: 'swap', // Good practice for font loading
 });
