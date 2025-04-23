@@ -14,8 +14,8 @@ export default function SiteFooter() {
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-y-2">
                 {/* Left Links */}
                 <nav className="flex items-center gap-x-4 sm:gap-x-6">
-                    <Link href="/about" className="text-sm text-white/70 hover:text-white transition-colors">
-                        About
+                    <Link href="/docs" className="text-sm text-white/70 hover:text-white transition-colors">
+                        Docs
                     </Link>
                     <Link href="/legal" className="text-sm text-white/70 hover:text-white transition-colors">
                         Legal
