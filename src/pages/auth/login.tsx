@@ -5,7 +5,7 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useRouter } from 'next/router';
 import type { Provider, Session } from '@supabase/supabase-js';
 import Cookies from 'js-cookie';
-import { AlertCircle } from 'lucide-react'; // Import AlertCircle icon
+import { AlertCircle } from 'lucide-react';
 
 // --- SVG Icons (Keep as is) ---
 // --- SVG Icons --- (Keep as is)
