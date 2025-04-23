@@ -69,8 +69,8 @@ export default function DocsPage() {
             <h2 className="text-2xl font-semibold text-white/90">Features</h2>
           </div>
           <ul className="list-disc list-inside space-y-2 text-white/80 pl-1 text-lg">
-            <motion.li variants={listItemVariant}>Real-time "Available Now" Check</motion.li>
-            <motion.li variants={listItemVariant}>"Available Soon" Projections (30m, 1h, etc.)</motion.li>
+            <motion.li variants={listItemVariant}>Real-time &quot;Available Now&quot; Check</motion.li>
+            <motion.li variants={listItemVariant}>&quot;Available Soon&quot; Projections (30m, 1h, etc.)</motion.li>
             <motion.li variants={listItemVariant}>Specific Time Slot Availability Check</motion.li>
             <motion.li variants={listItemVariant}>Room Details List (Name, Code, Capacity)</motion.li>
             <motion.li variants={listItemVariant}>Interactive Schedule Graph View</motion.li>
@@ -114,7 +114,7 @@ export default function DocsPage() {
             <motion.li variants={listItemVariant}>Run the development server: `npm run dev`.</motion.li>
           </ol>
           <p className="text-sm text-white/70">
-            Refer to the project's <Link href="https://github.com/tahayparker/vacansee" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:underline">README on GitHub</Link> for detailed setup.
+            Refer to the project&apos;s <Link href="https://github.com/tahayparker/vacansee" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:underline">README on GitHub</Link> for detailed setup.
           </p>
         </motion.section>
 
