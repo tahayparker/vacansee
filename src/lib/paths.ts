@@ -14,7 +14,9 @@ export const PUBLIC_PATHS: string[] = [
     '/api/rooms',       // Public API route for room list
     '/404',             // 404 page
     '/500',             // 500 page
-    '/about',           // Example About page
+    '/docs',           // Example About page
+    '/legal',           // Terms and Conditions
+    '/privacy',         // Legal pages (Privacy Policy, etc.)
     // Add any other truly public paths here
 ];
 
