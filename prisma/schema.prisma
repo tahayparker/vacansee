@@ -15,15 +15,6 @@ model Rooms {
   Capacity  Int?
 }
 
-model SignInLog {
-  id           String       @id
-  email        String
-  name         String?
-  authProvider AuthProvider
-  timestamp    DateTime
-  success      Boolean
-}
-
 model Teacher {
   id    Int    @id @default(autoincrement())
   Name  String
@@ -40,20 +31,4 @@ model Timings {
   EndTime   String
   Room      String
   Teacher   String
-}
-
-model AllowedEmail {
-  email     String   @id @unique // Email is the primary key and must be unique
-  createdAt DateTime @default(now()) @map("created_at") // Track when added
-  // Optional: Add updatedAt if you might modify entries later
-  // updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("allowed_emails") // Maps this model to the 'allowed_emails' table in the public schema
-}
-
-
-enum AuthProvider {
-  GOOGLE
-  GITHUB
-  UNDETERMINED
 }
