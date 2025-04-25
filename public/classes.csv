@@ -107,12 +107,12 @@ BUS121,Lecture,Tuesday,10:30,12:30,6.32-Classroom B,Noor Rizvi
 BUS121,Lecture,Tuesday,08:30,10:30,6.345-Classroom A 6.34 & 6.35,Noor Rizvi
 BUS121,Tutorial,Wednesday,11:30,13:30,3.42-Classroom B,Nikita Kirplani
 BUS121,Tutorial,Monday,15:30,17:30,4.52-Classroom A,Sabreen Wahbeh
-BUS121,Tutorial,Tuesday,15:30,17:30,4.51-Tutorial Room,Sabreen Wahbeh
+BUS121,Tutorial,Tuesday,15:30,17:30,4.50-Classroom B,Sabreen Wahbeh
 BUS121,Tutorial,Wednesday,13:30,15:30,3.42-Classroom B,Nikita Kirplani
 BUS121,Tutorial,Monday,16:30,18:30,6.28-Seminar/Tutorial,Ayush Mishra
 BUS121,Tutorial,Tuesday,15:30,17:30,5.18-Classroom A,Sherwin Fernandes
 BUS121,Tutorial,Monday,13:30,15:30,4.45-Classroom B,Sabreen Wahbeh
-BUS121,Tutorial,Tuesday,13:30,15:30,4.51-Tutorial Room,Sabreen Wahbeh
+BUS121,Tutorial,Tuesday,13:30,15:30,4.48-Classroom B,Sabreen Wahbeh
 BUS121,Tutorial,Monday,14:30,16:30,6.33-Classroom B,Ayush Mishra
 BUS121,Tutorial,Thursday,12:30,14:30,3.45-Classroom B,Ayush Mishra
 BUS121,Tutorial,Thursday,14:30,16:30,3.45-Classroom B,Ayush Mishra
@@ -216,7 +216,7 @@ CSCI369,Computer Lab,Monday,14:30,16:30,3.52-Computer Lab (Network),Manoj Kumar
 CSCI369,Lecture,Tuesday,08:30,10:30,0.17-Lecture Theatre,Manoj Kumar
 CSCI369,Tutorial,Monday,14:30,15:30,3.48-Classroom B,Tina Thomas
 CSCI369,Tutorial,Monday,11:30,12:30,3.42-Classroom B,Tina Thomas
-CSCI369,Tutorial,Tuesday,14:30,15:30,4.48-Classroom B,Tina Thomas
+CSCI369,Tutorial,Tuesday,14:30,15:30,4.50-Classroom B,Tina Thomas
 CSCI369,Tutorial,Monday,13:30,14:30,5.17-Classroom VC,Suzan Sallam
 CSCI369,Tutorial,Monday,09:30,10:30,6.38-Classroom B,Suzan Sallam
 CSCI369,Tutorial,Monday,13:30,14:30,5.10-Classroom B,Tina Thomas
@@ -324,7 +324,7 @@ CSIT314,Lecture,Wednesday,12:30,14:30,0.17-Lecture Theatre,Nkqubela Ruxwana
 CSIT314,Lecture,Wednesday,14:30,16:30,0.17-Lecture Theatre,Nkqubela Ruxwana
 CSIT314,Lecture,Thursday,14:30,16:30,6.32-Classroom B,Nkqubela Ruxwana
 CSIT314,Tutorial,Monday,13:30,14:30,3.46-Classroom A,Tauqeer Faiz
-CSIT314,Tutorial,Tuesday,13:30,14:30,4.48-Classroom B,Tina Thomas
+CSIT314,Tutorial,Tuesday,13:30,14:30,5.12-Informal Classroom,Tina Thomas
 CSIT314,Tutorial,Wednesday,15:30,16:30,4.48-Classroom B,Deepa Keshavamurthy
 CSIT314,Tutorial,Monday,10:30,11:30,3.42-Classroom B,Tina Thomas
 CSIT314,Tutorial,Wednesday,08:30,09:30,5.12-Informal Classroom,Sara Majeed
@@ -615,7 +615,7 @@ IFME002,Tutorial A,Monday,13:30,15:30,6.30-Multipurpose - Teaching & Research,Ze
 IFME002,Tutorial B,Wednesday,10:30,12:30,6.33-Classroom B,Zeyad Choucair
 IFPH002,Computer Lab,Thursday,12:30,13:30,3.53-Physics/Robotics Lab,Baharek Tajali
 IFPH002,Tutorial A,Tuesday,12:30,14:30,4.50-Classroom B,Baharek Tajali
-IFPH002,Tutorial B,Tuesday,15:30,17:30,4.50-Classroom B,Baharek Tajali
+IFPH002,Tutorial B,Tuesday,15:30,17:30,4.51-Tutorial Room,Baharek Tajali
 IFRC002,Tutorial A,Wednesday,08:30,10:30,4.52-Classroom A,Ajrina Hysaj
 IFRC002,Tutorial B,Thursday,13:30,15:30,6.29-Multipurpose - Teaching & Research,Ajrina Hysaj
 IFSC001,Tutorial,Friday,08:30,12:30,4.51-Tutorial Room,Amina Khan
@@ -657,7 +657,7 @@ ISIT224,Lecture,Thursday,08:30,10:30,4.44-Classroom B,Zeenath Khan
 LANG030,Tutorial A,Tuesday,08:30,11:30,5.10-Classroom B,Nicola Sabry
 LANG030,Tutorial B,Wednesday,14:30,17:30,6.33-Classroom B,Nicola Sabry
 LANG040,Tutorial A,Wednesday,12:30,14:30,4.50-Classroom B,Ajrina Hysaj
-LANG040,Tutorial A,Tuesday,13:30,15:30,6.30-Multipurpose - Teaching & Research,Nicola Sabry
+LANG040,Tutorial A,Tuesday,13:30,15:30,4.51-Tutorial Room,Nicola Sabry
 LANG040,Tutorial A,Monday,14:30,16:30,4.44-Classroom B,Sonia Adams
 LANG040,Tutorial B,Monday,09:30,11:30,4.50-Classroom B,Ajrina Hysaj
 LANG040,Tutorial B,Wednesday,11:30,13:30,5.10-Classroom B,Nicola Sabry
