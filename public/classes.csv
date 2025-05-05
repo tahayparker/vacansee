@@ -496,7 +496,6 @@ ENGG252,Computer Lab,Monday,11:30,13:30,1.47-Fluids Lab,Ahmed Mohamed
 ENGG252,Lecture\Tutorial,Wednesday,08:30,11:30,5.134-Classroom A 5.13 & 5.14,Mama Chacha
 ENGG252,Tutorial,Thursday,08:30,10:30,3.45-Classroom B,Abdulqader Hasan
 ENGG252,Tutorial,Thursday,14:30,16:30,5.12-Informal Classroom,Asarudheen Abdudeen
-ENGG252,Tutorial,Friday,16:30,18:30,5.12-Informal Classroom,Asarudheen Abdudeen
 ENGG252,Tutorial,Wednesday,15:30,17:30,6.39-Classroom A,Asarudheen Abdudeen
 ENGG452,Lecture,Wednesday,09:30,10:30,6.33-Classroom B,Karol Sikora
 ENGG462,Lecture,Monday,18:00,20:00,Online,Stephen Wilkinson
@@ -632,8 +631,8 @@ INE301,Tutorial,Friday,08:30,10:30,4.48-Classroom B,Umme Kulsoom
 INE301,Tutorial,Tuesday,15:30,17:30,5.17-Classroom VC,Umme Kulsoom
 INFO411,Computer Lab,Thursday,16:30,18:30,6.36-Computer Lab (Single Screen),Abdullah El Nokiti
 INFO411,Lecture,Tuesday,10:30,12:30,3.44-Classroom B,Farhad Oroumchian
-INFO411,Tutorial,Thursday,10:30,11:30,6.345-Classroom A 6.34 & 6.35,Farhad Oroumchian
-INFO411,Tutorial,Thursday,12:30,13:30,6.345-Classroom A 6.34 & 6.35,Abdullah El Nokiti
+INFO411,Tutorial,Thursday,10:30,11:30,4.51-Tutorial Room,Farhad Oroumchian
+INFO411,Tutorial,Thursday,12:30,13:30,4.51-Tutorial Room,Abdullah El Nokiti
 IRAE135,Lecture,Tuesday,10:30,12:30,5.11-Classroom B,Imene Ajala
 IRAE135,Lecture,Tuesday,12:30,14:30,5.11-Classroom B,Imene Ajala
 IRAE135,Lecture,Wednesday,14:30,16:30,6.345-Classroom A 6.34 & 6.35,Imene Ajala
@@ -701,7 +700,6 @@ MATH142,Tutorial,Wednesday,13:30,15:30,4.51-Tutorial Room,Zeyad Choucair
 MATH142,Tutorial,Monday,15:30,17:30,3.45-Classroom B,Zeyad Choucair
 MATH142,Tutorial,Thursday,10:30,12:30,3.45-Classroom B,Zeyad Choucair
 MATH142,Tutorial,Friday,10:30,12:30,5.19-Classroom A,Zeyad Choucair
-MATH142,Tutorial,Friday,14:30,16:30,3.48-Classroom B,Zeyad Choucair
 MATH255,Computer Lab,Thursday,18:30,20:30,4.52-Classroom A,Mohamad Klot
 MATH255,Computer Lab,Wednesday,18:30,20:30,5.12-Informal Classroom,Mohamad Klot
 MATH255,Computer Lab,Wednesday,09:30,11:30,3.42-Classroom B,Halim Khelalfa
@@ -791,9 +789,9 @@ MGNT102,Tutorial,Monday,11:30,13:30,4.45-Classroom B,Shaimaa Elsaid
 MGNT102,Tutorial,Monday,15:30,17:30,4.45-Classroom B,Donia Rawashdeh
 MGNT102,Tutorial,Tuesday,13:30,15:30,5.17-Classroom VC,Umme Kulsoom
 MGNT102,Tutorial,Tuesday,13:30,15:30,5.18-Classroom A,Donia Rawashdeh
-MGNT102,Tutorial,Thursday,08:30,10:30,4.51-Tutorial Room,Muhammad Latif
-MGNT102,Tutorial,Thursday,12:30,14:30,4.51-Tutorial Room,Muhammad Latif
-MGNT102,Tutorial,Thursday,10:30,12:30,4.51-Tutorial Room,Muhammad Latif
+MGNT102,Tutorial,Thursday,08:30,10:30,6.345-Classroom A 6.34 & 6.35,Muhammad Latif
+MGNT102,Tutorial,Thursday,12:30,14:30,6.345-Classroom A 6.34 & 6.35,Muhammad Latif
+MGNT102,Tutorial,Thursday,10:30,12:30,6.345-Classroom A 6.34 & 6.35,Muhammad Latif
 MGNT102,Tutorial,Wednesday,10:30,12:30,4.45-Classroom B,Donia Rawashdeh
 MGNT210,Lecture,Wednesday,10:30,12:30,6.345-Classroom A 6.34 & 6.35,Mahshid Baghestani
 MGNT210,Lecture,Thursday,12:30,14:30,5.134-Classroom A 5.13 & 5.14,Mahshid Baghestani
