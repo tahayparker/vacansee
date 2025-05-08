@@ -3,8 +3,8 @@ ACCY121,Lecture,Wednesday,16:30,18:30,0.17-Lecture Theatre,Khairul Kamarudin
 ACCY121,Lecture,Friday,14:30,16:30,0.17-Lecture Theatre,Khairul Kamarudin
 ACCY121,Tutorial,Wednesday,13:30,15:30,4.48-Classroom B,Yusra Ghani
 ACCY121,Tutorial,Wednesday,15:30,17:30,5.18-Classroom A,Yusra Ghani
-ACCY121,Tutorial,Friday,10:30,12:30,4.46-Classroom A,Alfiya Thaha
-ACCY121,Tutorial,Friday,10:30,12:30,4.47-Classroom A,Avneet Kaur
+ACCY121,Tutorial,Friday,10:30,12:30,6.39-Classroom A,Alfiya Thaha
+ACCY121,Tutorial,Friday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Avneet Kaur
 ACCY121,Tutorial,Friday,14:30,16:30,5.12-Informal Classroom,Alfiya Thaha
 ACCY121,Tutorial,Tuesday,16:30,18:30,6.33-Classroom B,Alfiya Thaha
 ACCY121,Tutorial,Friday,08:30,10:30,5.10-Classroom B,Avneet Kaur
@@ -412,7 +412,8 @@ ECTE469,Computer Lab B,Friday,08:30,10:30,1.38-Circuits Lab,Ashna Sreejith
 ECTE469,Workshop A,Tuesday,14:30,16:30,6.29-Multipurpose - Teaching & Research,Abdsamad Benkrid
 ECTE469,Workshop B,Wednesday,08:30,09:30,5.18-Classroom A,Abdsamad Benkrid
 ECTE469,Workshop C,Wednesday,14:30,15:30,5.18-Classroom A,Abdsamad Benkrid
-EDGI900,Lecture,Thursday,18:00,22:00,6.33-Classroom B,"TBA, 1"
+EDGI900,Lecture,Thursday,18:00,22:00,6.33-Classroom B,Christopher Tuffnell
+EDGI900,Lecture,Thursday,18:00,22:00,6.33-Classroom B,Dima Yousef
 EDGP920,Lecture,Wednesday,18:00,22:00,6.28-Seminar/Tutorial,Afnan Boutrid
 EDGP940,Lecture,Tuesday,18:00,20:00,6.29-Multipurpose - Teaching & Research,Muna Amr
 EDGT932,Lecture,Tuesday,18:00,22:00,3.42-Classroom B,Afnan Boutrid
