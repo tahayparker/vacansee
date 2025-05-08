@@ -293,7 +293,7 @@ CSIT128,Lecture,Tuesday,08:30,10:30,4.44-Classroom B,Soly Mathew
 CSIT128,Tutorial,Wednesday,15:30,16:30,3.45-Classroom B,Tauqeer Faiz
 CSIT128,Tutorial,Wednesday,13:30,14:30,5.134-Classroom A 5.13 & 5.14,Tauqeer Faiz
 CSIT128,Tutorial,Monday,16:30,17:30,6.33-Classroom B,Deepa Keshavamurthy
-CSIT128,Tutorial,Wednesday,13:30,14:30,5.10-Classroom B,Sara Majeed
+CSIT128,Tutorial,Wednesday,13:30,14:30,4.51-Tutorial Room,Sara Majeed
 CSIT128,Tutorial,Monday,14:30,15:30,6.38-Classroom B,Sara Majeed
 CSIT128,Tutorial,Monday,13:30,14:30,4.52-Classroom A,Sara Majeed
 CSIT128,Tutorial,Tuesday,10:30,11:30,3.42-Classroom B,Haitham Yaish
@@ -329,7 +329,7 @@ CSIT314,Tutorial,Wednesday,15:30,16:30,4.48-Classroom B,Deepa Keshavamurthy
 CSIT314,Tutorial,Monday,10:30,11:30,3.42-Classroom B,Tina Thomas
 CSIT314,Tutorial,Wednesday,08:30,09:30,5.12-Informal Classroom,Sara Majeed
 CSIT314,Tutorial,Wednesday,09:30,10:30,5.12-Informal Classroom,Sara Majeed
-CSIT314,Tutorial,Wednesday,14:30,15:30,5.10-Classroom B,Sara Majeed
+CSIT314,Tutorial,Wednesday,14:30,15:30,4.52-Classroom A,Sara Majeed
 CSIT314,Tutorial,Wednesday,11:30,12:30,5.18-Classroom A,Sara Majeed
 CSIT314,Tutorial,Thursday,09:30,10:30,4.48-Classroom B,Sonia Dagou
 CSIT314,Tutorial,Thursday,08:30,09:30,4.48-Classroom B,Sonia Dagou
@@ -611,8 +611,8 @@ IFCH002,Computer Lab,Thursday,10:30,11:30,1.53-Chemistry & Materials Science Lab
 IFCH002,Tutorial,Monday,08:30,12:30,4.51-Tutorial Room,Akanksha Singh
 IFEC002,Tutorial A,Tuesday,15:30,17:30,6.30-Multipurpose - Teaching & Research,Asima Shirazi
 IFEC002,Tutorial B,Wednesday,14:30,16:30,6.30-Multipurpose - Teaching & Research,Asima Shirazi
-IFME002,Tutorial A,Monday,13:30,15:30,6.30-Multipurpose - Teaching & Research,Zeyad Choucair
-IFME002,Tutorial B,Wednesday,10:30,12:30,6.33-Classroom B,Zeyad Choucair
+IFME002,Tutorial A,Monday,13:30,15:30,6.30-Multipurpose - Teaching & Research,Ziad Choucair
+IFME002,Tutorial B,Wednesday,10:30,12:30,6.33-Classroom B,Ziad Choucair
 IFPH002,Computer Lab,Thursday,12:30,13:30,3.53-Physics/Robotics Lab,Baharek Tajali
 IFPH002,Tutorial A,Tuesday,12:30,14:30,4.50-Classroom B,Baharek Tajali
 IFPH002,Tutorial B,Tuesday,15:30,17:30,4.51-Tutorial Room,Baharek Tajali
@@ -696,10 +696,10 @@ MATH142,Lecture A,Thursday,08:30,10:30,5.134-Classroom A 5.13 & 5.14,Assane Lo
 MATH142,Lecture A,Monday,08:30,10:30,6.39-Classroom A,Assane Lo
 MATH142,Lecture B,Friday,08:30,10:30,5.19-Classroom A,Assane Lo
 MATH142,Lecture B,Tuesday,14:30,16:30,5.134-Classroom A 5.13 & 5.14,Assane Lo
-MATH142,Tutorial,Wednesday,13:30,15:30,4.51-Tutorial Room,Zeyad Choucair
-MATH142,Tutorial,Monday,15:30,17:30,3.45-Classroom B,Zeyad Choucair
-MATH142,Tutorial,Thursday,10:30,12:30,3.45-Classroom B,Zeyad Choucair
-MATH142,Tutorial,Friday,10:30,12:30,5.19-Classroom A,Zeyad Choucair
+MATH142,Tutorial,Monday,15:30,17:30,3.45-Classroom B,Ziad Choucair
+MATH142,Tutorial,Thursday,10:30,12:30,3.45-Classroom B,Ziad Choucair
+MATH142,Tutorial,Friday,10:30,12:30,5.19-Classroom A,Ziad Choucair
+MATH142,Tutorial,Wednesday,13:30,15:30,5.10-Classroom B,Ziad Choucair
 MATH255,Computer Lab,Thursday,18:30,20:30,4.52-Classroom A,Mohamad Klot
 MATH255,Computer Lab,Wednesday,18:30,20:30,5.12-Informal Classroom,Mohamad Klot
 MATH255,Computer Lab,Wednesday,09:30,11:30,3.42-Classroom B,Halim Khelalfa
@@ -715,9 +715,9 @@ MBA905,Lecture B,Sunday,09:00,17:00,4.45-Classroom B,Subhadeep Datta
 MBA907,Lecture A,Saturday,09:00,17:00,4.45-Classroom B,Mohan Guruswamy
 MBA907,Lecture B,Sunday,09:00,17:00,4.45-Classroom B,Mohan Guruswamy
 MBA908,Lecture,Monday,18:00,22:00,3.46-Classroom A,Arijit Sikdar
-MBA911,Lecture A,Saturday,09:00,17:00,4.48-Classroom B,Faisal Rana
+MBA911,Lecture A,Saturday,09:00,17:00,5.19-Classroom A,Faisal Rana
 MBA911,Lecture A,Saturday,09:00,17:00,4.50-Classroom B,Faisal Rana
-MBA911,Lecture B,Sunday,09:00,17:00,4.48-Classroom B,Faisal Rana
+MBA911,Lecture B,Sunday,09:00,17:00,5.19-Classroom A,Faisal Rana
 MBA911,Lecture B,Sunday,09:00,17:00,4.50-Classroom B,Faisal Rana
 MBAS901,Lecture A,Saturday,09:00,16:00,6.345-Classroom A 6.34 & 6.35,Prithvi Bhattacharya
 MBAS901,Lecture A,Saturday,09:00,16:00,6.40-Computer Lab Single,Prithvi Bhattacharya
