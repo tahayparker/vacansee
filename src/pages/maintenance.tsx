@@ -1,19 +1,10 @@
 // src/pages/maintenance.tsx
 import React from "react";
 import Head from "next/head";
-import GradientBackground from "@/components/GradientBackground";
-import { DoorOpen, Settings } from "lucide-react";
-import localFont from "next/font/local";
+import { Settings } from "lucide-react";
 import type { GetServerSideProps, NextPage } from "next"; // Import GetServerSideProps
 
-const qurovaFont = localFont({
-  src: "../../public/fonts/Qurova-SemiBold.otf",
-  weight: "600",
-  display: "swap",
-});
-
-// Define a type for the page props (empty in this case if not redirecting)
-interface MaintenancePageProps {}
+interface MaintenancePageProps {} // eslint-disable-line @typescript-eslint/no-empty-object-type
 
 const MaintenancePage: NextPage<MaintenancePageProps> = () => {
   return (
@@ -32,7 +23,7 @@ const MaintenancePage: NextPage<MaintenancePageProps> = () => {
             vacansee is currently undergoing scheduled maintenance.
           </p>
           <p className="text-md text-white/70">
-            We're working hard to improve your experience and will be back
+            We&apos;re working hard to improve your experience and will be back
             online shortly. Thank you for your patience!
           </p>
         </div>
@@ -41,9 +32,9 @@ const MaintenancePage: NextPage<MaintenancePageProps> = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<MaintenancePageProps> = async (
-  context,
-) => {
+export const getServerSideProps: GetServerSideProps<
+  MaintenancePageProps
+> = async () => {
   const isMaintenanceModeActive =
     process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
 
