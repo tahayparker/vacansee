@@ -1,6 +1,8 @@
 # \scripts\scrape_timetable.py
+
 # pylint: disable=invalid-name, too-many-lines, too-many-locals, too-many-statements
 # pylint: disable=too-many-branches, broad-except
+
 
 import argparse
 import csv
@@ -9,7 +11,7 @@ import random
 import re
 import sys
 import time
-import datetime
+import datetime # Ensure datetime is imported
 import traceback
 from pathlib import Path
 from typing import Optional, Dict, List, Any
@@ -30,7 +32,7 @@ MAX_RETRIES = 5
 LINE_LENGTH_LIMIT = 99
 
 
-# --- Helper Function ---
+# --- Helper Functions ---
 def normalize_whitespace(text: Optional[str]) -> str:
     """
     Replaces consecutive whitespace chars with a single space
@@ -39,6 +41,36 @@ def normalize_whitespace(text: Optional[str]) -> str:
     if not isinstance(text, str):
         return ""  # Return empty string for None or non-string types
     return " ".join(text.split())
+
+
+def format_time_to_hh_mm(time_str: Optional[str]) -> str:
+    """
+    Converts a time string from formats like 'H:mm' or 'HH:mm' to 'HH:mm'.
+    Examples: "8:30" -> "08:30", "14:00" -> "14:00".
+    Returns an empty string if the input is None, empty, or just whitespace.
+    Returns the original (normalized) string if parsing fails, with a warning.
+    """
+    if time_str is None:
+        return ""
+
+    normalized_time = normalize_whitespace(time_str)
+    if not normalized_time:  # Handles empty string or string with only whitespace
+        return ""
+
+    try:
+        # datetime.strptime with %H can parse single-digit hours (e.g., "8")
+        # and double-digit hours (e.g., "08" or "14").
+        # It expects minutes to be two digits (e.g., "05", "30").
+        dt_obj = datetime.datetime.strptime(normalized_time, "%H:%M")
+        # datetime.strftime with %H:%M will format it with a leading zero for the hour if needed.
+        return dt_obj.strftime("%H:%M")
+    except ValueError:
+        # This occurs if normalized_time is not in a recognizable "H:M" or "HH:MM" format.
+        print(
+            f"Warning: Could not parse time '{normalized_time}' to HH:MM format. "
+            "Using the normalized original string."
+        )
+        return normalized_time
 
 
 # --- Supabase Client Initialization ---
@@ -469,19 +501,21 @@ class TimetableScraper:
                                 entry.get("type_with_section", "")
                             )
                             day = normalize_whitespace(entry.get("week_day", ""))
-                            start_time_str = normalize_whitespace(
-                                entry.get("start_time", "")
-                            )
-                            end_time_str = normalize_whitespace(
-                                entry.get("end_time", "")
-                            )
+
+                            # Get raw time strings
+                            raw_start_time = entry.get("start_time")
+                            raw_end_time = entry.get("end_time")
+
+                            # Format time strings to HH:mm
+                            start_time_str = format_time_to_hh_mm(raw_start_time)
+                            end_time_str = format_time_to_hh_mm(raw_end_time)
 
                             row_data = {
                                 "SubCode": subcode,
                                 "Class": class_type,
                                 "Day": day,
-                                "StartTime": start_time_str,
-                                "EndTime": end_time_str,
+                                "StartTime": start_time_str, # Use formatted time
+                                "EndTime": end_time_str,   # Use formatted time
                                 "Room": final_room_name,  # Already normalized/mapped
                                 "Teacher": teacher_norm,  # Already normalized
                             }
@@ -507,7 +541,7 @@ class TimetableScraper:
     def scrape(self, output_csv_path: Path) -> bool:
         """Main scraping orchestration logic."""
         print("Starting timetable scraping process...")
-        start_time = time.time()
+        start_time_proc = time.time() # Renamed to avoid conflict with time module
 
         try:
             print("\n--- Step 1: Fetching Base Page ---")
@@ -534,8 +568,8 @@ class TimetableScraper:
             print("\n--- Step 5: Processing Data and Saving to CSV ---")
             self.process_data_to_csv(timetable_data, output_csv_path)
 
-            end_time = time.time()
-            duration = end_time - start_time
+            end_time_proc = time.time() # Renamed to avoid conflict
+            duration = end_time_proc - start_time_proc
             print(f"\nScraping completed successfully in {duration:.2f} seconds.")
             return True
 
@@ -551,16 +585,16 @@ class TimetableScraper:
             cloudscraper.exceptions.CloudflareChallengeError,
             json.JSONDecodeError,
         ) as known_err:
-            end_time = time.time()
-            duration = end_time - start_time
+            end_time_proc = time.time() # Renamed
+            duration = end_time_proc - start_time_proc
             print(
                 f"\nScraping failed after {duration:.2f} seconds: "
                 f"{type(known_err).__name__} - {known_err}"
             )
             return False
         except Exception as unknown_err:  # Catch truly unexpected errors
-            end_time = time.time()
-            duration = end_time - start_time
+            end_time_proc = time.time() # Renamed
+            duration = end_time_proc - start_time_proc
             print(
                 f"\nScraping failed unexpectedly after {duration:.2f} seconds: "
                 f"{type(unknown_err).__name__} - {unknown_err}"
