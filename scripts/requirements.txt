@@ -1,0 +1,6 @@
+beautifulsoup4
+cloudscraper
+httpx
+postgrest
+python-dotenv
+supabase
