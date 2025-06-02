@@ -37,7 +37,9 @@ function isProtectedClientSide(pathname: string): boolean {
   ) {
     return false;
   }
-  return !PUBLIC_PATHS.includes(pathname) && !NO_LAYOUT_PAGES.includes(pathname);
+  return (
+    !PUBLIC_PATHS.includes(pathname) && !NO_LAYOUT_PAGES.includes(pathname)
+  );
 }
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -46,8 +48,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [sessionLoading, setSessionLoading] = useState(true);
   const initialCheckDone = useRef(false);
 
-  const isMaintenanceMode =
-    process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
+  const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
 
   useEffect(() => {
     let isMounted = true;
@@ -105,7 +106,8 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [supabase, sessionLoading]);
 
   const isClientSideProtectedPath = isProtectedClientSide(router.pathname);
-  const showLoader = sessionLoading && isClientSideProtectedPath && !isMaintenanceMode;
+  const showLoader =
+    sessionLoading && isClientSideProtectedPath && !isMaintenanceMode;
 
   if (showLoader) {
     return (
