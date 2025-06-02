@@ -6,8 +6,8 @@
   :root {
     /* Using HSL format (e.g., "240 10% 3.9%") */
     /* --- ADJUST THESE HSL VALUES FOR YOUR THEME --- */
-    --background: 240 10% 3.9%;  /* Default background */
-    --foreground: 0 0% 98%;      /* Default text */
+    --background: 240 10% 3.9%; /* Default background */
+    --foreground: 0 0% 98%; /* Default text */
 
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
@@ -21,16 +21,16 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
 
-    --primary: 0 0% 98%;              /* Primary buttons, accents */
+    --primary: 0 0% 98%; /* Primary buttons, accents */
     --primary-foreground: 240 5.9% 10%; /* Text on primary elements */
 
-    --secondary: 240 3.7% 15.9%;        /* Secondary buttons */
-    --secondary-foreground: 0 0% 98%;   /* Text on secondary elements */
+    --secondary: 240 3.7% 15.9%; /* Secondary buttons */
+    --secondary-foreground: 0 0% 98%; /* Text on secondary elements */
 
-    --accent: 240 3.7% 15.9%;           /* Hover states, subtle highlights */
+    --accent: 240 3.7% 15.9%; /* Hover states, subtle highlights */
     --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;      /* Destructive actions (e.g., delete) */
+    --destructive: 0 62.8% 30.6%; /* Destructive actions (e.g., delete) */
     --destructive-foreground: 0 0% 98%; /* Text on destructive elements */
 
     --ring: 240 4.9% 83.9%; /* Focus rings */
@@ -70,7 +70,7 @@
 
   html,
   body {
-     height: 100%; /* Ensure body can fill height */
+    height: 100%; /* Ensure body can fill height */
   }
 
   body {
@@ -78,7 +78,10 @@
     /* Background/color applied via utilities in _app.tsx */
     @apply antialiased;
     overflow-x: hidden;
-    font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family:
+      var(--font-montserrat), ui-sans-serif, system-ui, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+      "Noto Color Emoji";
   }
 
   /* --- ADD THIS RULE --- */
@@ -102,25 +105,36 @@
   /* --- Targeted font overrides for Shadcn Select and Command Items --- */
   /* Target SelectItem directly */
   .select-item-root, /* Assuming a data-slot or class on SelectItem root */
-  [data-slot='select-item'] { /* More robust selector using data-slot */
-    font-family: var(--font-montserrat), sans-serif !important; /* !important for higher specificity */
+  [data-slot='select-item'] {
+    /* More robust selector using data-slot */
+    font-family:
+      var(--font-montserrat), sans-serif !important; /* !important for higher specificity */
   }
 
   /* Target CommandItem directly */
   .command-item-root, /* Assuming a data-slot or class on CommandItem root */
-  [data-slot='command-item'] { /* More robust selector using data-slot */
-    font-family: var(--font-montserrat), sans-serif !important; /* !important for higher specificity */
+  [data-slot='command-item'] {
+    /* More robust selector using data-slot */
+    font-family:
+      var(--font-montserrat), sans-serif !important; /* !important for higher specificity */
   }
   /* --- End Targeted font overrides --- */
 
-
   /* --- Global Scrollbar Hiding --- */
   body::-webkit-scrollbar,
-  .hide-scrollbar::-webkit-scrollbar { display: none; }
-  body, .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  body,
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
   /* --- End Global Scrollbar Hiding --- */
 }
 
 /* Keep other layers */
-@layer components { }
-@layer utilities { }
+@layer components {
+}
+@layer utilities {
+}
