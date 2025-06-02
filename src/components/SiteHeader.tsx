@@ -159,7 +159,9 @@ interface SiteHeaderProps {
 }
 
 // --- Header Component ---
-export default function SiteHeader({ maintenanceMode = false }: SiteHeaderProps) {
+export default function SiteHeader({
+  maintenanceMode = false,
+}: SiteHeaderProps) {
   // --- State Variables ---
   const [isMounted, setIsMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
