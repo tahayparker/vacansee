@@ -34,12 +34,14 @@ A modern web application designed to help students find available rooms on campu
 ### Installation
 
 1. Clone the repository
+
 ```bash
 git clone https://github.com/tahayparker/vacansee.git
 cd vacansee
 ```
 
 2. Install dependencies
+
 ```bash
 npm install
 # or
@@ -47,17 +49,20 @@ yarn install
 ```
 
 3. Set up environment variables
+
 ```bash
 # Create a .env file with the following variables
 DATABASE_URL="postgresql://username:password@localhost:5432/vacansee"
 ```
 
 4. Initialize the database
+
 ```bash
 npx prisma db push
 ```
 
 5. Run the development server
+
 ```bash
 npm run dev
 # or
@@ -69,6 +74,7 @@ The application will be available at `http://localhost:3000`
 ## Automatic Updates ⚡
 
 The timetable data is automatically updated every day at 00:00 GST (04:00 UTC) using GitHub Actions. The workflow:
+
 1. Scrapes the latest timetable data
 2. Updates the database
 3. Generates a new schedule JSON
@@ -90,17 +96,16 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - Inspired by the need for an easier way to find available rooms
 
 ## Acknowledgments 🙏
+
 - Thank you Mom Dad for not kicking me out of the house
 - Thank you Claude & OpenAI engineers for making a really good product
 - Thank you Cursor devs for making a really really amazing product, and for the free trial
 - Thank you UOWD for finally getting rid of the PDF timetable and switching to the [website](https://my.uowdubai.ac.ae/timetable/viewer) instead (please keep it open for non-authenticated users, otherwise this project will die </3)
-
 
 ## Contact 📧
 
 Taha Parker - [@tahayparker](https://github.com/tahayparker)
 
 Project Link: [https://github.com/tahayparker/vacansee](https://github.com/tahayparker/vacansee)
-
 
 [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/powered-by-black-magic.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/it-works-dont-ask-me-how.svg)](https://forthebadge.com)
