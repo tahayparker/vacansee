@@ -65,11 +65,9 @@ export default async function handler(
   });
 
   if (!roomName || !day || !startTime || !endTime) {
-    return res
-      .status(400)
-      .json({
-        error: "Missing required fields: roomName, day, startTime, endTime",
-      });
+    return res.status(400).json({
+      error: "Missing required fields: roomName, day, startTime, endTime",
+    });
   }
   // Add more validation for time format if needed
 
