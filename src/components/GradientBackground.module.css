@@ -1,34 +1,34 @@
 .gradientBg {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    overflow: hidden;
-    /* Darker radial gradient */
-    background: radial-gradient(circle at center, rgb(25, 0, 50), rgb(0, 5, 20));
-    /* Make background larger than viewport to allow movement */
-    background-size: 400% 400%;
-    /* Apply animation */
-    animation: animateGradient 15s ease infinite;
-    top: 0;
-    left: 0;
-    z-index: 0;
-  }
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  overflow: hidden;
+  /* Darker radial gradient */
+  background: radial-gradient(circle at center, rgb(25, 0, 50), rgb(0, 5, 20));
+  /* Make background larger than viewport to allow movement */
+  background-size: 400% 400%;
+  /* Apply animation */
+  animation: animateGradient 15s ease infinite;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
 
-  /* New keyframes for the background gradient animation */
-  @keyframes animateGradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    25% {
-      background-position: 100% 0%; /* Move top-right */
-    }
-    50% {
-      background-position: 100% 100%; /* Move bottom-right */
-    }
-    75% {
-      background-position: 0% 100%; /* Move bottom-left */
-    }
-    100% {
-      background-position: 0% 50%; /* Return to start */
-    }
+/* New keyframes for the background gradient animation */
+@keyframes animateGradient {
+  0% {
+    background-position: 0% 50%;
   }
+  25% {
+    background-position: 100% 0%; /* Move top-right */
+  }
+  50% {
+    background-position: 100% 100%; /* Move bottom-right */
+  }
+  75% {
+    background-position: 0% 100%; /* Move bottom-left */
+  }
+  100% {
+    background-position: 0% 50%; /* Return to start */
+  }
+}
