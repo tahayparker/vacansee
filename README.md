@@ -92,14 +92,14 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Inspiration ✨
 
-- Built for my friends so they can stop eating my head and finally use a website to search empty rooms
+- Built for my friends so they can stop relying on me
 - Inspired by the need for an easier way to find available rooms
+- Definitely does not have any backstory
 
 ## Acknowledgments 🙏
 
 - Thank you Mom Dad for not kicking me out of the house
-- Thank you Claude & OpenAI engineers for making a really good product
-- Thank you Cursor devs for making a really really amazing product, and for the free trial
+- Thank you Google engineers for making a really good product, and for the free AI Studio that helped me redesign this site
 - Thank you UOWD for finally getting rid of the PDF timetable and switching to the [website](https://my.uowdubai.ac.ae/timetable/viewer) instead (please keep it open for non-authenticated users, otherwise this project will die </3)
 
 ## Contact 📧
