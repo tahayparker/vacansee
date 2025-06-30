@@ -7,8 +7,7 @@ import type { Provider, Session } from "@supabase/supabase-js";
 import Cookies from "js-cookie";
 import { AlertCircle } from "lucide-react";
 
-// --- SVG Icons (Keep as is) ---
-// --- SVG Icons --- (Keep as is)
+// --- SVG Icons ---
 export function Google(
   props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
 ) {
@@ -49,6 +48,24 @@ export function Github(
   );
 }
 
+export function Azure(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 448 512"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fill="#ffffff"
+        d="M0 32h214.6v214.6H0V32zm233.4 0H448v214.6H233.4V32zM0 265.4h214.6V480H0V265.4zm233.4 0H448V480H233.4V265.4z"
+      />
+    </svg>
+  );
+}
+
 // --- Login Page Component ---
 export default function LoginPage() {
   const supabase = getSupabaseBrowserClient();
@@ -56,28 +73,22 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // --- NEW: Check for error query parameter on mount ---
   useEffect(() => {
     if (router.isReady) {
-      // Ensure router.query is populated
       const errorQuery = router.query.error;
       if (typeof errorQuery === "string") {
-        // Decode the error message from URL
         const decodedError = decodeURIComponent(errorQuery.replace(/\+/g, " "));
         console.log("Login page received error query:", decodedError);
         setErrorMessage(decodedError);
-
-        // Clean the URL by removing the error parameter
         const { pathname, query } = router;
-        delete query.error; // Remove error from query object
+        delete query.error;
         router.replace({ pathname, query }, undefined, { shallow: true });
       }
     }
-  }, [router.isReady, router.query.error, router]); // Rerun when query param changes or router is ready
+  }, [router.isReady, router.query.error, router]);
 
-  // Helper to get redirect path (no changes needed here)
   const getRedirectPathFromQuery = (): string => {
-    /* ... */ const nextPath = router.query.next;
+    const nextPath = router.query.next;
     if (typeof nextPath === "string" && nextPath.startsWith("/")) {
       return nextPath;
     }
@@ -86,10 +97,9 @@ export default function LoginPage() {
 
   const handleOAuthLogin = async (provider: Provider) => {
     setIsLoading(true);
-    setErrorMessage(null); // Clear previous errors
-    const redirectURL = window.location.origin + "/api/auth/callback"; // Callback URL
+    setErrorMessage(null);
+    const redirectURL = window.location.origin + "/api/auth/callback";
 
-    // Store redirect path in cookie (no changes needed here)
     const redirectPath = getRedirectPathFromQuery();
     if (redirectPath && redirectPath !== "/") {
       Cookies.set("supabase-redirect-path", redirectPath, {
@@ -108,21 +118,17 @@ export default function LoginPage() {
 
     if (error) {
       console.error(`Error initiating login with ${provider}:`, error.message);
-      // --- CHANGE: Set error message state for client-side errors ---
       setErrorMessage(
         `Failed to start login with ${provider}: ${error.message}. Please try again.`,
       );
       Cookies.remove("supabase-redirect-path", { path: "/" });
-      setIsLoading(false); // Stop loading as initiation failed
+      setIsLoading(false);
     } else {
       console.log(`Redirecting to ${provider} for authentication...`);
-      // Redirect happens automatically, loading state persists until redirect
     }
   };
 
-  // Redirect already logged-in users (no changes needed here)
   useEffect(() => {
-    /* ... existing useEffect for session check ... */
     const checkSession = async () => {
       const {
         data: { session },
@@ -172,14 +178,12 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* --- NEW: Error Alert Display --- */}
           {errorMessage && (
             <div className="rounded-md border border-red-500/60 bg-red-950/50 p-4 text-center text-sm text-red-200 flex items-center justify-center gap-2">
               <AlertCircle className="h-5 w-5 flex-shrink-0 text-red-400" />
               <span>{errorMessage}</span>
             </div>
           )}
-          {/* --- End Error Alert Display --- */}
 
           <div className="space-y-4">
             {/* Google Button */}
@@ -202,6 +206,16 @@ export default function LoginPage() {
             >
               <Github className="size-5" />
               <span>{isLoading ? "Processing..." : "Sign in with GitHub"}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleOAuthLogin("azure")}
+              disabled={isLoading}
+              className="w-full rounded-full border border-solid border-white/[.3] transition-colors flex items-center justify-center gap-3 hover:bg-white/[.1] hover:border-white/[.5] font-medium text-base h-12 px-5 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Azure className="size-5" />
+              <span>{isLoading ? "Processing..." : "Sign in with Azure"}</span>
             </button>
           </div>
         </div>
