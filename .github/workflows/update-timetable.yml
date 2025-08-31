@@ -86,7 +86,20 @@ jobs:
           git commit -m "Update timetable CSV data [skip ci]"
           git push
 
-      - name: Upload Timetable to DB (Step 2)
+      - name: Update Rooms Table in DB (Step 2)
+        id: update_rooms
+        run: |
+          echo "Running rooms update script..."
+          python scripts/update_rooms.py
+          exit_code=$?
+          echo "Room update script finished with exit code $exit_code."
+          if [ $exit_code -ne 0 ]; then
+            echo "::error::Room update script failed with exit code $exit_code!"
+            exit $exit_code
+          fi
+
+
+      - name: Upload Timetable to DB (Step 3)
         id: upload # Add id
         # This step runs regardless of CSV changes now
         run: |
@@ -100,7 +113,7 @@ jobs:
             exit $exit_code
           fi
 
-      - name: Generate Schedule JSON (Step 3)
+      - name: Generate Schedule JSON (Step 4)
         id: generate_json # Add id
         # This step runs regardless of CSV changes now
         run: |
