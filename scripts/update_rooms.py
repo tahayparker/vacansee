@@ -1,4 +1,4 @@
-# \scripts\update_rooms.py
+# \scripts\update_teachers.py
 # Renamed and repurposed from upload_timetable.py
 import csv
 import sys
@@ -30,9 +30,10 @@ except Exception as init_err:
 
 # --- Functions ---
 
+
 def fetch_existing_room_names() -> Set[str]:
     """Fetches all existing room names from the Rooms table."""
-    print(f"Fetching existing teacher names from '{ROOMS_TABLE}' table...")
+    print(f"Fetching existing room names from '{ROOMS_TABLE}' table...")
     existing_names: Set[str] = set()
     try:
         response = supabase.table(ROOMS_TABLE).select("Name").execute()
@@ -45,7 +46,10 @@ def fetch_existing_room_names() -> Set[str]:
             print("No existing rooms found in the database.")
         return existing_names
     except (APIError, RequestError, HTTPStatusError) as db_err:
-        print(f"Error fetching existing rooms: {type(db_err).__name__} - {db_err}", file=sys.stderr)
+        print(
+            f"Error fetching existing rooms: {type(db_err).__name__} - {db_err}",
+            file=sys.stderr,
+        )
     except Exception as e:
         print(f"Unexpected error fetching existing rooms: {e}", file=sys.stderr)
         traceback.print_exc()
@@ -53,7 +57,9 @@ def fetch_existing_room_names() -> Set[str]:
     raise RuntimeError("Failed to fetch existing room names.")
 
 
-def find_new_rooms_from_csv(csv_path: Path, existing_names: Set[str]) -> List[Dict[str, Any]]:
+def find_new_rooms_from_csv(
+    csv_path: Path, existing_names: Set[str]
+) -> List[Dict[str, Any]]:
     """Reads CSV, finds unique room names not in existing_names, and prepares them for insertion."""
     print(f"Reading rooms from CSV: {csv_path}...")
     unique_csv_rooms: Set[str] = set()
@@ -66,19 +72,19 @@ def find_new_rooms_from_csv(csv_path: Path, existing_names: Set[str]) -> List[Di
 
         with csv_path.open("r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
-            if "Name" not in (reader.fieldnames or []):
-                raise ValueError("CSV file must contain a 'Name' column.")
+            if "Room" not in (reader.fieldnames or []):
+                raise ValueError("CSV file must contain a 'Room' column.")
 
             for i, row in enumerate(reader):
                 total_rows_in_csv += 1
-                room_name = row.get("Name")
+                room_name = row.get("Room")
                 # Basic validation and ignore placeholders
-                unique_csv_rooms.add(room_name.strip()) # Add normalized name
+                unique_csv_rooms.add(room_name.strip())  # Add normalized name
                 # else:
-                #     print(f"Debug: Skipping row {i+1} due to missing or placeholder teacher: {teacher_name}")
 
-
-        print(f"Found {len(unique_csv_rooms)} unique, non-placeholder room names in CSV (out of {total_rows_in_csv} rows).")
+        print(
+            f"Found {len(unique_csv_rooms)} unique, non-placeholder room names in CSV (out of {total_rows_in_csv} rows)."
+        )
 
         # Determine which names are new
         new_names = unique_csv_rooms - existing_names
@@ -86,11 +92,13 @@ def find_new_rooms_from_csv(csv_path: Path, existing_names: Set[str]) -> List[Di
 
         # Prepare data for insertion (adjust defaults if needed)
         for name in new_names:
-            new_rooms_to_insert.append({
-                "Name": name,
-                "ShortCode": name.split('-')[0].strip(),
-                "Capacity": ""  # Use empty string ""
-        })
+            new_rooms_to_insert.append(
+                {
+                    "Name": name,
+                    "ShortCode": name.split("-")[0].strip(),
+                    "Capacity": None,  # Use None for NULL
+                }
+            )
 
         return new_rooms_to_insert
 
@@ -99,23 +107,28 @@ def find_new_rooms_from_csv(csv_path: Path, existing_names: Set[str]) -> List[Di
     except (ValueError, csv.Error) as csv_proc_err:
         print(f"Error processing CSV file: {csv_proc_err}", file=sys.stderr)
     except Exception as e:
-        print(f"An unexpected error occurred during CSV processing: {e}", file=sys.stderr)
+        print(
+            f"An unexpected error occurred during CSV processing: {e}", file=sys.stderr
+        )
         traceback.print_exc()
 
-    return [] # Return empty list on failure
+    return []  # Return empty list on failure
+
 
 def insert_new_rooms(new_rooms: List[Dict[str, Any]]) -> bool:
     """Inserts the list of new rooms into the Rooms table."""
     if not new_rooms:
         print("No new rooms to insert.")
-        return True # Technically successful as there was nothing to do
+        return True  # Technically successful as there was nothing to do
 
     print(f"Attempting to insert {len(new_rooms)} new rooms into '{ROOMS_TABLE}'...")
     # Consider batching if the number of new rooms could be very large
     try:
         response = supabase.table(ROOMS_TABLE).insert(new_rooms).execute()
         # Check response for errors if needed, Supabase client might raise exceptions on failure
-        inserted_count = len(response.data) if hasattr(response, "data") else "Unknown number of"
+        inserted_count = (
+            len(response.data) if hasattr(response, "data") else "Unknown number of"
+        )
         print(f"Successfully inserted {inserted_count} new rooms.")
         # You might want more robust error checking based on the response structure
         # if response.error:
@@ -123,26 +136,32 @@ def insert_new_rooms(new_rooms: List[Dict[str, Any]]) -> bool:
         #    return False
         return True
     except (APIError, RequestError, HTTPStatusError) as db_err:
-        print(f"Error inserting new teachers: {type(db_err).__name__} - {db_err}", file=sys.stderr)
+        print(
+            f"Error inserting new rooms: {type(db_err).__name__} - {db_err}",
+            file=sys.stderr,
+        )
     except Exception as e:
-        print(f"Unexpected error inserting new teachers: {e}", file=sys.stderr)
+        print(f"Unexpected error inserting new rooms: {e}", file=sys.stderr)
         traceback.print_exc()
 
     return False
 
+
 # --- Main Execution ---
 if __name__ == "__main__":
-    print("Starting teacher update process...")
+    print("Starting rooms update process...")
     csv_file_path = DEFAULT_CSV_PATH
     final_success = False
     try:
         existing_rooms = fetch_existing_room_names()
         new_room_data = find_new_rooms_from_csv(csv_file_path, existing_rooms)
 
-        if new_room_data is not None: # Check if CSV processing was successful
-             final_success = insert_new_rooms(new_room_data)
+        if new_room_data is not None:  # Check if CSV processing was successful
+            final_success = insert_new_rooms(new_room_data)
         else:
-            print("Teacher update process failed during CSV processing.", file=sys.stderr)
+            print(
+                "Teacher update process failed during CSV processing.", file=sys.stderr
+            )
             final_success = False
 
     except (RuntimeError, Exception) as main_err:
@@ -150,13 +169,14 @@ if __name__ == "__main__":
         final_success = False
     finally:
         # Ensure disconnect happens
-         supabase.rpc("disconnect_db", {}) # Or equivalent disconnect method if available
-         print("Supabase client disconnected (attempted).")
-
+        supabase.rpc(
+            "disconnect_db", {}
+        )  # Or equivalent disconnect method if available
+        print("Supabase client disconnected (attempted).")
 
     if final_success:
-        print("Teacher update script finished successfully.")
+        print("Room update script finished successfully.")
         sys.exit(0)
     else:
-        print("Teacher update script finished with errors.", file=sys.stderr)
+        print("Room update script finished with errors.", file=sys.stderr)
         sys.exit(1)
