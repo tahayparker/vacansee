@@ -1,4 +1,4 @@
-# \scripts\update_teachers.py
+# \scripts\update_rooms.py
 # Renamed and repurposed from upload_timetable.py
 import csv
 import sys
