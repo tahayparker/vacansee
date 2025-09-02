@@ -15,7 +15,7 @@ ACCY121,Tutorial,Thursday,10:30,12:30,2.68-Block 19,Marryam Yasir
 ACCY121,Tutorial,Tuesday,16:30,18:30,5.18-Classroom A,Marryam Yasir
 ACCY121,Tutorial,Friday,14:30,16:30,6.38-Classroom B,Alfiya Thaha
 ACCY121,Tutorial,Friday,10:30,12:30,4.47-Classroom A,Alfiya Thaha
-ACCY121,Tutorial,Wednesday,16:30,18:30,6.40-Computer Lab,Alfiya Thaha
+ACCY121,Tutorial,Wednesday,16:30,18:30,2.71-Block 19,Alfiya Thaha
 ACCY121,Tutorial,Tuesday,16:30,18:30,6.28-Seminar/Tutorial,Alfiya Thaha
 ACCY121,Tutorial,Thursday,08:30,10:30,4.50-Classroom B,Afrah Siddiqui
 ACCY121,Tutorial,Thursday,10:30,12:30,5.17-Classroom VC,Afrah Siddiqui
@@ -109,7 +109,7 @@ BUS101,Tutorial,Monday,10:30,12:30,2.65-Block 19,Shaimaa Elsaid
 BUS101,Tutorial,Tuesday,10:30,12:30,4.50-Classroom B,Shaimaa Elsaid
 BUS101,Tutorial,Monday,14:30,16:30,3.48-Classroom B,Soha Chahine
 BUS101,Tutorial,Wednesday,13:30,15:30,2.70-Block 19,Soha Chahine
-BUS101,Tutorial,Wednesday,16:30,18:30,4.48-Classroom B,Soha Chahine
+BUS101,Tutorial,Wednesday,16:30,18:30,2.68-Block 19,Soha Chahine
 BUS101,Tutorial,Monday,10:30,12:30,4.48-Classroom B,Soha Chahine
 BUS101,Tutorial,Tuesday,14:30,16:30,5.10-Classroom B,Everyl Colaco
 BUS101,Tutorial,Thursday,12:30,14:30,6.38-Classroom B,Flevy Lasrado
@@ -275,7 +275,7 @@ CSIT040,Lecture,Wednesday,14:30,18:30,5.11-Classroom B,Tina Thomas
 CSIT110,Computer Lab,Monday,12:30,14:30,4.42-Computer Lab (Single Screen),George Tsaramirsis
 CSIT110,Computer Lab,Wednesday,12:30,14:30,1.52-Computer Lab Single,Obaid Ullah
 CSIT110,Computer Lab,Tuesday,12:30,14:30,1.52-Computer Lab Single,Syama K
-CSIT110,Computer Lab,Wednesday,16:30,18:30,4.42-Computer Lab (Single Screen),George Tsaramirsis
+CSIT110,Computer Lab,Wednesday,16:30,18:30,6.40-Computer Lab,George Tsaramirsis
 CSIT110,Computer Lab,Monday,14:30,16:30,6.39-Computer Lab,Obaid Ullah
 CSIT110,Computer Lab,Monday,12:30,14:30,6.39-Computer Lab,Obaid Ullah
 CSIT110,Computer Lab,Wednesday,14:30,16:30,6.39-Computer Lab,Salma Zalkha
@@ -869,8 +869,8 @@ MBA908,Lecture A,Saturday,09:00,17:00,3.45-Classroom B,Arijit Sikdar
 MBA908,Lecture B,Sunday,09:00,17:00,3.45-Classroom B,Arijit Sikdar
 MBA909,Lecture A,Saturday,09:00,17:00,3.45-Classroom B,Mohan Guruswamy
 MBA909,Lecture B,Sunday,09:00,17:00,3.45-Classroom B,Mohan Guruswamy
-MBAS900,Lecture,Thursday,18:00,22:00,4.42-Computer Lab (Single Screen),Prithvi Bhattacharya
-MBAS900,Lecture,Thursday,18:00,22:00,4.48-Classroom B,Prithvi Bhattacharya
+MBAS900,Lecture,Wednesday,18:00,22:00,4.42-Computer Lab (Single Screen),Prithvi Bhattacharya
+MBAS900,Lecture,Wednesday,18:00,22:00,4.48-Classroom B,Prithvi Bhattacharya
 MBAS900,Lecture,Tuesday,18:00,22:00,4.42-Computer Lab (Single Screen),Prithvi Bhattacharya
 MBAS900,Lecture,Tuesday,18:00,22:00,4.48-Classroom B,Prithvi Bhattacharya
 MBAS906,Lecture A,Saturday,09:00,16:00,6.40-Computer Lab,Prithvi Bhattacharya
