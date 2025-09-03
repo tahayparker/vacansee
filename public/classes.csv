@@ -13,8 +13,8 @@ ACCY121,Tutorial,Friday,14:30,16:30,6.38-Classroom B,Alfiya Thaha
 ACCY121,Tutorial,Friday,10:30,12:30,4.47-Classroom A,Alfiya Thaha
 ACCY121,Tutorial,Wednesday,16:30,18:30,2.71-Block 19,Alfiya Thaha
 ACCY121,Tutorial,Tuesday,16:30,18:30,6.28-Seminar/Tutorial,Alfiya Thaha
-ACCY121,Tutorial,Thursday,08:30,10:30,4.50-Classroom B,Afrah Siddiqui
-ACCY121,Tutorial,Thursday,10:30,12:30,5.17-Classroom VC,Afrah Siddiqui
+ACCY121,Tutorial,Friday,08:30,10:30,5.12-Informal Classroom,Afrah Siddiqui
+ACCY121,Tutorial,Friday,10:30,12:30,5.12-Informal Classroom,Afrah Siddiqui
 ACCY122,Lecture,Tuesday,14:30,16:30,2.66/67-Combined-Block 19,Muhabie Mengistu
 ACCY122,Tutorial,Wednesday,14:30,16:30,2.61-Block 19,Yusra Ghani
 ACCY122,Tutorial,Thursday,12:30,14:30,2.61-Block 19,Yusra Ghani
@@ -372,7 +372,7 @@ ECON100,Lecture,Monday,14:30,16:30,0.17-Lecture Theatre,Faisal Rana
 ECON100,Lecture,Monday,16:30,18:30,0.17-Lecture Theatre,Faisal Rana
 ECON100,Tutorial,Thursday,12:30,14:30,4.45-Classroom B,Avneet Kaur
 ECON100,Tutorial,Thursday,14:30,16:30,4.45-Classroom B,Avneet Kaur
-ECON100,Tutorial,Friday,08:30,10:30,5.12-Informal Classroom,Avneet Kaur
+ECON100,Tutorial,Friday,08:30,10:30,3.46-Classroom A,Avneet Kaur
 ECON100,Tutorial,Thursday,12:30,14:30,4.50-Classroom B,Raghida Araji
 ECON100,Tutorial,Friday,10:30,12:30,4.45-Classroom B,Raghida Araji
 ECON100,Tutorial,Friday,08:30,10:30,4.45-Classroom B,Raghida Araji
@@ -650,7 +650,7 @@ INE301,Tutorial,Wednesday,16:30,18:30,2.65-Block 19,Amna Moeen
 INE301,Tutorial,Thursday,08:30,10:30,2.61-Block 19,Amna Moeen
 INE301,Tutorial,Thursday,12:30,14:30,3.42-Classroom B,Amna Moeen
 INE301,Tutorial,Friday,10:30,12:30,4.50-Classroom B,Donia Rawashdeh
-INE301,Tutorial,Friday,14:30,16:30,5.12-Informal Classroom,Donia Rawashdeh
+INE301,Tutorial,Friday,08:30,10:30,4.50-Classroom B,Donia Rawashdeh
 INE301,Tutorial,Wednesday,16:30,18:30,3.45-Classroom B,Jourmana Trad
 IRAE135,Lecture,Thursday,14:30,16:30,2.62/63-Combined-Block 19,Noor Suwwan
 IRAE135,Lecture,Wednesday,10:30,12:30,2.62/63-Combined-Block 19,Noor Suwwan
@@ -922,8 +922,8 @@ MMD904,Lecture,Thursday,18:00,22:00,5.15-MAC Lab,Hala Georges
 MMD904,Lecture,Thursday,18:00,22:00,5.17-Classroom VC,Hala Georges
 MMD905,Lecture,Tuesday,18:00,22:00,5.12-Informal Classroom,Aaron Anderson
 MMD905,Lecture,Tuesday,18:00,22:00,5.12-Informal Classroom,Daniel Chedid
-MMD907,Lecture,Wednesday,18:00,22:00,3.42-Classroom B,Michael Mallory
-MMD910,Lecture,Friday,18:00,22:00,6.28-Seminar/Tutorial,Deborah Hardt
+MMD907,Lecture,Friday,18:00,22:00,6.28-Seminar/Tutorial,Michael Mallory
+MMD910,Lecture,Wednesday,18:00,22:00,3.42-Classroom B,Deborah Hardt
 MMMB203,Computer Lab,Tuesday,12:30,14:30,1.48-Thermal Lab,Adjunct 6
 MMMB203,Computer Lab,Tuesday,12:30,14:30,1.49-Manufacturing & Workshop Lab,Adjunct 6
 MMMB203,Computer Lab,Wednesday,08:30,10:30,1.48-Thermal Lab,Adjunct 6
@@ -1046,7 +1046,7 @@ VCD101,Lecture,Monday,12:30,14:30,5.15-MAC Lab,Ludmil Trenkov
 VCD101,Lecture,Monday,10:30,12:30,5.15-MAC Lab,Ludmil Trenkov
 VCD101,Lecture,Tuesday,10:30,12:30,5.15-MAC Lab,Ludmil Trenkov
 VCD101,Tutorial,Tuesday,14:30,16:30,5.15-MAC Lab,Mirna Kamel
-VCD101,Tutorial,Wednesday,14:30,16:30,5.15-MAC Lab,Mirna Kamel
+VCD101,Tutorial,Monday,14:30,16:30,5.15-MAC Lab,Mirna Kamel
 VCD101,Tutorial,Tuesday,16:30,18:30,5.15-MAC Lab,Mirna Kamel
 VCD102,Lecture,Monday,16:30,18:30,5.15-MAC Lab,Hala Georges
 VCD102,Tutorial,Thursday,12:30,14:30,5.15-MAC Lab,Hala Georges
