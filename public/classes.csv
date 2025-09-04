@@ -457,7 +457,7 @@ ECTE477,Computer Lab,Thursday,13:30,16:30,2.51-Project Lab,Kiyan Afsari
 ECTE477,Lecture,Tuesday,08:30,11:30,5.18-Classroom A,Abdsamad Benkrid
 ECTE477,Tutorial,Tuesday,12:30,13:30,3.52-Computer Lab (Network),Abdsamad Benkrid
 ECTE477,Tutorial,Tuesday,13:30,14:30,3.52-Computer Lab (Network),Abdsamad Benkrid
-ECTE498,Lecture,Monday,12:30,14:30,3.46-Classroom A,Haile Rajamani
+ECTE498,Lecture,Monday,12:30,14:30,2.68-Block 19,Haile Rajamani
 EDGC920,Lecture,Tuesday,18:00,22:00,5.19-Classroom A,Afnan Boutrid
 EDGI902,Lecture,Thursday,18:00,22:00,3.48-Classroom B,Christopher Tuffnell
 EDGX901,Lecture,Monday,18:00,22:00,6.38-Classroom B,Muna Amr
@@ -563,10 +563,10 @@ ENGG251,Tutorial,Thursday,08:30,10:30,2.64-Block 19,Mohammad AlRifai
 ENGG251,Tutorial,Tuesday,10:30,12:30,3.48-Classroom B,Mohammad AlRifai
 ENGG251,Tutorial,Thursday,10:30,12:30,2.64-Block 19,Mohammad AlRifai
 ENGG251,Tutorial,Monday,10:30,12:30,5.17-Classroom VC,Thahsin Saidarakath
-ENGG452,Lecture,Monday,12:30,14:30,3.46-Classroom A,Karol Sikora
+ENGG452,Lecture,Monday,12:30,14:30,2.68-Block 19,Karol Sikora
 ENGG461,Computer Lab,Thursday,14:30,16:30,4.42-Computer Lab (Single Screen),Hazem Gouda
-ENGG461,Lecture,Thursday,08:30,11:30,5.10-Classroom B,Hazem Gouda
-ENGG461,Lecture\Tutorial,Thursday,12:30,14:30,5.18-Classroom A,Hazem Gouda
+ENGG461,Lecture,Thursday,08:30,11:30,4.48-Classroom B,Hazem Gouda
+ENGG461,Tutorial,Thursday,12:30,14:30,5.18-Classroom A,Hazem Gouda
 ENGG940,Lecture,Wednesday,18:00,22:00,6.30-Multipurpose - Teaching & Research,Mama Chacha
 ENGG941,Lecture,Friday,18:00,22:00,5.18-Classroom A,Karol Sikora
 ENGG951,Lecture,Thursday,18:00,22:00,5.18-Classroom A,Kamal Jaafar
@@ -588,7 +588,7 @@ FIN223,Tutorial,Friday,08:30,10:30,6.28-Seminar/Tutorial,Lobna Mansour
 FIN223,Tutorial,Wednesday,08:30,10:30,6.38-Classroom B,Katia Lopez
 FIN223,Tutorial,Friday,10:30,12:30,3.45-Classroom B,Katia Lopez
 FIN223,Tutorial,Friday,08:30,10:30,3.45-Classroom B,Katia Lopez
-FIN241,Lecture,Thursday,14:30,16:30,4.44-Classroom B,Faisal Rana
+FIN241,Lecture,Thursday,14:30,16:30,2.62/63-Combined-Block 19,Faisal Rana
 FIN241,Lecture,Thursday,10:30,12:30,3.44-Classroom B,Faisal Rana
 FIN241,Tutorial,Wednesday,10:30,12:30,5.17-Classroom VC,Nada Tchantchane
 FIN241,Tutorial,Wednesday,16:30,18:30,6.28-Seminar/Tutorial,Nada Tchantchane
@@ -597,7 +597,7 @@ FIN241,Tutorial,Monday,13:30,15:30,5.19-Classroom A,Lobna Mansour
 FIN241,Tutorial,Wednesday,10:30,12:30,2.65-Block 19,Lobna Mansour
 FIN241,Tutorial,Monday,10:30,12:30,6.38-Classroom B,Lobna Mansour
 FIN241,Tutorial,Monday,08:30,10:30,6.38-Classroom B,Lobna Mansour
-FIN923,Lecture,Wednesday,18:00,22:00,5.12-Informal Classroom,Burcu Kapar
+FIN923,Lecture,Wednesday,18:00,22:00,5.134-Classroom A 5.13 & 5.14,Burcu Kapar
 FIN924,Lecture,Friday,18:00,22:00,4.44-Classroom B,Osama Al Hares
 FIN950,Lecture,Tuesday,18:00,22:00,6.38-Classroom B,"TBA, 9"
 FIN950,Lecture,Tuesday,18:00,22:00,6.40-Computer Lab,"TBA, 9"
@@ -748,9 +748,9 @@ MARK205,Computer Lab,Thursday,10:30,12:30,4.42-Computer Lab (Single Screen),Ravi
 MARK205,Lecture,Thursday,08:30,10:30,2.62/63-Combined-Block 19,Ravi Chatterjee
 MARK250,Lecture,Wednesday,08:30,10:30,2.66/67-Combined-Block 19,Dina Elnidani
 MARK250,Lecture,Thursday,08:30,10:30,5.11-Classroom B,Dina Elnidani
-MARK250,Tutorial,Thursday,12:30,14:30,6.29-Multipurpose - Teaching & Research,Fatma Sedef
+MARK250,Tutorial,Thursday,12:30,14:30,2.66-Block 19,Fatma Sedef
 MARK250,Tutorial,Wednesday,10:30,12:30,2.64-Block 19,Dina Elnidani
-MARK250,Tutorial,Thursday,10:30,12:30,6.29-Multipurpose - Teaching & Research,Fatma Sedef
+MARK250,Tutorial,Thursday,10:30,12:30,2.65-Block 19,Fatma Sedef
 MARK250,Tutorial,Tuesday,08:30,10:30,6.38-Classroom B,Odelia Mathews
 MARK250,Tutorial,Friday,10:30,12:30,5.18-Classroom A,Odelia Mathews
 MARK250,Tutorial,Friday,08:30,10:30,5.18-Classroom A,Odelia Mathews
@@ -766,7 +766,7 @@ MARK301,Tutorial,Thursday,08:30,10:30,4.45-Classroom B,Khadija AlNofeli
 MARK301,Tutorial,Tuesday,14:30,16:30,3.42-Classroom B,Basila
 MARK301,Tutorial,Wednesday,14:30,16:30,4.50-Classroom B,Basila
 MARK916,Lecture,Tuesday,18:00,22:00,4.50-Classroom B,Sourjo Mukherjee
-MARK935,Lecture,Friday,18:00,22:00,3.46-Classroom A,Sourjo Mukherjee
+MARK935,Lecture,Friday,18:00,22:00,5.134-Classroom A 5.13 & 5.14,Sourjo Mukherjee
 MARK940,Lecture,Monday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Prakash Vel
 MARK940,Lecture,Wednesday,18:00,22:00,6.345-Classroom A 6.34 & 6.35,Prakash Vel
 MARK977,Lecture,Thursday,18:00,22:00,6.38-Classroom B,Munyar Nyadzayo
@@ -810,10 +810,10 @@ MATH255,Computer Lab,Tuesday,16:30,18:30,4.45-Classroom B,Mohamad Klot
 MATH255,Computer Lab,Monday,16:30,18:30,4.48-Classroom B,Mohamad Klot
 MATH255,Computer Lab,Friday,16:30,18:30,3.42-Classroom B,Mohamad Klot
 MATH255,Computer Lab,Wednesday,16:30,18:30,4.45-Classroom B,Mohamad Klot
-MATH255,Computer Lab,Thursday,08:30,10:30,4.48-Classroom B,Sara Majeed
+MATH255,Computer Lab,Thursday,08:30,10:30,5.10-Classroom B,Sara Majeed
 MATH255,Computer Lab,Tuesday,14:30,16:30,2.61-Block 19,Sara Majeed
 MATH255,Computer Lab,Friday,08:30,10:30,4.48-Classroom B,Sara Majeed
-MATH255,Computer Lab,Thursday,10:30,12:30,4.48-Classroom B,Sara Majeed
+MATH255,Computer Lab,Thursday,10:30,12:30,5.10-Classroom B,Sara Majeed
 MATH255,Computer Lab,Thursday,12:30,14:30,2.65-Block 19,Abeer El Khouly
 MATH255,Computer Lab,Thursday,14:30,16:30,2.67-Block 19,Abeer El Khouly
 MATH255,Lecture A,Monday,12:30,14:30,2.62/63-Combined-Block 19,Abdellatif Tchantchane
@@ -949,6 +949,7 @@ MMMB203,Tutorial,Tuesday,16:30,18:30,6.33-Computer Lab,Asarudheen Abdudeen
 MMMB203,Tutorial,Wednesday,14:30,16:30,6.33-Computer Lab,Asarudheen Abdudeen
 MMMB203,Tutorial,Wednesday,10:30,12:30,6.33-Computer Lab,Asarudheen Abdudeen
 OPS802,Lecture,Wednesday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Lina Gharaibeh
+OPS802,Lecture,Tuesday,18:00,22:00,3.45-Classroom B,Lina Gharaibeh
 OPS910,Lecture,Tuesday,18:00,22:00,4.42-Computer Lab (Single Screen),Yiyang Bian
 OPS910,Lecture,Tuesday,18:00,22:00,4.48-Classroom B,Yiyang Bian
 OPS910,Lecture,Monday,18:00,22:00,6.32-Classroom B,Yiyang Bian
