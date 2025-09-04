@@ -33,7 +33,7 @@ ACCY801,Lecture,Tuesday,18:00,22:00,6.345-Classroom A 6.34 & 6.35,Namrata Gupta
 ARA101,Tutorial A,Monday,08:30,10:30,5.18-Classroom A,Katia Freywat
 ARA101,Tutorial A,Monday,10:30,12:30,5.18-Classroom A,Katia Freywat
 ARA101,Tutorial A,Tuesday,13:30,15:30,6.32-Classroom B,Katia Freywat
-ARA101,Tutorial B,Tuesday,15:30,17:30,5.11-Classroom B,Katia Freywat
+ARA101,Tutorial B,Tuesday,15:30,17:30,3.45-Classroom B,Katia Freywat
 ARA101,Tutorial B,Thursday,08:30,10:30,5.12-Informal Classroom,Katia Freywat
 ARA101,Tutorial B,Thursday,12:30,14:30,5.17-Classroom VC,Katia Freywat
 BCM110,Lecture,Monday,14:30,16:30,4.44-Classroom B,Deborah Hardt
@@ -84,7 +84,7 @@ BUS030,Tutorial,Thursday,14:30,16:30,2.65-Block 19,Monika Yadav
 BUS030,Tutorial,Thursday,12:30,14:30,2.70-Block 19,Monika Yadav
 BUS030,Tutorial,Friday,14:30,16:30,3.45-Classroom B,Monika Yadav
 BUS030,Tutorial,Thursday,12:30,14:30,2.71-Block 19,Sina Aneesh
-BUS030,Tutorial,Thursday,14:30,16:30,2.66-Block 19,Sina Aneesh
+BUS030,Tutorial,Thursday,14:30,16:30,2.71-Block 19,Sina Aneesh
 BUS030,Tutorial,Friday,14:30,16:30,4.48-Classroom B,Sina Aneesh
 BUS030,Tutorial,Thursday,14:30,16:30,2.61-Block 19,Sameera Siddiqui
 BUS030,Tutorial,Thursday,12:30,14:30,2.64-Block 19,Sameera Siddiqui
@@ -810,7 +810,8 @@ MATH141,Tutorial,Thursday,10:30,12:30,6.28-Seminar/Tutorial,Bakhtawar Baluch
 MATH141,Tutorial,Thursday,14:30,16:30,2.64-Block 19,Bakhtawar Baluch
 MATH141,Tutorial,Monday,08:30,10:30,4.50-Classroom B,Bakhtawar Baluch
 MATH142,Lecture,Tuesday,08:30,10:30,3.46-Classroom A,Bakhtawar Baluch
-MATH142,Tutorial,Wednesday,12:30,14:30,5.11-Classroom B,Bakhtawar Baluch
+MATH142,Lecture,Tuesday,12:30,14:30,5.19-Classroom A,Bakhtawar Baluch
+MATH142,Tutorial,Wednesday,12:30,14:30,3.48-Classroom B,Bakhtawar Baluch
 MATH255,Computer Lab,Tuesday,16:30,18:30,4.45-Classroom B,Mohamad Klot
 MATH255,Computer Lab,Monday,16:30,18:30,4.48-Classroom B,Mohamad Klot
 MATH255,Computer Lab,Friday,16:30,18:30,3.42-Classroom B,Mohamad Klot
@@ -922,7 +923,7 @@ MMD904,Lecture,Thursday,18:00,22:00,5.15-MAC Lab,Hala Georges
 MMD904,Lecture,Thursday,18:00,22:00,5.17-Classroom VC,Hala Georges
 MMD905,Lecture,Tuesday,18:00,22:00,5.12-Informal Classroom,Aaron Anderson
 MMD905,Lecture,Tuesday,18:00,22:00,5.12-Informal Classroom,Daniel Chedid
-MMD907,Lecture,Friday,18:00,22:00,6.28-Seminar/Tutorial,Michael Mallory
+MMD907,Lecture,Monday,18:00,22:00,5.10-Classroom B,Michael Mallory
 MMD910,Lecture,Wednesday,18:00,22:00,3.42-Classroom B,Deborah Hardt
 MMMB203,Computer Lab,Tuesday,12:30,14:30,1.48-Thermal Lab,Adjunct 6
 MMMB203,Computer Lab,Tuesday,12:30,14:30,1.49-Manufacturing & Workshop Lab,Adjunct 6
