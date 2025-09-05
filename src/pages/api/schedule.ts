@@ -43,6 +43,7 @@ export default async function handler(
       throw new Error("Invalid data format: scheduleData is not an array.");
     }
     console.log("[API Schedule] Successfully read scheduleData.json");
+    console.log(scheduleData);
     return res.status(200).json(scheduleData);
   } catch (error: any) {
     console.error("Error reading or parsing schedule data:", error);
