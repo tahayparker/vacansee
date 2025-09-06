@@ -15,7 +15,9 @@ export default function UnauthorizedPage() {
     const validateAccess = async () => {
       try {
         // Check if user has an active session
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
         if (session) {
           // User is signed in, redirect to homepage
@@ -89,15 +91,16 @@ export default function UnauthorizedPage() {
           Your account is not authorized to access vacansee.
         </p>
         <p className="text-sm text-red-100/90">
-          If you have been given access, please try using the account you
-          signed up with.
+          If you have been given access, please try using the account you signed
+          up with.
           <br />
           <br />
-          If you believe this is an error, please contact the administrator
-          for assistance.
+          If you believe this is an error, please contact the administrator for
+          assistance.
           <br />
           <br />
-          Please click the button below to go home. Your account will be signed out.
+          Please click the button below to go home. Your account will be signed
+          out.
         </p>
         <div className="flex justify-center pt-4">
           <Button
