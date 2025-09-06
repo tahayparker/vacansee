@@ -615,7 +615,9 @@ export default function SiteHeader({
                       className="flex items-center gap-3 w-full p-3 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 ease-in-out mb-3"
                     >
                       <vailaLink.icon className="h-5 w-5 flex-shrink-0 text-purple-400" />
-                      <span className="flex-grow text-base">{vailaLink.name}</span>
+                      <span className="flex-grow text-base">
+                        {vailaLink.name}
+                      </span>
                     </a>
                     <Separator className="bg-white/20 my-3" />
                     {loadingAuth ? (
