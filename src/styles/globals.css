@@ -121,14 +121,29 @@
   /* --- End Targeted font overrides --- */
 
   /* --- Global Scrollbar Hiding --- */
-  body::-webkit-scrollbar,
+  /* Hide scrollbars on all elements while preserving scroll functionality */
+  * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer and Edge */
+  }
+
+  *::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+  }
+
+  /* Ensure scrolling is still possible */
+  html {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Legacy class for backward compatibility */
+  .hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
-  }
-  body,
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
   }
   /* --- End Global Scrollbar Hiding --- */
 }
