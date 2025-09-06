@@ -531,7 +531,7 @@ export default function CheckAvailabilityPage() {
           <Button
             type="submit"
             disabled={isChecking || isLoadingRooms || !!roomFetchError}
-            className="col-span-2 md:flex-1 bg-purple-600 hover:bg-purple-700 text-white rounded-full px-5 py-2.5 text-sm font-medium flex items-center justify-center gap-2 disabled:opacity-60"
+            className="md:flex-1 bg-purple-600 hover:bg-purple-700 text-white rounded-full px-5 py-2.5 text-sm font-medium flex items-center justify-center gap-2 disabled:opacity-60"
           >
             {" "}
             {isChecking ? (
@@ -539,7 +539,8 @@ export default function CheckAvailabilityPage() {
             ) : (
               <Search className="w-4 h-4" />
             )}{" "}
-            Check Availability{" "}
+            <span className="md:hidden">Check</span>
+            <span className="hidden md:inline">Check Availability</span>{" "}
           </Button>
           <Button
             type="button"
