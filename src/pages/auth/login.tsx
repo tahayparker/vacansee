@@ -48,7 +48,9 @@ export function Github(
   );
 }
 
-export function Azure(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+export function Azure(
+  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
+) {
   return (
     <svg
       width="24"
