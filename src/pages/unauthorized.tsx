@@ -3,12 +3,50 @@ import { Button } from "@/components/ui/button";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useRouter } from "next/router";
 import { LogOut, OctagonMinus } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function UnauthorizedPage() {
   const supabase = getSupabaseBrowserClient();
   const router = useRouter();
   const [isSignOutLoading, setIsSignOutLoading] = useState(false);
+  const [isValidating, setIsValidating] = useState(true);
+
+  useEffect(() => {
+    const validateAccess = async () => {
+      try {
+        // Check if user has an active session
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (session) {
+          // User is signed in, redirect to homepage
+          console.log("User is already signed in, redirecting to homepage");
+          router.replace("/");
+          return;
+        }
+
+        // Check if they came from auth flow with signup_disabled error
+        const authError = router.query.auth_error;
+
+        if (authError !== "signup_disabled") {
+          // User didn't come from legitimate auth error, redirect to homepage
+          console.log("No valid auth error found, redirecting to homepage");
+          router.replace("/");
+          return;
+        }
+
+        // Valid access - user is not signed in and came from signup_disabled error
+        setIsValidating(false);
+      } catch (error) {
+        console.error("Error validating access:", error);
+        // On error, redirect to homepage for safety
+        router.replace("/");
+      }
+    };
+
+    if (router.isReady) {
+      validateAccess();
+    }
+  }, [router.isReady, router.query.auth_error, supabase.auth, router]);
 
   const handleSignOut = async () => {
     setIsSignOutLoading(true);
@@ -22,6 +60,17 @@ export default function UnauthorizedPage() {
       router.push("/");
     }
   };
+
+  // Show loading state while validating access
+  if (isValidating) {
+    return (
+      <div className="relative text-center max-w-2xl py-10">
+        <div className="flex justify-center items-center min-h-[200px]">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white/50"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative text-center max-w-2xl py-10">
