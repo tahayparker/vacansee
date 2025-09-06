@@ -98,7 +98,6 @@ jobs:
             exit $exit_code
           fi
 
-
       - name: Upload Timetable to DB (Step 3)
         id: upload # Add id
         # This step runs regardless of CSV changes now
