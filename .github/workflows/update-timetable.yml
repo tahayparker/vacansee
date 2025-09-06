@@ -83,7 +83,7 @@ jobs:
           git config user.name "Taha Parker via GitHub Actions"
           git config user.email "98612931+tahayparker@users.noreply.github.com"
           # File should already be staged from comparison step
-          git commit -m "Update timetable CSV data [skip ci]"
+          git commit -m "Update timetable CSV data [skip deploy]"
           git push
 
       - name: Update Rooms Table in DB (Step 2)
@@ -140,7 +140,7 @@ jobs:
             echo "Changes detected in scheduleData.json. Committing..."
             git config user.name "Taha Parker via GitHub Actions"
             git config user.email "98612931+tahayparker@users.noreply.github.com"
-            git commit -m "Update timetable JSON data [skip ci]"
+            git commit -m "Update timetable JSON data [skip deploy]"
             git push
           else
             echo "No JSON changes to commit (file might be identical or generation failed before check)."
