@@ -318,8 +318,8 @@ export default function GraphPage() {
                               roomData.availability.map((avail, idx) => (
                                 <td
                                   key={idx}
-                                  className={`relative z-0 border-b border-black/50 ${getCellColor(avail)} transition-colors duration-150 group-hover:brightness-110 ${idx === roomData.availability.length - 1 ? "" : "border-r border-black/50"}`}
-                                  title={`${getRoomName(roomData.room)} - ${timeIntervals[idx]}`}
+                                  className={`relative z-0 border-b border-black/50 ${getCellColor(avail)} transition-colors duration-150 group-hover:brightness-110 ${idx === roomData.availability.length - 1 ? "" : "border-r border-black/100"}`}
+                                  title={`${getRoomName(roomData.room)} - ${timeIntervals[idx]} - ${avail === 1 ? "Available" : "Occupied"}`}
                                   style={{ minWidth: "65px" }}
                                 >
                                   <div className="h-6"></div>
