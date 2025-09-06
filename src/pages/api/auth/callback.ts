@@ -45,6 +45,7 @@ export default async function handler(
       `[Callback] Detected signup_disabled error. Redirecting to /unauthorized. Description: ${errorDescription}`,
     );
     const unauthorizedUrl = new URL("/unauthorized", baseUrl);
+    unauthorizedUrl.searchParams.set("auth_error", "signup_disabled");
     res.redirect(unauthorizedUrl.toString()).end();
     return; // Stop processing immediately
   }
