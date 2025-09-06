@@ -14,6 +14,7 @@ import {
   LogIn,
   UserRound,
   LogOut,
+  CalendarCheck,
 } from "lucide-react";
 import {
   Popover,
@@ -23,12 +24,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import localFont from "next/font/local";
+import { Montserrat } from "next/font/google";
 
 // Configure the local font loader
 const qurovaFont = localFont({
   src: "../../public/fonts/Qurova-SemiBold.otf", // Adjust the path as necessary
   weight: "600", // Corresponds to Semibold
   display: "swap", // Good practice for font loading
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 // --- Navigation Items ---
@@ -40,6 +48,13 @@ const navItems = [
   { name: "Room Details", href: "/rooms", icon: BadgeInfo },
 ];
 type NavItemType = (typeof navItems)[0];
+
+// Vaila Link details
+const vailaLink = {
+  name: "vaila",
+  href: "https://vaila.vercel.app/",
+  icon: CalendarCheck,
+};
 
 // --- NavLink Component ---
 const NavLink = React.forwardRef<
@@ -167,6 +182,7 @@ export default function SiteHeader({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hoveredHref, setHoveredHref] = useState<string | null>(null);
   const [isAuthHovered, setIsAuthHovered] = useState(false);
+  const [isVailaLinkHovered, setIsVailaLinkHovered] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const router = useRouter();
   const currentPath = router.pathname;
@@ -257,6 +273,7 @@ export default function SiteHeader({
   const mobileBackdropTransition = { duration: 0.2, ease: "linear" };
   const authLayoutTransition = { type: "spring", stiffness: 400, damping: 30 };
   const authLabelTransition = { duration: 0.2, ease: "easeInOut" };
+  const vailaLabelTransition = { duration: 0.2, ease: "easeInOut" };
   const userDisplayName =
     user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
   const userEmail = user?.email || "No email provided";
@@ -385,7 +402,7 @@ export default function SiteHeader({
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent
-                        className="w-60 bg-gradient-to-br from-[#100643]/65 to-black/60 backdrop-blur-3xl border border-white/15 text-white p-0 mr-4 shadow-xl z-[70]"
+                        className={`w-60 bg-gradient-to-br from-[#100643]/70 to-black/40 backdrop-blur-3xl border border-white/15 text-white p-0 mr-0.25 shadow-xl z-[70] mt-2.5 font-sans ${montserrat.variable}`}
                         align="end"
                       >
                         <div className="p-4">
@@ -406,7 +423,7 @@ export default function SiteHeader({
                         <Button
                           variant="ghost"
                           onClick={handleSignOut}
-                          className="w-full justify-start p-4 text-red-400 hover:text-red-300 hover:bg-white/5 rounded-none rounded-b-md text-sm"
+                          className={`w-full justify-start p-4 text-red-400 hover:text-red-300 hover:bg-white/5 rounded-none rounded-b-md text-sm font-sans ${montserrat.variable}`}
                         >
                           <LogOut className="h-4 w-4 mr-2" /> Sign Out
                         </Button>
@@ -458,6 +475,51 @@ export default function SiteHeader({
                   </motion.div>
                 )}
               </AnimatePresence>
+            </div>
+
+            {/* Vaila Link - DESKTOP */}
+            <div className="hidden md:flex items-center ml-2">
+              <motion.div
+                layout
+                transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                onHoverStart={() => setIsVailaLinkHovered(true)}
+                onHoverEnd={() => setIsVailaLinkHovered(false)}
+                className="flex"
+              >
+                <a
+                  href={vailaLink.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={
+                    `relative flex items-center justify-center rounded-full transition-colors duration-200 ease-in-out overflow-hidden ` +
+                    (isVailaLinkHovered
+                      ? `bg-white/10 px-3 py-1.5 `
+                      : `p-2 hover:bg-white/10 `) +
+                    (isVailaLinkHovered ? "text-white" : "text-white/70")
+                  }
+                >
+                  <vailaLink.icon className="h-5 w-5 flex-shrink-0 text-purple-400" />
+                  <AnimatePresence>
+                    {isVailaLinkHovered && (
+                      <motion.span
+                        key="vaila-label"
+                        initial={{ width: 0, opacity: 0, marginLeft: 0 }}
+                        animate={{
+                          width: "auto",
+                          opacity: 1,
+                          marginLeft: "0.375rem",
+                        }}
+                        exit={{ width: 0, opacity: 0, marginLeft: 0 }}
+                        transition={vailaLabelTransition}
+                        className="text-sm font-medium whitespace-nowrap"
+                        style={{ lineHeight: "normal" }}
+                      >
+                        {vailaLink.name}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </a>
+              </motion.div>
             </div>
 
             {/* Mobile Menu Trigger */}
@@ -544,6 +606,18 @@ export default function SiteHeader({
                   </nav>
                   <Separator className="bg-white/20 my-2" />
                   <div className="mt-auto pt-2">
+                    {/* Vaila Link - MOBILE */}
+                    <a
+                      href={vailaLink.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 w-full p-3 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 ease-in-out mb-3"
+                    >
+                      <vailaLink.icon className="h-5 w-5 flex-shrink-0 text-purple-400" />
+                      <span className="flex-grow text-base">{vailaLink.name}</span>
+                    </a>
+                    <Separator className="bg-white/20 my-2" />
                     {loadingAuth ? (
                       <div className="flex justify-center items-center p-3 h-[76px]">
                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white/50"></div>
