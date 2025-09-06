@@ -214,7 +214,9 @@ export default function GraphPage() {
             >
               <SelectValue placeholder="Select a day" />
             </SelectTrigger>
-            <SelectContent className={`bg-black/80 backdrop-blur-md border-white/20 text-white font-sans ${montserrat.variable}`}>
+            <SelectContent
+              className={`bg-black/80 backdrop-blur-md border-white/20 text-white font-sans ${montserrat.variable}`}
+            >
               {daysOfWeek.map((day, index) => (
                 <SelectItem
                   key={index}
