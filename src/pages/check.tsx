@@ -92,7 +92,6 @@ const montserrat = Montserrat({
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-
 // --- Helper Functions (Unchanged) ---
 function generateTimeSlots(): string[] {
   const slots: string[] = [];
@@ -439,7 +438,9 @@ export default function CheckAvailabilityPage() {
               {" "}
               <SelectValue placeholder="Select a day" />{" "}
             </SelectTrigger>
-            <SelectContent className={`bg-black/80 backdrop-blur-md border-white/20 text-white font-sans ${montserrat.variable} max-h-60`}>
+            <SelectContent
+              className={`bg-black/80 backdrop-blur-md border-white/20 text-white font-sans ${montserrat.variable} max-h-60`}
+            >
               {" "}
               {daysOfWeek.map((d) => (
                 <SelectItem
@@ -473,7 +474,9 @@ export default function CheckAvailabilityPage() {
               {" "}
               <SelectValue placeholder="Select start time" />{" "}
             </SelectTrigger>
-            <SelectContent className={`bg-black/80 backdrop-blur-md border-white/20 text-white max-h-60 font-sans ${montserrat.variable}`}>
+            <SelectContent
+              className={`bg-black/80 backdrop-blur-md border-white/20 text-white max-h-60 font-sans ${montserrat.variable}`}
+            >
               {" "}
               {timeSlots.map((t) => (
                 <SelectItem
@@ -507,7 +510,9 @@ export default function CheckAvailabilityPage() {
               {" "}
               <SelectValue placeholder="Select end time" />{" "}
             </SelectTrigger>
-            <SelectContent className={`bg-black/80 backdrop-blur-md border-white/20 text-white max-h-60 font-sans ${montserrat.variable}`}>
+            <SelectContent
+              className={`bg-black/80 backdrop-blur-md border-white/20 text-white max-h-60 font-sans ${montserrat.variable}`}
+            >
               {" "}
               {timeSlots.map((t) => (
                 <SelectItem
