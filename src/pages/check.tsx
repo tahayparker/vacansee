@@ -46,6 +46,7 @@ import {
   addMinutes,
 } from "date-fns";
 import Fuse from "fuse.js";
+import { Montserrat } from "next/font/google";
 
 // --- Data Structures (Unchanged) ---
 interface RoomListData {
@@ -84,6 +85,13 @@ const daysOfWeek = [
 ];
 const MIN_HOUR = 7;
 const MAX_HOUR = 23;
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
+
 
 // --- Helper Functions (Unchanged) ---
 function generateTimeSlots(): string[] {
@@ -349,7 +357,7 @@ export default function CheckAvailabilityPage() {
               </Button>
             </PopoverTrigger>
             <PopoverContent
-              className="max-h-[--radix-popover-content-available-height] p-0 bg-black/80 backdrop-blur-md border-white/20 text-white"
+              className={`max-h-[--radix-popover-content-available-height] p-0 bg-black/80 backdrop-blur-md border-white/20 text-white font-sans ${montserrat.variable}`}
               style={{
                 fontFamily: "inherit",
                 width: "var(--radix-popover-trigger-width)",
@@ -371,7 +379,7 @@ export default function CheckAvailabilityPage() {
                     placeholder="Search room..."
                     value={searchQuery}
                     onValueChange={setSearchQuery}
-                    className="h-9 text-white placeholder:text-gray-400 border-0 border-b border-white/20 rounded-none ring-offset-0 focus-visible:ring-0 focus-visible:border-b-purple-500"
+                    className={`h-9 text-white placeholder:text-gray-400 border-0 border-b border-white/20 rounded-none ring-offset-0 focus-visible:ring-0 focus-visible:border-b-purple-500 font-sans ${montserrat.variable}`}
                   />
                   <CommandList className="hide-scrollbar">
                     {" "}
@@ -431,7 +439,7 @@ export default function CheckAvailabilityPage() {
               {" "}
               <SelectValue placeholder="Select a day" />{" "}
             </SelectTrigger>
-            <SelectContent className="bg-black/80 backdrop-blur-md border-white/20 text-white">
+            <SelectContent className={`bg-black/80 backdrop-blur-md border-white/20 text-white font-sans ${montserrat.variable} max-h-60`}>
               {" "}
               {daysOfWeek.map((d) => (
                 <SelectItem
@@ -465,7 +473,7 @@ export default function CheckAvailabilityPage() {
               {" "}
               <SelectValue placeholder="Select start time" />{" "}
             </SelectTrigger>
-            <SelectContent className="bg-black/80 backdrop-blur-md border-white/20 text-white max-h-60">
+            <SelectContent className={`bg-black/80 backdrop-blur-md border-white/20 text-white max-h-60 font-sans ${montserrat.variable}`}>
               {" "}
               {timeSlots.map((t) => (
                 <SelectItem
@@ -499,7 +507,7 @@ export default function CheckAvailabilityPage() {
               {" "}
               <SelectValue placeholder="Select end time" />{" "}
             </SelectTrigger>
-            <SelectContent className="bg-black/80 backdrop-blur-md border-white/20 text-white max-h-60">
+            <SelectContent className={`bg-black/80 backdrop-blur-md border-white/20 text-white max-h-60 font-sans ${montserrat.variable}`}>
               {" "}
               {timeSlots.map((t) => (
                 <SelectItem
