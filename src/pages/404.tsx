@@ -5,11 +5,9 @@ import { AlertTriangle } from "lucide-react";
 
 export default function Custom404() {
   // Return only the content container. Centering handled by <main> in _app.tsx
-  // Added py-10 for vertical spacing
   return (
-    <div className="space-y-4 text-center py-10">
+    <div className="space-y-4 text-center">
       {" "}
-      {/* Removed all flex/grow/h-full properties */}
       <AlertTriangle className="mx-auto h-16 w-16 text-yellow-500" />
       <h1 className="text-4xl sm:text-5xl font-bold text-white/90">
         Error 404
