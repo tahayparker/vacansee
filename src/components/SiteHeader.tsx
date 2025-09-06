@@ -588,8 +588,8 @@ export default function SiteHeader({
                 transition={mobilePanelTransition}
               >
                 <div className="max-h-[calc(100vh-6rem)] overflow-y-auto p-4 flex flex-col">
-                  <nav className="mb-4">
-                    <ul className="flex flex-col gap-1">
+                  <nav>
+                    <ul className="flex flex-col gap-2">
                       {navItems.map((navItem) => (
                         <NavLink
                           key={navItem.href}
@@ -604,8 +604,8 @@ export default function SiteHeader({
                       ))}
                     </ul>
                   </nav>
-                  <Separator className="bg-white/20 my-2" />
-                  <div className="mt-auto pt-2">
+                  <Separator className="bg-white/20 my-3" />
+                  <div className="mt-auto">
                     {/* Vaila Link - MOBILE */}
                     <a
                       href={vailaLink.href}
@@ -617,14 +617,14 @@ export default function SiteHeader({
                       <vailaLink.icon className="h-5 w-5 flex-shrink-0 text-purple-400" />
                       <span className="flex-grow text-base">{vailaLink.name}</span>
                     </a>
-                    <Separator className="bg-white/20 my-2" />
+                    <Separator className="bg-white/20 my-3" />
                     {loadingAuth ? (
                       <div className="flex justify-center items-center p-3 h-[76px]">
                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white/50"></div>
                       </div>
                     ) : user ? (
-                      <div className="space-y-3">
-                        <div className="px-3">
+                      <div>
+                        <div className="px-3 py-3">
                           <p
                             className="font-semibold text-sm text-white truncate"
                             title={userDisplayName}
@@ -632,7 +632,7 @@ export default function SiteHeader({
                             {userDisplayName}
                           </p>
                           <p
-                            className="text-xs text-white/60 truncate"
+                            className="text-xs text-white/60 truncate mt-1"
                             title={userEmail}
                           >
                             {userEmail}
