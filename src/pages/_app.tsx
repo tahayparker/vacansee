@@ -143,10 +143,17 @@ export default function App({ Component, pageProps }: AppProps) {
         className={cn(
           "flex flex-col flex-grow items-center z-10 w-full px-4 sm:px-8",
           router.pathname === "/" && !isMaintenanceMode
-            ? "md:justify-center pt-16 md:pt-0"
+            ? "justify-center pt-16 md:pt-0"
             : router.pathname === "/maintenance"
               ? "justify-center pt-16" // Ensure maintenance page content is also centered
-              : "pt-4", // Default for other pages needing header space
+              : router.pathname === "/404"
+                ? "justify-center pt-16" // Center the 404 page content
+                : router.pathname === "/500"
+                  ? "justify-center pt-16" // Center the 500 page content
+                  : router.pathname === "/unauthorized"
+                    ? "justify-center pt-16" // Center the unauthorized page content
+                    : "pt-4", // Default for other pages needing header space
+
         )}
       >
         <Component {...pageProps} />
