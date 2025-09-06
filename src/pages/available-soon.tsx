@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Montserrat } from "next/font/google";
 
 // --- Data Structures ---
 interface AvailableRoomInfo {
@@ -29,11 +30,17 @@ interface ApiErrorResponse {
 
 // --- Duration Options ---
 const durationOptions = [
-  { label: "in 30 minutes", value: 30 },
-  { label: "in 1 hour", value: 60 },
-  { label: "in 1.5 hours", value: 90 },
-  { label: "in 2 hours", value: 120 },
+  { label: "30 minutes", value: 30 },
+  { label: "1 hour", value: 60 },
+  { label: "1.5 hours", value: 90 },
+  { label: "2 hours", value: 120 },
 ];
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
 
 // --- UTC+4 Timezone Identifier ---
 const TARGET_TIMEZONE = "Etc/GMT-4"; // Represents UTC+4
@@ -341,7 +348,7 @@ export default function AvailableSoonPage() {
             htmlFor="duration-select"
             className="text-sm font-medium text-gray-300"
           >
-            Show rooms available:
+            Show rooms available in:
           </label>
           <Select
             value={selectedDuration.toString()}
@@ -349,12 +356,12 @@ export default function AvailableSoonPage() {
           >
             <SelectTrigger
               id="duration-select"
-              className="w-[180px] bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500"
+              className={`w-[180px] bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500 font-sans ${montserrat.variable}`}
             >
               {" "}
               <SelectValue placeholder="Select duration" />{" "}
             </SelectTrigger>
-            <SelectContent className="bg-black/80 backdrop-blur-md border-white/20 text-white">
+            <SelectContent className={`bg-black/80 backdrop-blur-md border-white/20 text-white font-sans ${montserrat.variable}`}>
               {" "}
               {durationOptions.map((option) => (
                 <SelectItem
