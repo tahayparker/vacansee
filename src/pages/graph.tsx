@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { getDay } from "date-fns"; // Import getDay function
 import { AlertCircle } from "lucide-react"; // Import for error display
+import { Montserrat } from "next/font/google";
 
 // --- Data Structures ---
 interface FrontendRoomData {
@@ -62,6 +63,12 @@ const timeIntervals = [
   "21:30",
   "22:00",
 ];
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-montserrat",
+});
 
 // --- Helper to get adjusted day index (Monday=0) ---
 function getAdjustedDayIndex(): number {
@@ -207,7 +214,7 @@ export default function GraphPage() {
             >
               <SelectValue placeholder="Select a day" />
             </SelectTrigger>
-            <SelectContent className="bg-black/80 backdrop-blur-md border-white/20 text-white">
+            <SelectContent className={`bg-black/80 backdrop-blur-md border-white/20 text-white font-sans ${montserrat.variable}`}>
               {daysOfWeek.map((day, index) => (
                 <SelectItem
                   key={index}
