@@ -153,7 +153,6 @@ export default function App({ Component, pageProps }: AppProps) {
                   : router.pathname === "/unauthorized"
                     ? "justify-center pt-16" // Center the unauthorized page content
                     : "pt-4", // Default for other pages needing header space
-
         )}
       >
         <Component {...pageProps} />
