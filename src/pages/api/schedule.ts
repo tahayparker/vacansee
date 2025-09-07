@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 import path from "path";
-// ** REMOVED: import { createSupabaseRouteHandlerClient } from '@/lib/supabase/server'; **
+import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
 
 // Define the expected structure from the JSON file
 interface FrontendRoomData {
@@ -23,9 +23,14 @@ export default async function handler(
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
-  // --- REMOVED Authentication Check ---
-  // Middleware should handle protecting this route if needed.
-  // ---
+  // Add auth check - schedule requires authentication
+  const supabase = createSupabaseRouteHandlerClient(req, res);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) {
+    return res.status(401).json({ error: "Authentication required" });
+  }
 
   const githubUrl =
     "https://raw.githubusercontent.com/tahayparker/vacansee/refs/heads/main/public/scheduleData.json";
@@ -69,12 +74,9 @@ export default async function handler(
 
       if (!fs.existsSync(schedulePath)) {
         console.error(`Schedule data file not found at: ${schedulePath}`);
-        return res
-          .status(404)
-          .json({
-            error:
-              "Schedule data file not found locally and GitHub fetch failed",
-          });
+        return res.status(404).json({
+          error: "Schedule data file not found locally and GitHub fetch failed",
+        });
       }
 
       const fileContents = fs.readFileSync(schedulePath, "utf8");
@@ -94,19 +96,15 @@ export default async function handler(
         localError,
       );
       if (localError instanceof SyntaxError) {
-        return res
-          .status(500)
-          .json({
-            error:
-              "Failed to parse schedule data: Invalid JSON format in both GitHub and local sources.",
-          });
-      }
-      return res
-        .status(500)
-        .json({
+        return res.status(500).json({
           error:
-            "Internal Server Error: Both GitHub and local schedule data sources failed",
+            "Failed to parse schedule data: Invalid JSON format in both GitHub and local sources.",
         });
+      }
+      return res.status(500).json({
+        error:
+          "Internal Server Error: Both GitHub and local schedule data sources failed",
+      });
     }
   }
 }
