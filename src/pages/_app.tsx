@@ -52,6 +52,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     let isMounted = true;
+
     const handleSessionUpdate = (session: Session | null) => {
       if (!isMounted) return;
       console.log(
@@ -64,27 +65,30 @@ export default function App({ Component, pageProps }: AppProps) {
       }
     };
 
-    supabase.auth
-      .getSession()
-      .then(({ data: { session } }) => {
-        if (isMounted) {
-          console.log(
-            "[_app Client] Initial getSession result:",
-            session ? `User ID: ${session.user.id}` : "No session",
-          );
-          handleSessionUpdate(session);
-        }
-      })
-      .catch((error) => {
-        console.error("[_app Client] Initial getSession error:", error);
-        if (isMounted) {
-          handleSessionUpdate(null);
-          if (!initialCheckDone.current) {
-            setSessionLoading(false);
-            initialCheckDone.current = true;
+    // Only fetch session if router is ready to avoid unnecessary calls
+    if (router.isReady) {
+      supabase.auth
+        .getSession()
+        .then(({ data: { session } }) => {
+          if (isMounted) {
+            console.log(
+              "[_app Client] Initial getSession result:",
+              session ? `User ID: ${session.user.id}` : "No session",
+            );
+            handleSessionUpdate(session);
           }
-        }
-      });
+        })
+        .catch((error) => {
+          console.error("[_app Client] Initial getSession error:", error);
+          if (isMounted) {
+            handleSessionUpdate(null);
+            if (!initialCheckDone.current) {
+              setSessionLoading(false);
+              initialCheckDone.current = true;
+            }
+          }
+        });
+    }
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
@@ -93,6 +97,14 @@ export default function App({ Component, pageProps }: AppProps) {
           handleSessionUpdate(session);
           if (initialCheckDone.current && sessionLoading) {
             setSessionLoading(false);
+          }
+
+          // Handle sign out - redirect to home for protected pages
+          if (event === "SIGNED_OUT") {
+            const isProtectedPath = isProtectedClientSide(router.pathname);
+            if (isProtectedPath) {
+              router.replace("/");
+            }
           }
         }
       },
@@ -103,7 +115,7 @@ export default function App({ Component, pageProps }: AppProps) {
       authListener?.subscription.unsubscribe();
       console.log("[_app Client] Unsubscribed from auth state changes.");
     };
-  }, [supabase, sessionLoading]);
+  }, [supabase, sessionLoading, router.isReady, router]);
 
   const isClientSideProtectedPath = isProtectedClientSide(router.pathname);
   const showLoader =
