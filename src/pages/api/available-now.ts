@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma"; // Import Prisma client from lib
 import { DateTime } from "luxon"; // Import Luxon DateTime
+import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
 
 const DUBAI_TIMEZONE = "Asia/Dubai"; // Use standard IANA identifier
 
@@ -35,6 +36,15 @@ export default async function handler(
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);
     return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
+  }
+
+  // Add auth check - available-now requires authentication
+  const supabase = createSupabaseRouteHandlerClient(req, res);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) {
+    return res.status(401).json({ error: "Authentication required" });
   }
 
   try {
