@@ -1,8 +1,7 @@
 // src/pages/api/rooms.ts
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
-// Auth check can be added if room list shouldn't be public
-// import { createSupabaseRouteHandlerClient } from '@/lib/supabase/server';
+import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
 
 // Define the structure for the response data
 interface RoomListData {
@@ -22,11 +21,14 @@ export default async function handler(
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
-  // Optional: Add auth check if needed
-  // const supabase = createSupabaseRouteHandlerClient(req, res);
-  // const { data: { session } } = await supabase.auth.getSession();
-  // if (!session) { return res.status(401).json({ error: 'Authentication required' }); }
-
+  // Add auth check - rooms list requires authentication
+  const supabase = createSupabaseRouteHandlerClient(req, res);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) {
+    return res.status(401).json({ error: "Authentication required" });
+  }
   try {
     const rooms = await prisma.rooms.findMany({
       select: {
