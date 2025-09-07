@@ -2,10 +2,10 @@
 
 /**
  * Vercel Ignored Build Step
- * 
+ *
  * This script tells Vercel whether to skip a build based on the commit message.
  * If the commit message contains "[skip ci]" or "skip deploy", the build will be skipped.
- * 
+ *
  * Exit codes:
  * - 0: Skip the build
  * - 1: Continue with the build
@@ -15,7 +15,7 @@ const { execSync } = require('child_process');
 
 try {
   // Get the latest commit message
-  const commitMessage = execSync('git log -1 --pretty=%B', { 
+  const commitMessage = execSync('git log -1 --pretty=%B', {
     encoding: 'utf8',
     stdio: ['pipe', 'pipe', 'pipe']
   }).trim();
@@ -23,8 +23,8 @@ try {
   console.log('Latest commit message:', commitMessage);
 
   // Check if the commit message contains skip patterns
-  const skipPatterns = ['[skip ci]', 'skip deploy'];
-  const shouldSkip = skipPatterns.some(pattern => 
+  const skipPatterns = ['[skip ci]', '[skip deploy]'];
+  const shouldSkip = skipPatterns.some(pattern =>
     commitMessage.toLowerCase().includes(pattern.toLowerCase())
   );
 
