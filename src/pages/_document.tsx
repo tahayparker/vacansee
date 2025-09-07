@@ -7,10 +7,8 @@ export default function Document() {
       <Head />
       <link rel="icon" href="/favicon.ico" />
       <link rel="manifest" href="/manifest.json" />
-      {/* Apply inline style for initial dark background */}
       <body style={{ backgroundColor: "#0a0a0a" }}>
         {" "}
-        {/* Use your dark theme's background hex */}
         <Main />
         <NextScript />
       </body>
