@@ -59,8 +59,8 @@ BCM215,Lecture,Monday,12:30,14:30,5.11-Classroom B,Jad Yammine
 BCM215,Tutorial,Wednesday,14:30,16:30,2.71-Block 19,Hamda Al Khaja
 BCM215,Tutorial,Thursday,12:30,14:30,6.28-Seminar/Tutorial,Hamda Al Khaja
 BCM215,Tutorial,Thursday,14:30,16:30,6.28-Seminar/Tutorial,Hamda Al Khaja
-BCM216,Lecture,Monday,10:30,12:30,2.61-Block 19,BCM TBD 1
-BCM216,Tutorial,Tuesday,14:30,16:30,5.17-Classroom VC,Jad Yammine
+BCM216,Lecture,Monday,10:30,12:30,2.61-Block 19,Jad Yammine
+BCM216,Tutorial,Tuesday,14:30,16:30,5.17-Classroom VC,Hamda Al Khaja
 BCM216,Tutorial,Tuesday,16:30,18:30,5.17-Classroom VC,Jad Yammine
 BCM216,Tutorial,Monday,16:30,18:30,2.61-Block 19,Jad Yammine
 BCM241,Lecture,Monday,08:30,10:30,2.66/67-Combined-Block 19,Deborah Hardt
@@ -75,7 +75,7 @@ BCM313,Tutorial,Friday,10:30,12:30,5.10-Classroom B,Negin Chabook
 BCM313,Tutorial,Friday,08:30,10:30,5.10-Classroom B,Negin Chabook
 BCM313,Tutorial,Wednesday,12:30,14:30,2.65-Block 19,Negin Chabook
 BCM325,Lecture,Wednesday,12:30,14:30,2.61-Block 19,Aaron Anderson
-BCM325,Tutorial,Thursday,10:30,12:30,3.46-Classroom A,Rahaf Nassif
+BCM325,Tutorial,Thursday,10:30,12:30,4.50-Classroom B,Rahaf Nassif
 BCM325,Tutorial,Friday,08:30,10:30,3.42-Classroom B,Rahaf Nassif
 BUS030,Lecture,Monday,14:30,16:30,6.345-Classroom A 6.34 & 6.35,Monika Yadav
 BUS030,Lecture,Monday,14:30,16:30,2.66/67-Combined-Block 19,Nikita Kirplani
@@ -218,9 +218,9 @@ CSCI291,Computer Lab,Thursday,11:30,14:30,3.47-Game Dev Lab Dual Screens,Eva Bar
 CSCI291,Computer Lab,Friday,09:30,12:30,6.36-Computer Lab (Single Screen),Ashna Sreejith
 CSCI291,Computer Lab,Friday,09:30,12:30,6.36-Computer Lab (Single Screen),Ashna Sreejith
 CSCI291,Lecture,Monday,11:30,13:30,6.32-Classroom B,Abdsamad Benkrid
-CSCI291,Lecture,Wednesday,08:30,10:30,2.62/63-Combined-Block 19,Abdsamad Benkrid
-CSCI291,Workshop,Thursday,08:30,10:30,5.17-Classroom VC,Halima Asif
-CSCI291,Workshop,Thursday,08:30,10:30,5.17-Classroom VC,Kiyan Afsari
+CSCI291,Lecture,Wednesday,08:30,10:30,2.66/67-Combined-Block 19,Abdsamad Benkrid
+CSCI291,Workshop,Thursday,08:30,10:30,4.48-Classroom B,Halima Asif
+CSCI291,Workshop,Thursday,08:30,10:30,4.48-Classroom B,Kiyan Afsari
 CSCI291,Workshop,Wednesday,10:30,12:30,3.48-Classroom B,Halima Asif
 CSCI291,Workshop,Wednesday,10:30,12:30,3.48-Classroom B,Kiyan Afsari
 CSCI291,Workshop,Monday,14:30,16:30,3.42-Classroom B,Ashna Sreejith
@@ -383,9 +383,11 @@ ECON100,Tutorial,Thursday,12:30,14:30,5.10-Classroom B,Aparna Balaji
 ECON100,Tutorial,Thursday,14:30,16:30,5.10-Classroom B,Aparna Balaji
 ECON100,Tutorial,Friday,08:30,10:30,5.17-Classroom VC,Bingren Sun
 ECON100,Tutorial,Friday,10:30,12:30,5.17-Classroom VC,Bingren Sun
-ECON100,Tutorial,Thursday,14:30,16:30,2.70-Block 19,Ayush Mishra
+ECON100,Tutorial,Thursday,14:30,16:30,5.18-Classroom A,Ayush Mishra
 ECON100,Tutorial,Friday,14:30,16:30,5.17-Classroom VC,Bingren Sun
 ECON100,Tutorial,Tuesday,16:30,18:30,3.42-Classroom B,Jourmana Trad
+ECON100,Tutorial,Thursday,10:30,12:30,4.48-Classroom B,Avneet Kaur
+ECON100,Tutorial,Friday,10:30,12:30,3.48-Classroom B,Avneet Kaur
 ECON100,Tutorial,Thursday,08:30,10:30,3.42-Classroom B,Ayush Mishra
 ECON100,Tutorial,Thursday,10:30,12:30,3.42-Classroom B,Ayush Mishra
 ECON100,Tutorial,Friday,14:30,16:30,5.10-Classroom B,Jourmana Trad
@@ -445,7 +447,7 @@ ECTE364,Tutorial,Monday,08:30,10:30,4.51-Tutorial Room,Abeer El Khouly
 ECTE364,Tutorial,Monday,10:30,12:30,4.51-Tutorial Room,Abeer El Khouly
 ECTE364,Tutorial,Monday,08:30,10:30,6.28-Seminar/Tutorial,Mohamed Malek
 ECTE408,Computer Lab,Friday,16:30,18:30,6.40-Computer Lab,Ashna Sreejith
-ECTE408,Lecture,Thursday,09:30,12:30,4.50-Classroom B,Obada Al Khatib
+ECTE408,Lecture,Thursday,09:30,12:30,3.46-Classroom A,Obada Al Khatib
 ECTE408,Tutorial,Thursday,12:30,13:30,4.51-Tutorial Room,Kiyan Afsari
 ECTE408,Tutorial,Friday,15:30,16:30,3.42-Classroom B,Abeer El Khouly
 ECTE423,Computer Lab,Monday,14:30,17:30,1.51-Power Lab,Mohamad Nassereddine
@@ -461,7 +463,7 @@ ECTE498,Lecture,Monday,12:30,14:30,2.68-Block 19,Haile Rajamani
 EDGC920,Lecture,Tuesday,18:00,22:00,5.19-Classroom A,Afnan Boutrid
 EDGI902,Lecture,Thursday,18:00,22:00,3.48-Classroom B,Christopher Tuffnell
 EDGX901,Lecture,Monday,18:00,22:00,6.38-Classroom B,Muna Amr
-EDGZ906,Lecture,Tuesday,18:00,22:00,6.32-Classroom B,Muna Amr
+EDGZ906,Lecture,Tuesday,18:00,22:00,4.48-Classroom B,Muna Amr
 EDGZ921,Lecture,Wednesday,18:00,22:00,4.51-Tutorial Room,Afnan Boutrid
 ENGG102,Computer Lab,Thursday,10:30,12:30,1.53-Chemistry & Materials Science Lab,Dana Ghibeh
 ENGG102,Computer Lab,Wednesday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Dana Ghibeh
@@ -565,14 +567,17 @@ ENGG251,Tutorial,Thursday,10:30,12:30,2.64-Block 19,Mohammad AlRifai
 ENGG251,Tutorial,Monday,10:30,12:30,5.17-Classroom VC,Thahsin Saidarakath
 ENGG452,Lecture,Monday,12:30,14:30,2.68-Block 19,Karol Sikora
 ENGG461,Computer Lab,Thursday,14:30,16:30,4.42-Computer Lab (Single Screen),Hazem Gouda
-ENGG461,Lecture,Thursday,08:30,11:30,4.48-Classroom B,Hazem Gouda
+ENGG461,Computer Lab,Friday,14:30,16:30,4.42-Computer Lab (Single Screen),Hazem Gouda
+ENGG461,Lecture,Thursday,08:30,11:30,5.17-Classroom VC,Hazem Gouda
 ENGG461,Tutorial,Thursday,12:30,14:30,5.18-Classroom A,Hazem Gouda
+ENGG461,Tutorial,Friday,10:30,12:30,2.65-Block 19,Hazem Gouda
 ENGG940,Lecture,Wednesday,18:00,22:00,6.30-Multipurpose - Teaching & Research,Mama Chacha
 ENGG941,Lecture,Friday,18:00,22:00,5.18-Classroom A,Karol Sikora
 ENGG951,Lecture,Thursday,18:00,22:00,5.18-Classroom A,Kamal Jaafar
 ENGG961,Lecture,Tuesday,18:00,22:00,6.29-Multipurpose - Teaching & Research,Adjunct ENGG 3
 ENTR902,Lecture,Tuesday,18:00,22:00,5.11-Classroom B,Marouane Khallouk
 ENTR902,Lecture,Thursday,18:00,22:00,5.11-Classroom B,Marouane Khallouk
+ENTR902,Lecture,Wednesday,18:00,22:00,6.32-Classroom B,Marouane Khallouk
 FIN222,Computer Lab,Friday,08:30,10:30,4.42-Computer Lab (Single Screen),Nikita Kirplani
 FIN222,Computer Lab,Tuesday,12:30,14:30,6.39-Computer Lab,Nikita Kirplani
 FIN222,Computer Lab,Wednesday,08:30,10:30,4.42-Computer Lab (Single Screen),Sherwin Fernandes
@@ -591,16 +596,15 @@ FIN223,Tutorial,Friday,08:30,10:30,3.45-Classroom B,Katia Lopez
 FIN241,Lecture,Thursday,14:30,16:30,2.62/63-Combined-Block 19,Faisal Rana
 FIN241,Lecture,Thursday,10:30,12:30,3.44-Classroom B,Faisal Rana
 FIN241,Tutorial,Wednesday,10:30,12:30,5.17-Classroom VC,Nada Tchantchane
-FIN241,Tutorial,Wednesday,16:30,18:30,6.28-Seminar/Tutorial,Nada Tchantchane
-FIN241,Tutorial,Wednesday,14:30,16:30,6.28-Seminar/Tutorial,Nada Tchantchane
+FIN241,Tutorial,Wednesday,16:30,18:30,5.12-Informal Classroom,Nada Tchantchane
+FIN241,Tutorial,Wednesday,14:30,16:30,4.45-Classroom B,Nada Tchantchane
 FIN241,Tutorial,Monday,13:30,15:30,5.19-Classroom A,Lobna Mansour
 FIN241,Tutorial,Wednesday,10:30,12:30,2.65-Block 19,Lobna Mansour
 FIN241,Tutorial,Monday,10:30,12:30,6.38-Classroom B,Lobna Mansour
 FIN241,Tutorial,Monday,08:30,10:30,6.38-Classroom B,Lobna Mansour
 FIN923,Lecture,Wednesday,18:00,22:00,5.134-Classroom A 5.13 & 5.14,Burcu Kapar
 FIN924,Lecture,Friday,18:00,22:00,4.44-Classroom B,Osama Al Hares
-FIN950,Lecture,Tuesday,18:00,22:00,6.38-Classroom B,"TBA, 9"
-FIN950,Lecture,Tuesday,18:00,22:00,6.40-Computer Lab,"TBA, 9"
+FIN950,Lecture,Tuesday,18:00,22:00,2.70-Block 19,"TBA, 9"
 FIN957,Lecture,Thursday,18:00,22:00,5.12-Informal Classroom,Vikash Ramiah
 FIN960,Lecture,Friday,18:00,22:00,4.45-Classroom B,Kashif Saleem
 FSPD116,Lecture,Tuesday,18:00,20:00,6.30-Multipurpose - Teaching & Research,Sandunie Wijesekara
@@ -653,7 +657,7 @@ INE301,Tutorial,Friday,10:30,12:30,4.50-Classroom B,Donia Rawashdeh
 INE301,Tutorial,Friday,08:30,10:30,4.50-Classroom B,Donia Rawashdeh
 INE301,Tutorial,Wednesday,16:30,18:30,3.45-Classroom B,Jourmana Trad
 IRAE135,Lecture,Wednesday,10:30,12:30,2.62/63-Combined-Block 19,Noor Suwwan
-IRAE135,Lecture,Thursday,12:30,14:30,2.62/63-Combined-Block 19,Noor Suwwan
+IRAE135,Lecture,Thursday,12:30,14:30,4.44-Classroom B,Noor Suwwan
 IRAE135,Tutorial,Wednesday,08:30,10:30,3.45-Classroom B,Dana Charkaoui
 IRAE135,Tutorial,Thursday,10:30,12:30,3.48-Classroom B,Dana Charkaoui
 IRAE135,Tutorial,Wednesday,14:30,16:30,3.42-Classroom B,Noor Suwwan
@@ -746,7 +750,7 @@ MARK205,Computer Lab,Thursday,12:30,14:30,2.50-Computer Lab Single,Nazanin Tahsi
 MARK205,Computer Lab,Thursday,10:30,12:30,6.33-Computer Lab,Nazanin Tahsili
 MARK205,Computer Lab,Thursday,10:30,12:30,4.42-Computer Lab (Single Screen),Ravi Chatterjee
 MARK205,Lecture,Thursday,08:30,10:30,2.62/63-Combined-Block 19,Ravi Chatterjee
-MARK250,Lecture,Wednesday,08:30,10:30,2.66/67-Combined-Block 19,Dina Elnidani
+MARK250,Lecture,Wednesday,08:30,10:30,2.62/63-Combined-Block 19,Dina Elnidani
 MARK250,Lecture,Thursday,08:30,10:30,5.11-Classroom B,Dina Elnidani
 MARK250,Tutorial,Thursday,12:30,14:30,2.66-Block 19,Fatma Sedef
 MARK250,Tutorial,Wednesday,10:30,12:30,2.64-Block 19,Dina Elnidani
@@ -756,7 +760,7 @@ MARK250,Tutorial,Friday,10:30,12:30,5.18-Classroom A,Odelia Mathews
 MARK250,Tutorial,Friday,08:30,10:30,5.18-Classroom A,Odelia Mathews
 MARK250,Tutorial,Tuesday,10:30,12:30,6.38-Classroom B,Odelia Mathews
 MARK250,Tutorial,Thursday,10:30,12:30,5.12-Informal Classroom,Dina Elnidani
-MARK301,Lecture,Thursday,12:30,14:30,6.32-Classroom B,Khadija AlNofeli
+MARK301,Lecture,Thursday,12:30,14:30,2.62/63-Combined-Block 19,Khadija AlNofeli
 MARK301,Lecture,Thursday,14:30,16:30,6.32-Classroom B,Khadija AlNofeli
 MARK301,Tutorial,Wednesday,08:30,10:30,5.19-Classroom A,Umme Kulsoom
 MARK301,Tutorial,Tuesday,08:30,10:30,2.68-Block 19,Umme Kulsoom
@@ -767,6 +771,7 @@ MARK301,Tutorial,Tuesday,14:30,16:30,3.42-Classroom B,Basila
 MARK301,Tutorial,Wednesday,14:30,16:30,4.50-Classroom B,Basila
 MARK916,Lecture,Tuesday,18:00,22:00,4.50-Classroom B,Sourjo Mukherjee
 MARK935,Lecture,Friday,18:00,22:00,5.134-Classroom A 5.13 & 5.14,Sourjo Mukherjee
+MARK935,Lecture,Monday,18:00,22:00,3.44-Classroom B,Sourjo Mukherjee
 MARK940,Lecture,Monday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Prakash Vel
 MARK940,Lecture,Wednesday,18:00,22:00,6.345-Classroom A 6.34 & 6.35,Prakash Vel
 MARK977,Lecture,Thursday,18:00,22:00,6.38-Classroom B,Munyar Nyadzayo
@@ -886,7 +891,7 @@ MGNT110,Tutorial,Wednesday,14:30,16:30,5.18-Classroom A,Muhammad Latif
 MGNT110,Tutorial,Wednesday,16:30,18:30,5.18-Classroom A,Muhammad Latif
 MGNT110,Tutorial,Tuesday,16:30,18:30,2.61-Block 19,Muhammad Latif
 MGNT110,Tutorial,Tuesday,14:30,16:30,2.65-Block 19,Muhammad Latif
-MGNT110,Tutorial,Monday,10:30,12:30,2.68-Block 19,Adjunct Mgmt A
+MGNT110,Tutorial,Monday,10:30,12:30,2.68-Block 19,Ayush Mishra
 MGNT110,Tutorial,Thursday,12:30,14:30,3.48-Classroom B,Sadaf Khurshid
 MGNT110,Tutorial,Wednesday,12:30,14:30,3.42-Classroom B,Ayush Mishra
 MGNT110,Tutorial,Wednesday,14:30,16:30,4.48-Classroom B,Ayush Mishra
@@ -950,8 +955,8 @@ MMMB203,Tutorial,Wednesday,14:30,16:30,6.33-Computer Lab,Asarudheen Abdudeen
 MMMB203,Tutorial,Wednesday,10:30,12:30,6.33-Computer Lab,Asarudheen Abdudeen
 OPS802,Lecture,Wednesday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Lina Gharaibeh
 OPS802,Lecture,Tuesday,18:00,22:00,3.45-Classroom B,Lina Gharaibeh
-OPS910,Lecture,Tuesday,18:00,22:00,4.42-Computer Lab (Single Screen),Yiyang Bian
-OPS910,Lecture,Tuesday,18:00,22:00,4.48-Classroom B,Yiyang Bian
+OPS910,Lecture,Tuesday,18:00,22:00,6.32-Classroom B,Yiyang Bian
+OPS910,Lecture,Tuesday,18:00,22:00,6.40-Computer Lab,Yiyang Bian
 OPS910,Lecture,Monday,18:00,22:00,6.32-Classroom B,Yiyang Bian
 OPS910,Lecture,Monday,18:00,22:00,6.40-Computer Lab,Yiyang Bian
 OPS910,Lecture,Thursday,18:00,22:00,6.32-Classroom B,Ziang Wang
@@ -977,7 +982,7 @@ PSYC120,Tutorial,Monday,14:30,16:30,5.18-Classroom A,Melanie Haughton
 PSYC120,Tutorial,Tuesday,10:30,12:30,3.42-Classroom B,"TBA, 99"
 PSYC120,Tutorial,Tuesday,14:30,16:30,3.46-Classroom A,"TBA, 99"
 PSYC120,Tutorial,Wednesday,12:30,14:30,4.51-Tutorial Room,"TBA, 99"
-PSYC120,Tutorial,Thursday,08:30,10:30,3.46-Classroom A,"TBA, 99"
+PSYC120,Tutorial,Thursday,08:30,10:30,4.50-Classroom B,"TBA, 99"
 PSYC121,Lecture,Thursday,10:30,12:30,2.62/63-Combined-Block 19,Oliver Bones
 PSYC121,Tutorial,Thursday,14:30,16:30,5.17-Classroom VC,Oliver Bones
 PSYC121,Tutorial,Monday,14:30,16:30,6.29-Multipurpose - Teaching & Research,"TBA, 9"
