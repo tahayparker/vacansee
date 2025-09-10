@@ -2,8 +2,8 @@ name: Update Timetable Data
 
 on:
   schedule:
-    # Run every 5 minutes
-    - cron: "0/5 * * * *"
+    # Run every hour at the start of the hour to reduce oscillation
+    - cron: "0 * * * *"
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -128,23 +128,51 @@ jobs:
           # Always assume we might need to commit the JSON after generation
           echo "should_check_commit_json=true" >> $GITHUB_OUTPUT
 
-      - name: Commit and push JSON changes
-        # Check if the previous step indicated we should check for commits
+      - name: Check for meaningful JSON changes
+        id: check_json_changes
         if: steps.generate_json.outputs.should_check_commit_json == 'true'
         run: |
-          echo "Checking for scheduleData.json changes..."
+          echo "Analyzing scheduleData.json changes for significance..."
           # Stage the potentially new/modified JSON file
           git add public/scheduleData.json
-          # Check if there are staged changes to commit before committing
-          if ! git diff --staged --quiet; then
-            echo "Changes detected in scheduleData.json. Committing..."
-            git config user.name "Taha Parker via GitHub Actions"
-            git config user.email "98612931+tahayparker@users.noreply.github.com"
-            git commit -m "Update timetable JSON data [skip deploy]"
-            git push
+          
+          # Check if there are any staged changes at all
+          if git diff --staged --quiet; then
+            echo "No JSON changes detected."
+            echo "json_changed=false" >> $GITHUB_OUTPUT
           else
-            echo "No JSON changes to commit (file might be identical or generation failed before check)."
+            # Check if changes are substantial (more than just minor oscillations)
+            # Use git diff --numstat to get the number of added and deleted lines
+            numstat_output=$(git diff --staged --numstat public/scheduleData.json || echo "0	0	public/scheduleData.json")
+            added_lines=$(echo "$numstat_output" | cut -f1)
+            deleted_lines=$(echo "$numstat_output" | cut -f2)
+            
+            # Calculate total changes (handle cases where values might be empty or non-numeric)
+            changes_count=$((${added_lines:-0} + ${deleted_lines:-0}))
+            echo "Lines added: ${added_lines:-0}, deleted: ${deleted_lines:-0}, total: $changes_count"
+            
+            # Only commit if there are substantial changes (more than 50 lines total)
+            # This helps prevent oscillation commits for minor availability changes
+            if [ "$changes_count" -gt 50 ]; then
+              echo "Substantial changes detected ($changes_count lines). Will commit."
+              echo "json_changed=true" >> $GITHUB_OUTPUT
+            else
+              echo "Minor changes detected ($changes_count lines). Skipping commit to prevent oscillation."
+              echo "json_changed=false" >> $GITHUB_OUTPUT
+              # Unstage the file since we're not committing
+              git reset public/scheduleData.json
+            fi
           fi
+
+      - name: Commit and push JSON changes
+        # Only commit if substantial changes were detected
+        if: steps.check_json_changes.outputs.json_changed == 'true'
+        run: |
+          echo "Committing substantial scheduleData.json changes..."
+          git config user.name "Taha Parker via GitHub Actions"
+          git config user.email "98612931+tahayparker@users.noreply.github.com"
+          git commit -m "Update timetable JSON data [skip deploy]"
+          git push
 
       - name: Cleanup # Optional: Add any other cleanup if needed
         run: |

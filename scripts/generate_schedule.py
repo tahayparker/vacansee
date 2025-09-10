@@ -159,14 +159,42 @@ def fetch_all_timings() -> TimingsDict:
     raise RuntimeError("Failed to fetch timings data.")
 
 
+def parse_time_to_minutes(time_str: str) -> int:
+    """
+    Convert time string (HH:MM) to minutes since midnight for reliable comparison.
+    Returns -1 for invalid time strings.
+    """
+    try:
+        hours, minutes = map(int, time_str.split(':'))
+        return hours * 60 + minutes
+    except (ValueError, AttributeError):
+        return -1
+
+
 def is_slot_available(
     slot_start: str, slot_end: str, room_timings: List[Tuple[str, str]]
 ) -> bool:
     """
     Checks if a given time slot overlaps with any existing timings for a room.
+    Uses minute-based comparison for more reliable results.
     """
+    slot_start_min = parse_time_to_minutes(slot_start)
+    slot_end_min = parse_time_to_minutes(slot_end)
+    
+    # If time parsing failed, assume slot is unavailable for safety
+    if slot_start_min == -1 or slot_end_min == -1:
+        return False
+    
     for timing_start, timing_end in room_timings:
-        if timing_start < slot_end and timing_end > slot_start:
+        timing_start_min = parse_time_to_minutes(timing_start)
+        timing_end_min = parse_time_to_minutes(timing_end)
+        
+        # Skip invalid timing entries
+        if timing_start_min == -1 or timing_end_min == -1:
+            continue
+            
+        # Check for overlap: timing starts before slot ends AND timing ends after slot starts
+        if timing_start_min < slot_end_min and timing_end_min > slot_start_min:
             return False
     return True
 
@@ -213,7 +241,55 @@ def generate_schedule_data(
 
 
 def save_schedule_to_json(schedule_data: List[Dict[str, Any]]) -> bool:
-    """Saves the generated schedule data to a JSON file. Returns True on success."""
+    """
+    Saves the generated schedule data to a JSON file only if there are substantial changes.
+    Returns True on success.
+    """
+    print(f"Checking if schedule needs updating: {OUTPUT_JSON_PATH}...")
+    
+    # Check if existing file exists and compare with new data
+    if OUTPUT_JSON_PATH.exists():
+        try:
+            with OUTPUT_JSON_PATH.open("r", encoding="utf-8") as file:
+                existing_data = json.load(file)
+            
+            # Compare the data structures to see if there are meaningful differences
+            if existing_data == schedule_data:
+                print("No changes detected in schedule data. Skipping update.")
+                return True
+            
+            # Calculate the number of availability changes to detect oscillation
+            changes_count = 0
+            if len(existing_data) == len(schedule_data):
+                for i, day_data in enumerate(schedule_data):
+                    if i < len(existing_data) and "rooms" in day_data and "rooms" in existing_data[i]:
+                        existing_rooms = existing_data[i]["rooms"]
+                        new_rooms = day_data["rooms"]
+                        
+                        for j, room_data in enumerate(new_rooms):
+                            if j < len(existing_rooms) and "availability" in room_data and "availability" in existing_rooms[j]:
+                                existing_avail = existing_rooms[j]["availability"]
+                                new_avail = room_data["availability"]
+                                
+                                # Count differing availability slots
+                                for k in range(min(len(existing_avail), len(new_avail))):
+                                    if existing_avail[k] != new_avail[k]:
+                                        changes_count += 1
+            
+            print(f"Detected {changes_count} availability changes.")
+            
+            # Only update if there are substantial changes (more than 10% of total slots)
+            # This helps prevent minor oscillations from causing constant updates
+            total_slots = len(TIME_SLOTS) * len(DAYS_OF_WEEK) * 50  # Approximate total slots
+            threshold = max(10, total_slots * 0.1)  # At least 10 changes or 10% of total
+            
+            if changes_count < threshold:
+                print(f"Changes ({changes_count}) below threshold ({threshold:.0f}). Skipping update to prevent oscillation.")
+                return True
+                
+        except (json.JSONDecodeError, KeyError, IndexError) as e:
+            print(f"Warning: Could not compare with existing file: {e}. Proceeding with update.")
+    
     print(f"Saving schedule data to JSON file: {OUTPUT_JSON_PATH}...")
     try:
         OUTPUT_JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
