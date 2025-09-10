@@ -27,7 +27,7 @@ ACCY201,Lecture,Wednesday,10:30,13:30,5.134-Classroom A 5.13 & 5.14,Muhabie Meng
 ACCY312,Lecture,Tuesday,10:30,12:30,6.345-Classroom A 6.34 & 6.35,Namrata Gupta
 ACCY312,Tutorial,Thursday,08:30,10:30,2.68-Block 19,Marryam Yasir
 ACCY312,Tutorial,Tuesday,14:30,16:30,5.19-Classroom A,Ali Reza
-ACCY312,Tutorial,Tuesday,12:30,14:30,6.29-Multipurpose - Teaching & Research,Marryam Yasir
+ACCY312,Tutorial,Tuesday,12:30,14:30,4.45-Classroom B,Marryam Yasir
 ACCY801,Lecture,Monday,18:00,22:00,5.17-Classroom VC,Namrata Gupta
 ACCY801,Lecture,Tuesday,18:00,22:00,6.345-Classroom A 6.34 & 6.35,Namrata Gupta
 ARA101,Tutorial A,Monday,08:30,10:30,5.18-Classroom A,Katia Freywat
@@ -37,13 +37,13 @@ ARA101,Tutorial B,Tuesday,15:30,17:30,3.45-Classroom B,Katia Freywat
 ARA101,Tutorial B,Thursday,08:30,10:30,5.12-Informal Classroom,Katia Freywat
 ARA101,Tutorial B,Thursday,12:30,14:30,5.17-Classroom VC,Katia Freywat
 BCM110,Lecture,Monday,14:30,16:30,4.44-Classroom B,Deborah Hardt
-BCM110,Tutorial,Tuesday,08:30,10:30,6.29-Multipurpose - Teaching & Research,Mira Hanafy
+BCM110,Tutorial,Tuesday,08:30,10:30,3.42-Classroom B,Mira Hanafy
 BCM110,Tutorial,Tuesday,12:30,14:30,5.12-Informal Classroom,Mira Hanafy
 BCM110,Tutorial,Thursday,10:30,12:30,6.38-Classroom B,Roaa Ataya
 BCM110,Tutorial,Thursday,08:30,10:30,6.38-Classroom B,Roaa Ataya
 BCM114,Lecture,Tuesday,16:30,18:30,0.17-Lecture Theatre,Michael Mallory
-BCM114,Tutorial,Wednesday,10:30,12:30,6.29-Multipurpose - Teaching & Research,Mira Hanafy
-BCM114,Tutorial,Wednesday,12:30,14:30,6.29-Multipurpose - Teaching & Research,Mira Hanafy
+BCM114,Tutorial,Wednesday,10:30,12:30,5.12-Informal Classroom,Mira Hanafy
+BCM114,Tutorial,Wednesday,12:30,14:30,5.19-Classroom A,Mira Hanafy
 BCM114,Tutorial,Thursday,14:30,16:30,6.30-Multipurpose - Teaching & Research,Mira Hanafy
 BCM114,Tutorial,Wednesday,10:30,12:30,3.45-Classroom B,Roaa Ataya
 BCM114,Tutorial,Wednesday,12:30,14:30,3.45-Classroom B,Roaa Ataya
@@ -97,7 +97,7 @@ BUS101,Tutorial,Tuesday,12:30,14:30,5.18-Classroom A,Donia Rawashdeh
 BUS101,Tutorial,Tuesday,14:30,16:30,5.18-Classroom A,Donia Rawashdeh
 BUS101,Tutorial,Wednesday,16:30,18:30,5.10-Classroom B,Everyl Colaco
 BUS101,Tutorial,Tuesday,16:30,18:30,5.10-Classroom B,Everyl Colaco
-BUS101,Tutorial,Monday,10:30,12:30,2.65-Block 19,Shaimaa Elsaid
+BUS101,Tutorial,Monday,10:30,12:30,3.45-Classroom B,Shaimaa Elsaid
 BUS101,Tutorial,Tuesday,10:30,12:30,4.50-Classroom B,Shaimaa Elsaid
 BUS101,Tutorial,Monday,14:30,16:30,3.48-Classroom B,Soha Chahine
 BUS101,Tutorial,Wednesday,13:30,15:30,2.70-Block 19,Soha Chahine
@@ -145,6 +145,7 @@ BUS201,Tutorial,Wednesday,14:30,16:30,6.38-Classroom B,Ira Miguel
 BUS201,Tutorial,Wednesday,16:30,18:30,3.48-Classroom B,Khaled Eid
 BUS331,Lecture,Wednesday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Jaeyoung Cho
 BUS331,Lecture,Wednesday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Subhadeep Datta
+BUS331,Lecture,Tuesday,12:30,14:30,4.44-Classroom B,Jaeyoung Cho
 BUS331,Lecture,Tuesday,12:30,14:30,4.44-Classroom B,Subhadeep Datta
 BUS331,Tutorial,Wednesday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Subhadeep Datta
 BUS331,Tutorial,Wednesday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Shehnaz Al-Helo
@@ -537,15 +538,15 @@ ENGG105,Lecture,Tuesday,16:30,18:30,3.44-Classroom B,Karol Sikora
 ENGG105,Lecture,Tuesday,14:30,16:30,3.44-Classroom B,Karol Sikora
 ENGG105,Lecture,Monday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Karol Sikora
 ENGG105,Lecture,Thursday,11:30,13:30,4.467-Classroom A 4.46 & 4.47,Karol Sikora
-ENGG105,Tutorial,Monday,08:30,10:30,6.29-Multipurpose - Teaching & Research,Mohammad AlRifai
-ENGG105,Tutorial,Monday,10:30,12:30,6.29-Multipurpose - Teaching & Research,Mohammad AlRifai
+ENGG105,Tutorial,Monday,08:30,10:30,2.65-Block 19,Mohammad AlRifai
+ENGG105,Tutorial,Monday,10:30,12:30,2.65-Block 19,Mohammad AlRifai
 ENGG105,Tutorial,Tuesday,10:30,12:30,6.28-Seminar/Tutorial,Sana Sahir
 ENGG105,Tutorial,Thursday,14:30,16:30,6.29-Multipurpose - Teaching & Research,Mohammad AlRifai
 ENGG105,Tutorial,Wednesday,10:30,12:30,6.28-Seminar/Tutorial,Thahsin Saidarakath
 ENGG105,Tutorial,Wednesday,14:30,16:30,5.19-Classroom A,Thahsin Saidarakath
 ENGG105,Tutorial,Wednesday,08:30,10:30,6.28-Seminar/Tutorial,Thahsin Saidarakath
 ENGG105,Tutorial,Tuesday,14:30,16:30,4.45-Classroom B,Thahsin Saidarakath
-ENGG105,Tutorial,Wednesday,08:30,10:30,6.29-Multipurpose - Teaching & Research,Aghead Al Arnaout
+ENGG105,Tutorial,Wednesday,08:30,10:30,5.12-Informal Classroom,Aghead Al Arnaout
 ENGG105,Tutorial,Tuesday,10:30,12:30,5.10-Classroom B,Eva Barbulescu
 ENGG105,Tutorial,Tuesday,14:30,16:30,5.12-Informal Classroom,Aghead Al Arnaout
 ENGG105,Tutorial,Tuesday,08:30,10:30,4.45-Classroom B,Eva Barbulescu
@@ -608,29 +609,34 @@ FIN950,Lecture,Tuesday,18:00,22:00,2.70-Block 19,"TBA, 9"
 FIN957,Lecture,Thursday,18:00,22:00,5.12-Informal Classroom,Vikash Ramiah
 FIN960,Lecture,Friday,18:00,22:00,4.45-Classroom B,Kashif Saleem
 FSPD116,Lecture,Tuesday,18:00,20:00,6.30-Multipurpose - Teaching & Research,Sandunie Wijesekara
-GESF000,Tutorial A,Monday,08:30,13:30,4.53-Seminar/Tutorial,Unknown
-GESF000,Tutorial B,Tuesday,08:30,13:30,4.53-Seminar/Tutorial,Unknown
-GESF000,Tutorial C,Wednesday,08:30,13:30,4.53-Seminar/Tutorial,Unknown
-GESF000,Tutorial D,Thursday,08:30,13:30,4.53-Seminar/Tutorial,Unknown
-GESF000,Tutorial E,Friday,08:30,12:30,4.53-Seminar/Tutorial,Unknown
-GESF100,Tutorial A,Monday,08:30,13:30,5.08-Seminar / Tutorial,Unknown
-GESF100,Tutorial B,Tuesday,08:30,13:30,5.08-Seminar / Tutorial,Unknown
-GESF100,Tutorial C,Wednesday,08:30,13:30,5.08-Seminar / Tutorial,Unknown
-GESF100,Tutorial D,Thursday,08:30,13:30,5.08-Seminar / Tutorial,Unknown
-GESF100,Tutorial E,Friday,08:30,12:30,5.08-Seminar / Tutorial,Unknown
-GESF200,Tutorial A,Monday,08:30,13:30,6.30-Multipurpose - Teaching & Research,Unknown
-GESF200,Tutorial B,Tuesday,08:30,13:30,6.30-Multipurpose - Teaching & Research,Unknown
-GESF200,Tutorial C,Wednesday,08:30,13:30,6.30-Multipurpose - Teaching & Research,Unknown
-GESF200,Tutorial D,Thursday,08:30,13:30,6.30-Multipurpose - Teaching & Research,Unknown
-GESF200,Tutorial E,Friday,08:30,12:30,6.30-Multipurpose - Teaching & Research,Unknown
+GESF000,Tutorial A,Monday,08:30,13:30,4.53-Seminar/Tutorial,Rachel Gillner
+GESF000,Tutorial B,Tuesday,08:30,13:30,4.53-Seminar/Tutorial,Rachel Gillner
+GESF000,Tutorial C,Wednesday,08:30,13:30,4.53-Seminar/Tutorial,Hortence Kenswil
+GESF000,Tutorial D,Thursday,08:30,13:30,4.53-Seminar/Tutorial,Hortence Kenswil
+GESF000,Tutorial E,Friday,08:30,12:30,4.53-Seminar/Tutorial,Hortence Kenswil
+GESF100,Tutorial A,Monday,08:30,13:30,5.08-Seminar / Tutorial,Fauzia Rafi
+GESF100,Tutorial B,Tuesday,08:30,13:30,5.08-Seminar / Tutorial,Fauzia Rafi
+GESF100,Tutorial C,Wednesday,08:30,13:30,5.08-Seminar / Tutorial,Fauzia Rafi
+GESF100,Tutorial D,Thursday,08:30,13:30,5.08-Seminar / Tutorial,Fauzia Rafi
+GESF100,Tutorial E,Friday,08:30,12:30,5.08-Seminar / Tutorial,Fauzia Rafi
+GESF200,Tutorial A,Monday,08:30,13:30,6.30-Multipurpose - Teaching & Research,Magdalena Halim
+GESF200,Tutorial B,Tuesday,08:30,13:30,6.30-Multipurpose - Teaching & Research,Magdalena Halim
+GESF200,Tutorial C,Wednesday,08:30,13:30,6.30-Multipurpose - Teaching & Research,Magdalena Halim
+GESF200,Tutorial D,Thursday,08:30,13:30,6.30-Multipurpose - Teaching & Research,Magdalena Halim
+GESF200,Tutorial E,Friday,08:30,12:30,6.30-Multipurpose - Teaching & Research,Magdalena Halim
+GESF300,Tutorial A,Monday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Alison Webster
+GESF300,Tutorial B,Tuesday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Alison Webster
+GESF300,Tutorial C,Wednesday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Alison Webster
+GESF300,Tutorial D,Thursday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Alison Webster
+GESF300,Tutorial E,Friday,08:30,12:30,6.29-Multipurpose - Teaching & Research,Alison Webster
 HUM040,Lecture,Monday,16:30,18:30,3.46-Classroom A,Afnan Boutrid
 HUM040,Tutorial,Friday,10:30,12:30,4.48-Classroom B,Afnan Boutrid
 HUM040,Tutorial,Friday,14:30,16:30,4.51-Tutorial Room,Afnan Boutrid
-IELT200,Tutorial A,Monday,18:00,21:00,5.08-Seminar / Tutorial,"IELTS, Adjunct1"
-IELT200,Tutorial B,Tuesday,18:00,21:00,5.08-Seminar / Tutorial,"IELTS, Adjunct1"
-IELT200,Tutorial C,Wednesday,18:00,21:00,5.08-Seminar / Tutorial,"IELTS, Adjunct1"
-IELT200,Tutorial D,Thursday,18:00,21:00,5.08-Seminar / Tutorial,"IELTS, Adjunct1"
-IELT200,Tutorial E,Friday,18:00,21:00,5.08-Seminar / Tutorial,"IELTS, Adjunct1"
+IELT200,Tutorial A,Monday,18:00,21:00,5.08-Seminar / Tutorial,Ferzana Aslam
+IELT200,Tutorial B,Tuesday,18:00,21:00,5.08-Seminar / Tutorial,Ferzana Aslam
+IELT200,Tutorial C,Wednesday,18:00,21:00,5.08-Seminar / Tutorial,Ferzana Aslam
+IELT200,Tutorial D,Thursday,18:00,21:00,5.08-Seminar / Tutorial,Ferzana Aslam
+IELT200,Tutorial E,Friday,18:00,21:00,5.08-Seminar / Tutorial,Ferzana Aslam
 IFBS002,Tutorial A,Tuesday,16:30,18:30,4.51-Tutorial Room,Sadaf Khurshid
 IFBS002,Tutorial B,Wednesday,14:30,16:30,5.08-Seminar / Tutorial,Sadaf Khurshid
 IFCH002,Computer Lab,Wednesday,18:30,19:30,1.53-Chemistry & Materials Science Lab,Akanksha Singh
@@ -640,11 +646,13 @@ IFEC002,Tutorial A,Monday,14:30,16:30,5.08-Seminar / Tutorial,Asima Shirazi
 IFEC002,Tutorial B,Tuesday,14:30,16:30,5.08-Seminar / Tutorial,Asima Shirazi
 IFME002,Tutorial A,Tuesday,12:30,14:30,5.10-Classroom B,Ziad Choucair
 IFME002,Tutorial B,Friday,14:30,16:30,4.53-Seminar/Tutorial,Ziad Choucair
-IFPH002,Computer Lab,Friday,11:30,12:30,3.53-Physics/Robotics Lab,Baharek Tajali
-IFPH002,Tutorial A,Monday,14:30,16:30,4.53-Seminar/Tutorial,Baharek Tajali
-IFPH002,Tutorial B,Friday,09:30,11:30,2.61-Block 19,Baharek Tajali
-IFRC002,Tutorial A,Wednesday,12:30,14:30,4.48-Classroom B,Unknown
-IFRC002,Tutorial B,Monday,16:30,18:30,3.45-Classroom B,Unknown
+IFPH002,Computer Lab,Monday,11:30,12:30,3.53-Physics/Robotics Lab,Baharek Tajali
+IFPH002,Tutorial A,Monday,08:30,10:30,2.64-Block 19,Baharek Tajali
+IFPH002,Tutorial B,Monday,12:30,14:30,3.45-Classroom B,Baharek Tajali
+IFRC002,Tutorial A,Monday,16:30,18:30,3.45-Classroom B,Ajrina Hysaj
+IFRC002,Tutorial A,Wednesday,12:30,14:30,4.48-Classroom B,Ajrina Hysaj
+IFRC002,Tutorial B,Wednesday,16:30,18:30,2.61-Block 19,Ajrina Hysaj
+IFRC002,Tutorial B,Friday,10:30,12:30,4.46-Classroom A,Ajrina Hysaj
 IFSC001,Tutorial A,Friday,08:30,12:30,2.67-Block 19,Amina Khan
 INE301,Lecture,Wednesday,12:30,14:30,2.62/63-Combined-Block 19,Marouane Khallouk
 INE301,Lecture,Wednesday,14:30,16:30,2.62/63-Combined-Block 19,Marouane Khallouk
@@ -665,7 +673,7 @@ IRAE135,Tutorial,Thursday,14:30,16:30,2.66-Block 19,Noor Suwwan
 IRAE135,Tutorial,Monday,12:30,14:30,2.64-Block 19,Aswina Sreekumar
 IRAE135,Tutorial,Thursday,08:30,10:30,2.67-Block 19,Dana Charkaoui
 IRAE135,Tutorial,Friday,08:30,10:30,2.65-Block 19,Dana Charkaoui
-IRAE135,Tutorial,Wednesday,12:30,14:30,2.71-Block 19,Aswina Sreekumar
+IRAE135,Tutorial,Wednesday,12:30,14:30,4.467-Classroom A 4.46 & 4.47,Aswina Sreekumar
 ISIT040,Lecture,Thursday,08:30,12:30,6.32-Classroom B,Abdullah El Nokiti
 ISIT040,Lecture,Thursday,08:30,12:30,6.32-Classroom B,Omar Daoudi
 ISIT040,Lecture,Thursday,08:30,12:30,6.32-Classroom B,Tauqeer Faiz
@@ -689,34 +697,34 @@ ISIT312,Tutorial,Wednesday,08:30,09:30,5.18-Classroom A,Asma Damankesh
 ISIT312,Tutorial,Wednesday,09:30,10:30,5.18-Classroom A,Asma Damankesh
 ISIT312,Tutorial,Monday,13:30,14:30,5.17-Classroom VC,Abdullah El Nokiti
 ISIT312,Tutorial,Monday,14:30,15:30,5.17-Classroom VC,Abdullah El Nokiti
-LANG030,Tutorial A,Tuesday,14:30,17:30,4.50-Classroom B,LANG TBD1
-LANG030,Tutorial A,Wednesday,10:30,13:30,6.345-Classroom A 6.34 & 6.35,LANG TBD7
-LANG030,Tutorial A,Monday,08:30,11:30,5.19-Classroom A,LANG TBD2
-LANG030,Tutorial A,Wednesday,09:30,12:30,4.48-Classroom B,LANG TBD2
-LANG030,Tutorial A,Monday,09:30,12:30,2.70-Block 19,LANG TBD3
-LANG030,Tutorial A,Tuesday,10:30,13:30,2.71-Block 19,LANG TBD3
-LANG030,Tutorial B,Thursday,13:30,16:30,4.467-Classroom A 4.46 & 4.47,LANG TBD1
-LANG030,Tutorial B,Thursday,08:30,11:30,2.66-Block 19,LANG TBD7
-LANG030,Tutorial B,Friday,14:30,17:30,6.28-Seminar/Tutorial,LANG TBD2
-LANG030,Tutorial B,Thursday,13:30,16:30,5.11-Classroom B,LANG TBD2
-LANG030,Tutorial B,Thursday,09:30,12:30,2.70-Block 19,LANG TBD3
-LANG030,Tutorial B,Friday,09:30,12:30,2.64-Block 19,LANG TBD3
-LANG040,Tutorial A,Tuesday,09:30,11:30,2.61-Block 19,LANG TBD4
-LANG040,Tutorial A,Monday,12:30,14:30,5.18-Classroom A,LANG TBD4
-LANG040,Tutorial A,Monday,08:30,10:30,5.10-Classroom B,LANG TBD4
-LANG040,Tutorial A,Monday,08:30,10:30,4.45-Classroom B,LANG TBD5
-LANG040,Tutorial A,Monday,12:30,14:30,5.12-Informal Classroom,LANG TBD5
-LANG040,Tutorial A,Thursday,08:30,10:30,3.48-Classroom B,LANG TBD5
-LANG040,Tutorial A,Monday,12:30,14:30,2.61-Block 19,LANG TBD6
-LANG040,Tutorial A,Monday,08:30,10:30,5.17-Classroom VC,LANG TBD6
-LANG040,Tutorial B,Wednesday,08:30,10:30,2.71-Block 19,LANG TBD4
-LANG040,Tutorial B,Wednesday,10:30,12:30,2.70-Block 19,LANG TBD4
-LANG040,Tutorial B,Tuesday,14:30,16:30,3.48-Classroom B,LANG TBD4
-LANG040,Tutorial B,Thursday,10:30,12:30,4.45-Classroom B,LANG TBD5
-LANG040,Tutorial B,Friday,08:30,10:30,2.68-Block 19,LANG TBD5
-LANG040,Tutorial B,Friday,10:30,12:30,2.70-Block 19,LANG TBD5
-LANG040,Tutorial B,Tuesday,16:30,18:30,3.46-Classroom A,LANG TBD6
-LANG040,Tutorial B,Tuesday,13:30,15:30,5.11-Classroom B,LANG TBD6
+LANG030,Tutorial A,Tuesday,14:30,17:30,4.50-Classroom B,Sabina Ashraf
+LANG030,Tutorial A,Wednesday,10:30,13:30,6.345-Classroom A 6.34 & 6.35,Sonia Adams
+LANG030,Tutorial A,Monday,08:30,11:30,5.19-Classroom A,Ajrina Hysaj
+LANG030,Tutorial A,Wednesday,09:30,12:30,4.48-Classroom B,Ferzana Aslam
+LANG030,Tutorial A,Monday,09:30,12:30,2.70-Block 19,Nicola Sabry
+LANG030,Tutorial A,Tuesday,10:30,13:30,2.71-Block 19,Ferzana Aslam
+LANG030,Tutorial B,Thursday,13:30,16:30,4.467-Classroom A 4.46 & 4.47,Sabina Ashraf
+LANG030,Tutorial B,Thursday,08:30,11:30,2.66-Block 19,Sonia Adams
+LANG030,Tutorial B,Friday,14:30,17:30,6.28-Seminar/Tutorial,Ajrina Hysaj
+LANG030,Tutorial B,Thursday,13:30,16:30,5.11-Classroom B,Ferzana Aslam
+LANG030,Tutorial B,Thursday,09:30,12:30,2.70-Block 19,Nicola Sabry
+LANG030,Tutorial B,Friday,09:30,12:30,2.64-Block 19,Ferzana Aslam
+LANG040,Tutorial A,Tuesday,09:30,11:30,2.61-Block 19,Sonia Adams
+LANG040,Tutorial A,Monday,12:30,14:30,5.18-Classroom A,Nicola Sabry
+LANG040,Tutorial A,Monday,08:30,10:30,5.10-Classroom B,Ferzana Aslam
+LANG040,Tutorial A,Monday,08:30,10:30,4.45-Classroom B,Sabina Ashraf
+LANG040,Tutorial A,Monday,12:30,14:30,5.12-Informal Classroom,Sonia Adams
+LANG040,Tutorial A,Wednesday,08:30,10:30,2.68-Block 19,Nicola Sabry
+LANG040,Tutorial A,Monday,12:30,14:30,2.61-Block 19,Hortence Kenswil
+LANG040,Tutorial A,Monday,08:30,10:30,5.17-Classroom VC,Hortence Kenswil
+LANG040,Tutorial B,Wednesday,08:30,10:30,2.71-Block 19,Sonia Adams
+LANG040,Tutorial B,Wednesday,10:30,12:30,2.70-Block 19,Nicola Sabry
+LANG040,Tutorial B,Tuesday,14:30,16:30,3.48-Classroom B,Ferzana Aslam
+LANG040,Tutorial B,Thursday,10:30,12:30,4.45-Classroom B,Sabina Ashraf
+LANG040,Tutorial B,Friday,08:30,10:30,2.70-Block 19,Sonia Adams
+LANG040,Tutorial B,Friday,10:30,12:30,2.70-Block 19,Nicola Sabry
+LANG040,Tutorial B,Tuesday,16:30,18:30,3.46-Classroom A,Hortence Kenswil
+LANG040,Tutorial B,Tuesday,13:30,15:30,5.11-Classroom B,Hortence Kenswil
 MACS901,Lecture,Tuesday,18:00,22:00,6.39-Computer Lab,Mouhannad Al Attar
 MACS902,Lecture,Thursday,18:00,22:00,6.33-Computer Lab,Manoj Kumar
 MARK101,Lecture,Thursday,08:30,10:30,0.17-Lecture Theatre,Rumaila Abbas
@@ -779,7 +787,7 @@ MATH041,Lecture,Friday,08:30,10:30,3.48-Classroom B,Math Adjunct 1
 MATH041,Tutorial,Tuesday,08:30,10:30,3.45-Classroom B,Math Adjunct 1
 MATH042,Lecture,Tuesday,11:30,13:30,5.11-Classroom B,Mervat Madi
 MATH042,Workshop,Wednesday,15:30,17:30,6.30-Multipurpose - Teaching & Research,Mervat Madi
-MATH042,Workshop,Friday,10:30,12:30,6.29-Multipurpose - Teaching & Research,Mervat Madi
+MATH042,Workshop,Friday,10:30,12:30,2.68-Block 19,Mervat Madi
 MATH042,Workshop,Friday,14:30,16:30,6.29-Multipurpose - Teaching & Research,Mervat Madi
 MATH043,Lecture,Tuesday,13:30,15:30,2.64-Block 19,Adjunct Lecturer Math
 MATH043,Workshop,Wednesday,12:30,14:30,6.28-Seminar/Tutorial,Math Adjunct 1
@@ -800,9 +808,9 @@ MATH141,Tutorial,Tuesday,08:30,10:30,6.28-Seminar/Tutorial,MATH Adjunct1
 MATH141,Tutorial,Wednesday,08:30,10:30,5.10-Classroom B,MATH Adjunct1
 MATH141,Tutorial,Tuesday,14:30,16:30,6.28-Seminar/Tutorial,MATH Adjunct1
 MATH141,Tutorial,Tuesday,10:30,12:30,3.45-Classroom B,MATH Adjunct1
-MATH141,Tutorial,Wednesday,14:30,16:30,6.29-Multipurpose - Teaching & Research,MATH Adjunct1
+MATH141,Tutorial,Wednesday,14:30,16:30,6.28-Seminar/Tutorial,MATH Adjunct1
 MATH141,Tutorial,Thursday,08:30,10:30,6.28-Seminar/Tutorial,Bakhtawar Baluch
-MATH141,Tutorial,Tuesday,10:30,12:30,6.29-Multipurpose - Teaching & Research,Bakhtawar Baluch
+MATH141,Tutorial,Tuesday,10:30,12:30,4.45-Classroom B,Bakhtawar Baluch
 MATH141,Tutorial,Tuesday,14:30,16:30,6.29-Multipurpose - Teaching & Research,Ziad Choucair
 MATH141,Tutorial,Wednesday,08:30,10:30,3.48-Classroom B,Bakhtawar Baluch
 MATH141,Tutorial,Thursday,10:30,12:30,6.28-Seminar/Tutorial,Bakhtawar Baluch
@@ -887,6 +895,8 @@ MGNT110,Tutorial,Tuesday,10:30,12:30,5.17-Classroom VC,Amna Moeen
 MGNT110,Tutorial,Tuesday,12:30,14:30,5.17-Classroom VC,Amna Moeen
 MGNT110,Tutorial,Wednesday,10:30,12:30,6.38-Classroom B,Amna Moeen
 MGNT110,Tutorial,Wednesday,14:30,16:30,2.65-Block 19,Amna Moeen
+MGNT110,Tutorial,Tuesday,12:30,14:30,2.68-Block 19,Muhammad Latif
+MGNT110,Tutorial,Wednesday,12:30,14:30,4.45-Classroom B,Muhammad Latif
 MGNT110,Tutorial,Wednesday,14:30,16:30,5.18-Classroom A,Muhammad Latif
 MGNT110,Tutorial,Wednesday,16:30,18:30,5.18-Classroom A,Muhammad Latif
 MGNT110,Tutorial,Tuesday,16:30,18:30,2.61-Block 19,Muhammad Latif
@@ -895,8 +905,8 @@ MGNT110,Tutorial,Monday,10:30,12:30,2.68-Block 19,Ayush Mishra
 MGNT110,Tutorial,Thursday,12:30,14:30,3.48-Classroom B,Sadaf Khurshid
 MGNT110,Tutorial,Wednesday,12:30,14:30,3.42-Classroom B,Ayush Mishra
 MGNT110,Tutorial,Wednesday,14:30,16:30,4.48-Classroom B,Ayush Mishra
-MGNT110,Tutorial,Wednesday,10:30,12:30,5.12-Informal Classroom,Tanya Dinc
-MGNT110,Tutorial,Wednesday,12:30,14:30,5.19-Classroom A,Tanya Dinc
+MGNT110,Tutorial,Wednesday,10:30,12:30,2.71-Block 19,Tanya Dinc
+MGNT110,Tutorial,Wednesday,12:30,14:30,2.71-Block 19,Tanya Dinc
 MGNT205,Lecture,Thursday,10:30,12:30,6.345-Classroom A 6.34 & 6.35,Sadaf Khurshid
 MGNT205,Tutorial,Tuesday,11:30,13:30,2.64-Block 19,Sadaf Khurshid
 MGNT205,Tutorial,Tuesday,12:30,14:30,2.65-Block 19,Sawsan AlKhayat
