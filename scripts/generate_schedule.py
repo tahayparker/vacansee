@@ -75,88 +75,83 @@ RoomInfo = Dict[str, str]
 TimingsDict = DefaultDict[str, DefaultDict[str, List[Tuple[str, str]]]]
 
 
-def fetch_rooms_data() -> List[RoomInfo]:
+def fetch_rooms_data_paginated(page_size=100) -> List[RoomInfo]:
     """
-    Fetches rooms to include in the schedule from the 'Rooms' table.
-    Returns a list of dictionaries, each containing 'short_code' and 'full_name'.
-    Excludes rooms where the Name is exactly 'Consultation' or 'Online'.
+    Fetches rooms from Supabase in paginated fashion. Returns list of dicts with 'short_code' and 'full_name'.
     """
-    print("Fetching rooms data from Supabase (excluding 'Consultation', 'Online')...")
+    print(f"Fetching rooms data from Supabase with pagination (page size={page_size})...")
     rooms_info: List[RoomInfo] = []
-    try:
-        # Fetch ShortCode and Name
-        # Use .neq() to exclude specific exact names
-        response = (
-            supabase.table("Rooms")
-            .select("ShortCode, Name")
-            .neq("Name", "Consultation")
-            .neq("Name", "Online")
-            .order("Name", desc=False)
-            .execute()
-        )
-
-        if response.data:
-            for room in response.data:
-                if room.get("ShortCode") and room.get("Name"):
-                    rooms_info.append(
-                        {"short_code": room["ShortCode"], "full_name": room["Name"]}
-                    )
-            print(f"Filtered rooms fetched: {len(rooms_info)}")
-            # print(f"Rooms data: {rooms_info}")
-            return rooms_info
-        else:
-            print("No rooms found matching the criteria.")
-            return []
-    except (APIError, RequestError) as db_err:
-        print(
-            f"Error fetching rooms: {type(db_err).__name__} - {db_err}", file=sys.stderr
-        )
-    except Exception as e:
-        print(f"Unexpected error fetching rooms: {e}", file=sys.stderr)
-        traceback.print_exc()
-
-    raise RuntimeError("Failed to fetch rooms data.")
+    offset = 0
+    while True:
+        try:
+            response = (
+                supabase.table("Rooms")
+                .select("ShortCode, Name")
+                .neq("Name", "Consultation")
+                .neq("Name", "Online")
+                .order("Name", desc=False)
+                .range(offset, offset + page_size - 1)
+                .execute()
+            )
+            if response.data:
+                for room in response.data:
+                    if room.get("ShortCode") and room.get("Name"):
+                        rooms_info.append({"short_code": room["ShortCode"], "full_name": room["Name"]})
+                if len(response.data) < page_size:
+                    break
+                offset += page_size
+            else:
+                break
+        except (APIError, RequestError) as db_err:
+            print(f"Error fetching rooms: {type(db_err).__name__} - {db_err}", file=sys.stderr)
+            break
+        except Exception as e:
+            print(f"Unexpected error fetching rooms: {e}", file=sys.stderr)
+            traceback.print_exc()
+            break
+    print(f"Total rooms fetched: {len(rooms_info)}")
+    return rooms_info
 
 
-def fetch_all_timings() -> TimingsDict:
+def fetch_all_timings_paginated(page_size=500) -> TimingsDict:
     """
-    Fetches all timings and organizes them by Day and Full Room Name.
-    Returns defaultdict: timings_by_day[day][full_room_name] = list of (start, end)
+    Fetches all timings from Supabase in paginated fashion. Returns timings_by_day[day][full_room_name] = list of (start, end)
     """
-    print("Fetching all timings from Supabase...")
+    print(f"Fetching all timings from Supabase with pagination (page size={page_size})...")
     timings_by_day: TimingsDict = defaultdict(lambda: defaultdict(list))
-    try:
-        response = (
-            supabase.table("Timings").select("Day, Room, StartTime, EndTime").execute()
-        )
-
-        if response.data:
-            processed_count = 0
-            for timing in response.data:
-                day = timing.get("Day")
-                full_room_name = timing.get("Room")
-                start_time = timing.get("StartTime")
-                end_time = timing.get("EndTime")
-
-                if day and full_room_name and start_time and end_time:
-                    timings_by_day[day][full_room_name].append((start_time, end_time))
-                    processed_count += 1
-
-            print(f"Fetched and processed {processed_count} valid timing entries.")
-            return timings_by_day
-        else:
-            print("No timings found in the database.")
-            return timings_by_day
-    except (APIError, RequestError) as db_err:
-        print(
-            f"Error fetching timings: {type(db_err).__name__} - {db_err}",
-            file=sys.stderr,
-        )
-    except Exception as e:
-        print(f"Unexpected error fetching timings: {e}", file=sys.stderr)
-        traceback.print_exc()
-
-    raise RuntimeError("Failed to fetch timings data.")
+    offset = 0
+    processed_count = 0
+    while True:
+        try:
+            response = (
+                supabase.table("Timings")
+                .select("Day, Room, StartTime, EndTime")
+                .range(offset, offset + page_size - 1)
+                .execute()
+            )
+            if response.data:
+                for timing in response.data:
+                    day = timing.get("Day")
+                    full_room_name = timing.get("Room")
+                    start_time = timing.get("StartTime")
+                    end_time = timing.get("EndTime")
+                    if day and full_room_name and start_time and end_time:
+                        timings_by_day[day][full_room_name].append((start_time, end_time))
+                        processed_count += 1
+                if len(response.data) < page_size:
+                    break
+                offset += page_size
+            else:
+                break
+        except (APIError, RequestError) as db_err:
+            print(f"Error fetching timings: {type(db_err).__name__} - {db_err}", file=sys.stderr)
+            break
+        except Exception as e:
+            print(f"Unexpected error fetching timings: {e}", file=sys.stderr)
+            traceback.print_exc()
+            break
+    print(f"Fetched and processed {processed_count} valid timing entries.")
+    return timings_by_day
 
 
 def is_slot_available(
@@ -171,43 +166,52 @@ def is_slot_available(
     return True
 
 
-def generate_schedule_data(
-    rooms_to_schedule: List[RoomInfo], all_timings: TimingsDict
-) -> List[Dict[str, Any]]:
+def generate_schedule_data_from_csv(csv_path: Path) -> List[Dict[str, Any]]:
     """
-    Generates schedule availability data for given rooms and timings.
-    Uses Full Room Name for lookup, but outputs ShortCode in the JSON.
+    Generates schedule availability data from CSV file. Supabase is used as fallback if CSV is missing or empty.
     """
-    print("Starting schedule data generation...")
+    print(f"Generating schedule data from CSV: {csv_path}")
+    import csv
     schedule: List[Dict[str, Any]] = []
+    # Build: {day: {room: [(start, end), ...]}}
+    timings_by_day_room = defaultdict(lambda: defaultdict(list))
+    rooms_set = set()
+    try:
+        with csv_path.open("r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                day = row.get("Day")
+                room = row.get("Room")
+                start = row.get("StartTime")
+                end = row.get("EndTime")
+                if day and room and start and end:
+                    timings_by_day_room[day][room].append((start, end))
+                    rooms_set.add(room)
+    except Exception as e:
+        print(f"Error reading CSV: {e}. Falling back to Supabase.")
+        # fallback to Supabase
+        rooms_info = fetch_rooms_data_paginated()
+        timings_by_day_room = fetch_all_timings_paginated()
+        rooms_set = set()
+        for day in timings_by_day_room:
+            for room in timings_by_day_room[day]:
+                rooms_set.add(room)
 
     for day in DAYS_OF_WEEK:
         print(f"Processing day: {day}")
         day_data: Dict[str, Any] = {"day": day, "rooms": []}
-        timings_for_day: DefaultDict[str, List[Tuple[str, str]]] = all_timings.get(
-            day, defaultdict(list)
-        )
-
-        for room_info in rooms_to_schedule:
-            room_short_code = room_info["short_code"]
-            room_full_name = room_info["full_name"]
-
-            room_output_data = {"room": room_short_code, "availability": []}
-            timings_for_this_room = timings_for_day.get(room_full_name, [])
-
+        timings_for_day = timings_by_day_room.get(day, {})
+        for room in sorted(rooms_set):
+            room_output_data = {"room": room, "availability": []}
+            timings_for_this_room = timings_for_day.get(room, [])
             slot_count = len(TIME_SLOTS)
             for i in range(slot_count - 1):
                 start_time = TIME_SLOTS[i]
                 end_time = TIME_SLOTS[i + 1]
-                available = is_slot_available(
-                    start_time, end_time, timings_for_this_room
-                )
+                available = is_slot_available(start_time, end_time, timings_for_this_room)
                 room_output_data["availability"].append(1 if available else 0)
-
             day_data["rooms"].append(room_output_data)
-
         schedule.append(day_data)
-
     print("Schedule data generation complete.")
     return schedule
 
@@ -237,22 +241,12 @@ if __name__ == "__main__":
     print("Starting schedule generation process...")
     final_success = False
     try:
-        room_info_list = fetch_rooms_data()
-        all_timings_data = fetch_all_timings()
-
-        if room_info_list:
-            generated_schedule = generate_schedule_data(
-                room_info_list, all_timings_data
-            )
-            final_success = save_schedule_to_json(generated_schedule)
-        else:
-            print("Cannot generate schedule as no rooms were found or fetched.")
-            final_success = False
-
+        csv_path = SCRIPT_DIR.parent / "public" / "classes.csv"
+        generated_schedule = generate_schedule_data_from_csv(csv_path)
+        final_success = save_schedule_to_json(generated_schedule)
     except (RuntimeError, Exception) as main_err:
         print(f"Script failed: {main_err}", file=sys.stderr)
         final_success = False
-
     if final_success:
         print("Script finished successfully.")
         sys.exit(0)
