@@ -168,9 +168,12 @@ export default function GraphPage() {
   const getCellColor = (avail: number) => {
     return avail === 1 ? "bg-green-500/70" : "bg-red-600/80";
   };
-  const getRoomName = (roomIdentifier: string | null | undefined): string => {
-    return roomIdentifier || ""; // Return empty string if null/undefined
-  };
+  // Only show the room shortcode (before any dash or space)
+  const getRoomShortCode = (roomIdentifier: string | null | undefined): string => {
+    if (!roomIdentifier) return "";
+    // Split by dash, space, or slash, take first part
+    return roomIdentifier.split(/[- /]/)[0];
+  }
 
   const currentDayData = scheduleData[selectedDayIndex];
 
@@ -297,8 +300,8 @@ export default function GraphPage() {
                   <AnimatePresence initial={false}>
                     {currentDayData.rooms
                       .sort((a, b) => {
-                        const roomA = getRoomName(a?.room) ?? "";
-                        const roomB = getRoomName(b?.room) ?? "";
+                        const roomA = getRoomShortCode(a?.room) ?? "";
+                        const roomB = getRoomShortCode(b?.room) ?? "";
                         return roomA.localeCompare(roomB);
                       })
                       .map((roomData, roomIndex) => {
@@ -320,7 +323,7 @@ export default function GraphPage() {
                             <td
                               className={`sticky left-0 bg-black group-hover:bg-zinc-900 text-white z-20 px-3 py-1.5 border-r border-b border-white/10 text-right text-sm whitespace-nowrap transition-colors duration-100`}
                             >
-                              {getRoomName(roomData.room)}
+                              {getRoomShortCode(roomData.room)}
                             </td>
                             {/* Data Cells */}
                             {Array.isArray(roomData.availability) &&
@@ -328,7 +331,7 @@ export default function GraphPage() {
                                 <td
                                   key={idx}
                                   className={`relative z-0 border-b border-black/50 ${getCellColor(avail)} transition-colors duration-150 group-hover:brightness-110 ${idx === roomData.availability.length - 1 ? "" : "border-r border-black/100"}`}
-                                  title={`${getRoomName(roomData.room)} - ${timeIntervals[idx]} - ${avail === 1 ? "Available" : "Occupied"}`}
+                                  title={`${getRoomShortCode(roomData.room)} - ${timeIntervals[idx]} - ${avail === 1 ? "Available" : "Occupied"}`}
                                   style={{ minWidth: "65px" }}
                                 >
                                   <div className="h-6"></div>
