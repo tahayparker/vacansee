@@ -170,6 +170,7 @@ CIVL361,Computer Lab,Tuesday,13:30,16:30,0.201-Concrete / Geo Tech Lab,Mohammad 
 CIVL361,Computer Lab,Tuesday,13:30,16:30,0.201-Concrete / Geo Tech Lab,Mohammad AlRifai
 CIVL361,Lecture,Monday,10:30,13:30,0.201-Concrete / Geo Tech Lab,Stephen Wilkinson
 CIVL361,Tutorial,Monday,14:30,16:30,0.201-Concrete / Geo Tech Lab,Stephen Wilkinson
+CONV000,Tutorial,Thursday,13:30,14:30,4.53-Seminar/Tutorial,Alison Webster
 CSCI218,Computer Lab,Wednesday,14:30,16:30,4.52-AI Lab,Milan Dordevic
 CSCI218,Computer Lab,Thursday,14:30,16:30,6.39-Computer Lab,Milan Dordevic
 CSCI218,Computer Lab,Friday,08:30,10:30,6.33-Computer Lab,Milan Dordevic
@@ -672,7 +673,7 @@ IRAE135,Tutorial,Wednesday,14:30,16:30,3.42-Classroom B,Noor Suwwan
 IRAE135,Tutorial,Thursday,14:30,16:30,2.66-Block 19,Noor Suwwan
 IRAE135,Tutorial,Monday,12:30,14:30,2.64-Block 19,Aswina Sreekumar
 IRAE135,Tutorial,Thursday,08:30,10:30,2.67-Block 19,Dana Charkaoui
-IRAE135,Tutorial,Friday,08:30,10:30,2.65-Block 19,Dana Charkaoui
+IRAE135,Tutorial,Friday,08:30,10:30,3.48-Classroom B,Dana Charkaoui
 IRAE135,Tutorial,Wednesday,12:30,14:30,4.467-Classroom A 4.46 & 4.47,Aswina Sreekumar
 ISIT040,Lecture,Thursday,08:30,12:30,6.32-Classroom B,Abdullah El Nokiti
 ISIT040,Lecture,Thursday,08:30,12:30,6.32-Classroom B,Omar Daoudi
@@ -783,7 +784,7 @@ MARK935,Lecture,Monday,18:00,22:00,3.44-Classroom B,Sourjo Mukherjee
 MARK940,Lecture,Monday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Prakash Vel
 MARK940,Lecture,Wednesday,18:00,22:00,6.345-Classroom A 6.34 & 6.35,Prakash Vel
 MARK977,Lecture,Thursday,18:00,22:00,6.38-Classroom B,Munyar Nyadzayo
-MATH041,Lecture,Friday,08:30,10:30,3.48-Classroom B,Math Adjunct 1
+MATH041,Lecture,Friday,08:30,10:30,2.65-Block 19,Math Adjunct 1
 MATH041,Tutorial,Tuesday,08:30,10:30,3.45-Classroom B,Math Adjunct 1
 MATH042,Lecture,Tuesday,11:30,13:30,5.11-Classroom B,Mervat Madi
 MATH042,Workshop,Wednesday,15:30,17:30,6.30-Multipurpose - Teaching & Research,Mervat Madi
@@ -1013,6 +1014,9 @@ PUBH115,Tutorial,Wednesday,10:30,12:30,2.61-Block 19,Sarah Hatahet
 PUBH115,Tutorial,Thursday,08:30,10:30,5.18-Classroom A,Sarah Hatahet
 PUBH115,Tutorial,Thursday,10:30,12:30,5.18-Classroom A,Sarah Hatahet
 PUBH115,Tutorial,Wednesday,08:30,10:30,2.61-Block 19,Sarah Hatahet
+PVT000,Tutorial A,Tuesday,13:30,16:00,4.53-Seminar/Tutorial,Magdalena Halim
+PVT000,Tutorial B,Wednesday,13:30,16:00,4.53-Seminar/Tutorial,Sabina Ashraf
+PVT000,Tutorial C,Monday,13:30,16:00,4.53-Seminar/Tutorial,Alison Webster
 RESH905,Lecture,Saturday,08:30,11:30,3.48-Classroom B,Ibrahim Alananzeh
 SMAH915,Lecture,Sunday,08:30,11:30,4.53-Seminar/Tutorial,Suzanne Malt
 SNPG916,Lecture,Sunday,12:00,15:00,4.42-Computer Lab (Single Screen),Khalil Yousef
