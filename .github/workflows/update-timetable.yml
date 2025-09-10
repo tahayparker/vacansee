@@ -38,8 +38,8 @@ jobs:
           echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" >> $GITHUB_ENV
           echo "Supabase variables configured."
 
-      - name: Generate new timetable CSV data (Step 1)
-        id: scrape # Add id for potential future reference if needed
+      - name: Generate new timetable CSV data
+        id: scrape
         run: |
           echo "Running timetable scraper..."
           python scripts/scrape_timetable.py --output public/classes.csv
@@ -86,7 +86,7 @@ jobs:
           git commit -m "Update timetable CSV data [skip deploy]"
           git push
 
-      - name: Update Rooms Table in DB (Step 2)
+      - name: Update Rooms Table in DB
         id: update_rooms
         run: |
           echo "Running rooms update script..."
@@ -98,8 +98,8 @@ jobs:
             exit $exit_code
           fi
 
-      - name: Upload Timetable to DB (Step 3)
-        id: upload # Add id
+      - name: Upload Timetable to DB
+        id: upload
         # This step runs regardless of CSV changes now
         run: |
           echo "Running timetable upload script..."
@@ -112,8 +112,8 @@ jobs:
             exit $exit_code
           fi
 
-      - name: Generate Schedule JSON (Step 4)
-        id: generate_json # Add id
+      - name: Generate Schedule JSON
+        id: generate_json
         # This step runs regardless of CSV changes now
         run: |
           echo "Running schedule generation script..."
@@ -127,6 +127,12 @@ jobs:
           fi
           # Always assume we might need to commit the JSON after generation
           echo "should_check_commit_json=true" >> $GITHUB_OUTPUT
+
+      - name: Format scheduleData.json with Prettier
+        run: |
+          echo "Formatting scheduleData.json with Prettier..."
+          npm install --no-save prettier
+          npx prettier public/scheduleData.json --write
 
       - name: Commit and push JSON changes
         # Check if the previous step indicated we should check for commits
