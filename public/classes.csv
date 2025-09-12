@@ -33,7 +33,7 @@ ACCY801,Lecture,Tuesday,18:00,22:00,6.38-Classroom B,Namrata Gupta
 ARA101,Tutorial A,Monday,08:30,10:30,5.18-Classroom A,Katia Freywat
 ARA101,Tutorial A,Monday,10:30,12:30,5.18-Classroom A,Katia Freywat
 ARA101,Tutorial A,Tuesday,13:30,15:30,6.32-Classroom B,Katia Freywat
-ARA101,Tutorial B,Tuesday,15:30,17:30,3.45-Classroom B,Katia Freywat
+ARA101,Tutorial B,Tuesday,15:30,17:30,6.32-Classroom B,Katia Freywat
 ARA101,Tutorial B,Thursday,08:30,10:30,5.12-Informal Classroom,Katia Freywat
 ARA101,Tutorial B,Thursday,12:30,14:30,5.17-Classroom VC,Katia Freywat
 BCM110,Lecture,Monday,14:30,16:30,4.44-Classroom B,Deborah Hardt
@@ -99,7 +99,7 @@ BUS101,Tutorial,Wednesday,16:30,18:30,5.10-Classroom B,Everyl Colaco
 BUS101,Tutorial,Tuesday,16:30,18:30,5.10-Classroom B,Everyl Colaco
 BUS101,Tutorial,Monday,10:30,12:30,3.45-Classroom B,Shaimaa Elsaid
 BUS101,Tutorial,Tuesday,10:30,12:30,4.50-Classroom B,Shaimaa Elsaid
-BUS101,Tutorial,Monday,14:30,16:30,3.48-Classroom B,Soha Chahine
+BUS101,Tutorial,Monday,14:30,16:30,3.48-Classroom B,Flevy Lasrado
 BUS101,Tutorial,Wednesday,13:30,15:30,2.70-Block 19,Soha Chahine
 BUS101,Tutorial,Wednesday,16:30,18:30,2.68-Block 19,Soha Chahine
 BUS101,Tutorial,Monday,10:30,12:30,4.48-Classroom B,Soha Chahine
@@ -669,6 +669,7 @@ INE301,Tutorial,Wednesday,16:30,18:30,3.45-Classroom B,Jourmana Trad
 IRAE135,Lecture,Wednesday,10:30,12:30,2.62/63-Combined-Block 19,Noor Suwwan
 IRAE135,Lecture,Thursday,12:30,14:30,4.44-Classroom B,Noor Suwwan
 IRAE135,Tutorial,Wednesday,08:30,10:30,3.45-Classroom B,Dana Charkaoui
+IRAE135,Tutorial,Monday,10:30,12:30,5.10-Classroom B,Noor Suwwan
 IRAE135,Tutorial,Thursday,10:30,12:30,3.48-Classroom B,Dana Charkaoui
 IRAE135,Tutorial,Wednesday,14:30,16:30,3.42-Classroom B,Noor Suwwan
 IRAE135,Tutorial,Thursday,14:30,16:30,2.66-Block 19,Noor Suwwan
@@ -886,7 +887,7 @@ MECH382,Computer Lab,Tuesday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Umar 
 MECH382,Computer Lab,Monday,11:30,13:30,1.49-Manufacturing & Workshop Lab,Umar Asghar
 MECH382,Computer Lab,Monday,13:30,15:30,1.49-Manufacturing & Workshop Lab,Asarudheen Abdudeen
 MECH382,Computer Lab,Monday,13:30,15:30,1.49-Manufacturing & Workshop Lab,Asarudheen Abdudeen
-MECH382,Lecture,Tuesday,15:30,17:30,6.32-Classroom B,Umar Asghar
+MECH382,Lecture,Tuesday,15:30,17:30,5.11-Classroom B,Umar Asghar
 MECH474,Lecture,Tuesday,18:00,22:00,6.29-Multipurpose - Teaching & Research,Adjunct ENGG 3
 MECH474,Tutorial,Wednesday,16:30,18:30,6.29-Multipurpose - Teaching & Research,Adjunct ENGG 3
 MGNT110,Lecture,Monday,08:30,10:30,0.17-Lecture Theatre,Greig Taylor
