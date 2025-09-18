@@ -130,7 +130,7 @@ BUS121,Tutorial,Tuesday,14:30,16:30,2.71-Block 19,Deepshikha Vyas
 BUS121,Tutorial,Tuesday,16:30,18:30,2.71-Block 19,Deepshikha Vyas
 BUS121,Tutorial,Friday,14:30,16:30,3.48-Classroom B,Deepshikha Vyas
 BUS121,Tutorial,Friday,16:30,18:30,3.48-Classroom B,Deepshikha Vyas
-BUS121,Tutorial,Tuesday,08:30,10:30,5.10-Classroom B,Ira Miguel
+BUS121,Tutorial,Tuesday,08:30,10:30,5.10-Classroom B,Ira Agtarap
 BUS121,Tutorial,Tuesday,14:30,16:30,4.51-Tutorial Room,Riya Bhattacharya
 BUS201,Lecture,Tuesday,10:30,12:30,0.17-Lecture Theatre,Prithvi Bhattacharya
 BUS201,Lecture,Monday,12:30,14:30,0.17-Lecture Theatre,Prithvi Bhattacharya
@@ -141,10 +141,10 @@ BUS201,Tutorial,Thursday,14:30,16:30,5.12-Informal Classroom,Shehnaz Al-Helo
 BUS201,Tutorial,Wednesday,08:30,10:30,5.17-Classroom VC,Shehnaz Al-Helo
 BUS201,Tutorial,Tuesday,12:30,14:30,4.50-Classroom B,Shehnaz Al-Helo
 BUS201,Tutorial,Tuesday,16:30,18:30,3.48-Classroom B,Khaled Eid
-BUS201,Tutorial,Wednesday,16:30,18:30,6.38-Classroom B,Ira Miguel
+BUS201,Tutorial,Wednesday,16:30,18:30,6.38-Classroom B,Ira Agtarap
 BUS201,Tutorial,Friday,10:30,12:30,3.46-Classroom A,Nikita Kirplani
 BUS201,Tutorial,Monday,16:30,18:30,3.48-Classroom B,Khaled Eid
-BUS201,Tutorial,Wednesday,14:30,16:30,6.38-Classroom B,Ira Miguel
+BUS201,Tutorial,Wednesday,14:30,16:30,6.38-Classroom B,Ira Agtarap
 BUS201,Tutorial,Wednesday,16:30,18:30,3.48-Classroom B,Khaled Eid
 BUS331,Lecture,Wednesday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Jaeyoung Cho
 BUS331,Lecture,Wednesday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Subhadeep Datta
@@ -432,6 +432,7 @@ ECTE324,Computer Lab,Thursday,13:30,16:30,1.51-Power Lab,Habiba Ahmed
 ECTE324,Computer Lab,Friday,09:30,12:30,1.51-Power Lab,Razveen Kashif
 ECTE324,Computer Lab,Friday,09:30,12:30,1.51-Power Lab,Razveen Kashif
 ECTE324,Computer Lab,Friday,14:30,17:30,1.51-Power Lab,Habiba Ahmed
+ECTE324,Computer Lab,Wednesday,14:30,17:30,1.51-Power Lab,Razveen Kashif
 ECTE324,Lecture,Wednesday,08:30,10:30,5.134-Classroom A 5.13 & 5.14,Mohamad Nassereddine
 ECTE324,Tutorial,Wednesday,12:30,14:30,5.10-Classroom B,Abeer El Khouly
 ECTE324,Tutorial,Wednesday,15:30,17:30,3.46-Classroom A,Abeer El Khouly
@@ -569,7 +570,7 @@ ENGG251,Computer Lab,Wednesday,12:30,14:30,1.53-Chemistry & Materials Science La
 ENGG251,Computer Lab,Friday,14:30,16:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo
 ENGG251,Lecture,Monday,08:30,10:30,2.62/63-Combined-Block 19,Ciara O'Driscoll
 ENGG251,Tutorial,Thursday,08:30,10:30,2.64-Block 19,Mohammad AlRifai
-ENGG251,Tutorial,Tuesday,10:30,12:30,3.48-Classroom B,Mohammad AlRifai
+ENGG251,Tutorial,Tuesday,10:30,12:30,3.45-Classroom B,Mohammad AlRifai
 ENGG251,Tutorial,Thursday,10:30,12:30,2.64-Block 19,Mohammad AlRifai
 ENGG251,Tutorial,Monday,10:30,12:30,5.17-Classroom VC,Thahsin Saidarakath
 ENGG452,Lecture,Monday,12:30,14:30,Online,Karol Sikora
@@ -821,7 +822,7 @@ MATH141,Tutorial,Monday,14:30,16:30,4.51-Tutorial Room,MATH Adjunct1
 MATH141,Tutorial,Tuesday,08:30,10:30,6.28-Seminar/Tutorial,MATH Adjunct1
 MATH141,Tutorial,Wednesday,08:30,10:30,5.10-Classroom B,MATH Adjunct1
 MATH141,Tutorial,Tuesday,14:30,16:30,6.28-Seminar/Tutorial,MATH Adjunct1
-MATH141,Tutorial,Tuesday,10:30,12:30,3.45-Classroom B,MATH Adjunct1
+MATH141,Tutorial,Tuesday,10:30,12:30,3.48-Classroom B,MATH Adjunct1
 MATH141,Tutorial,Wednesday,14:30,16:30,6.29-Multipurpose - Teaching & Research,MATH Adjunct1
 MATH141,Tutorial,Thursday,08:30,10:30,6.28-Seminar/Tutorial,Bakhtawar Baluch
 MATH141,Tutorial,Tuesday,10:30,12:30,4.45-Classroom B,Bakhtawar Baluch
