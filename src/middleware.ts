@@ -25,7 +25,8 @@ async function requiresAuthentication(pathname: string): Promise<boolean> {
     pathname.endsWith(".jpeg") ||
     pathname.endsWith(".svg") ||
     pathname.endsWith(".css") ||
-    pathname.endsWith(".js")
+    pathname.endsWith(".js") ||
+    pathname === "/manifest.json"
   ) {
     return false;
   }
@@ -60,6 +61,7 @@ export async function middleware(req: NextRequest) {
       pathname.endsWith(".svg") ||
       pathname.endsWith(".css") ||
       pathname.endsWith(".js") ||
+      pathname === "/manifest.json" ||
       pathname.startsWith("/fonts/") // Allow font files if in /public/fonts
     ) {
       console.log(
