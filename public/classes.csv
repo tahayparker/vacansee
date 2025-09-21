@@ -871,8 +871,9 @@ MBA908,Lecture A,Saturday,09:00,17:00,3.45-Classroom B,Arijit Sikdar
 MBA908,Lecture B,Sunday,09:00,17:00,3.45-Classroom B,Arijit Sikdar
 MBA909,Lecture A,Saturday,09:00,17:00,3.45-Classroom B,Mohan Guruswamy
 MBA909,Lecture B,Sunday,09:00,17:00,3.45-Classroom B,Mohan Guruswamy
-MBAS900,Lecture,Wednesday,18:00,22:00,4.42-Computer Lab (Single Screen),"Khaled Eid, Prithvi Bhattacharya"
-MBAS900,Lecture,Wednesday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,"Khaled Eid, Prithvi Bhattacharya"
+MBAS900,Computer Lab,Wednesday,20:00,22:00,4.42-Computer Lab (Single Screen),Prithvi Bhattacharya
+MBAS900,Computer Lab,Wednesday,20:00,22:00,4.52-AI Lab,Khaled Eid
+MBAS900,Lecture,Wednesday,18:00,20:00,4.467-Classroom A 4.46 & 4.47,Prithvi Bhattacharya
 MBAS906,Lecture A,Saturday,09:00,16:00,6.40-Computer Lab,Prithvi Bhattacharya
 MBAS906,Lecture B,Sunday,09:00,16:00,6.40-Computer Lab,Prithvi Bhattacharya
 MBAS920,Lecture A,Saturday,09:00,16:00,4.45-Classroom B,Ziang Wang
