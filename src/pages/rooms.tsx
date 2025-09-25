@@ -148,7 +148,7 @@ export default function RoomDetailsPage() {
       opacity: 1,
       transition: { staggerChildren: 0.03, delayChildren: 0.1 },
     },
-  };
+  } as const;
   const itemVariant = {
     hidden: { opacity: 0, y: 10 },
     visible: {
@@ -157,7 +157,7 @@ export default function RoomDetailsPage() {
       transition: { duration: 0.3, ease: "easeOut" },
     },
     exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
-  };
+  } as const;
   const pageHeaderVariant = {
     hidden: { opacity: 0, y: -20 },
     visible: {
@@ -165,7 +165,7 @@ export default function RoomDetailsPage() {
       y: 0,
       transition: { delay: 0.1, duration: 0.4, ease: "easeOut" },
     },
-  };
+  } as const;
   const searchBarVariant = {
     hidden: { opacity: 0, y: -10 },
     visible: {
@@ -173,14 +173,14 @@ export default function RoomDetailsPage() {
       y: 0,
       transition: { delay: 0.2, duration: 0.4, ease: "easeOut" },
     },
-  };
+  } as const;
   const tableContainerVariant = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: { delay: 0.3, duration: 0.5, ease: "easeOut" },
     },
-  };
+  } as const;
 
   // --- Render Page ---
   return (
