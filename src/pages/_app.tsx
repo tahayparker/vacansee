@@ -2,7 +2,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Montserrat } from "next/font/google";
-import GradientBackground from "@/components/GradientBackground";
+import LiquidEtherBackground from "@/components/LiquidEtherBackground";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useEffect, useState, useRef } from "react";
@@ -124,9 +124,9 @@ export default function App({ Component, pageProps }: AppProps) {
   if (showLoader) {
     return (
       <div
-        className={`${montserrat.className} bg-background text-foreground min-h-screen flex flex-col relative`}
+        className={`${montserrat.className} bg-transparent text-foreground min-h-screen flex flex-col relative`}
       >
-        <GradientBackground />
+        <LiquidEtherBackground />
         <div className="flex flex-grow items-center justify-center z-10">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white/50"></div>
         </div>
@@ -137,7 +137,7 @@ export default function App({ Component, pageProps }: AppProps) {
   if (NO_LAYOUT_PAGES.includes(router.pathname)) {
     return (
       <div className={`${montserrat.variable} font-sans`}>
-        {router.pathname === "/auth/login" && <GradientBackground />}
+        {router.pathname === "/auth/login" && <LiquidEtherBackground />}
         <Component {...pageProps} />
         <Analytics />
         <SpeedInsights />
@@ -147,9 +147,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <div
-      className={`${montserrat.className} bg-background text-foreground min-h-screen flex flex-col relative`}
+      className={`${montserrat.className} bg-transparent text-foreground min-h-screen flex flex-col relative`}
     >
-      <GradientBackground />
+      <LiquidEtherBackground />
       <SiteHeader maintenanceMode={isMaintenanceMode} />
       <main
         className={cn(
