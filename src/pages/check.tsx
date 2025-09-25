@@ -271,9 +271,13 @@ export default function CheckAvailabilityPage() {
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.07, duration: 0.4, ease: "easeOut" },
+      transition: {
+        delay: i * 0.07,
+        duration: 0.4,
+        ease: "easeOut" as const,
+      },
     }),
-  };
+  } as const;
   const resultVariant = {
     hidden: { opacity: 0, scale: 0.95, y: -10 },
     visible: {
@@ -282,7 +286,7 @@ export default function CheckAvailabilityPage() {
       y: 0,
       height: "auto",
       marginTop: "2rem",
-      transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] as const },
     },
     exit: {
       opacity: 0,
@@ -290,9 +294,9 @@ export default function CheckAvailabilityPage() {
       y: 10,
       height: 0,
       marginTop: 0,
-      transition: { duration: 0.2, ease: "easeIn" },
+      transition: { duration: 0.2, ease: "easeIn" as const },
     },
-  };
+  } as const;
   const alertVariants = {
     success: "bg-green-950/50 border-green-500/60",
     destructive: "bg-red-950/30 border-red-500/60",
