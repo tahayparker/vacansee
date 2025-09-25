@@ -1,11 +1,11 @@
-import GradientBackground from "@/components/GradientBackground"; // Ensure this path is correct
+import LiquidEtherBackground from "@/components/LiquidEtherBackground"; // Ensure this path is correct
 
 // --- Test Page Component ---
 export default function TestPage() {
   return (
-    // Apply fonts and ensure GradientBackground is rendered behind content
+  // Apply fonts and ensure LiquidEtherBackground is rendered behind content
     <div className={`relative min-h-screen`}>
-      <GradientBackground /> {/* Render the gradient background */}
+  <LiquidEtherBackground /> {/* Render the gradient background */}
       {/* Centering container for the content */}
       <div className="relative z-10 grid min-h-screen place-items-center p-8">
         {/* Content Area */}
