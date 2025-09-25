@@ -85,8 +85,15 @@ const NavLink = React.forwardRef<
     ref,
   ) => {
     const isActuallyActive = item.href === currentPath;
-    const layoutTransition = { type: "spring", stiffness: 500, damping: 35 };
-    const labelTransition = { duration: 0.2, ease: "easeInOut" };
+    const layoutTransition = {
+      type: "spring",
+      stiffness: 500,
+      damping: 35,
+    } as const;
+    const labelTransition = {
+      duration: 0.2,
+      ease: "easeInOut",
+    } as const;
 
     if (isMobile) {
       return (
@@ -210,7 +217,7 @@ export default function SiteHeader({
         if (isSubscribed) setLoadingAuth(false);
       }
       const { data: authListener } = supabase.auth.onAuthStateChange(
-        (_event, session) => {
+        (_event: string, session: { user: any; }) => {
           if (isSubscribed) {
             console.log("Auth state changed:", _event);
             setUser(session?.user ?? null);
@@ -268,12 +275,28 @@ export default function SiteHeader({
   };
 
   // --- Constants ---
-  const menuToggleTransition = { duration: 0.2 };
-  const mobilePanelTransition = { duration: 0.2, ease: "easeOut" };
-  const mobileBackdropTransition = { duration: 0.2, ease: "linear" };
-  const authLayoutTransition = { type: "spring", stiffness: 400, damping: 30 };
-  const authLabelTransition = { duration: 0.2, ease: "easeInOut" };
-  const vailaLabelTransition = { duration: 0.2, ease: "easeInOut" };
+  const menuToggleTransition = { duration: 0.2 } as const;
+  const mobilePanelTransition = {
+    duration: 0.2,
+    ease: "easeOut",
+  } as const;
+  const mobileBackdropTransition = {
+    duration: 0.2,
+    ease: "linear",
+  } as const;
+  const authLayoutTransition = {
+    type: "spring",
+    stiffness: 400,
+    damping: 30,
+  } as const;
+  const authLabelTransition = {
+    duration: 0.2,
+    ease: "easeInOut",
+  } as const;
+  const vailaLabelTransition = {
+    duration: 0.2,
+    ease: "easeInOut",
+  } as const;
   const userDisplayName =
     user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
   const userEmail = user?.email || "No email provided";
