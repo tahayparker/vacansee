@@ -111,6 +111,7 @@ BUS101,Tutorial,Thursday,12:30,14:30,6.38-Classroom B,Flevy Lasrado
 BUS101,Tutorial,Wednesday,14:30,16:30,5.10-Classroom B,Everyl Colaco
 BUS101,Tutorial,Tuesday,08:30,10:30,4.50-Classroom B,Shaimaa Elsaid
 BUS101,Tutorial,Monday,14:30,16:30,5.10-Classroom B,Shaimaa Elsaid
+BUS101,Tutorial,Monday,16:30,18:30,5.18-Classroom A,Flevy Lasrado
 BUS121,Lecture,Thursday,14:30,16:30,0.17-Lecture Theatre,Kashif Saleem
 BUS121,Lecture,Tuesday,12:30,14:30,0.17-Lecture Theatre,Kashif Saleem
 BUS121,Lecture,Wednesday,16:30,18:30,0.17-Lecture Theatre,Riya Bhattacharya
@@ -240,6 +241,7 @@ CSCI336,Computer Lab,Tuesday,10:30,12:30,3.47-Game Dev Lab Dual Screens,Shahrul 
 CSCI336,Lecture,Wednesday,08:30,10:30,3.46-Classroom A,HC Lim
 CSCI336,Tutorial,Wednesday,14:30,15:30,3.46-Classroom A,HC Lim
 CSCI336,Tutorial,Wednesday,10:30,11:30,6.33-Computer Lab,HC Lim
+CSCI350,Lecture,Wednesday,12:30,13:30,2.70-Block 19,Halim Khelalfa
 CSCI368,Computer Lab,Wednesday,16:30,18:30,6.39-Computer Lab,Suzan Sallam
 CSCI368,Computer Lab,Thursday,10:30,12:30,3.52-Computer Lab (Network),Suzan Sallam
 CSCI368,Computer Lab,Tuesday,12:30,14:30,6.33-Computer Lab,Mouhannad Al Attar
@@ -583,7 +585,8 @@ ENGG461,Tutorial,Friday,10:30,12:30,2.65-Block 19,Hazem Gouda
 ENGG940,Lecture,Wednesday,18:00,22:00,6.30-Multipurpose - Teaching & Research,Mama Chacha
 ENGG941,Lecture,Friday,18:00,22:00,5.18-Classroom A,Karol Sikora
 ENGG951,Lecture,Thursday,18:00,22:00,5.18-Classroom A,Kamal Jaafar
-ENGG961,Lecture,Tuesday,18:00,22:00,6.29-Multipurpose - Teaching & Research,Adjunct ENGG 3
+ENGG961,Lecture,Tuesday,18:00,22:00,6.29-Multipurpose - Teaching & Research,Hazem Gouda
+ENGG961,Lecture,Tuesday,18:00,22:00,6.29-Multipurpose - Teaching & Research,Karim Bourouni
 ENTR902,Lecture,Tuesday,18:00,22:00,5.11-Classroom B,Marouane Khallouk
 ENTR902,Lecture,Thursday,18:00,22:00,5.11-Classroom B,Marouane Khallouk
 ENTR902,Lecture,Wednesday,18:00,22:00,6.32-Classroom B,Marouane Khallouk
@@ -802,11 +805,12 @@ MARK940,Lecture,Monday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Prakash Vel
 MARK940,Lecture,Wednesday,18:00,22:00,6.345-Classroom A 6.34 & 6.35,Prakash Vel
 MARK977,Lecture,Thursday,18:00,22:00,6.38-Classroom B,Munyar Nyadzayo
 MATH041,Lecture,Friday,08:30,10:30,2.65-Block 19,Sara Abdelaziz
-MATH041,Tutorial,Tuesday,08:30,10:30,3.45-Classroom B,Math Adjunct 1
+MATH041,Tutorial,Thursday,12:30,14:30,2.61-Block 19,Sara Abdelaziz
 MATH042,Lecture,Tuesday,11:30,13:30,5.11-Classroom B,Mervat Madi
 MATH042,Workshop,Wednesday,15:30,17:30,6.30-Multipurpose - Teaching & Research,Mervat Madi
 MATH042,Workshop,Friday,10:30,12:30,2.68-Block 19,Mervat Madi
 MATH042,Workshop,Friday,14:30,16:30,6.29-Multipurpose - Teaching & Research,Mervat Madi
+MATH042,Workshop,Thursday,14:30,16:30,4.44-Classroom B,Mervat Madi
 MATH043,Lecture,Tuesday,13:30,15:30,2.64-Block 19,Sara Abdelaziz
 MATH043,Workshop,Wednesday,12:30,14:30,6.28-Seminar/Tutorial,Faibin Poyil
 MATH043,Workshop,Wednesday,15:30,17:30,2.70-Block 19,Math Adjunct 1
@@ -821,12 +825,12 @@ MATH141,Lecture B,Thursday,08:30,10:30,6.345-Classroom A 6.34 & 6.35,Assane Lo
 MATH141,Tutorial,Wednesday,14:30,16:30,4.51-Tutorial Room,Ziad Choucair
 MATH141,Tutorial,Thursday,14:30,16:30,4.48-Classroom B,Ziad Choucair
 MATH141,Tutorial,Monday,14:30,16:30,3.45-Classroom B,Ziad Choucair
-MATH141,Tutorial,Monday,14:30,16:30,4.51-Tutorial Room,MATH Adjunct1
-MATH141,Tutorial,Tuesday,08:30,10:30,6.28-Seminar/Tutorial,MATH Adjunct1
-MATH141,Tutorial,Wednesday,08:30,10:30,5.10-Classroom B,MATH Adjunct1
-MATH141,Tutorial,Tuesday,14:30,16:30,6.28-Seminar/Tutorial,MATH Adjunct1
-MATH141,Tutorial,Tuesday,10:30,12:30,3.48-Classroom B,MATH Adjunct1
-MATH141,Tutorial,Wednesday,14:30,16:30,6.29-Multipurpose - Teaching & Research,MATH Adjunct1
+MATH141,Tutorial,Monday,14:30,16:30,4.51-Tutorial Room,Peter Boateng
+MATH141,Tutorial,Tuesday,08:30,10:30,6.28-Seminar/Tutorial,Peter Boateng
+MATH141,Tutorial,Wednesday,08:30,10:30,5.10-Classroom B,Peter Boateng
+MATH141,Tutorial,Tuesday,14:30,16:30,6.28-Seminar/Tutorial,Peter Boateng
+MATH141,Tutorial,Tuesday,10:30,12:30,3.48-Classroom B,Peter Boateng
+MATH141,Tutorial,Wednesday,14:30,16:30,6.29-Multipurpose - Teaching & Research,Peter Boateng
 MATH141,Tutorial,Thursday,08:30,10:30,6.28-Seminar/Tutorial,Bakhtawar Baluch
 MATH141,Tutorial,Tuesday,10:30,12:30,4.45-Classroom B,Bakhtawar Baluch
 MATH141,Tutorial,Tuesday,14:30,16:30,6.29-Multipurpose - Teaching & Research,Ziad Choucair
@@ -868,8 +872,8 @@ MBA902,Lecture A,Saturday,09:00,17:00,5.134-Classroom A 5.13 & 5.14,Prakash Vel
 MBA902,Lecture B,Sunday,09:00,17:00,5.134-Classroom A 5.13 & 5.14,Prakash Vel
 MBA904,Lecture A,Saturday,09:00,17:00,Function Room,Payyazhi Jayashree
 MBA904,Lecture B,Sunday,09:00,17:00,Function Room,Payyazhi Jayashree
-MBA906,Lecture A,Saturday,09:00,17:00,5.17-Classroom VC,Burcu Kapar
-MBA906,Lecture B,Sunday,09:00,17:00,5.17-Classroom VC,Burcu Kapar
+MBA906,Lecture A,Saturday,08:30,16:30,6.28-Seminar/Tutorial,Burcu Kapar
+MBA906,Lecture B,Sunday,08:30,16:30,6.28-Seminar/Tutorial,Burcu Kapar
 MBA908,Lecture A,Saturday,09:00,17:00,3.45-Classroom B,Arijit Sikdar
 MBA908,Lecture B,Sunday,09:00,17:00,3.45-Classroom B,Arijit Sikdar
 MBA909,Lecture A,Saturday,09:00,17:00,3.45-Classroom B,Mohan Guruswamy
