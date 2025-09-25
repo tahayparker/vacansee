@@ -13,7 +13,7 @@ export default function AboutPage() {
       y: 0,
       transition: { duration: 0.5, ease: "easeOut" },
     },
-  };
+  } as const;
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 py-6 pt-20 md:pt-24 flex-grow flex flex-col items-center text-white">
