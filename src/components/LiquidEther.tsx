@@ -183,27 +183,25 @@ export default function LiquidEther({
       private _onMouseMove = this.onDocumentMouseMove.bind(this);
       private _onTouchStart = this.onDocumentTouchStart.bind(this);
       private _onTouchMove = this.onDocumentTouchMove.bind(this);
-      private _onMouseEnter = this.onMouseEnter.bind(this);
-      private _onMouseLeave = this.onMouseLeave.bind(this);
       private _onTouchEnd = this.onTouchEnd.bind(this);
+      private _onMouseOut = this.onDocumentMouseOut.bind(this);
       init(container: HTMLElement) {
         this.container = container;
-        container.addEventListener('mousemove', this._onMouseMove);
-        container.addEventListener('touchstart', this._onTouchStart, { passive: true });
-        container.addEventListener('touchmove', this._onTouchMove, { passive: true });
-        container.addEventListener('mouseenter', this._onMouseEnter);
-        container.addEventListener('mouseleave', this._onMouseLeave);
-        container.addEventListener('touchend', this._onTouchEnd);
+        window.addEventListener('mousemove', this._onMouseMove, { passive: true });
+        window.addEventListener('touchstart', this._onTouchStart, { passive: true });
+        window.addEventListener('touchmove', this._onTouchMove, { passive: true });
+        window.addEventListener('touchend', this._onTouchEnd, { passive: true });
+        window.addEventListener('touchcancel', this._onTouchEnd, { passive: true });
+        window.addEventListener('mouseout', this._onMouseOut);
       }
       dispose() {
-        const c = this.container;
-        if (!c) return;
-        c.removeEventListener('mousemove', this._onMouseMove);
-        c.removeEventListener('touchstart', this._onTouchStart);
-        c.removeEventListener('touchmove', this._onTouchMove);
-        c.removeEventListener('mouseenter', this._onMouseEnter);
-        c.removeEventListener('mouseleave', this._onMouseLeave);
-        c.removeEventListener('touchend', this._onTouchEnd);
+        window.removeEventListener('mousemove', this._onMouseMove);
+        window.removeEventListener('touchstart', this._onTouchStart);
+        window.removeEventListener('touchmove', this._onTouchMove);
+        window.removeEventListener('touchend', this._onTouchEnd);
+        window.removeEventListener('touchcancel', this._onTouchEnd);
+        window.removeEventListener('mouseout', this._onMouseOut);
+        this.container = null;
       }
       setCoords(x: number, y: number) {
         if (!this.container) return;
@@ -211,15 +209,21 @@ export default function LiquidEther({
         const rect = this.container.getBoundingClientRect();
         const nx = (x - rect.left) / rect.width;
         const ny = (y - rect.top) / rect.height;
+        const inside = nx >= 0 && nx <= 1 && ny >= 0 && ny <= 1;
+        this.isHoverInside = inside;
         this.coords.set(nx * 2 - 1, -(ny * 2 - 1));
         this.mouseMoved = true;
         this.timer = window.setTimeout(() => {
           this.mouseMoved = false;
+          this.hasUserControl = false;
+          this.isHoverInside = false;
         }, 100);
       }
       setNormalized(nx: number, ny: number) {
         this.coords.set(nx, ny);
         this.mouseMoved = true;
+        this.hasUserControl = false;
+        this.isHoverInside = false;
       }
       onDocumentMouseMove(event: MouseEvent) {
         if (this.onInteract) this.onInteract();
@@ -256,12 +260,12 @@ export default function LiquidEther({
       }
       onTouchEnd() {
         this.isHoverInside = false;
+        this.hasUserControl = false;
       }
-      onMouseEnter() {
-        this.isHoverInside = true;
-      }
-      onMouseLeave() {
-        this.isHoverInside = false;
+      onDocumentMouseOut(event: MouseEvent) {
+        if (!event.relatedTarget) {
+          this.isHoverInside = false;
+        }
       }
       update() {
         if (this.takeoverActive) {
