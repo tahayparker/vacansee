@@ -86,7 +86,7 @@ BUS030,Tutorial,Friday,14:30,16:30,3.45-Classroom B,Monika Yadav
 BUS030,Tutorial,Friday,10:30,12:30,2.66-Block 19,Monika Yadav
 BUS030,Tutorial,Thursday,12:30,14:30,2.71-Block 19,Sina Aneesh
 BUS030,Tutorial,Thursday,14:30,16:30,2.71-Block 19,Sina Aneesh
-BUS030,Tutorial,Friday,10:30,12:30,2.61-Block 19,Sameera Siddiqui
+BUS030,Tutorial,Friday,10:30,12:30,2.61-Block 19,Everyl Colaco
 BUS030,Tutorial,Friday,14:30,16:30,4.48-Classroom B,Sina Aneesh
 BUS030,Tutorial,Thursday,14:30,16:30,2.61-Block 19,Sameera Siddiqui
 BUS030,Tutorial,Friday,10:30,12:30,2.62-Block 19,Sina Aneesh
@@ -326,7 +326,6 @@ CSIT123,Tutorial,Monday,10:30,12:30,2.50-Computer Lab Single,Tauqeer Faiz
 CSIT123,Tutorial,Wednesday,08:30,10:30,2.50-Computer Lab Single,Halim Khelalfa
 CSIT123,Tutorial,Wednesday,16:30,18:30,2.50-Computer Lab Single,Tauqeer Faiz
 CSIT128,Computer Lab,Thursday,14:30,16:30,6.36-Computer Lab (Single Screen),Deepa Keshavamurthy
-CSIT128,Computer Lab,Friday,16:30,18:30,1.52-Computer Lab Single,Deepa Keshavamurthy
 CSIT128,Computer Lab,Monday,16:30,18:30,1.52-Computer Lab Single,Sara Azeem Khan
 CSIT128,Computer Lab,Friday,10:30,12:30,6.33-Computer Lab,Sara Azeem Khan
 CSIT128,Lecture,Tuesday,12:30,14:30,3.44-Classroom B,Soly Mathew
@@ -370,7 +369,6 @@ CSIT375,Tutorial,Monday,09:30,10:30,3.48-Classroom B,Tina Thomas
 CSIT375,Tutorial,Wednesday,13:30,14:30,5.17-Classroom VC,Tina Thomas
 CSIT375,Tutorial,Monday,09:30,10:30,4.48-Classroom B,Syama K
 CSIT375,Tutorial,Monday,13:30,14:30,2.65-Block 19,Syama K
-CSIT375,Tutorial,Monday,08:30,09:30,3.48-Classroom B,Tina Thomas
 CSIT375,Tutorial,Tuesday,08:30,09:30,3.48-Classroom B,Tina Thomas
 ECON100,Lecture,Wednesday,10:30,12:30,0.17-Lecture Theatre,Avneet Kaur
 ECON100,Lecture,Wednesday,14:30,16:30,0.17-Lecture Theatre,Avneet Kaur
@@ -770,10 +768,10 @@ MARK101,Tutorial,Monday,14:30,16:30,6.38-Classroom B,Nazanin Tahsili
 MARK101,Tutorial,Thursday,14:30,16:30,6.38-Classroom B,Nazanin Tahsili
 MARK101,Tutorial,Thursday,08:30,10:30,2.71-Block 19,Umme Kulsoom
 MARK101,Tutorial,Wednesday,12:30,14:30,2.64-Block 19,Fatma Sedef
-MARK101,Tutorial,Monday,16:30,18:30,5.12-Informal Classroom,Vahideh Rahnama
-MARK101,Tutorial,Tuesday,14:30,16:30,4.48-Classroom B,Vahideh Rahnama
-MARK101,Tutorial,Tuesday,12:30,14:30,4.48-Classroom B,Vahideh Rahnama
-MARK101,Tutorial,Monday,14:30,16:30,5.12-Informal Classroom,Vahideh Rahnama
+MARK101,Tutorial,Monday,16:30,18:30,5.12-Informal Classroom,Nazanin Tahsili
+MARK101,Tutorial,Tuesday,14:30,16:30,4.48-Classroom B,Nazanin Tahsili
+MARK101,Tutorial,Tuesday,12:30,14:30,4.48-Classroom B,Fatma Sedef
+MARK101,Tutorial,Monday,14:30,16:30,5.12-Informal Classroom,Odelia Mathews
 MARK205,Computer Lab,Monday,10:30,12:30,6.36-Computer Lab (Single Screen),Vidhi Sharma
 MARK205,Computer Lab,Tuesday,12:30,14:30,3.47-Game Dev Lab Dual Screens,Vidhi Sharma
 MARK205,Computer Lab,Wednesday,12:30,14:30,3.52-Computer Lab (Network),Vidhi Sharma
