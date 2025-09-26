@@ -633,16 +633,16 @@ GESF200,Tutorial B,Tuesday,08:30,13:30,6.30-Multipurpose - Teaching & Research,M
 GESF200,Tutorial C,Wednesday,08:30,13:30,6.30-Multipurpose - Teaching & Research,Magdalena Halim
 GESF200,Tutorial D,Thursday,08:30,13:30,6.30-Multipurpose - Teaching & Research,Magdalena Halim
 GESF200,Tutorial E,Friday,08:30,12:30,6.30-Multipurpose - Teaching & Research,Magdalena Halim
-GESF300,Tutorial A,Monday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Alison Webster
-GESF300,Tutorial B,Tuesday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Alison Webster
-GESF300,Tutorial C,Wednesday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Alison Webster
-GESF300,Tutorial D,Thursday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Alison Webster
-GESF300,Tutorial E,Friday,08:30,12:30,6.29-Multipurpose - Teaching & Research,Alison Webster
-GESF400,Tutorial A,Monday,08:30,13:30,1.14-Multipurpose Room,Lynne Robinson
-GESF400,Tutorial B,Tuesday,08:30,13:30,1.14-Multipurpose Room,Lynne Robinson
-GESF400,Tutorial C,Wednesday,08:30,13:30,1.14-Multipurpose Room,Sabina Ashraf
-GESF400,Tutorial D,Thursday,08:30,13:30,1.14-Multipurpose Room,Lynne Robinson
-GESF400,Tutorial E,Friday,08:30,12:30,1.14-Multipurpose Room,Lynne Robinson
+GESF300,Tutorial A,Monday,08:30,13:30,1.14-Multipurpose Room,Alison Webster
+GESF300,Tutorial B,Tuesday,08:30,13:30,1.14-Multipurpose Room,Alison Webster
+GESF300,Tutorial C,Wednesday,08:30,13:30,1.14-Multipurpose Room,Alison Webster
+GESF300,Tutorial D,Thursday,08:30,13:30,1.14-Multipurpose Room,Alison Webster
+GESF300,Tutorial E,Friday,08:30,12:30,1.14-Multipurpose Room,Alison Webster
+GESF400,Tutorial A,Monday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Lynne Robinson
+GESF400,Tutorial B,Tuesday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Lynne Robinson
+GESF400,Tutorial C,Wednesday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Sabina Ashraf
+GESF400,Tutorial D,Thursday,08:30,13:30,6.29-Multipurpose - Teaching & Research,Lynne Robinson
+GESF400,Tutorial E,Friday,08:30,12:30,6.29-Multipurpose - Teaching & Research,Lynne Robinson
 HUM040,Lecture,Monday,16:30,18:30,3.46-Classroom A,Afnan Boutrid
 HUM040,Tutorial,Friday,10:30,12:30,4.48-Classroom B,Dana Charkaoui
 HUM040,Tutorial,Friday,14:30,16:30,4.51-Tutorial Room,Afnan Boutrid
@@ -668,7 +668,7 @@ IFRC002,Tutorial A,Wednesday,12:30,14:30,4.48-Classroom B,Ajrina Hysaj
 IFRC002,Tutorial A,Monday,12:30,14:30,4.48-Classroom B,Ajrina Hysaj
 IFRC002,Tutorial B,Wednesday,16:30,18:30,2.61-Block 19,Ajrina Hysaj
 IFRC002,Tutorial B,Friday,10:30,12:30,4.46-Classroom A,Ajrina Hysaj
-IFRC002,Tutorial B,Thursday,10:30,12:30,2.61-Block 19,Ajrina Hysaj
+IFRC002,Tutorial B,Tuesday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Ajrina Hysaj
 IFSC001,Tutorial A,Friday,08:30,12:30,2.67-Block 19,Amina Khan
 INE301,Lecture,Wednesday,12:30,14:30,2.62/63-Combined-Block 19,Marouane Khallouk
 INE301,Lecture,Wednesday,14:30,16:30,2.62/63-Combined-Block 19,Marouane Khallouk
@@ -772,6 +772,7 @@ MARK101,Tutorial,Monday,16:30,18:30,5.12-Informal Classroom,Nazanin Tahsili
 MARK101,Tutorial,Tuesday,14:30,16:30,4.48-Classroom B,Nazanin Tahsili
 MARK101,Tutorial,Tuesday,12:30,14:30,4.48-Classroom B,Fatma Sedef
 MARK101,Tutorial,Monday,14:30,16:30,5.12-Informal Classroom,Odelia Mathews
+MARK101,Tutorial,Monday,12:30,14:30,3.46-Classroom A,Odelia Mathews
 MARK205,Computer Lab,Monday,10:30,12:30,6.36-Computer Lab (Single Screen),Vidhi Sharma
 MARK205,Computer Lab,Tuesday,12:30,14:30,3.47-Game Dev Lab Dual Screens,Vidhi Sharma
 MARK205,Computer Lab,Wednesday,12:30,14:30,3.52-Computer Lab (Network),Vidhi Sharma
