@@ -201,7 +201,7 @@ export default function AvailableSoonPage() {
       opacity: 1,
       transition: { delayChildren: 0.1, staggerChildren: 0.08 },
     },
-  } as const;
+  };
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -209,7 +209,7 @@ export default function AvailableSoonPage() {
       y: 0,
       transition: { type: "spring", stiffness: 100, damping: 12 },
     },
-  } as const;
+  };
 
   // --- Render Logic ---
   const renderContent = () => {
@@ -311,7 +311,7 @@ export default function AvailableSoonPage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" } as const}
+        transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
       >
         <div className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center text-white inline-block mr-2">
@@ -352,7 +352,7 @@ export default function AvailableSoonPage() {
           </label>
           <Select
             value={selectedDuration.toString()}
-            onValueChange={(value: string) => setSelectedDuration(parseInt(value, 10))}
+            onValueChange={(value) => setSelectedDuration(parseInt(value, 10))}
           >
             <SelectTrigger
               id="duration-select"
