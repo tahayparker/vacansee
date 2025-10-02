@@ -9,7 +9,7 @@ export default function Home() {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
-  } as const;
+  };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -18,13 +18,23 @@ export default function Home() {
       y: 0,
       transition: { duration: 0.5, ease: "easeOut" },
     },
-  } as const;
+  };
 
   // Return the content block directly. _app.tsx handles centering.
   // Added py-10 for vertical spacing within the centered block
   return (
     <div className="relative text-center max-w-4xl py-10">
+      {" "}
       {/* No flex, no grow, no centering. Added py-10 */}
+      {/* Background Glow */}
+      <motion.div
+        className="absolute inset-0 -z-10 overflow-visible"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+      >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-purple-800/30 rounded-full blur-[100px] sm:blur-[150px]" />
+      </motion.div>
       {/* Content */}
       <motion.div
         variants={containerVariants}
