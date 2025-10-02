@@ -1,5 +1,5 @@
 // src/pages/auth/login.tsx
-import LiquidEtherBackground from "@/components/LiquidEtherBackground";
+import GradientBackground from "@/components/GradientBackground";
 import { JSX, SVGProps, useEffect, useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useRouter } from "next/router";
@@ -170,7 +170,7 @@ export default function LoginPage() {
 
   return (
     <div className={`relative min-h-screen`}>
-  <LiquidEtherBackground />
+      <GradientBackground />
       <div className="relative z-10 grid min-h-screen place-items-center p-4">
         <div className="w-full max-w-md space-y-6 rounded-xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-lg">
           <div className="space-y-2 text-center text-white">
