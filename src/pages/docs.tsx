@@ -23,12 +23,12 @@ export default function DocsPage() {
       y: 0,
       transition: { duration: 0.5, ease: "easeOut" },
     },
-  } as const;
+  };
 
   const listItemVariant = {
     hidden: { opacity: 0, x: -10 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
-  } as const;
+  };
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 py-6 pt-20 md:pt-24 flex-grow flex flex-col text-white">
@@ -39,7 +39,7 @@ export default function DocsPage() {
       <motion.div
         initial="hidden"
         animate="visible"
-  variants={{ visible: { transition: { staggerChildren: 0.1 } } } as const}
+        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
         className="space-y-10" // Increased spacing between sections slightly
       >
         {/* --- Header Section (Slightly adjusted) --- */}
