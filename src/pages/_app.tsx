@@ -78,7 +78,7 @@ export default function App({ Component, pageProps }: AppProps) {
             handleSessionUpdate(session);
           }
         })
-        .catch((error: any) => {
+        .catch((error) => {
           console.error("[_app Client] Initial getSession error:", error);
           if (isMounted) {
             handleSessionUpdate(null);
@@ -91,7 +91,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event: string, session: any) => {
+      (event, session) => {
         if (isMounted) {
           console.log(`[_app Client] onAuthStateChange event: ${event}`);
           handleSessionUpdate(session);
