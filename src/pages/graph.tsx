@@ -129,7 +129,7 @@ export default function GraphPage() {
   const pageContainerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.4, ease: "easeOut" } },
-  } as const;
+  };
 
   const headerSectionVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -138,7 +138,7 @@ export default function GraphPage() {
       y: 0,
       transition: { delay: 0.1, duration: 0.4, ease: "easeOut" },
     },
-  } as const;
+  };
 
   const tableContainerVariants = {
     hidden: { opacity: 0 },
@@ -147,7 +147,7 @@ export default function GraphPage() {
       transition: { delay: 0.1, duration: 0.3, ease: "easeOut" },
     }, // Faster transition
     exit: { opacity: 0, transition: { duration: 0.2, ease: "easeIn" } },
-  } as const;
+  };
 
   const tableRowVariants = {
     hidden: { opacity: 0, x: -15 }, // Slightly less x offset
@@ -157,15 +157,11 @@ export default function GraphPage() {
       transition: {
         delay: i * 0.025, // Faster stagger delay
         duration: 0.3,
-        ease: "easeOut" as const,
+        ease: "easeOut",
       },
     }),
-    exit: {
-      opacity: 0,
-      x: 15,
-      transition: { duration: 0.15, ease: "easeIn" as const },
-    }, // Faster exit
-  } as const;
+    exit: { opacity: 0, x: 15, transition: { duration: 0.15, ease: "easeIn" } }, // Faster exit
+  };
   // --- End Animation Variants ---
 
   // --- Helper Functions ---
@@ -213,7 +209,7 @@ export default function GraphPage() {
           </label>
           <Select
             value={selectedDayIndex.toString()}
-            onValueChange={(value: string) => setSelectedDayIndex(parseInt(value, 10))}
+            onValueChange={(value) => setSelectedDayIndex(parseInt(value, 10))}
           >
             <SelectTrigger
               id="day-select"
