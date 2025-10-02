@@ -1,6 +1,6 @@
 {
   "name": "vacansee",
-  "version": "2.0.1",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "prisma generate && next dev --turbopack",
@@ -50,14 +50,12 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/three": "^0.180.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
     "prisma": "^6.6.0",
     "shadcn": "^3.2.1",
     "tailwindcss": "^4",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.180.0",
     "typescript": "^5"
   }
 }
