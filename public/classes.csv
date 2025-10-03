@@ -79,7 +79,7 @@ BCM313,Tutorial,Wednesday,08:30,10:30,4.45-Classroom B,Negin Chabook
 BCM313,Tutorial,Friday,10:30,12:30,5.10-Classroom B,Negin Chabook
 BCM313,Tutorial,Friday,08:30,10:30,5.10-Classroom B,Negin Chabook
 BCM313,Tutorial,Wednesday,12:30,14:30,2.65-Block 19,Negin Chabook
-BCM325,Lecture,Wednesday,12:30,14:30,2.61-Block 19,Aaron Anderson
+BCM325,Lecture,Wednesday,12:30,14:30,4.467-Classroom A 4.46 & 4.47,Aaron Anderson
 BCM325,Tutorial,Thursday,10:30,12:30,4.50-Classroom B,Rahaf Nassif
 BCM325,Tutorial,Friday,08:30,10:30,3.42-Classroom B,Rahaf Nassif
 BUS030,Lecture,Monday,14:30,16:30,6.345-Classroom A 6.34 & 6.35,Monika Yadav
@@ -260,9 +260,11 @@ CSCI368,Tutorial,Wednesday,11:30,12:30,3.42-Classroom B,Tina Thomas
 CSCI368,Tutorial,Monday,10:30,11:30,3.48-Classroom B,Suzan Sallam
 CSCI368,Tutorial,Monday,13:30,14:30,3.48-Classroom B,Suzan Sallam
 CSCI368,Tutorial,Wednesday,13:30,14:30,5.18-Classroom A,Suzan Sallam
+CSIT040,Lecture,Tuesday,10:30,14:30,2.62/63-Combined-Block 19,Deepa Keshavamurthy
 CSIT040,Lecture,Tuesday,10:30,14:30,2.62/63-Combined-Block 19,Kiyan Afsari
 CSIT040,Lecture,Tuesday,10:30,14:30,2.62/63-Combined-Block 19,Mai El Barachi
 CSIT040,Lecture,Tuesday,10:30,14:30,2.62/63-Combined-Block 19,Tina Thomas
+CSIT040,Lecture,Wednesday,14:30,18:30,5.11-Classroom B,Deepa Keshavamurthy
 CSIT040,Lecture,Wednesday,14:30,18:30,5.11-Classroom B,Kiyan Afsari
 CSIT040,Lecture,Wednesday,14:30,18:30,5.11-Classroom B,Mai El Barachi
 CSIT040,Lecture,Wednesday,14:30,18:30,5.11-Classroom B,Tina Thomas
@@ -697,7 +699,7 @@ IRAE135,Tutorial,Monday,12:30,14:30,2.64-Block 19,Aswina Sreekumar
 IRAE135,Tutorial,Thursday,14:30,16:30,2.68-Block 19,Aswina Sreekumar
 IRAE135,Tutorial,Thursday,08:30,10:30,2.67-Block 19,Dana Charkaoui
 IRAE135,Tutorial,Friday,08:30,10:30,3.48-Classroom B,Dana Charkaoui
-IRAE135,Tutorial,Wednesday,12:30,14:30,4.467-Classroom A 4.46 & 4.47,Dana Charkaoui
+IRAE135,Tutorial,Wednesday,12:30,14:30,2.61-Block 19,Dana Charkaoui
 ISIT040,Lecture,Thursday,08:30,12:30,6.32-Classroom B,Abdullah El Nokiti
 ISIT040,Lecture,Thursday,08:30,12:30,6.32-Classroom B,Omar Daoudi
 ISIT040,Lecture,Thursday,08:30,12:30,6.32-Classroom B,Tauqeer Faiz
