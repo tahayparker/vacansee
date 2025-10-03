@@ -1,7 +1,7 @@
 SubCode,Class,Day,StartTime,EndTime,Room,Teacher
 ACCY121,Lecture,Monday,10:30,12:30,0.17-Lecture Theatre,Khairul Kamarudin
 ACCY121,Lecture,Tuesday,14:30,16:30,0.17-Lecture Theatre,Khairul Kamarudin
-ACCY121,Tutorial,Thursday,14:30,16:30,2.70-Block 19,Yusra Ghani
+ACCY121,Tutorial,Thursday,14:30,16:30,3.44-Classroom B,Yusra Ghani
 ACCY121,Tutorial,Monday,12:30,14:30,4.51-Tutorial Room,Yusra Ghani
 ACCY121,Tutorial,Tuesday,12:30,14:30,6.28-Seminar/Tutorial,Yusra Ghani
 ACCY121,Tutorial,Wednesday,08:30,10:30,4.50-Classroom B,Marryam Yasir
@@ -658,7 +658,7 @@ IELT200,Tutorial E,Friday,18:00,21:00,5.08-Seminar / Tutorial,Ferzana Aslam
 IFBS002,Tutorial A,Tuesday,16:30,18:30,4.51-Tutorial Room,Sadaf Khurshid
 IFBS002,Tutorial B,Wednesday,14:30,16:30,6.33-Computer Lab,Sadaf Khurshid
 IFCH002,Computer Lab,Wednesday,18:30,19:30,1.53-Chemistry & Materials Science Lab,Akanksha Singh
-IFCH002,Tutorial A,Tuesday,16:30,18:30,4.53-Seminar/Tutorial,Akanksha Singh
+IFCH002,Tutorial A,Tuesday,16:30,18:30,1.14-Multipurpose Room,Abdulqader Hasan
 IFCH002,Tutorial B,Wednesday,16:30,18:30,4.53-Seminar/Tutorial,Akanksha Singh
 IFEC002,Tutorial A,Monday,14:30,16:30,3.46-Classroom A,Asima Shirazi
 IFEC002,Tutorial B,Tuesday,12:30,14:30,4.51-Tutorial Room,Asima Shirazi
@@ -670,9 +670,11 @@ IFPH002,Tutorial B,Monday,12:30,14:30,3.45-Classroom B,Baharek Tajali
 IFRC002,Tutorial A,Monday,16:30,18:30,3.45-Classroom B,Ajrina Hysaj
 IFRC002,Tutorial A,Wednesday,12:30,14:30,4.48-Classroom B,Ajrina Hysaj
 IFRC002,Tutorial A,Monday,12:30,14:30,4.48-Classroom B,Ajrina Hysaj
+IFRC002,Tutorial A,Wednesday,13:30,15:30,6.30-Multipurpose - Teaching & Research,Ferzana Aslam
 IFRC002,Tutorial B,Wednesday,16:30,18:30,2.61-Block 19,Ajrina Hysaj
 IFRC002,Tutorial B,Thursday,08:30,10:30,2.61-Block 19,Ajrina Hysaj
 IFRC002,Tutorial B,Tuesday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Ajrina Hysaj
+IFRC002,Tutorial B,Thursday,08:30,10:30,2.65-Block 19,Ferzana Aslam
 IFSC001,Tutorial A,Friday,08:30,12:30,2.67-Block 19,Amina Khan
 INE301,Lecture,Wednesday,12:30,14:30,2.62/63-Combined-Block 19,Marouane Khallouk
 INE301,Lecture,Wednesday,14:30,16:30,2.62/63-Combined-Block 19,Marouane Khallouk
