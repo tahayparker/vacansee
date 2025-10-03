@@ -244,9 +244,9 @@ CSCI336,Lecture,Wednesday,08:30,10:30,3.46-Classroom A,HC Lim
 CSCI336,Tutorial,Wednesday,14:30,15:30,3.46-Classroom A,HC Lim
 CSCI336,Tutorial,Wednesday,10:30,11:30,6.33-Computer Lab,HC Lim
 CSCI350,Lecture,Wednesday,12:30,13:30,2.70-Block 19,Halim Khelalfa
-CSCI368,Computer Lab,Wednesday,16:30,18:30,6.39-Computer Lab,Suzan Sallam
+CSCI368,Computer Lab,Wednesday,16:30,18:30,3.52-Computer Lab (Network),Suzan Sallam
 CSCI368,Computer Lab,Thursday,10:30,12:30,3.52-Computer Lab (Network),Suzan Sallam
-CSCI368,Computer Lab,Tuesday,12:30,14:30,6.33-Computer Lab,Mouhannad Al Attar
+CSCI368,Computer Lab,Tuesday,12:30,14:30,3.52-Computer Lab (Network),Mouhannad Al Attar
 CSCI368,Computer Lab,Tuesday,08:30,10:30,6.33-Computer Lab,Mouhannad Al Attar
 CSCI368,Computer Lab,Monday,14:30,16:30,3.52-Computer Lab (Network),Suzan Sallam
 CSCI368,Computer Lab,Thursday,08:30,10:30,3.52-Computer Lab (Network),Suzan Sallam
@@ -467,8 +467,8 @@ ECTE423,Tutorial,Monday,10:30,12:30,1.51-Power Lab,Mohamad Nassereddine
 ECTE477,Computer Lab,Tuesday,14:30,17:30,2.51-Project Lab,Kiyan Afsari
 ECTE477,Computer Lab,Thursday,13:30,16:30,2.51-Project Lab,Kiyan Afsari
 ECTE477,Lecture,Tuesday,08:30,11:30,5.18-Classroom A,Abdsamad Benkrid
-ECTE477,Tutorial,Tuesday,12:30,13:30,3.52-Computer Lab (Network),Abdsamad Benkrid
-ECTE477,Tutorial,Tuesday,13:30,14:30,3.52-Computer Lab (Network),Abdsamad Benkrid
+ECTE477,Tutorial,Tuesday,12:30,13:30,6.33-Computer Lab,Abdsamad Benkrid
+ECTE477,Tutorial,Tuesday,13:30,14:30,6.33-Computer Lab,Abdsamad Benkrid
 ECTE498,Lecture,Monday,12:30,14:30,Online,Haile Rajamani
 EDGC920,Lecture,Tuesday,18:00,22:00,5.19-Classroom A,Afnan Boutrid
 EDGI902,Lecture,Thursday,18:00,22:00,3.48-Classroom B,Christopher Tuffnell
@@ -683,6 +683,7 @@ INE301,Tutorial,Thursday,08:30,10:30,3.48-Classroom B,Amna Moeen
 INE301,Tutorial,Thursday,12:30,14:30,3.42-Classroom B,Amna Moeen
 INE301,Tutorial,Friday,10:30,12:30,4.50-Classroom B,Donia Rawashdeh
 INE301,Tutorial,Friday,08:30,10:30,4.50-Classroom B,Donia Rawashdeh
+INE301,Tutorial,Monday,16:30,18:30,3.42-Classroom B,Jourmana Trad
 INE301,Tutorial,Wednesday,16:30,18:30,4.48-Classroom B,Jourmana Trad
 IRAE135,Lecture,Monday,16:30,18:30,6.345-Classroom A 6.34 & 6.35,Noor Suwwan
 IRAE135,Lecture,Wednesday,10:30,12:30,2.62/63-Combined-Block 19,Noor Suwwan
