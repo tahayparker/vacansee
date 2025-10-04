@@ -904,8 +904,8 @@ MDT904,Lecture A,Saturday,10:00,16:00,4.44-Classroom B,Mai El Barachi
 MDT904,Lecture B,Sunday,10:00,16:00,4.44-Classroom B,Mai El Barachi
 MDT913,Lecture A,Saturday,10:00,16:00,6.345-Classroom A 6.34 & 6.35,Obada Al Khatib
 MDT913,Lecture B,Sunday,10:00,16:00,6.345-Classroom A 6.34 & 6.35,Obada Al Khatib
-MDT999,Lecture A,Saturday,10:00,16:00,3.46-Classroom A,George Tsaramirsis
-MDT999,Lecture B,Sunday,10:00,16:00,3.46-Classroom A,George Tsaramirsis
+MDT999,Lecture A,Saturday,10:00,16:00,3.44-Classroom B,George Tsaramirsis
+MDT999,Lecture B,Sunday,10:00,16:00,3.44-Classroom B,George Tsaramirsis
 MECH321,Computer Lab,Monday,16:30,18:30,1.48-Thermal Lab,Abdulqader Hasan
 MECH321,Lecture,Wednesday,08:30,11:30,3.42-Classroom B,Ciara O'Driscoll
 MECH321,Tutorial,Wednesday,12:30,14:30,3.46-Classroom A,Abdulqader Hasan
@@ -940,7 +940,7 @@ MGNT110,Tutorial,Wednesday,12:30,14:30,3.42-Classroom B,Ayush Mishra
 MGNT110,Tutorial,Wednesday,14:30,16:30,4.48-Classroom B,Ayush Mishra
 MGNT110,Tutorial,Wednesday,10:30,12:30,2.71-Block 19,Tanya Dinc
 MGNT110,Tutorial,Wednesday,12:30,14:30,2.71-Block 19,Tanya Dinc
-MGNT110,Tutorial,Tuesday,10:30,12:30,2.64-Block 19,Tanya Dinc
+MGNT110,Tutorial,Tuesday,10:30,12:30,2.68-Block 19,Tanya Dinc
 MGNT205,Lecture,Thursday,10:30,12:30,6.345-Classroom A 6.34 & 6.35,Sadaf Khurshid
 MGNT205,Tutorial,Tuesday,11:30,13:30,2.61-Block 19,Sadaf Khurshid
 MGNT205,Tutorial,Tuesday,12:30,14:30,2.65-Block 19,Sawsan AlKhayat
@@ -988,7 +988,7 @@ MMMB203,Computer Lab,Wednesday,12:30,14:30,1.48-Thermal Lab,Ahmed Mohamed
 MMMB203,Computer Lab,Wednesday,12:30,14:30,1.49-Manufacturing & Workshop Lab,Ahmed Mohamed
 MMMB203,Lecture A,Monday,12:30,14:30,4.467-Classroom A 4.46 & 4.47,Mama Chacha
 MMMB203,Lecture B,Tuesday,08:30,10:30,5.134-Classroom A 5.13 & 5.14,Mama Chacha
-MMMB203,Tutorial,Tuesday,10:30,12:30,2.68-Block 19,Asarudheen Abdudeen
+MMMB203,Tutorial,Tuesday,10:30,12:30,2.64-Block 19,Asarudheen Abdudeen
 MMMB203,Tutorial,Wednesday,12:30,14:30,5.11-Classroom B,Mohammad Yousuf
 MMMB203,Tutorial,Tuesday,16:30,18:30,2.65-Block 19,Asarudheen Abdudeen
 MMMB203,Tutorial,Wednesday,14:30,16:30,6.28-Seminar/Tutorial,Asarudheen Abdudeen
