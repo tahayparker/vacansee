@@ -220,10 +220,8 @@ CSCI251,Lecture A,Monday,15:30,17:30,6.32-Classroom B,HC Lim
 CSCI251,Lecture B,Tuesday,16:30,18:30,4.467-Classroom A 4.46 & 4.47,HC Lim
 CSCI291,Computer Lab,Thursday,08:30,10:30,3.47-Game Dev Lab Dual Screens,Mahmoud Alkakuri
 CSCI291,Computer Lab,Thursday,10:30,12:30,3.47-Game Dev Lab Dual Screens,Ashna Sreejith
-CSCI291,Computer Lab,Friday,10:30,12:30,6.36-Computer Lab (Single Screen),Mahmoud Alkakuri
 CSCI291,Computer Lab,Friday,14:30,16:30,3.52-Computer Lab (Network),Mahmoud Alkakuri
 CSCI291,Computer Lab,Thursday,12:30,14:30,3.47-Game Dev Lab Dual Screens,Eva Barbulescu
-CSCI291,Computer Lab,Friday,14:30,16:30,3.47-Game Dev Lab Dual Screens,Ashna Sreejith
 CSCI291,Computer Lab,Friday,10:30,12:30,1.52-Computer Lab Single,Ashna Sreejith
 CSCI291,Computer Lab,Thursday,08:30,10:30,6.36-Computer Lab (Single Screen),Ashna Sreejith
 CSCI291,Lecture,Monday,11:30,13:30,6.32-Classroom B,Abdsamad Benkrid
@@ -820,7 +818,7 @@ MATH042,Workshop,Friday,14:30,16:30,6.29-Multipurpose - Teaching & Research,Merv
 MATH042,Workshop,Friday,16:30,18:30,6.38-Classroom B,Mervat Madi
 MATH043,Lecture,Tuesday,13:30,15:30,2.64-Block 19,Sara Abdelaziz
 MATH043,Workshop,Wednesday,12:30,14:30,6.28-Seminar/Tutorial,Faibin Poyil
-MATH043,Workshop,Wednesday,15:30,17:30,6.30-Multipurpose - Teaching & Research,Math Adjunct 1
+MATH043,Workshop,Wednesday,15:30,17:30,6.30-Multipurpose - Teaching & Research,Faibin Poyil
 MATH141,Lecture A,Monday,10:30,12:30,5.134-Classroom A 5.13 & 5.14,Assane Lo
 MATH141,Lecture A,Monday,14:30,16:30,5.134-Classroom A 5.13 & 5.14,Assane Lo
 MATH141,Lecture A,Monday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Mohamed Malek
@@ -832,7 +830,6 @@ MATH141,Lecture B,Thursday,08:30,10:30,6.345-Classroom A 6.34 & 6.35,Assane Lo
 MATH141,Tutorial,Wednesday,14:30,16:30,4.51-Tutorial Room,Ziad Choucair
 MATH141,Tutorial,Thursday,14:30,16:30,4.48-Classroom B,Ziad Choucair
 MATH141,Tutorial,Monday,14:30,16:30,3.45-Classroom B,Ziad Choucair
-MATH141,Tutorial,Monday,14:30,16:30,2.65-Block 19,Peter Boateng
 MATH141,Tutorial,Tuesday,08:30,10:30,6.28-Seminar/Tutorial,Peter Boateng
 MATH141,Tutorial,Wednesday,08:30,10:30,5.10-Classroom B,Peter Boateng
 MATH141,Tutorial,Tuesday,14:30,16:30,6.28-Seminar/Tutorial,Peter Boateng
@@ -869,8 +866,7 @@ MATH291,Tutorial,Wednesday,16:30,18:30,5.19-Classroom A,Ziad Choucair
 MATH291,Tutorial,Friday,08:30,10:30,4.47-Classroom A,Ziad Choucair
 MATH291,Tutorial,Friday,10:30,12:30,2.71-Block 19,Ziad Choucair
 MATH291,Tutorial,Thursday,12:30,14:30,4.48-Classroom B,Ziad Choucair
-MATH291,Tutorial,Friday,10:30,12:30,4.51-Tutorial Room,MATH Instructor 1
-MATH291,Tutorial,Friday,08:30,10:30,4.51-Tutorial Room,MATH Instructor 1
+MATH291,Tutorial,Wednesday,16:30,18:30,5.17-Classroom VC,Assane Lo
 MATH291,Tutorial,Friday,14:30,16:30,4.50-Classroom B,Ziad Choucair
 MBA900,Lecture A,Saturday,09:00,17:00,5.134-Classroom A 5.13 & 5.14,Faisal Rana
 MBA900,Lecture B,Sunday,09:00,17:00,5.134-Classroom A 5.13 & 5.14,Faisal Rana
@@ -975,14 +971,14 @@ MMMB203,Computer Lab,Thursday,12:30,14:30,1.48-Thermal Lab,Ahmed Mohamed
 MMMB203,Computer Lab,Thursday,12:30,14:30,1.49-Manufacturing & Workshop Lab,Ahmed Mohamed
 MMMB203,Computer Lab,Wednesday,14:30,16:30,1.48-Thermal Lab,Aghead Al Arnaout
 MMMB203,Computer Lab,Wednesday,14:30,16:30,1.49-Manufacturing & Workshop Lab,Aghead Al Arnaout
-MMMB203,Computer Lab,Tuesday,14:30,16:30,1.48-Thermal Lab,Adjunct 6
-MMMB203,Computer Lab,Tuesday,14:30,16:30,1.49-Manufacturing & Workshop Lab,Adjunct 6
+MMMB203,Computer Lab,Tuesday,14:30,16:30,1.48-Thermal Lab,Ahmed Mohamed
+MMMB203,Computer Lab,Tuesday,14:30,16:30,1.49-Manufacturing & Workshop Lab,Ahmed Mohamed
 MMMB203,Computer Lab,Thursday,14:30,16:30,1.48-Thermal Lab,Aghead Al Arnaout
 MMMB203,Computer Lab,Thursday,14:30,16:30,1.49-Manufacturing & Workshop Lab,Aghead Al Arnaout
-MMMB203,Computer Lab,Friday,08:30,10:30,1.48-Thermal Lab,Aghead Al Arnaout
-MMMB203,Computer Lab,Friday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Aghead Al Arnaout
-MMMB203,Computer Lab,Friday,10:30,12:30,1.48-Thermal Lab,Adjunct 6
-MMMB203,Computer Lab,Friday,10:30,12:30,1.49-Manufacturing & Workshop Lab,Adjunct 6
+MMMB203,Computer Lab,Friday,08:30,10:30,1.48-Thermal Lab,Ayman Ahdy
+MMMB203,Computer Lab,Friday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Ayman Ahdy
+MMMB203,Computer Lab,Friday,10:30,12:30,1.48-Thermal Lab,Ayman Ahdy
+MMMB203,Computer Lab,Friday,10:30,12:30,1.49-Manufacturing & Workshop Lab,Ayman Ahdy
 MMMB203,Computer Lab,Wednesday,12:30,14:30,1.48-Thermal Lab,Ahmed Mohamed
 MMMB203,Computer Lab,Wednesday,12:30,14:30,1.49-Manufacturing & Workshop Lab,Ahmed Mohamed
 MMMB203,Lecture A,Monday,12:30,14:30,4.467-Classroom A 4.46 & 4.47,Mama Chacha
@@ -1004,12 +1000,10 @@ OPS913,Lecture,Thursday,18:00,22:00,4.50-Classroom B,Balan Sundarkani
 OPS913,Lecture,Monday,18:00,22:00,4.44-Classroom B,Balan Sundarkani
 OPS922,Lecture,Wednesday,18:00,22:00,3.45-Classroom B,Balan Sundarkani
 PHY040,Computer Lab,Monday,14:30,16:30,3.53-Physics/Robotics Lab,Baharek Tajali
-PHY040,Computer Lab,Monday,12:30,14:30,3.53-Physics/Robotics Lab,Akanksha Singh
 PHY040,Computer Lab,Tuesday,14:30,16:30,3.53-Physics/Robotics Lab,Baharek Tajali
 PHY040,Computer Lab,Thursday,08:30,10:30,3.53-Physics/Robotics Lab,Roy Forrest
 PHY040,Computer Lab,Thursday,14:30,16:30,3.53-Physics/Robotics Lab,Baharek Tajali
 PHY040,Computer Lab,Thursday,10:30,12:30,3.53-Physics/Robotics Lab,Roy Forrest
-PHY040,Computer Lab,Tuesday,12:30,14:30,3.53-Physics/Robotics Lab,Unknown
 PHY040,Computer Lab,Wednesday,15:30,17:30,3.53-Physics/Robotics Lab,Roy Forrest
 PHY040,Computer Lab,Wednesday,10:30,12:30,3.53-Physics/Robotics Lab,Roy Forrest
 PHY040,Computer Lab,Wednesday,13:30,15:30,3.53-Physics/Robotics Lab,Roy Forrest
@@ -1056,13 +1050,13 @@ STAT040,Lecture,Tuesday,16:30,18:30,2.66/67-Combined-Block 19,Mervat Madi
 STAT040,Lecture,Friday,08:30,10:30,5.134-Classroom A 5.13 & 5.14,Mervat Madi
 STAT040,Lecture,Wednesday,08:30,10:30,4.44-Classroom B,Mervat Madi
 STAT040,Workshop,Wednesday,12:30,14:30,2.50-Computer Lab Single,Baharek Tajali
-STAT040,Workshop,Wednesday,12:30,14:30,2.50-Computer Lab Single,Stat Instructor
+STAT040,Workshop,Wednesday,12:30,14:30,2.50-Computer Lab Single,Dania Dallah
 STAT040,Workshop,Tuesday,13:30,15:30,2.50-Computer Lab Single,Ezgi Bayirli
 STAT040,Workshop,Tuesday,13:30,15:30,2.50-Computer Lab Single,Faibin Poyil
 STAT040,Workshop,Tuesday,08:30,10:30,6.40-Computer Lab,Baharek Tajali
-STAT040,Workshop,Tuesday,08:30,10:30,6.40-Computer Lab,Stat Instructor
+STAT040,Workshop,Tuesday,08:30,10:30,6.40-Computer Lab,Dania Dallah
 STAT040,Workshop,Thursday,12:30,14:30,6.40-Computer Lab,Baharek Tajali
-STAT040,Workshop,Thursday,12:30,14:30,6.40-Computer Lab,Stat Instructor
+STAT040,Workshop,Thursday,12:30,14:30,6.40-Computer Lab,Dania Dallah
 STAT040,Workshop,Thursday,14:30,16:30,6.40-Computer Lab,Ezgi Bayirli
 STAT040,Workshop,Thursday,14:30,16:30,6.40-Computer Lab,Faibin Poyil
 STAT040,Workshop,Thursday,08:30,10:30,2.50-Computer Lab Single,Ezgi Bayirli
@@ -1075,16 +1069,16 @@ STAT040,Workshop,Monday,08:30,10:30,6.40-Computer Lab,Ezgi Bayirli
 STAT040,Workshop,Monday,08:30,10:30,6.40-Computer Lab,Sara Abdelaziz
 STAT040,Workshop,Wednesday,08:30,10:30,6.40-Computer Lab,Ezgi Bayirli
 STAT040,Workshop,Wednesday,08:30,10:30,6.40-Computer Lab,Sara Abdelaziz
+STAT040,Workshop,Wednesday,14:30,16:30,2.50-Computer Lab Single,Dania Dallah
 STAT040,Workshop,Wednesday,14:30,16:30,2.50-Computer Lab Single,Sara Abdelaziz
-STAT040,Workshop,Wednesday,14:30,16:30,2.50-Computer Lab Single,STAT Adjunct
 STAT040,Workshop,Wednesday,10:30,12:30,2.50-Computer Lab Single,Ezgi Bayirli
 STAT040,Workshop,Wednesday,10:30,12:30,2.50-Computer Lab Single,Sara Abdelaziz
+STAT040,Workshop,Friday,10:30,12:30,6.40-Computer Lab,Dania Dallah
 STAT040,Workshop,Friday,10:30,12:30,6.40-Computer Lab,Faibin Poyil
-STAT040,Workshop,Friday,10:30,12:30,6.40-Computer Lab,Stat Instructor
 STAT040,Workshop,Tuesday,15:30,17:30,2.50-Computer Lab Single,Faibin Poyil
-STAT040,Workshop,Tuesday,15:30,17:30,2.50-Computer Lab Single,Stat Instructor
+STAT040,Workshop,Tuesday,15:30,17:30,2.50-Computer Lab Single,Sara Abdelaziz
+STAT040,Workshop,Tuesday,10:30,12:30,2.50-Computer Lab Single,Dania Dallah
 STAT040,Workshop,Tuesday,10:30,12:30,2.50-Computer Lab Single,Faibin Poyil
-STAT040,Workshop,Tuesday,10:30,12:30,2.50-Computer Lab Single,Stat Instructor
 STAT040,Workshop,Thursday,10:30,12:30,6.39-Computer Lab,Ezgi Bayirli
 STAT040,Workshop,Thursday,10:30,12:30,6.39-Computer Lab,Faibin Poyil
 VCD101,Lecture,Monday,12:30,14:30,5.15-MAC Lab,Ludmil Trenkov
