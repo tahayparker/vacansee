@@ -521,56 +521,60 @@ export default function CustomGraphPage() {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="range" className="mt-4">
-                    <div className="flex gap-3 items-center">
-                      <label className="text-sm text-gray-300 whitespace-nowrap">
-                        From:
-                      </label>
-                      <div className="flex-1">
-                        <Select
-                          value={dayRangeStart !== null ? dayRangeStart.toString() : undefined}
-                          onValueChange={(val) => setDayRangeStart(parseInt(val))}
-                        >
-                          <SelectTrigger className="bg-black/20 border-white/20 text-white">
-                            <SelectValue placeholder="Select start day" />
-                          </SelectTrigger>
-                          <SelectContent
-                            className={`bg-black/80 backdrop-blur-md border-white/20 text-white ${montserrat.variable}`}
+                    <div className="flex flex-col md:flex-row gap-3 md:items-center">
+                      <div className="flex gap-3 items-center flex-1">
+                        <label className="text-sm text-gray-300 whitespace-nowrap">
+                          From:
+                        </label>
+                        <div className="flex-1">
+                          <Select
+                            value={dayRangeStart !== null ? dayRangeStart.toString() : undefined}
+                            onValueChange={(val) => setDayRangeStart(parseInt(val))}
                           >
-                            {daysOfWeek.map((day, idx) => (
-                              <SelectItem
-                                key={idx}
-                                value={idx.toString()}
-                                className="focus:bg-purple-600/30 focus:text-white"
-                              >
-                                {day}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                            <SelectTrigger className="bg-black/20 border-white/20 text-white">
+                              <SelectValue placeholder="Select start day" />
+                            </SelectTrigger>
+                            <SelectContent
+                              className={`bg-black/80 backdrop-blur-md border-white/20 text-white ${montserrat.variable}`}
+                            >
+                              {daysOfWeek.map((day, idx) => (
+                                <SelectItem
+                                  key={idx}
+                                  value={idx.toString()}
+                                  className="focus:bg-purple-600/30 focus:text-white"
+                                >
+                                  {day}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
-                      <label className="text-sm text-gray-300 whitespace-nowrap">To:</label>
-                      <div className="flex-1">
-                        <Select
-                          value={dayRangeEnd !== null ? dayRangeEnd.toString() : undefined}
-                          onValueChange={(val) => setDayRangeEnd(parseInt(val))}
-                        >
-                          <SelectTrigger className="bg-black/20 border-white/20 text-white">
-                            <SelectValue placeholder="Select end day" />
-                          </SelectTrigger>
-                          <SelectContent
-                            className={`bg-black/80 backdrop-blur-md border-white/20 text-white ${montserrat.variable}`}
+                      <div className="flex gap-3 items-center flex-1">
+                        <label className="text-sm text-gray-300 whitespace-nowrap">To:</label>
+                        <div className="flex-1">
+                          <Select
+                            value={dayRangeEnd !== null ? dayRangeEnd.toString() : undefined}
+                            onValueChange={(val) => setDayRangeEnd(parseInt(val))}
                           >
-                            {daysOfWeek.map((day, idx) => (
-                              <SelectItem
-                                key={idx}
-                                value={idx.toString()}
-                                className="focus:bg-purple-600/30 focus:text-white"
-                              >
-                                {day}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                            <SelectTrigger className="bg-black/20 border-white/20 text-white">
+                              <SelectValue placeholder="Select end day" />
+                            </SelectTrigger>
+                            <SelectContent
+                              className={`bg-black/80 backdrop-blur-md border-white/20 text-white ${montserrat.variable}`}
+                            >
+                              {daysOfWeek.map((day, idx) => (
+                                <SelectItem
+                                  key={idx}
+                                  value={idx.toString()}
+                                  className="focus:bg-purple-600/30 focus:text-white"
+                                >
+                                  {day}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
                     </div>
                   </TabsContent>
@@ -618,56 +622,60 @@ export default function CustomGraphPage() {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="range" className="mt-4">
-                    <div className="flex gap-3 items-center">
-                      <label className="text-sm text-gray-300 whitespace-nowrap">
-                        From:
-                      </label>
-                      <div className="flex-1">
-                        <Select
-                          value={timeRangeStart !== null ? timeRangeStart.toString() : undefined}
-                          onValueChange={(val) => setTimeRangeStart(parseInt(val))}
-                        >
-                          <SelectTrigger className="bg-black/20 border-white/20 text-white">
-                            <SelectValue placeholder="Select start time" />
-                          </SelectTrigger>
-                          <SelectContent
-                            className={`bg-black/80 backdrop-blur-md border-white/20 text-white ${montserrat.variable}`}
+                    <div className="flex flex-col md:flex-row gap-3 md:items-center">
+                      <div className="flex gap-3 items-center flex-1">
+                        <label className="text-sm text-gray-300 whitespace-nowrap">
+                          From:
+                        </label>
+                        <div className="flex-1">
+                          <Select
+                            value={timeRangeStart !== null ? timeRangeStart.toString() : undefined}
+                            onValueChange={(val) => setTimeRangeStart(parseInt(val))}
                           >
-                            {allTimeIntervals.map((time, idx) => (
-                              <SelectItem
-                                key={idx}
-                                value={idx.toString()}
-                                className="focus:bg-purple-600/30 focus:text-white"
-                              >
-                                {formatTime(time, use24h)}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                            <SelectTrigger className="bg-black/20 border-white/20 text-white">
+                              <SelectValue placeholder="Select start time" />
+                            </SelectTrigger>
+                            <SelectContent
+                              className={`bg-black/80 backdrop-blur-md border-white/20 text-white ${montserrat.variable}`}
+                            >
+                              {allTimeIntervals.map((time, idx) => (
+                                <SelectItem
+                                  key={idx}
+                                  value={idx.toString()}
+                                  className="focus:bg-purple-600/30 focus:text-white"
+                                >
+                                  {formatTime(time, use24h)}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
-                      <label className="text-sm text-gray-300 whitespace-nowrap">To:</label>
-                      <div className="flex-1">
-                        <Select
-                          value={timeRangeEnd !== null ? timeRangeEnd.toString() : undefined}
-                          onValueChange={(val) => setTimeRangeEnd(parseInt(val))}
-                        >
-                          <SelectTrigger className="bg-black/20 border-white/20 text-white">
-                            <SelectValue placeholder="Select end time" />
-                          </SelectTrigger>
-                          <SelectContent
-                            className={`bg-black/80 backdrop-blur-md border-white/20 text-white ${montserrat.variable}`}
+                      <div className="flex gap-3 items-center flex-1">
+                        <label className="text-sm text-gray-300 whitespace-nowrap">To:</label>
+                        <div className="flex-1">
+                          <Select
+                            value={timeRangeEnd !== null ? timeRangeEnd.toString() : undefined}
+                            onValueChange={(val) => setTimeRangeEnd(parseInt(val))}
                           >
-                            {allTimeIntervals.map((time, idx) => (
-                              <SelectItem
-                                key={idx}
-                                value={idx.toString()}
-                                className="focus:bg-purple-600/30 focus:text-white"
-                              >
-                                {formatTime(time, use24h)}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                            <SelectTrigger className="bg-black/20 border-white/20 text-white">
+                              <SelectValue placeholder="Select end time" />
+                            </SelectTrigger>
+                            <SelectContent
+                              className={`bg-black/80 backdrop-blur-md border-white/20 text-white ${montserrat.variable}`}
+                            >
+                              {allTimeIntervals.map((time, idx) => (
+                                <SelectItem
+                                  key={idx}
+                                  value={idx.toString()}
+                                  className="focus:bg-purple-600/30 focus:text-white"
+                                >
+                                  {formatTime(time, use24h)}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
                     </div>
                   </TabsContent>
