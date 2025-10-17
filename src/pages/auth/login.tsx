@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import type { Provider, Session } from "@supabase/supabase-js";
 import Cookies from "js-cookie";
 import { AlertCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 // --- SVG Icons ---
 export function Google(
@@ -167,24 +168,46 @@ export default function LoginPage() {
     };
   }, [supabase, router]);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
   return (
-    <div className="w-full flex items-center justify-center" style={{ minHeight: 'calc(100vh - 80px)' }}>
-      <div className="w-full max-w-md space-y-6 rounded-xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-lg">
-        <div className="space-y-2 text-center text-white">
+    <div className="w-full flex items-center justify-center py-8">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="w-full max-w-md space-y-6 rounded-xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-lg"
+      >
+        <motion.div variants={itemVariants} className="space-y-2 text-center text-white">
           <h1 className="text-3xl font-bold tracking-tight">Sign In</h1>
           <p className="text-md text-gray-300">
             Choose your preferred provider to continue
           </p>
-        </div>
+        </motion.div>
 
           {errorMessage && (
-            <div className="rounded-md border border-red-500/60 bg-red-950/50 p-4 text-center text-sm text-red-200 flex items-center justify-center gap-2">
+            <motion.div
+              variants={itemVariants}
+              className="rounded-md border border-red-500/60 bg-red-950/50 p-4 text-center text-sm text-red-200 flex items-center justify-center gap-2"
+            >
               <AlertCircle className="h-5 w-5 flex-shrink-0 text-red-400" />
               <span>{errorMessage}</span>
-            </div>
+            </motion.div>
           )}
 
-          <div className="space-y-4">
+          <motion.div variants={itemVariants} className="space-y-4">
             {/* Google Button */}
             <button
               type="button"
@@ -216,8 +239,8 @@ export default function LoginPage() {
               <Azure className="size-5" />
               <span>{isLoading ? "Processing..." : "Sign in with Azure"}</span>
             </button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
   );
 }
