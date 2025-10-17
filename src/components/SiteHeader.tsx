@@ -16,6 +16,7 @@ import {
   UserRound,
   LogOut,
   CalendarCheck,
+  Settings2,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import localFont from "next/font/local";
@@ -32,6 +33,7 @@ const navItems = [
   { name: "Available Soon", href: "/available-soon", icon: Clock },
   { name: "Check Availability", href: "/check", icon: Search },
   { name: "Graph", href: "/graph", icon: Grid3x3 },
+  { name: "Custom Graph", href: "/custom-graph", icon: Settings2 },
   { name: "Room Details", href: "/rooms", icon: BadgeInfo },
 ];
 type NavItemType = (typeof navItems)[0];
@@ -347,7 +349,17 @@ export default function SiteHeader({
                       aria-label="Profile"
                     >
                       <span className="flex items-center justify-center">
-                        <UserRound className="h-5 w-5 flex-shrink-0" />
+                        {user.user_metadata?.avatar_url || user.user_metadata?.picture ? (
+                          <Image
+                            src={user.user_metadata?.avatar_url || user.user_metadata?.picture}
+                            alt="Profile"
+                            width={20}
+                            height={20}
+                            className="rounded-full flex-shrink-0"
+                          />
+                        ) : (
+                          <UserRound className="h-5 w-5 flex-shrink-0" />
+                        )}
                         <AnimatePresence>
                           {(isAuthHovered || currentPath === "/profile") && (
                             <motion.span
