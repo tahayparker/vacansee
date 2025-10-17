@@ -1,5 +1,4 @@
 // src/pages/auth/login.tsx
-import GradientBackground from "@/components/GradientBackground";
 import { JSX, SVGProps, useEffect, useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useRouter } from "next/router";
@@ -169,16 +168,14 @@ export default function LoginPage() {
   }, [supabase, router]);
 
   return (
-    <div className={`relative min-h-screen`}>
-      <GradientBackground />
-      <div className="relative z-10 grid min-h-screen place-items-center p-4">
-        <div className="w-full max-w-md space-y-6 rounded-xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-lg">
-          <div className="space-y-2 text-center text-white">
-            <h1 className="text-3xl font-bold tracking-tight">Sign In</h1>
-            <p className="text-md text-gray-300">
-              Choose your preferred provider to continue
-            </p>
-          </div>
+    <div className="w-full flex items-center justify-center" style={{ minHeight: 'calc(100vh - 80px)' }}>
+      <div className="w-full max-w-md space-y-6 rounded-xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-lg">
+        <div className="space-y-2 text-center text-white">
+          <h1 className="text-3xl font-bold tracking-tight">Sign In</h1>
+          <p className="text-md text-gray-300">
+            Choose your preferred provider to continue
+          </p>
+        </div>
 
           {errorMessage && (
             <div className="rounded-md border border-red-500/60 bg-red-950/50 p-4 text-center text-sm text-red-200 flex items-center justify-center gap-2">
@@ -222,6 +219,5 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
