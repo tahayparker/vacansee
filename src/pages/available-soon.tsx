@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Montserrat } from "next/font/google";
+import { useTimeFormat } from "@/contexts/TimeFormatContext";
 
 // --- Data Structures ---
 interface AvailableRoomInfo {
@@ -63,6 +64,7 @@ export default function AvailableSoonPage() {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { use24h } = useTimeFormat();
 
   // --- Data Fetching and Filtering ---
   const fetchData = useCallback(async (duration: number) => {
@@ -173,12 +175,12 @@ export default function AvailableSoonPage() {
         timeZone: TARGET_TIMEZONE,
         hour: "numeric",
         minute: "2-digit",
-        hour12: true,
+        hour12: !use24h,
       });
     } catch {
       return "Invalid Time";
     }
-  }, [checkedAtFutureTime]);
+  }, [checkedAtFutureTime, use24h]);
   const formattedCheckedDay = useMemo(() => {
     if (!checkedAtFutureTime) return "Loading...";
     try {
