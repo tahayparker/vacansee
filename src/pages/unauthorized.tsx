@@ -4,15 +4,20 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useRouter } from "next/router";
 import { LogOut, OctagonMinus } from "lucide-react";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 export default function UnauthorizedPage() {
   const supabase = getSupabaseBrowserClient();
   const router = useRouter();
   const [isSignOutLoading, setIsSignOutLoading] = useState(false);
   const [isValidating, setIsValidating] = useState(true);
+  const [hasValidated, setHasValidated] = useState(false);
 
   useEffect(() => {
     const validateAccess = async () => {
+      // Skip validation if we've already validated successfully
+      if (hasValidated) return;
+
       try {
         // Check if user has an active session
         const {
@@ -37,7 +42,12 @@ export default function UnauthorizedPage() {
         }
 
         // Valid access - user is not signed in and came from signup_disabled error
+        // Mark as validated before cleaning URL
+        setHasValidated(true);
         setIsValidating(false);
+
+        // Clean up URL parameters
+        router.replace("/unauthorized", undefined, { shallow: true });
       } catch (error) {
         console.error("Error validating access:", error);
         // On error, redirect to homepage for safety
@@ -48,7 +58,7 @@ export default function UnauthorizedPage() {
     if (router.isReady) {
       validateAccess();
     }
-  }, [router.isReady, router.query.auth_error, supabase.auth, router]);
+  }, [router.isReady, router.query.auth_error, supabase.auth, router, hasValidated]);
 
   const handleSignOut = async () => {
     setIsSignOutLoading(true);
@@ -74,6 +84,20 @@ export default function UnauthorizedPage() {
     );
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
   return (
     <div className="relative text-center max-w-2xl py-10">
       {/* Background Glow */}
@@ -82,15 +106,25 @@ export default function UnauthorizedPage() {
       </div>
 
       {/* Content */}
-      <div className="space-y-8 rounded-xl border border-red-500/60 bg-red-950/25 p-8 shadow-lg backdrop-blur-lg">
-        <OctagonMinus className="mx-auto h-12 w-12 text-red-400" />
-        <h1 className="text-3xl font-bold tracking-tight text-red-200">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-8 rounded-xl border border-red-500/60 bg-red-950/25 p-8 shadow-lg backdrop-blur-lg"
+      >
+        <motion.div variants={itemVariants}>
+          <OctagonMinus className="mx-auto h-12 w-12 text-red-400" />
+        </motion.div>
+        <motion.h1
+          variants={itemVariants}
+          className="text-3xl font-bold tracking-tight text-red-200"
+        >
           Unauthorized Access
-        </h1>
-        <p className="text-md text-red-100/90">
+        </motion.h1>
+        <motion.p variants={itemVariants} className="text-md text-red-100/90">
           Your account is not authorized to access vacansee.
-        </p>
-        <p className="text-sm text-red-100/90">
+        </motion.p>
+        <motion.p variants={itemVariants} className="text-sm text-red-100/90">
           If you have been given access, please try using the account you signed
           up with.
           <br />
@@ -101,8 +135,8 @@ export default function UnauthorizedPage() {
           <br />
           Please click the button below to go home. Your account will be signed
           out.
-        </p>
-        <div className="flex justify-center pt-4">
+        </motion.p>
+        <motion.div variants={itemVariants} className="flex justify-center pt-4">
           <Button
             variant="outline"
             onClick={handleSignOut}
@@ -116,8 +150,8 @@ export default function UnauthorizedPage() {
             )}
             Go Home
           </Button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
