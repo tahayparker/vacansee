@@ -587,21 +587,16 @@ export default function SiteHeader({
                           onClick={() => setIsMenuOpen(false)}
                           className="flex items-center gap-3 w-full p-3 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 ease-in-out mb-2"
                         >
-                          <UserRound className="h-5 w-5 flex-shrink-0" />
-                          <div className="flex-grow">
-                            <p
-                              className="font-semibold text-sm text-white truncate"
-                              title={userDisplayName}
-                            >
-                              {userDisplayName}
-                            </p>
-                            <p
-                              className="text-xs text-white/60 truncate mt-0.5"
-                              title={userEmail}
-                            >
-                              {userEmail}
-                            </p>
-                          </div>
+                          {user.user_metadata?.avatar_url || user.user_metadata?.picture ? (
+                            <img
+                              src={user.user_metadata?.avatar_url || user.user_metadata?.picture}
+                              alt={userDisplayName}
+                              className="h-8 w-8 rounded-full flex-shrink-0 object-cover"
+                            />
+                          ) : (
+                            <UserRound className="h-8 w-8 flex-shrink-0" />
+                          )}
+                          <span className="flex-grow text-base font-medium">Profile</span>
                         </Link>
                         <button
                           onClick={handleSignOut}
