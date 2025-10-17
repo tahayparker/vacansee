@@ -184,7 +184,7 @@ export default function RoomDetailsPage() {
 
   // --- Render Page ---
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 py-6 pt-20 md:pt-24 flex flex-col min-h-screen items-center">
+    <div className="w-full max-w-5xl mx-auto px-4 py-6 pt-20 md:pt-24 flex flex-col items-center">
       <Head>
         <title>Room Details - vacansee</title>
       </Head>
@@ -221,7 +221,7 @@ export default function RoomDetailsPage() {
         variants={tableContainerVariant}
         initial="hidden"
         animate="visible"
-        className="border border-white/20 rounded-lg shadow-lg overflow-hidden bg-black/60 backdrop-blur-md flex flex-col min-h-0 w-full max-w-4xl mb-auto"
+        className="border border-white/20 rounded-lg shadow-lg overflow-hidden bg-black/60 backdrop-blur-md flex flex-col min-h-0 w-full max-w-4xl mb-6"
       >
         <div className="overflow-y-auto hide-scrollbar max-h-[65vh]">
           <table className="w-full border-collapse table-fixed">
