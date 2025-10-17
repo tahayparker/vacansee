@@ -16,12 +16,6 @@ import {
   LogOut,
   CalendarCheck,
 } from "lucide-react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import localFont from "next/font/local";
 import { Montserrat } from "next/font/google";
@@ -183,7 +177,6 @@ export default function SiteHeader({
   const [hoveredHref, setHoveredHref] = useState<string | null>(null);
   const [isAuthHovered, setIsAuthHovered] = useState(false);
   const [isVailaLinkHovered, setIsVailaLinkHovered] = useState(false);
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const router = useRouter();
   const currentPath = router.pathname;
 
@@ -217,7 +210,6 @@ export default function SiteHeader({
             setLoadingAuth(false);
             if (_event === "SIGNED_IN" || _event === "SIGNED_OUT") {
               setIsMenuOpen(false);
-              setIsPopoverOpen(false);
             }
           }
         },
@@ -250,7 +242,6 @@ export default function SiteHeader({
   // --- Handlers ---
   const handleSignOut = async () => {
     setIsMenuOpen(false);
-    setIsPopoverOpen(false);
     setLoadingAuth(true);
     try {
       const { error } = await supabase.auth.signOut();
@@ -277,7 +268,6 @@ export default function SiteHeader({
   const userDisplayName =
     user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
   const userEmail = user?.email || "No email provided";
-  const showActiveAuthStyle = isAuthHovered || isPopoverOpen;
 
   // --- Component Return ---
   return (
@@ -351,84 +341,50 @@ export default function SiteHeader({
                     onHoverStart={() => setIsAuthHovered(true)}
                     onHoverEnd={() => setIsAuthHovered(false)}
                   >
-                    <Popover
-                      open={isPopoverOpen}
-                      onOpenChange={setIsPopoverOpen}
+                    <Link
+                      href="/profile"
+                      className={
+                        `relative flex items-center justify-center rounded-full transition-colors duration-200 ease-in-out overflow-hidden ` +
+                        (isAuthHovered || currentPath === "/profile"
+                          ? `bg-white/10 px-3 py-1.5 `
+                          : `p-2 hover:hover:bg-white/10 `) +
+                        (isAuthHovered || currentPath === "/profile"
+                          ? "text-white"
+                          : "text-white/80")
+                      }
+                      aria-label="Profile"
                     >
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          className={
-                            `relative flex items-center justify-center rounded-full transition-colors duration-200 ease-in-out overflow-hidden ` +
-                            (showActiveAuthStyle
-                              ? `bg-white/10 px-3 py-1.5 `
-                              : `p-2 hover:hover:bg-white/10 `) +
-                            (showActiveAuthStyle
-                              ? "text-white"
-                              : "text-white/80")
-                          }
-                          aria-label="User menu"
-                        >
-                          <span className="flex items-center justify-center">
-                            <UserRound className="h-5 w-5 flex-shrink-0" />
-                            <AnimatePresence>
-                              {showActiveAuthStyle && (
-                                <motion.span
-                                  key="profile-label"
-                                  initial={{
-                                    width: 0,
-                                    opacity: 0,
-                                    marginLeft: 0,
-                                  }}
-                                  animate={{
-                                    width: "auto",
-                                    opacity: 1,
-                                    marginLeft: "0.375rem",
-                                  }}
-                                  exit={{
-                                    width: 0,
-                                    opacity: 0,
-                                    marginLeft: 0,
-                                  }}
-                                  transition={authLabelTransition}
-                                  className="text-sm font-medium whitespace-nowrap"
-                                  style={{ lineHeight: "normal" }}
-                                >
-                                  Profile
-                                </motion.span>
-                              )}
-                            </AnimatePresence>
-                          </span>
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent
-                        className={`w-60 bg-gradient-to-br from-[#100643]/70 to-black/40 backdrop-blur-3xl border border-white/15 text-white p-0 mr-0.25 shadow-xl z-[70] mt-2.5 font-sans ${montserrat.variable}`}
-                        align="end"
-                      >
-                        <div className="p-4">
-                          <p
-                            className="font-semibold text-sm truncate"
-                            title={userDisplayName}
-                          >
-                            {userDisplayName}
-                          </p>
-                          <p
-                            className="text-xs text-white/70 truncate"
-                            title={userEmail}
-                          >
-                            {userEmail}
-                          </p>
-                        </div>
-                        <Separator className="bg-white/10" />
-                        <Button
-                          variant="ghost"
-                          onClick={handleSignOut}
-                          className={`w-full justify-start p-4 text-red-400 hover:text-red-300 hover:bg-white/5 rounded-none rounded-b-md text-sm font-sans ${montserrat.variable}`}
-                        >
-                          <LogOut className="h-4 w-4 mr-2" /> Sign Out
-                        </Button>
-                      </PopoverContent>
-                    </Popover>
+                      <span className="flex items-center justify-center">
+                        <UserRound className="h-5 w-5 flex-shrink-0" />
+                        <AnimatePresence>
+                          {(isAuthHovered || currentPath === "/profile") && (
+                            <motion.span
+                              key="profile-label"
+                              initial={{
+                                width: 0,
+                                opacity: 0,
+                                marginLeft: 0,
+                              }}
+                              animate={{
+                                width: "auto",
+                                opacity: 1,
+                                marginLeft: "0.375rem",
+                              }}
+                              exit={{
+                                width: 0,
+                                opacity: 0,
+                                marginLeft: 0,
+                              }}
+                              transition={authLabelTransition}
+                              className="text-sm font-medium whitespace-nowrap"
+                              style={{ lineHeight: "normal" }}
+                            >
+                              Profile
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
+                      </span>
+                    </Link>
                   </motion.div>
                 ) : (
                   <motion.div
@@ -626,20 +582,27 @@ export default function SiteHeader({
                       </div>
                     ) : user ? (
                       <div>
-                        <div className="px-3 py-3">
-                          <p
-                            className="font-semibold text-sm text-white truncate"
-                            title={userDisplayName}
-                          >
-                            {userDisplayName}
-                          </p>
-                          <p
-                            className="text-xs text-white/60 truncate mt-1"
-                            title={userEmail}
-                          >
-                            {userEmail}
-                          </p>
-                        </div>
+                        <Link
+                          href="/profile"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="flex items-center gap-3 w-full p-3 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 ease-in-out mb-2"
+                        >
+                          <UserRound className="h-5 w-5 flex-shrink-0" />
+                          <div className="flex-grow">
+                            <p
+                              className="font-semibold text-sm text-white truncate"
+                              title={userDisplayName}
+                            >
+                              {userDisplayName}
+                            </p>
+                            <p
+                              className="text-xs text-white/60 truncate mt-0.5"
+                              title={userEmail}
+                            >
+                              {userEmail}
+                            </p>
+                          </div>
+                        </Link>
                         <button
                           onClick={handleSignOut}
                           className="flex items-center gap-3 w-full p-3 rounded-md text-red-400 hover:text-red-300 hover:bg-white/10 transition-colors duration-200 ease-in-out"
