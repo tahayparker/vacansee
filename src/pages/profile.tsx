@@ -1,0 +1,128 @@
+// pages/profile.tsx
+import React, { useEffect, useState } from "react";
+import SpotlightCard from "@/components/SpotlightCard";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { LogOut } from "lucide-react";
+import { useTimeFormat } from "@/contexts/TimeFormatContext";
+
+export default function Profile() {
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [avatarUrl, setAvatarUrl] = useState<string>("");
+  const { use24h, setTimeFormat } = useTimeFormat();
+
+  const handleSignOut = async () => {
+    const supabase = getSupabaseBrowserClient();
+    await supabase.auth.signOut();
+    // Optional: you could route to home if needed
+    // router.replace("/");
+  };
+
+  useEffect(() => {
+    const supabase = getSupabaseBrowserClient();
+    supabase.auth.getUser().then(({ data }) => {
+      const user = data.user;
+      if (!user) return;
+      const meta = (user.user_metadata || {}) as Record<string, any>;
+      // Common OAuth metadata keys: name, full_name, picture, avatar_url
+      const userName = meta.name || meta.full_name || "";
+      const userAvatar = meta.avatar_url || meta.picture || "";
+      setName(userName || user.email?.split("@")[0] || "");
+      setEmail(user.email || "");
+      setAvatarUrl(userAvatar);
+    });
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 w-full px-4" style={{ minHeight: 'calc(100vh - 80px)' }}>
+      <style jsx>{`
+        :global(.pc-card-wrapper:hover),
+        :global(.pc-card-wrapper.active) {
+          --card-opacity: 0 !important;
+        }
+        :global(.pc-card) {
+          height: 90vh !important;
+          max-height: 700px !important;
+          border: 1px solid rgb(147, 51, 234) !important;
+        }
+        :global(.pc-inside) {
+          border: 1px solid rgb(147, 51, 234) !important;
+        }
+        /* Ensure readable black text on any background */
+        :global(.pc-details) {
+          mix-blend-mode: normal !important;
+        }
+        :global(.pc-details h3),
+        :global(.pc-details p) {
+          background: none !important;
+          -webkit-text-fill-color: initial !important;
+          background-clip: initial !important;
+          -webkit-background-clip: initial !important;
+          color: #0a0a0a !important; /* black */
+          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6) !important; /* subtle lift on darker areas */
+        }
+        :global(.pc-details h3) {
+          margin-bottom: 8px !important; /* spacing between name and title */
+          font-weight: 700 !important;
+        }
+        :global(.pc-details p) {
+          font-size: 20px !important; /* slightly larger title */
+          top: 0px !important;
+          font-weight: 600 !important;
+        }
+      `}</style>
+      <SpotlightCard className="w-full max-w-md">
+        <div className="flex flex-col items-center text-center space-y-4">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-4xl font-bold text-white overflow-hidden">
+            {avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+            ) : (
+              (name || email || " ").charAt(0).toUpperCase()
+            )}
+          </div>
+          <div className="w-full max-w-xs mx-auto">
+            <h2 className="text-2xl font-bold text-white mb-1">{name || " "}</h2>
+            <p className="text-neutral-300">{email || " "}</p>
+            <div className="mt-4">
+              <Button onClick={handleSignOut} variant="destructive" className="w-full flex items-center gap-2 justify-center">
+                <LogOut className="h-4 w-4" />
+                Sign out
+              </Button>
+            </div>
+          </div>
+        </div>
+      </SpotlightCard>
+      <SpotlightCard className="w-full max-w-md">
+        <div className="space-y-4">
+          <h3 className="text-xl text-center font-semibold text-white">Settings</h3>
+          <div className="flex items-center justify-between">
+            <span className="text-md text-white-100">Time format</span>
+            <ButtonGroup>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setTimeFormat(false)}
+                className={!use24h ? "bg-accent" : ""}
+              >
+                12h
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setTimeFormat(true)}
+                className={use24h ? "bg-accent" : ""}
+              >
+                24h
+              </Button>
+            </ButtonGroup>
+          </div>
+        </div>
+      </SpotlightCard>
+    </div>
+  );
+}
