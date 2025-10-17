@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { DoorOpen, AlertCircle, Clock, Users } from "lucide-react";
 import { DateTime } from "luxon"; // Use Luxon for formatting
 import { Button } from "@/components/ui/button";
+import { useTimeFormat } from "@/contexts/TimeFormatContext";
 
 // --- Data Structures (Client-side representation) ---
 interface AvailableRoomInfo {
@@ -30,6 +31,7 @@ export default function AvailableNowPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const fetchInitiated = useRef(false); // Ref to prevent double fetch in Strict Mode
+  const { use24h } = useTimeFormat();
 
   // --- Data Fetching Function (Client-side) ---
   const fetchData = useCallback(async () => {
@@ -105,11 +107,11 @@ export default function AvailableNowPage() {
     try {
       return DateTime.fromISO(checkedAt)
         .setZone(DUBAI_TIMEZONE)
-        .toFormat("h:mm a");
+        .toFormat(use24h ? "HH:mm" : "h:mm a");
     } catch {
       return "Invalid Time";
     }
-  }, [checkedAt]);
+  }, [checkedAt, use24h]);
 
   const formattedCheckedDay = useMemo(() => {
     if (!checkedAt) return "Loading...";
