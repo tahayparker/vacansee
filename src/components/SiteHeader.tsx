@@ -1,6 +1,7 @@
 // src/components/SiteHeader.tsx
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import type { User } from "@supabase/supabase-js";
@@ -18,19 +19,11 @@ import {
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import localFont from "next/font/local";
-import { Montserrat } from "next/font/google";
-
 // Configure the local font loader
 const qurovaFont = localFont({
   src: "../../public/fonts/Qurova-SemiBold.otf", // Adjust the path as necessary
   weight: "600", // Corresponds to Semibold
   display: "swap", // Good practice for font loading
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 // --- Navigation Items ---
@@ -267,7 +260,6 @@ export default function SiteHeader({
   const vailaLabelTransition = { duration: 0.2, ease: "easeInOut" };
   const userDisplayName =
     user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
-  const userEmail = user?.email || "No email provided";
 
   // --- Component Return ---
   return (
@@ -588,10 +580,12 @@ export default function SiteHeader({
                           className="flex items-center gap-3 w-full p-3 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 ease-in-out mb-2"
                         >
                           {user.user_metadata?.avatar_url || user.user_metadata?.picture ? (
-                            <img
+                            <Image
                               src={user.user_metadata?.avatar_url || user.user_metadata?.picture}
                               alt={userDisplayName}
-                              className="h-8 w-8 rounded-full flex-shrink-0 object-cover"
+                              width={32}
+                              height={32}
+                              className="rounded-full flex-shrink-0 object-cover"
                             />
                           ) : (
                             <UserRound className="h-8 w-8 flex-shrink-0" />
