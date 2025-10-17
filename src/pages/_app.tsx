@@ -2,7 +2,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Montserrat } from "next/font/google";
-import GradientBackground from "@/components/GradientBackground";
+import PlasmaBackground from "@/components/PlasmaBackground";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { useEffect, useState, useRef } from "react";
@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { PUBLIC_PATHS } from "@/lib/paths";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { TimeFormatProvider } from "@/contexts/TimeFormatContext";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -20,7 +21,7 @@ const montserrat = Montserrat({
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-const NO_LAYOUT_PAGES = ["/auth/login"]; // Add any other pages that shouldn't have header/footer
+const NO_LAYOUT_PAGES: string[] = []; // All pages now have header/footer
 
 function isProtectedClientSide(pathname: string): boolean {
   if (
@@ -126,21 +127,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <div
         className={`${montserrat.className} bg-background text-foreground min-h-screen flex flex-col relative`}
       >
-        <GradientBackground />
+        <PlasmaBackground />
         <div className="flex flex-grow items-center justify-center z-10">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white/50"></div>
         </div>
-      </div>
-    );
-  }
-
-  if (NO_LAYOUT_PAGES.includes(router.pathname)) {
-    return (
-      <div className={`${montserrat.variable} font-sans`}>
-        {router.pathname === "/auth/login" && <GradientBackground />}
-        <Component {...pageProps} />
-        <Analytics />
-        <SpeedInsights />
       </div>
     );
   }
@@ -149,27 +139,31 @@ export default function App({ Component, pageProps }: AppProps) {
     <div
       className={`${montserrat.className} bg-background text-foreground min-h-screen flex flex-col relative`}
     >
-      <GradientBackground />
-      <SiteHeader maintenanceMode={isMaintenanceMode} />
-      <main
-        className={cn(
-          "flex flex-col flex-grow items-center z-10 w-full px-4 sm:px-8",
-          router.pathname === "/" && !isMaintenanceMode
-            ? "justify-center pt-16 md:pt-0"
-            : router.pathname === "/maintenance"
-              ? "justify-center pt-16" // Ensure maintenance page content is also centered
-              : router.pathname === "/404"
-                ? "justify-center pt-16" // Center the 404 page content
-                : router.pathname === "/500"
-                  ? "justify-center pt-16" // Center the 500 page content
-                  : router.pathname === "/unauthorized"
-                    ? "justify-center pt-16" // Center the unauthorized page content
-                    : "pt-4", // Default for other pages needing header space
-        )}
-      >
-        <Component {...pageProps} />
-      </main>
-      <SiteFooter />
+      <PlasmaBackground />
+      <TimeFormatProvider>
+        <SiteHeader maintenanceMode={isMaintenanceMode} />
+        <main
+          className={cn(
+            "flex flex-col flex-grow items-center z-10 w-full px-4 sm:px-8",
+            router.pathname === "/" && !isMaintenanceMode
+              ? "justify-center pt-16 md:pt-0"
+              : router.pathname === "/maintenance"
+                ? "justify-center pt-16" // Ensure maintenance page content is also centered
+                : router.pathname === "/404"
+                  ? "justify-center pt-16" // Center the 404 page content
+                  : router.pathname === "/500"
+                    ? "justify-center pt-16" // Center the 500 page content
+                    : router.pathname === "/unauthorized"
+                      ? "justify-center pt-16" // Center the unauthorized page content
+                      : router.pathname === "/auth/login"
+                        ? "justify-center pt-16" // Center the login page content
+                        : "pt-4", // Default for other pages needing header space
+          )}
+        >
+          <Component {...pageProps} />
+        </main>
+        <SiteFooter />
+      </TimeFormatProvider>
       <Analytics />
       <SpeedInsights />
     </div>
