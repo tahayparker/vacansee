@@ -12,6 +12,8 @@ import {
 import { getDay } from "date-fns"; // Import getDay function
 import { AlertCircle } from "lucide-react"; // Import for error display
 import { Montserrat } from "next/font/google";
+import { useTimeFormat } from "@/contexts/TimeFormatContext";
+import { formatTime } from "@/lib/utils";
 
 // --- Data Structures ---
 interface FrontendRoomData {
@@ -85,6 +87,7 @@ export default function GraphPage() {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { use24h } = useTimeFormat();
 
   // --- Data Fetching ---
   useEffect(() => {
@@ -290,7 +293,7 @@ export default function GraphPage() {
                         style={{ minWidth: "65px" }}
                       >
                         {" "}
-                        {time}{" "}
+                        {formatTime(time, use24h)}{" "}
                       </th>
                     ))}
                   </tr>
