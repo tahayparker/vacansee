@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import SpotlightCard from "@/components/SpotlightCard";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogOut } from "lucide-react";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
 
@@ -99,27 +99,23 @@ export default function Profile() {
         <div className="space-y-4">
           <h3 className="text-xl text-center font-semibold text-white">Settings</h3>
           <div className="flex items-center justify-between">
-            <span className="text-md text-white-100">Time format</span>
-            <ButtonGroup>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setTimeFormat(false)}
-                className={!use24h ? "bg-accent" : ""}
-              >
-                12h
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setTimeFormat(true)}
-                className={use24h ? "bg-accent" : ""}
-              >
-                24h
-              </Button>
-            </ButtonGroup>
+            <span className="text-md text-white">Time format</span>
+            <Tabs value={use24h ? "24h" : "12h"} onValueChange={(val) => setTimeFormat(val === "24h")}>
+              <TabsList className="bg-black/40 border border-white/10 w-40">
+                <TabsTrigger
+                  value="12h"
+                  className="text-white data-[state=active]:bg-purple-600 data-[state=active]:text-white transition-all duration-300 ease-in-out"
+                >
+                  12h
+                </TabsTrigger>
+                <TabsTrigger
+                  value="24h"
+                  className="text-white data-[state=active]:bg-purple-600 data-[state=active]:text-white transition-all duration-300 ease-in-out"
+                >
+                  24h
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
         </div>
       </SpotlightCard>
