@@ -7,6 +7,31 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   // Add other configurations if you have them
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com', // Google avatars
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com', // GitHub avatars
+      },
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co', // Supabase storage
+      },
+      {
+        protocol: 'https',
+        hostname: 'platform-lookaside.fbsbx.com', // Facebook avatars
+      },
+      {
+        protocol: 'https',
+        hostname: 'graph.microsoft.com', // Microsoft avatars
+      },
+    ],
+  },
+
   async redirects() {
     return [
       // --- Redirects for "/available-now" ---
