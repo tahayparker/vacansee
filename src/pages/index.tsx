@@ -23,18 +23,9 @@ export default function Home() {
   // Return the content block directly. _app.tsx handles centering.
   // Added py-10 for vertical spacing within the centered block
   return (
-    <div className="relative text-center max-w-4xl py-10">
+    <div className="relative text-center max-w-6xl py-10">
       {" "}
       {/* No flex, no grow, no centering. Added py-10 */}
-      {/* Background Glow */}
-      <motion.div
-        className="absolute inset-0 -z-10 overflow-visible"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-      >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-purple-800/30 rounded-full blur-[100px] sm:blur-[150px]" />
-      </motion.div>
       {/* Content */}
       <motion.div
         variants={containerVariants}
@@ -43,7 +34,7 @@ export default function Home() {
       >
         <motion.h1
           variants={itemVariants}
-          className="text-5xl sm:text-6xl md:text-7xl font-bold mb-5 tracking-tight leading-tight bg-gradient-to-r from-purple-400 via-pink-500 to-orange-400 bg-clip-text text-transparent"
+          className="text-5xl sm:text-6xl md:text-7xl font-bold mb-5 tracking-tight leading-tight text-white"
         >
           Find Open Rooms <br className="sm:hidden" /> Across Campus, Instantly.
         </motion.h1>
