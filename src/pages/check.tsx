@@ -36,7 +36,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { cn } from "@/lib/utils";
+import { cn, formatTime } from "@/lib/utils";
 import {
   format,
   getDay,
@@ -47,6 +47,7 @@ import {
 } from "date-fns";
 import Fuse from "fuse.js";
 import { Montserrat } from "next/font/google";
+import { useTimeFormat } from "@/contexts/TimeFormatContext";
 
 // --- Data Structures (Unchanged) ---
 interface RoomListData {
@@ -122,6 +123,7 @@ export default function CheckAvailabilityPage() {
   const [checkResult, setCheckResult] = useState<CheckResult | null>(null);
   const [isLoadingRooms, setIsLoadingRooms] = useState(true);
   const [roomFetchError, setRoomFetchError] = useState<string | null>(null);
+  const { use24h } = useTimeFormat();
 
   // --- Fetch Rooms (Unchanged) ---
   useEffect(() => {
@@ -484,7 +486,7 @@ export default function CheckAvailabilityPage() {
                   value={t}
                   className="font-sans focus:bg-purple-600/30 focus:text-white"
                 >
-                  {t}
+                  {formatTime(t, use24h)}
                 </SelectItem>
               ))}{" "}
             </SelectContent>
@@ -520,7 +522,7 @@ export default function CheckAvailabilityPage() {
                   value={t}
                   className="font-sans focus:bg-purple-600/30 focus:text-white"
                 >
-                  {t}
+                  {formatTime(t, use24h)}
                 </SelectItem>
               ))}{" "}
             </SelectContent>
