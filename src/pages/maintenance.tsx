@@ -1,7 +1,7 @@
 // src/pages/maintenance.tsx
 import React from "react";
 import Head from "next/head";
-import { Settings } from "lucide-react";
+import { Construction } from "lucide-react";
 import type { GetServerSideProps, NextPage } from "next"; // Import GetServerSideProps
 
 interface MaintenancePageProps {} // eslint-disable-line @typescript-eslint/no-empty-object-type
@@ -15,7 +15,7 @@ const MaintenancePage: NextPage<MaintenancePageProps> = () => {
       </Head>
       <div className="relative flex flex-col flex-grow items-center justify-center text-center z-10 w-full px-4 sm:px-8 text-white">
         <div className="max-w-xl">
-          <Settings className="mx-auto h-16 w-16 text-purple-400 mb-6" />
+          <Construction className="mx-auto h-16 w-16 text-purple-400 mb-6" />
           <h1 className="text-4xl sm:text-5xl font-bold mb-4">
             Maintenance Mode
           </h1>
