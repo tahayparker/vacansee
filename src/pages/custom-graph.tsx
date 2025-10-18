@@ -837,17 +837,17 @@ export default function CustomGraphPage() {
             ref={graphRef}
           >
             <div className="w-full overflow-auto hide-scrollbar border-l border-t border-b border-white/15 rounded-lg shadow-lg bg-black/20 backdrop-blur-sm">
-              <table className="border-separate border-spacing-0 w-full min-w-[1400px]">
+              <table className="border-separate border-spacing-0 w-full min-w-[800px] md:min-w-[1400px]">
                 <thead className="sticky top-0 z-30">
                   <tr>
-                    <th className="sticky left-0 top-0 bg-black text-white z-40 px-3 py-3 border-r border-b border-white/15 text-right text-sm font-semibold whitespace-nowrap">
+                    <th className="sticky left-0 top-0 bg-black text-white z-40 px-2 md:px-3 py-3 border-r border-b border-white/15 text-center text-xs md:text-sm font-semibold whitespace-nowrap w-auto max-w-fit">
                       Room
                     </th>
                     {filteredTimeIntervals.map((time, index) => (
                       <th
                         key={time}
-                        className={`sticky top-0 bg-black text-white z-30 px-3 py-3 border-b border-white/15 text-center text-xs md:text-sm font-medium whitespace-nowrap ${index === filteredTimeIntervals.length - 1 ? "" : "border-r border-white/15"}`}
-                        style={{ minWidth: "65px" }}
+                        className={`sticky top-0 bg-black text-white z-30 px-1.5 md:px-3 py-2 md:py-3 border-b border-white/15 text-center text-xs md:text-sm font-medium whitespace-nowrap ${index === filteredTimeIntervals.length - 1 ? "" : "border-r border-white/15"}`}
+                        style={{ minWidth: "45px", width: "auto" }}
                       >
                         {formatTime(time, use24h)}
                       </th>
@@ -867,13 +867,13 @@ export default function CustomGraphPage() {
                         layout="position"
                         className="group"
                       >
-                        <td className="sticky left-0 bg-black group-hover:bg-zinc-900 text-white z-20 px-3 py-2 border-r border-b border-white/10 text-right text-sm whitespace-nowrap transition-colors duration-100">
+                        <td className="sticky left-0 bg-black group-hover:bg-zinc-900 text-white z-20 px-2 md:px-3 py-2 border-r border-b border-white/10 text-right text-sm whitespace-nowrap transition-colors duration-100 w-auto max-w-fit">
                           <div className="flex flex-col items-end gap-0.5">
-                            <span className="font-semibold text-base">
+                            <span className="font-semibold text-sm md:text-base">
                               {getRoomShortCode(row.room)}
                             </span>
-                            <span className="text-sm text-gray-300 font-medium">
-                              {row.day}
+                            <span className="text-xs md:text-sm text-gray-300 font-medium">
+                              {row.day.substring(0, 3)}
                             </span>
                           </div>
                         </td>
@@ -882,9 +882,9 @@ export default function CustomGraphPage() {
                             key={idx}
                             className={`relative z-0 border-b border-black/50 ${getCellColor(avail)} transition-colors duration-150 group-hover:brightness-110 ${idx === row.availability.length - 1 ? "" : "border-r border-black/100"}`}
                             title={`${getRoomShortCode(row.room)} - ${row.day} - ${filteredTimeIntervals[idx]} - ${avail === 1 ? "Available" : "Occupied"}`}
-                            style={{ minWidth: "65px" }}
+                            style={{ minWidth: "45px", width: "auto" }}
                           >
-                            <div className="h-6"></div>
+                            <div className="h-5 md:h-6"></div>
                           </td>
                         ))}
                       </motion.tr>
