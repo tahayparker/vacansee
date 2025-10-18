@@ -766,7 +766,7 @@ export default function CustomGraphPage() {
                     onPressedChange={(pressed) => pressed && setGroupBy("date")}
                     className="data-[state=on]:bg-purple-600 data-[state=on]:text-white text-white border border-white/20 rounded-full px-4"
                   >
-                    Date
+                    Day
                   </Toggle>
                 </div>
               </AccordionContent>
