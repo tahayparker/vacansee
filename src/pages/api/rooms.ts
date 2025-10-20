@@ -1,63 +1,125 @@
-// src/pages/api/rooms.ts
+/**
+ * Rooms List API Route
+ *
+ * Returns a list of all rooms with their details.
+ * Excludes consultation and online rooms.
+ *
+ * @method GET
+ * @auth Required
+ * @returns List of rooms with name, shortCode, and capacity
+ */
+
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
-
-// Define the structure for the response data
-interface RoomListData {
-  name: string; // Full Name
-  shortCode: string; // Short Code
-  capacity: number | null;
-}
-
-type ResponseData = RoomListData[] | { error: string };
+import { processRoomsList } from "@/services/roomService";
+import { addSecurityHeaders, getClientIP } from "@/lib/security";
+import { rateLimit } from "@/lib/rateLimit";
+import { handleApiError, DatabaseError } from "@/lib/errors";
+import { logger, generateRequestId } from "@/lib/logger";
+import { cacheGetOrSet } from "@/lib/cache";
+import type { RoomsListResponse } from "@/types/api";
+import type { Room } from "@/types/shared";
+import { CACHE_TTL } from "@/constants";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>,
+  res: NextApiResponse<RoomsListResponse | { error: string }>,
 ) {
-  if (req.method !== "GET") {
-    res.setHeader("Allow", ["GET"]);
-    return res.status(405).json({ error: "Method Not Allowed" });
-  }
+  const requestId = generateRequestId();
+  const ip = getClientIP(req);
 
-  // Add auth check - rooms list requires authentication
-  const supabase = createSupabaseRouteHandlerClient(req, res);
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  if (!session) {
-    return res.status(401).json({ error: "Authentication required" });
-  }
   try {
-    const rooms = await prisma.rooms.findMany({
-      select: {
-        Name: true,
-        ShortCode: true,
-        Capacity: true,
-      },
-      where: {
-        AND: [
-          { NOT: { Name: { contains: "consultation", mode: "insensitive" } } },
-          { NOT: { Name: { contains: "online", mode: "insensitive" } } },
-        ],
-      },
-      orderBy: {
-        Name: "asc", // Order alphabetically by Name
-      },
+    // Add security headers
+    addSecurityHeaders(res);
+
+    // Rate limiting
+    await rateLimit(ip);
+
+    // Method validation
+    if (req.method !== "GET") {
+      res.setHeader("Allow", ["GET"]);
+      return res.status(405).json({ error: "Method Not Allowed" });
+    }
+
+    // Authentication check
+    const supabase = createSupabaseRouteHandlerClient(req, res);
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+
+    logger.info("Fetching rooms list", {
+      requestId,
+      userId: session.user.id,
     });
 
-    // Map to the desired response structure
-    const responseData: RoomListData[] = rooms.map((room) => ({
-      name: room.Name,
-      shortCode: room.ShortCode,
-      capacity: room.Capacity,
-    }));
+    // Cache the rooms list since it doesn't change frequently
+    const rooms = await cacheGetOrSet(
+      `rooms-list-${session.user.id}`,
+      async () => {
+        // Fetch all rooms from database
+        const roomsData = await prisma.rooms.findMany({
+          select: {
+            Name: true,
+            ShortCode: true,
+            Capacity: true,
+          },
+          orderBy: {
+            Name: "asc",
+          },
+        });
 
-    console.log(`[API Rooms] Fetched ${responseData.length} rooms.`);
-    return res.status(200).json(responseData);
+        // Convert to our Room type format
+        const roomsList: Room[] = roomsData.map((room) => ({
+          name: room.Name,
+          shortCode: room.ShortCode,
+          capacity: room.Capacity,
+        }));
+
+        // Process rooms to filter out excluded patterns (consultation, online, etc.)
+        return processRoomsList(roomsList);
+      },
+      {
+        ttl: CACHE_TTL.ROOMS * 1000,
+        staleTime: CACHE_TTL.ROOMS * 0.8 * 1000,
+      }
+    );
+
+    logger.info("Rooms list fetched successfully", {
+      requestId,
+      totalRooms: rooms.length,
+    });
+
+    // Set cache headers for client-side caching
+    res.setHeader(
+      "Cache-Control",
+      `public, max-age=${CACHE_TTL.ROOMS}, stale-while-revalidate=${CACHE_TTL.ROOMS * 2}`
+    );
+
+    return res.status(200).json({
+      total: rooms.length,
+      rooms,
+    });
   } catch (error: any) {
-    console.error("[API Rooms] Error fetching rooms:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    logger.error("Error in rooms API", error, { requestId, ip });
+
+    // Handle database errors specially
+    if (error.code) {
+      throw new DatabaseError("Database query failed", {
+        code: error.code,
+        requestId,
+      });
+    }
+
+    const { statusCode, body } = handleApiError(error);
+    return res.status(statusCode).json(body as any);
+  } finally {
+    await prisma.$disconnect().catch((e) => {
+      logger.error("Error disconnecting Prisma", e, { requestId });
+    });
   }
 }
