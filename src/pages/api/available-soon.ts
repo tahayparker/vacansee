@@ -1,154 +1,176 @@
-// src/pages/api/available-soon.ts
-import type { NextApiRequest, NextApiResponse } from "next";
-import prisma from "@/lib/prisma";
-import { DateTime } from "luxon"; // Import Luxon DateTime
-import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
+/**
+ * Available Soon API Route
+ *
+ * Returns rooms that will be available after a specified duration
+ * from the current time in Dubai timezone.
+ *
+ * @method POST
+ * @auth Required
+ * @body { durationMinutes?: number } - Duration in minutes (default: 30)
+ * @returns List of rooms available at future time
+ */
 
-// Types and constants...
-interface RequestBody {
-  durationMinutes?: number;
-}
-interface AvailableRoomInfo {
-  name: string;
-  shortCode: string;
-  capacity: number | null;
-}
-type ResponseData =
-  | { checkedAtFutureTime: string; rooms: AvailableRoomInfo[] }
-  | { error: string };
-const DUBAI_TIMEZONE = "Asia/Dubai";
-const roomGroupings: Record<string, string[]> = {
-  "4.467": ["4.46", "4.47"],
-  "5.134": ["5.13", "5.14"],
-  "6.345": ["6.34", "6.35"],
-};
-const mainGroupRooms = Object.keys(roomGroupings);
-const EXCLUDED_ROOM_PATTERNS = ["consultation", "online"];
+import type { NextApiRequest, NextApiResponse } from "next";
+import { z } from "zod";
+import prisma from "@/lib/prisma";
+import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
+import { addMinutesToCurrentTime, getCurrentTimeString, getCurrentDayName, getDayNameInDubai, getTimeStringInDubai, formatDubaiDateToISO } from "@/services/timeService";
+import { processRoomsList } from "@/services/roomService";
+import { addSecurityHeaders, getClientIP } from "@/lib/security";
+import { rateLimit } from "@/lib/rateLimit";
+import { handleApiError, ValidationError, DatabaseError } from "@/lib/errors";
+import { logger, generateRequestId } from "@/lib/logger";
+import type { AvailableSoonResponse } from "@/types/api";
+import type { Room } from "@/types/shared";
+
+/**
+ * Request body validation schema
+ */
+const RequestSchema = z.object({
+  durationMinutes: z.number().int().min(0).max(480).optional().default(30),
+});
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>,
+  res: NextApiResponse<AvailableSoonResponse | { error: string }>,
 ) {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).json({ error: "Method Not Allowed" });
-  }
-
-  // Add auth check - available-soon requires authentication
-  const supabase = createSupabaseRouteHandlerClient(req, res);
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  if (!session) {
-    return res.status(401).json({ error: "Authentication required" });
-  }
+  const requestId = generateRequestId();
+  const ip = getClientIP(req);
 
   try {
-    // 1. Get Duration from Request Body
-    const { durationMinutes = 30 } = req.body as RequestBody;
-    if (typeof durationMinutes !== "number" || durationMinutes < 0) {
-      return res
-        .status(400)
-        .json({ error: "Invalid durationMinutes parameter." });
+    // Add security headers
+    addSecurityHeaders(res);
+
+    // Rate limiting
+    await rateLimit(ip);
+
+    // Method validation
+    if (req.method !== "POST") {
+      res.setHeader("Allow", ["POST"]);
+      return res.status(405).json({ error: "Method Not Allowed" });
     }
 
-    // 2. Calculate Future Time in Dubai using Luxon
-    const nowLuxon = DateTime.now().setZone(DUBAI_TIMEZONE); // Get current time zoned to Dubai
-    const futureTimeLuxon = nowLuxon.plus({ minutes: durationMinutes }); // Add duration
+    // Authentication check
+    const supabase = createSupabaseRouteHandlerClient(req, res);
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-    // Get components needed for the query from the zoned future DateTime object
-    const checkDayDubai = futureTimeLuxon.toFormat("EEEE"); // Format as full day name
-    const checkTimeDubai = futureTimeLuxon.toFormat("HH:mm"); // Format as HH:mm
-
-    console.log(
-      `[API Available Soon] Using Luxon. Checking for Day: ${checkDayDubai}, Future Time: ${checkTimeDubai} in ${DUBAI_TIMEZONE} (${durationMinutes} mins from now)`,
-    );
-    if (!checkDayDubai) {
-      return res
-        .status(500)
-        .json({ error: "Internal server error: Cannot determine check day." });
+    if (!session) {
+      return res.status(401).json({ error: "Authentication required" });
     }
 
-    // 3. Find NAMES of Rooms Occupied *at the Future Time*
+    // Validate request body
+    const validationResult = RequestSchema.safeParse(req.body);
+    if (!validationResult.success) {
+      throw new ValidationError("Invalid request parameters", {
+        errors: validationResult.error.errors,
+      });
+    }
+
+    const { durationMinutes } = validationResult.data;
+
+    // Get current time in Dubai timezone
+    // Note: All time functions automatically use Dubai timezone (Asia/Dubai)
+    const currentTimeString = getCurrentTimeString(); // Returns time in Dubai timezone
+    const currentDay = getCurrentDayName(); // Returns day in Dubai timezone
+
+    // Calculate future time by adding minutes
+    // This properly handles day rollovers (e.g., 23:30 + 60min = 00:30 next day)
+    const futureDate = addMinutesToCurrentTime(durationMinutes);
+    const futureTimeString = getTimeStringInDubai(futureDate); // Get time in Dubai TZ
+    const futureDay = getDayNameInDubai(futureDate); // Get day name in Dubai TZ
+
+    // Use the future day for the query (handles day rollovers correctly)
+    const checkDay = futureDay;
+
+    logger.info("Checking future availability in Dubai timezone", {
+      requestId,
+      currentTime: currentTimeString,
+      currentDay,
+      futureTime: futureTimeString,
+      futureDay,
+      durationMinutes,
+      timezone: "Asia/Dubai",
+      userId: session.user.id,
+    });
+
+    // Query rooms occupied at future time
     const bookedRoomsResult = await prisma.timings.findMany({
       where: {
-        Day: checkDayDubai,
-        StartTime: { lte: checkTimeDubai },
-        EndTime: { gt: checkTimeDubai },
+        Day: checkDay,
+        StartTime: { lte: futureTimeString },
+        EndTime: { gt: futureTimeString },
       },
       select: { Room: true },
       distinct: ["Room"],
       orderBy: { Room: "asc" },
     });
-    const occupiedRoomNames = bookedRoomsResult.map(
-      (timing: { Room: string }) => timing.Room,
-    );
-    console.log(
-      "[API Available Soon] Occupied Room Names at future time:",
-      occupiedRoomNames,
-    );
 
-    // 4. Find Room Details for rooms NOT occupied at future time AND NOT excluded
-    const availableRoomsData = await prisma.rooms.findMany({
-      where: {
-        AND: [
-          { Name: { notIn: occupiedRoomNames } },
-          ...EXCLUDED_ROOM_PATTERNS.map((pattern) => ({
-            NOT: { Name: { contains: pattern, mode: "insensitive" as const } },
-          })),
-        ],
-      },
-      select: { Name: true, ShortCode: true, Capacity: true },
-      orderBy: { Name: "asc" },
+    const occupiedRoomNames = bookedRoomsResult.map((timing) => timing.Room);
+
+    logger.debug("Occupied rooms at future time", {
+      requestId,
+      count: occupiedRoomNames.length,
     });
 
-    // 5. Apply Room Grouping Filter
-    const initialRooms: AvailableRoomInfo[] = availableRoomsData.map(
-      (room) => ({
+    // Query available rooms
+    const availableRoomsData = await prisma.rooms.findMany({
+      where: {
+        Name: { notIn: occupiedRoomNames },
+      },
+      select: { Name: true, ShortCode: true, Capacity: true },
+    });
+
+    // Convert to Room type and sort by shortcode as number
+    const roomsBeforeProcessing: Room[] = availableRoomsData
+      .map((room) => ({
         name: room.Name,
         shortCode: room.ShortCode,
         capacity: room.Capacity,
-      }),
-    );
-    const availableShortCodes = new Set(
-      initialRooms.map((room: AvailableRoomInfo) => room.shortCode),
-    );
-    const relatedRoomsToExclude = new Set<string>();
-    mainGroupRooms.forEach((mainRoomCode) => {
-      if (!availableShortCodes.has(mainRoomCode)) {
-        const relatedCodes = roomGroupings[mainRoomCode];
-        if (relatedCodes) {
-          relatedCodes.forEach((code) => relatedRoomsToExclude.add(code));
+      }))
+      .sort((a, b) => {
+        const aNum = parseFloat(a.shortCode);
+        const bNum = parseFloat(b.shortCode);
+        // If both are valid numbers, compare numerically
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+          return aNum - bNum;
         }
-      }
+        // Otherwise, compare lexicographically
+        return a.shortCode.localeCompare(b.shortCode, undefined, { sensitivity: "base" });
+      });
+
+    // Apply room filtering and grouping logic
+    const processedRooms = processRoomsList(roomsBeforeProcessing);
+
+    logger.info("Future availability processed", {
+      requestId,
+      totalRooms: roomsBeforeProcessing.length,
+      filteredRooms: processedRooms.length,
+      durationMinutes,
     });
-    const filteredRooms = initialRooms.filter(
-      (room: AvailableRoomInfo) => !relatedRoomsToExclude.has(room.shortCode),
-    );
-    console.log(
-      "[API Available Soon] Filtered rooms count:",
-      filteredRooms.length,
-    );
-    // --- End Group Filtering Logic ---
 
-    // 6. Prepare the Response Data
-    const responsePayload: ResponseData = {
-      checkedAtFutureTime: futureTimeLuxon.toISO() ?? new Date().toISOString(), // Use ISO string from future DateTime object
-      rooms: filteredRooms,
-    };
+    // Get checked timestamp in ISO format (the future time we're checking)
+    const checkedAt = formatDubaiDateToISO(futureDate);
 
-    console.log(
-      "[API Available Soon] Sending final Available Rooms Count:",
-      responsePayload.rooms.length,
-    );
-    return res.status(200).json(responsePayload);
+    return res.status(200).json({
+      checkedAt,
+      offsetMinutes: durationMinutes,
+      targetTime: futureTimeString,
+      rooms: processedRooms,
+    });
   } catch (error: any) {
-    console.error("[API Available Soon] Error:", error);
+    logger.error("Error in available-soon API", error, { requestId, ip });
+
+    // Handle database errors specially
     if (error.code) {
-      console.error(`[API Available Soon] Prisma Error Code: ${error.code}`);
+      throw new DatabaseError("Database query failed", {
+        code: error.code,
+        requestId,
+      });
     }
-    return res.status(500).json({ error: "Internal Server Error" });
-  } finally {
-    // await prisma.$disconnect().catch(e => console.error("[API Available Soon] Error disconnecting Prisma:", e));
+
+    const { statusCode, body } = handleApiError(error);
+    return res.status(statusCode).json(body as any);
   }
 }
