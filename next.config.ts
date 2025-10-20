@@ -1,11 +1,19 @@
-// next.config.mjs (or next.config.ts)
-import { NextConfig } from "next"; // Import type if using TypeScript
+// next.config.ts
+import { NextConfig } from "next";
+import withBundleAnalyzer from "@next/bundle-analyzer";
 
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
-  // Use NextConfig type
   reactStrictMode: true,
-  // Add other configurations if you have them
+
+  // Performance optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production" ? {
+      exclude: ["error", "warn"],
+    } : false,
+  },
+
+  // SWC minification is enabled by default in Next.js 15
 
   images: {
     remotePatterns: [
@@ -30,6 +38,59 @@ const nextConfig: NextConfig = {
         hostname: 'graph.microsoft.com', // Microsoft avatars
       },
     ],
+  },
+
+  async headers() {
+    return [
+      {
+        source: '/manifest.json',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/manifest+json',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/sw.js',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/javascript',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+          {
+            key: 'Service-Worker-Allowed',
+            value: '/',
+          },
+        ],
+      },
+      {
+        source: '/offline.html',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/:path*.(png|jpg|jpeg|gif|svg|ico|webp)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
   },
 
   async redirects() {
@@ -98,7 +159,17 @@ const nextConfig: NextConfig = {
       // Add more redirects as needed following this pattern
     ];
   },
+
+  // Experimental features for better performance
+  experimental: {
+    optimizePackageImports: ["lucide-react", "date-fns", "framer-motion"],
+  },
 };
 
-// Use default export for .mjs or .ts
-export default nextConfig;
+// Configure bundle analyzer
+const bundleAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
+// Use default export with bundle analyzer wrapper
+export default bundleAnalyzer(nextConfig);
