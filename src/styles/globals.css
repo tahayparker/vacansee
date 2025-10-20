@@ -66,14 +66,20 @@
   * {
     @apply border-border; /* Sets default border color */
     box-sizing: border-box; /* Recommended reset */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* Standard */
   }
 
-  html,
-  body {
+  html {
+    background-color: #000000; /* Pure black background to prevent white flash */
     height: 100%; /* Ensure body can fill height */
   }
 
   body {
+    background-color: #000000; /* Pure black background to prevent white flash */
+    height: 100%; /* Ensure body can fill height */
     /* Font applied via font-sans in _app.tsx which reads from theme config */
     /* Background/color applied via utilities in _app.tsx */
     @apply antialiased;
@@ -102,6 +108,15 @@
   }
   /* --- End Added Rule --- */
 
+  /* Allow text selection in input fields and textareas */
+  input,
+  textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
   /* --- Targeted font overrides for Shadcn Select and Command Items --- */
   /* Target SelectItem directly */
   .select-item-root, /* Assuming a data-slot or class on SelectItem root */
@@ -119,6 +134,38 @@
       var(--font-montserrat), sans-serif !important; /* !important for higher specificity */
   }
   /* --- End Targeted font overrides --- */
+
+  /* --- Accessibility: Focus Visible Styles --- */
+  /* Enhanced focus styles for keyboard navigation */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-purple-500 ring-offset-2 ring-offset-black;
+    transition: box-shadow 0.2s ease-in-out;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  [role="button"]:focus-visible {
+    @apply ring-2 ring-purple-500 ring-offset-2 ring-offset-black;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply ring-2 ring-purple-500 ring-offset-1 ring-offset-black border-purple-500;
+  }
+
+  /* Focus within for composite components */
+  [role="combobox"]:focus-within,
+  [role="listbox"]:focus-within {
+    @apply ring-2 ring-purple-500;
+  }
+
+  /* Ensure focus is visible on interactive elements */
+  [tabindex="0"]:focus-visible,
+  [tabindex]:not([tabindex="-1"]):focus-visible {
+    @apply ring-2 ring-purple-500 ring-offset-2 ring-offset-black;
+  }
+  /* --- End Accessibility Styles --- */
 
   /* --- Global Scrollbar Hiding --- */
   /* Hide scrollbars on all elements while preserving scroll functionality */
