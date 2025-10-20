@@ -29,7 +29,7 @@ export default function AboutPage() {
       >
         <motion.h1
           variants={sectionVariant}
-          className="text-4xl md:text-5xl font-bold mb-6 text-center bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"
+          className="text-4xl md:text-5xl font-bold mb-6 text-center bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent"
         >
           About vacansee
         </motion.h1>
@@ -38,7 +38,7 @@ export default function AboutPage() {
           variants={sectionVariant}
           className="space-y-3 text-lg text-white/80 max-w-3xl mx-auto text-center"
         >
-          <Info className="mx-auto h-10 w-10 text-purple-400 mb-3" />
+          <Info className="mx-auto h-10 w-10 text-purple-500 mb-3" />
           <h2 className="text-2xl font-semibold text-white/90">
             What is vacansee?
           </h2>
@@ -57,7 +57,7 @@ export default function AboutPage() {
           variants={sectionVariant}
           className="space-y-3 text-lg text-white/80 max-w-3xl mx-auto text-center"
         >
-          <Target className="mx-auto h-10 w-10 text-purple-400 mb-3" />
+          <Target className="mx-auto h-10 w-10 text-purple-500 mb-3" />
           <h2 className="text-2xl font-semibold text-white/90">Our Goal</h2>
           <p>
             The primary goal is to make finding an available room quick and
@@ -71,7 +71,7 @@ export default function AboutPage() {
           variants={sectionVariant}
           className="space-y-3 text-lg text-white/80 max-w-3xl mx-auto text-center"
         >
-          <Cpu className="mx-auto h-10 w-10 text-purple-400 mb-3" />
+          <Cpu className="mx-auto h-10 w-10 text-purple-500 mb-3" />
           <h2 className="text-2xl font-semibold text-white/90">Technology</h2>
           <p>
             Built using modern web technologies including Next.js, React,
@@ -84,7 +84,7 @@ export default function AboutPage() {
           variants={sectionVariant}
           className="space-y-3 text-lg text-white/80 max-w-3xl mx-auto text-center"
         >
-          <Mail className="mx-auto h-10 w-10 text-purple-400 mb-3" />
+          <Mail className="mx-auto h-10 w-10 text-purple-500 mb-3" />
           <h2 className="text-2xl font-semibold text-white/90">Contact</h2>
           <p>
             For questions or feedback, please reach out to the project
@@ -94,7 +94,7 @@ export default function AboutPage() {
             <Link
               href="https://tahayparker.vercel.app/contact"
               target="_blank"
-              className="text-purple-400 hover:underline"
+              className="text-purple-500 hover:underline"
             >
               Contact Me
             </Link>
