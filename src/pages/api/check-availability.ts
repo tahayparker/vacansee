@@ -1,91 +1,86 @@
-// src/pages/api/check-availability.ts
+/**
+ * Check Availability API Route
+ *
+ * Checks if a specific room is available during a requested time slot.
+ * Returns conflict details if the room is occupied.
+ *
+ * @method POST
+ * @auth Required
+ * @body { roomName: string, day: string, startTime: string, endTime: string }
+ * @returns Availability status with conflict details if unavailable
+ */
+
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
-import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server"; // For Auth
-
-// Define expected request body
-interface RequestBody {
-  roomName?: string; // Use the Name field from Rooms table for matching Timings.Room
-  day?: string;
-  startTime?: string; // Expect "HH:mm" format
-  endTime?: string; // Expect "HH:mm" format
-}
-
-// Define structure for conflicting class details
-interface ConflictDetails {
-  subject: string;
-  professor: string;
-  startTime: string;
-  endTime: string;
-  room: string; // Include room for clarity
-  classType: string; // e.g., Lecture, Tutorial
-}
-
-// Define response structure
-type ResponseData =
-  | {
-      available: boolean;
-      checked: {
-        // Include checked parameters for clarity
-        roomName: string;
-        day: string;
-        startTime: string;
-        endTime: string;
-      };
-      classes?: ConflictDetails[]; // Array of conflicts if not available
-    }
-  | { error: string };
+import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
+import { addSecurityHeaders, getClientIP } from "@/lib/security";
+import { rateLimit } from "@/lib/rateLimit";
+import { handleApiError, ValidationError, DatabaseError } from "@/lib/errors";
+import { logger, generateRequestId } from "@/lib/logger";
+import { AvailabilityCheckRequestSchema } from "@/types/api";
+import type { AvailabilityCheckResponse } from "@/types/api";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>,
+  res: NextApiResponse<AvailabilityCheckResponse | { error: string }>,
 ) {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).json({ error: "Method Not Allowed" });
-  }
-
-  // 1. Authentication Check
-  const supabase = createSupabaseRouteHandlerClient(req, res);
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  if (!session) {
-    return res.status(401).json({ error: "Authentication required" });
-  }
-  // Note: Client-side handles allowlist authorization
-
-  // 2. Validate Input
-  const { roomName, day, startTime, endTime } = req.body as RequestBody;
-  console.log("[API Check Availability] Received:", {
-    roomName,
-    day,
-    startTime,
-    endTime,
-  });
-
-  if (!roomName || !day || !startTime || !endTime) {
-    return res.status(400).json({
-      error: "Missing required fields: roomName, day, startTime, endTime",
-    });
-  }
-  // Add more validation for time format if needed
+  const requestId = generateRequestId();
+  const ip = getClientIP(req);
 
   try {
-    // 3. Query for Conflicts
-    // Find Timings entries that *overlap* with the requested range
+    // Add security headers
+    addSecurityHeaders(res);
+
+    // Rate limiting
+    await rateLimit(ip);
+
+    // Method validation
+    if (req.method !== "POST") {
+      res.setHeader("Allow", ["POST"]);
+      return res.status(405).json({ error: "Method Not Allowed" });
+    }
+
+    // Authentication check
+    const supabase = createSupabaseRouteHandlerClient(req, res);
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+
+    // Validate request body with Zod
+    const validationResult = AvailabilityCheckRequestSchema.safeParse(req.body);
+    if (!validationResult.success) {
+      throw new ValidationError("Invalid request parameters", {
+        errors: validationResult.error.errors,
+      });
+    }
+
+    const { roomName, day, startTime, endTime } = validationResult.data;
+
+    logger.info("Checking room availability", {
+      requestId,
+      roomName,
+      day,
+      startTime,
+      endTime,
+      userId: session.user.id,
+    });
+
+    // Query for overlapping bookings
+    // A conflict exists if: (booking starts before request ends) AND (booking ends after request starts)
     const conflicts = await prisma.timings.findMany({
       where: {
-        Room: roomName, // Match based on the Room Name
+        Room: roomName,
         Day: day,
-        // Overlap condition:
-        // A conflict exists if (Booking StartTime < Request EndTime) AND (Booking EndTime > Request StartTime)
-        StartTime: { lt: endTime }, // Booking starts before request ends
-        EndTime: { gt: startTime }, // Booking ends after request starts
+        StartTime: { lt: endTime }, // Booking starts before requested end time
+        EndTime: { gt: startTime }, // Booking ends after requested start time
       },
       select: {
         SubCode: true,
-        Class: true, // Type of class (Lecture, Tutorial, etc.)
+        Class: true,
         Teacher: true,
         StartTime: true,
         EndTime: true,
@@ -98,26 +93,43 @@ export default async function handler(
 
     const isAvailable = conflicts.length === 0;
 
-    const checkedParams = { roomName, day, startTime, endTime }; // Echo back checked params
+    // Prepare response with checked parameters
+    const checkedParams = {
+      roomName,
+      day,
+      startTime,
+      endTime,
+    };
 
     if (isAvailable) {
-      console.log(
-        `[API Check Availability] Room "${roomName}" is AVAILABLE on ${day} from ${startTime} to ${endTime}`,
-      );
-      return res.status(200).json({ available: true, checked: checkedParams });
+      logger.info("Room is available", {
+        requestId,
+        roomName,
+        day,
+        timeSlot: `${startTime}-${endTime}`,
+      });
+
+      return res.status(200).json({
+        available: true,
+        checked: checkedParams,
+      });
     } else {
-      console.log(
-        `[API Check Availability] Room "${roomName}" is NOT AVAILABLE on ${day} from ${startTime} to ${endTime}. Conflicts:`,
-        conflicts.length,
-      );
-      // Format conflicting class details
-      const conflictDetails: ConflictDetails[] = conflicts.map((c) => ({
+      logger.info("Room has conflicts", {
+        requestId,
+        roomName,
+        day,
+        timeSlot: `${startTime}-${endTime}`,
+        conflictCount: conflicts.length,
+      });
+
+      // Format conflict details for response
+      const conflictDetails = conflicts.map((c) => ({
         subject: c.SubCode,
-        classType: c.Class, // Keep original format or title case if preferred
+        classType: c.Class,
         professor: c.Teacher,
-        startTime: c.StartTime, // Assuming HH:mm format is already correct
+        startTime: c.StartTime,
         endTime: c.EndTime,
-        room: c.Room, // Include room in conflict details
+        room: c.Room,
       }));
 
       return res.status(200).json({
@@ -127,7 +139,21 @@ export default async function handler(
       });
     }
   } catch (error: any) {
-    console.error("[API Check Availability] Error:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    logger.error("Error in check-availability API", error, { requestId, ip });
+
+    // Handle database errors specially
+    if (error.code) {
+      throw new DatabaseError("Database query failed", {
+        code: error.code,
+        requestId,
+      });
+    }
+
+    const { statusCode, body } = handleApiError(error);
+    return res.status(statusCode).json(body as any);
+  } finally {
+    await prisma.$disconnect().catch((e) => {
+      logger.error("Error disconnecting Prisma", e, { requestId });
+    });
   }
 }
