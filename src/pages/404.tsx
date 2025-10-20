@@ -17,7 +17,7 @@ export default function Custom404() {
       </p>
       <Link
         href="/"
-        className="inline-block mt-6 px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors"
+        className="inline-block mt-6 px-6 py-2 rounded-full bg-purple-500 text-white hover:bg-purple-500 transition-colors"
       >
         Go back home
       </Link>
