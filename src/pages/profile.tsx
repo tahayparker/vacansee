@@ -4,14 +4,21 @@ import SpotlightCard from "@/components/SpotlightCard";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogOut } from "lucide-react";
+import { LogOut, RotateCcw } from "lucide-react";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
+import { imageOptimization } from "@/lib/images";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 export default function Profile() {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [avatarUrl, setAvatarUrl] = useState<string>("");
+  const [optimizedAvatarUrl, setOptimizedAvatarUrl] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [resetting, setResetting] = useState<boolean>(false);
+  const [resetDone, setResetDone] = useState<boolean>(false);
   const { use24h, setTimeFormat } = useTimeFormat();
+  const { resetOnboarding } = useUserPreferences();
 
   const handleSignOut = async () => {
     const supabase = getSupabaseBrowserClient();
@@ -20,20 +27,66 @@ export default function Profile() {
     // router.replace("/");
   };
 
+
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
-    supabase.auth.getUser().then(({ data }) => {
+    supabase.auth.getUser().then(async ({ data }) => {
       const user = data.user;
-      if (!user) return;
+      if (!user) {
+        setIsLoading(false);
+        return;
+      }
       const meta = (user.user_metadata || {}) as Record<string, any>;
       // Common OAuth metadata keys: name, full_name, picture, avatar_url
       const userName = meta.name || meta.full_name || "";
       const userAvatar = meta.avatar_url || meta.picture || "";
       setName(userName || user.email?.split("@")[0] || "");
       setEmail(user.email || "");
-      setAvatarUrl(userAvatar);
+
+      // Optimize avatar image if available
+      if (userAvatar) {
+        try {
+          const optimizedUrl = await imageOptimization.avatar(userAvatar, 96);
+          setOptimizedAvatarUrl(optimizedUrl);
+        } catch (error) {
+          console.warn('Failed to optimize avatar image:', error);
+          setOptimizedAvatarUrl(userAvatar);
+        }
+      }
+
+      setIsLoading(false);
+    }).catch((error) => {
+      console.error("Error fetching user data:", error);
+      setIsLoading(false);
     });
   }, []);
+
+  const handleResetOnboarding = async () => {
+    try {
+      setResetting(true);
+      setResetDone(false);
+      // Clear session guard so the tour can re-open immediately
+      if (typeof window !== 'undefined') {
+        try { sessionStorage.removeItem('vacansee_onboarding_done'); } catch {}
+      }
+      await resetOnboarding();
+      setResetDone(true);
+    } catch (e) {
+      console.error("Failed to reset onboarding", e);
+    } finally {
+      setResetting(false);
+    }
+  };
+
+
+  // Show loading spinner while fetching user data (no card until data is ready)
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 w-full px-4" style={{ minHeight: 'calc(100vh - 80px)' }}>
+        <LoadingSpinner size="medium" message="Loading profile..." />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 w-full px-4" style={{ minHeight: 'calc(100vh - 80px)' }}>
@@ -76,9 +129,9 @@ export default function Profile() {
       <SpotlightCard className="w-full max-w-md">
         <div className="flex flex-col items-center text-center space-y-4">
           <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-4xl font-bold text-white overflow-hidden">
-            {avatarUrl ? (
+            {optimizedAvatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+              <img src={optimizedAvatarUrl} alt="avatar" className="w-full h-full object-cover" />
             ) : (
               (name || email || " ").charAt(0).toUpperCase()
             )}
@@ -104,19 +157,36 @@ export default function Profile() {
               <TabsList className="bg-black/40 border border-white/10 w-40">
                 <TabsTrigger
                   value="12h"
-                  className="text-white data-[state=active]:bg-purple-600 data-[state=active]:text-white transition-all duration-300 ease-in-out"
+                  className="text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white transition-all duration-300 ease-in-out"
                 >
                   12h
                 </TabsTrigger>
                 <TabsTrigger
                   value="24h"
-                  className="text-white data-[state=active]:bg-purple-600 data-[state=active]:text-white transition-all duration-300 ease-in-out"
+                  className="text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white transition-all duration-300 ease-in-out"
                 >
                   24h
                 </TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
+
+          <div className="h-px bg-white/10 my-2" />
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-md text-white">Onboarding</span>
+              <Button onClick={handleResetOnboarding} disabled={resetting} variant="outline" className="flex items-center gap-2">
+                <RotateCcw className="h-4 w-4" />
+                {resetting ? 'Resetting…' : 'Reset onboarding'}
+              </Button>
+            </div>
+            <p className="text-sm text-white/60">See the welcome tour again to revisit key features.</p>
+            {resetDone && (
+              <span className="text-xs text-green-400">Reset. The tour will appear now.</span>
+            )}
+          </div>
+
         </div>
       </SpotlightCard>
     </div>
