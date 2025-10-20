@@ -19,17 +19,13 @@ import {
   Settings2,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import localFont from "next/font/local";
-// Configure the local font loader
-const qurovaFont = localFont({
-  src: "../../public/fonts/Qurova-SemiBold.otf", // Adjust the path as necessary
-  weight: "600", // Corresponds to Semibold
-  display: "swap", // Good practice for font loading
-});
+import { KeyboardKeys, AriaAnnouncer } from "@/lib/accessibility";
+import { qurovaFont } from "@/lib/fonts";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 // --- Navigation Items ---
 const navItems = [
-  { name: "Currently Available", href: "/available-now", icon: DoorOpen },
+  { name: "Available Now", href: "/available-now", icon: DoorOpen },
   { name: "Available Soon", href: "/available-soon", icon: Clock },
   { name: "Check Availability", href: "/check", icon: Search },
   { name: "Graph", href: "/graph", icon: Grid3x3 },
@@ -74,7 +70,6 @@ const NavLink = React.forwardRef<
     ref,
   ) => {
     const isActuallyActive = item.href === currentPath;
-    const layoutTransition = { type: "spring", stiffness: 500, damping: 35 };
     const labelTransition = { duration: 0.2, ease: "easeInOut" };
 
     if (isMobile) {
@@ -85,7 +80,7 @@ const NavLink = React.forwardRef<
             className={
               "flex items-center gap-3 w-full p-3 rounded-md transition-colors duration-200 ease-in-out " +
               (isActuallyActive
-                ? "text-purple-300 font-semibold bg-white/5"
+                ? "text-purple-500 font-semibold bg-white/5"
                 : "text-white/80 hover:text-white hover:bg-white/10 ") +
               (className ?? "")
             }
@@ -110,8 +105,6 @@ const NavLink = React.forwardRef<
       return (
         <motion.li
           ref={ref}
-          layout
-          transition={layoutTransition}
           onHoverStart={onHoverStart}
           onHoverEnd={onHoverEnd}
           className="flex"
@@ -257,7 +250,6 @@ export default function SiteHeader({
   const menuToggleTransition = { duration: 0.2 };
   const mobilePanelTransition = { duration: 0.2, ease: "easeOut" };
   const mobileBackdropTransition = { duration: 0.2, ease: "linear" };
-  const authLayoutTransition = { type: "spring", stiffness: 400, damping: 30 };
   const authLabelTransition = { duration: 0.2, ease: "easeInOut" };
   const vailaLabelTransition = { duration: 0.2, ease: "easeInOut" };
   const userDisplayName =
@@ -271,6 +263,8 @@ export default function SiteHeader({
         className={
           "fixed top-0 left-0 right-0 z-50 flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 bg-black/5 backdrop-blur-lg border-b border-white/10"
         }
+        role="banner"
+        aria-label="Main navigation"
       >
         {/* Left side: Brand (Always Visible) */}
         <div className="flex-shrink-0 z-10 flex items-center">
@@ -284,7 +278,7 @@ export default function SiteHeader({
               }
             }}
           >
-            <DoorOpen className="h-6 w-6 text-purple-400" />
+            <DoorOpen className="h-6 w-6 text-purple-500" />
             <span className={`sm:inline text-xl mt-1 ${qurovaFont.className}`}>
               vacansee
             </span>
@@ -295,8 +289,8 @@ export default function SiteHeader({
         {!maintenanceMode && isMounted && (
           <div className="flex items-center gap-1 sm:gap-2">
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex">
-              <ul className="flex items-center gap-x-1">
+            <nav className="hidden md:flex" role="navigation" aria-label="Main navigation">
+              <ul className="flex items-center gap-x-1" role="menubar">
                 {navItems.map((navItem) => (
                   <NavLink
                     key={navItem.href}
@@ -322,15 +316,15 @@ export default function SiteHeader({
                     exit={{ opacity: 0 }}
                     className="w-8 h-8 flex items-center justify-center"
                   >
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white/50"></div>
+                    <LoadingSpinner size="small" />
                   </motion.div>
                 ) : user ? (
                   <motion.div
                     key="profile-container-desktop"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
                     className="flex items-center"
                     onHoverStart={() => setIsAuthHovered(true)}
                     onHoverEnd={() => setIsAuthHovered(false)}
@@ -393,10 +387,10 @@ export default function SiteHeader({
                 ) : (
                   <motion.div
                     key="signin-button-desktop"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={authLayoutTransition}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
                     onHoverStart={() => setIsAuthHovered(true)}
                     onHoverEnd={() => setIsAuthHovered(false)}
                     className="flex"
@@ -440,8 +434,6 @@ export default function SiteHeader({
             {/* Vaila Link - DESKTOP */}
             <div className="hidden md:flex items-center ml-2">
               <motion.div
-                layout
-                transition={{ type: "spring", stiffness: 500, damping: 35 }}
                 onHoverStart={() => setIsVailaLinkHovered(true)}
                 onHoverEnd={() => setIsVailaLinkHovered(false)}
                 className="flex"
@@ -458,7 +450,7 @@ export default function SiteHeader({
                     (isVailaLinkHovered ? "text-white" : "text-white/70")
                   }
                 >
-                  <vailaLink.icon className="h-5 w-5 flex-shrink-0 text-purple-400" />
+                  <vailaLink.icon className="h-5 w-5 flex-shrink-0 text-purple-500" />
                   <AnimatePresence>
                     {isVailaLinkHovered && (
                       <motion.span
@@ -486,9 +478,19 @@ export default function SiteHeader({
             <div className="flex md:hidden ml-1">
               <motion.button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+                onKeyDown={(e) => {
+                  if (e.key === KeyboardKeys.ENTER || e.key === KeyboardKeys.SPACE) {
+                    e.preventDefault();
+                    setIsMenuOpen(!isMenuOpen);
+                    AriaAnnouncer.getInstance().announce(
+                      isMenuOpen ? 'Menu closed' : 'Menu opened'
+                    );
+                  }
+                }}
                 className="relative z-[65] flex flex-col justify-center items-center gap-[7px] p-2 rounded-full transition-colors"
-                aria-label="Toggle menu"
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMenuOpen}
+                aria-controls="mobile-menu"
                 whileTap={{ scale: 0.95 }}
               >
                 <motion.span
@@ -539,6 +541,9 @@ export default function SiteHeader({
             {isMounted && isMenuOpen && (
               <motion.div
                 key="mobile-menu-panel"
+                id="mobile-menu"
+                role="menu"
+                aria-label="Mobile navigation menu"
                 className={
                   "fixed inset-x-4 top-20 z-50 md:hidden bg-gradient-to-br from-black/80 to-black/90 backdrop-blur-xl border border-white/15 shadow-xl rounded-lg overflow-hidden"
                 }
@@ -574,7 +579,7 @@ export default function SiteHeader({
                       onClick={() => setIsMenuOpen(false)}
                       className="flex items-center gap-3 w-full p-3 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 ease-in-out mb-3"
                     >
-                      <vailaLink.icon className="h-5 w-5 flex-shrink-0 text-purple-400" />
+                      <vailaLink.icon className="h-5 w-5 flex-shrink-0 text-purple-500" />
                       <span className="flex-grow text-base">
                         {vailaLink.name}
                       </span>
@@ -582,7 +587,7 @@ export default function SiteHeader({
                     <Separator className="bg-white/20 my-3" />
                     {loadingAuth ? (
                       <div className="flex justify-center items-center p-3 h-[76px]">
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white/50"></div>
+                        <LoadingSpinner size="small" />
                       </div>
                     ) : user ? (
                       <div>
