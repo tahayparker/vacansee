@@ -1,10 +1,11 @@
 // src/pages/unauthorized.tsx
 import { Button } from "@/components/ui/button";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
-import { useRouter } from "next/router";
+import { motion } from "framer-motion";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { LogOut, OctagonMinus } from "lucide-react";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 export default function UnauthorizedPage() {
   const supabase = getSupabaseBrowserClient();
@@ -78,7 +79,7 @@ export default function UnauthorizedPage() {
     return (
       <div className="relative text-center max-w-2xl py-10">
         <div className="flex justify-center items-center min-h-[200px]">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white/50"></div>
+          <LoadingSpinner size="medium" />
         </div>
       </div>
     );
@@ -144,7 +145,7 @@ export default function UnauthorizedPage() {
             className="rounded-full border-white/40 bg-transparent px-6 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-white/10 hover:border-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50 flex items-center gap-2 disabled:opacity-60"
           >
             {isSignOutLoading ? (
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              <LoadingSpinner size="small" className="mr-2" />
             ) : (
               <LogOut className="h-4 w-4" />
             )}
