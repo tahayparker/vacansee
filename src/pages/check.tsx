@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import Head from "next/head";
 import { motion, AnimatePresence } from "framer-motion";
+import { scaleVariants } from "@/lib/animations";
 // --- Import AlertCircle with other icons ---
 import {
   AlertCircle,
@@ -12,7 +13,6 @@ import {
   Calendar,
   ChevronsUpDown,
   CircleX,
-  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -46,8 +46,11 @@ import {
   addMinutes,
 } from "date-fns";
 import Fuse from "fuse.js";
-import { Montserrat } from "next/font/google";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
+import { useFormPersistence, useSearchPersistence } from "@/hooks/useFormPersistence";
+import { montserrat } from "@/lib/fonts";
+import { AriaAttributes, KeyboardKeys, isKey, AriaAnnouncer } from "@/lib/accessibility";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 // --- Data Structures (Unchanged) ---
 interface RoomListData {
@@ -87,12 +90,6 @@ const daysOfWeek = [
 const MIN_HOUR = 7;
 const MAX_HOUR = 23;
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-  weight: ["300", "400", "500", "600", "700", "800"],
-});
-
 // --- Helper Functions (Unchanged) ---
 function generateTimeSlots(): string[] {
   const slots: string[] = [];
@@ -110,14 +107,30 @@ const timeSlots = generateTimeSlots();
 
 // --- Main Page Component ---
 export default function CheckAvailabilityPage() {
-  // --- State (Unchanged) ---
+  // --- Form persistence ---
+  const form = useFormPersistence({
+    selectedRoomName: "",
+    day: "",
+    startTime: "",
+    endTime: "",
+  }, {
+    debounceDelay: 500,
+    persist: true,
+    storageKey: "check-availability-form",
+    clearOnSubmit: true,
+  });
+
+  // --- Search persistence ---
+  const search = useSearchPersistence("", {
+    debounceDelay: 300,
+    persist: true,
+    storageKey: "room-search-query",
+  });
+
+  // --- Other state ---
   const [selectedRoom, setSelectedRoom] = useState<RoomListData | null>(null);
-  const [day, setDay] = useState<string>("");
-  const [startTime, setStartTime] = useState<string>("");
-  const [endTime, setEndTime] = useState<string>("");
   const [allRooms, setAllRooms] = useState<RoomListData[]>([]);
   const [comboboxOpen, setComboboxOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [isChecking, setIsChecking] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [checkResult, setCheckResult] = useState<CheckResult | null>(null);
@@ -143,8 +156,8 @@ export default function CheckAvailabilityPage() {
           }
           throw new Error(errorMsg);
         }
-        const data: RoomListData[] = await response.json();
-        setAllRooms(data);
+        const data: { total: number; rooms: RoomListData[] } = await response.json();
+        setAllRooms(data.rooms);
         setRoomFetchError(null);
       } catch (err: any) {
         console.error("Error fetching rooms:", err);
@@ -157,19 +170,20 @@ export default function CheckAvailabilityPage() {
     fetchRooms();
   }, []);
 
-  // --- Fuzzy Search (Unchanged) ---
+  // --- Fuzzy Search with persistence ---
   const fuse = useMemo(() => {
     if (allRooms.length === 0) return null;
     return new Fuse(allRooms, { keys: ["name", "shortCode"], threshold: 0.4 });
   }, [allRooms]);
   const filteredRooms = useMemo(() => {
-    if (!fuse || searchQuery === "") return allRooms;
-    return fuse.search(searchQuery).map((result) => result.item);
-  }, [searchQuery, allRooms, fuse]);
+    if (!fuse || search.query === "") return allRooms;
+    return fuse.search(search.query).map((result) => result.item);
+  }, [search.query, allRooms, fuse]);
 
-  // --- Event Handlers (Unchanged) ---
+  // --- Event Handlers with persistence ---
   const handleNow = useCallback(() => {
-    const now = new Date();
+    // Get current time in Dubai timezone (Asia/Dubai, UTC+4)
+    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Dubai' }));
     const currentMinutes = now.getMinutes();
     const startMinutes = currentMinutes < 30 ? 0 : 30;
     const startTimeExact = setMinutes(
@@ -181,57 +195,61 @@ export default function CheckAvailabilityPage() {
     const endTimeExact = setMinutes(setHours(now, endHour), endMinutes);
     const todayJsIndex = getDay(now);
     const todayAdjusted = todayJsIndex === 0 ? 6 : todayJsIndex - 1;
-    if (!day) {
-      setDay(daysOfWeek[todayAdjusted]);
-    }
-    setStartTime(format(startTimeExact, "HH:mm"));
-    const endFormatted = format(endTimeExact, "HH:mm");
-    if (timeSlots.includes(endFormatted)) {
-      setEndTime(endFormatted);
-    } else {
-      setEndTime(timeSlots[timeSlots.length - 1]);
-    }
+
+    form.setFields({
+      day: form.values.day || daysOfWeek[todayAdjusted],
+      startTime: format(startTimeExact, "HH:mm"),
+      endTime: timeSlots.includes(format(endTimeExact, "HH:mm"))
+        ? format(endTimeExact, "HH:mm")
+        : timeSlots[timeSlots.length - 1],
+    });
+
     setFormError(null);
     setCheckResult(null);
-  }, [day]);
+  }, [form]);
   const handleAllDay = useCallback(() => {
-    if (!day) {
-      const todayJsIndex = getDay(new Date());
-      const todayAdjusted = todayJsIndex === 0 ? 6 : todayJsIndex - 1;
-      setDay(daysOfWeek[todayAdjusted]);
-    }
-    setStartTime(timeSlots[0]);
-    setEndTime(timeSlots[timeSlots.length - 1]);
+    const todayJsIndex = getDay(new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Dubai' })));
+    const todayAdjusted = todayJsIndex === 0 ? 6 : todayJsIndex - 1;
+
+    form.setFields({
+      day: form.values.day || daysOfWeek[todayAdjusted],
+      startTime: timeSlots[0],
+      endTime: timeSlots[timeSlots.length - 1],
+    });
+
     setFormError(null);
     setCheckResult(null);
-  }, [day]);
+  }, [form]);
+
   const handleReset = useCallback(() => {
     setSelectedRoom(null);
-    setSearchQuery("");
-    setDay("");
-    setStartTime("");
-    setEndTime("");
+    search.clearQuery();
+    form.reset();
     setFormError(null);
     setCheckResult(null);
     setComboboxOpen(false);
-  }, []);
+  }, [form, search]);
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
       setFormError(null);
       setCheckResult(null);
+
       if (roomFetchError) {
         setFormError("Cannot check availability: Room list failed to load.");
         return;
       }
-      if (!selectedRoom || !day || !startTime || !endTime) {
+
+      if (!selectedRoom || !form.values.day || !form.values.startTime || !form.values.endTime) {
         setFormError("Please select a room, day, start time, and end time.");
         return;
       }
-      if (startTime >= endTime) {
+
+      if (form.values.startTime >= form.values.endTime) {
         setFormError("End time must be after start time.");
         return;
       }
+
       setIsChecking(true);
       try {
         const response = await fetch("/api/check-availability", {
@@ -239,11 +257,12 @@ export default function CheckAvailabilityPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             roomName: selectedRoom.name,
-            day: day,
-            startTime: startTime,
-            endTime: endTime,
+            day: form.values.day,
+            startTime: form.values.startTime,
+            endTime: form.values.endTime,
           }),
         });
+
         if (!response.ok) {
           let errorMsg = `API Error: ${response.status}`;
           try {
@@ -254,8 +273,15 @@ export default function CheckAvailabilityPage() {
           }
           throw new Error(errorMsg);
         }
+
         const data: CheckResult = await response.json();
         setCheckResult(data);
+
+        // Clear form on successful submission
+        form.handleSubmit(async () => {
+          // Form is already cleared by the hook
+        });
+
       } catch (err: any) {
         console.error("Check availability error:", err);
         setFormError(err.message || "Failed to check availability.");
@@ -264,10 +290,10 @@ export default function CheckAvailabilityPage() {
         setIsChecking(false);
       }
     },
-    [selectedRoom, day, startTime, endTime, roomFetchError],
+    [selectedRoom, form, roomFetchError],
   );
 
-  // --- Animation Variants (Unchanged) ---
+  // --- Animation Variants ---
   const formItemVariant = {
     hidden: { opacity: 0, y: 15 },
     visible: (i: number) => ({
@@ -275,25 +301,6 @@ export default function CheckAvailabilityPage() {
       y: 0,
       transition: { delay: i * 0.07, duration: 0.4, ease: "easeOut" },
     }),
-  };
-  const resultVariant = {
-    hidden: { opacity: 0, scale: 0.95, y: -10 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      height: "auto",
-      marginTop: "2rem",
-      transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.95,
-      y: 10,
-      height: 0,
-      marginTop: 0,
-      transition: { duration: 0.2, ease: "easeIn" },
-    },
   };
   const alertVariants = {
     success: "bg-green-950/50 border-green-500/60",
@@ -319,6 +326,16 @@ export default function CheckAvailabilityPage() {
       <form
         onSubmit={handleSubmit}
         className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5"
+        onKeyDown={(e) => {
+          if (isKey(KeyboardKeys.ESCAPE, e)) {
+            e.preventDefault();
+            setFormError(null);
+            setCheckResult(null);
+            AriaAnnouncer.getInstance().announce("Form cleared");
+          }
+        }}
+        role="form"
+        aria-label="Room availability check form"
       >
         {/* --- Form Elements (Unchanged structure) --- */}
         <motion.div
@@ -366,8 +383,7 @@ export default function CheckAvailabilityPage() {
             >
               {isLoadingRooms ? (
                 <div className="flex items-center justify-center p-4 h-20">
-                  {" "}
-                  <Loader2 className="h-6 w-6 animate-spin text-purple-400" />{" "}
+                  <LoadingSpinner size="medium" />
                 </div>
               ) : roomFetchError ? (
                 <div className="p-4 text-center text-sm text-red-300">
@@ -375,47 +391,57 @@ export default function CheckAvailabilityPage() {
                   {roomFetchError}{" "}
                 </div>
               ) : (
-                <Command shouldFilter={false}>
-                  <CommandInput
-                    placeholder="Search room..."
-                    value={searchQuery}
-                    onValueChange={setSearchQuery}
-                    className={`h-9 text-white placeholder:text-gray-400 border-0 border-b border-white/20 rounded-none ring-offset-0 focus-visible:ring-0 focus-visible:border-b-purple-500 font-sans ${montserrat.variable}`}
-                  />
-                  <CommandList className="hide-scrollbar">
-                    {" "}
-                    <CommandEmpty>No room found.</CommandEmpty>{" "}
-                    <CommandGroup>
+                <>
+                  <Command shouldFilter={false}>
+                    <CommandInput
+                      placeholder="Search room..."
+                      value={search.query}
+                      onValueChange={search.setQuery}
+                      className={`h-9 text-white placeholder:text-gray-400 border-0 border-b border-white/20 rounded-none ring-offset-0 focus-visible:ring-0 focus-visible:border-b-purple-500 font-sans ${montserrat.variable}`}
+                      aria-label="Search for a room"
+                      aria-describedby="room-search-help"
+                    />
+                    <CommandList className="hide-scrollbar">
                       {" "}
-                      {filteredRooms.map((room) => (
-                        <CommandItem
-                          key={room.shortCode}
-                          value={room.name}
-                          onSelect={(currentValue) => {
-                            const foundRoom = allRooms.find(
-                              (r) =>
-                                r.name.toLowerCase() ===
-                                currentValue.toLowerCase(),
-                            );
-                            setSelectedRoom(foundRoom || null);
-                            setComboboxOpen(false);
-                            setSearchQuery("");
-                          }}
-                          className="font-sans aria-selected:bg-purple-600/30 aria-selected:text-white text-sm cursor-pointer"
-                        >
-                          {" "}
-                          {room.name}{" "}
-                          {room.capacity !== null && (
-                            <span className="ml-2 text-xs text-gray-400">
-                              {" "}
-                              ({room.capacity}){" "}
-                            </span>
-                          )}{" "}
-                        </CommandItem>
-                      ))}{" "}
-                    </CommandGroup>{" "}
-                  </CommandList>
-                </Command>
+                      <CommandEmpty>No room found.</CommandEmpty>{" "}
+                      <CommandGroup>
+                        {" "}
+                        {filteredRooms.map((room) => (
+                          <CommandItem
+                            key={room.shortCode}
+                            value={room.name}
+                            onSelect={(currentValue) => {
+                              const foundRoom = allRooms.find(
+                                (r) =>
+                                  r.name.toLowerCase() ===
+                                  currentValue.toLowerCase(),
+                              );
+                              setSelectedRoom(foundRoom || null);
+                              setComboboxOpen(false);
+                              search.clearQuery();
+                              if (foundRoom) {
+                                form.setField('selectedRoomName', foundRoom.name);
+                              }
+                            }}
+                            className="font-sans aria-selected:bg-purple-500/30 aria-selected:text-white text-sm cursor-pointer"
+                          >
+                            {" "}
+                            {room.name}{" "}
+                            {room.capacity !== null && (
+                              <span className="ml-2 text-xs text-gray-400">
+                                {" "}
+                                ({room.capacity}){" "}
+                              </span>
+                            )}{" "}
+                          </CommandItem>
+                        ))}{" "}
+                      </CommandGroup>{" "}
+                    </CommandList>
+                  </Command>
+                  <div id="room-search-help" className="sr-only">
+                    Type to search for rooms. Use arrow keys to navigate and Enter to select.
+                  </div>
+                </>
               )}
             </PopoverContent>
           </Popover>
@@ -432,10 +458,12 @@ export default function CheckAvailabilityPage() {
           >
             Day
           </label>
-          <Select value={day} onValueChange={setDay}>
+          <Select value={form.values.day} onValueChange={(value) => form.setField('day', value)}>
             <SelectTrigger
               id="day"
               className="w-full bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500"
+              aria-label="Select day of the week"
+              aria-describedby="day-help"
             >
               {" "}
               <SelectValue placeholder="Select a day" />{" "}
@@ -448,12 +476,15 @@ export default function CheckAvailabilityPage() {
                 <SelectItem
                   key={d}
                   value={d}
-                  className="font-sans focus:bg-purple-600/30 focus:text-white"
+                  className="font-sans focus:bg-purple-500/30 focus:text-white"
                 >
                   {d}
                 </SelectItem>
               ))}{" "}
             </SelectContent>
+            <div id="day-help" className="sr-only">
+              Choose the day of the week to check room availability
+            </div>
           </Select>
         </motion.div>
         <motion.div
@@ -468,10 +499,12 @@ export default function CheckAvailabilityPage() {
           >
             Start Time
           </label>
-          <Select value={startTime} onValueChange={setStartTime}>
+          <Select value={form.values.startTime} onValueChange={(value) => form.setField('startTime', value)}>
             <SelectTrigger
               id="startTime"
               className="w-full bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500"
+              aria-label="Select start time"
+              aria-describedby="start-time-help"
             >
               {" "}
               <SelectValue placeholder="Select start time" />{" "}
@@ -484,12 +517,15 @@ export default function CheckAvailabilityPage() {
                 <SelectItem
                   key={`start-${t}`}
                   value={t}
-                  className="font-sans focus:bg-purple-600/30 focus:text-white"
+                  className="font-sans focus:bg-purple-500/30 focus:text-white"
                 >
                   {formatTime(t, use24h)}
                 </SelectItem>
               ))}{" "}
             </SelectContent>
+            <div id="start-time-help" className="sr-only">
+              Choose the start time for checking room availability
+            </div>
           </Select>
         </motion.div>
         <motion.div
@@ -504,10 +540,12 @@ export default function CheckAvailabilityPage() {
           >
             End Time
           </label>
-          <Select value={endTime} onValueChange={setEndTime}>
+          <Select value={form.values.endTime} onValueChange={(value) => form.setField('endTime', value)}>
             <SelectTrigger
               id="endTime"
               className="w-full bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500"
+              aria-label="Select end time"
+              aria-describedby="end-time-help"
             >
               {" "}
               <SelectValue placeholder="Select end time" />{" "}
@@ -520,12 +558,15 @@ export default function CheckAvailabilityPage() {
                 <SelectItem
                   key={`end-${t}`}
                   value={t}
-                  className="font-sans focus:bg-purple-600/30 focus:text-white"
+                  className="font-sans focus:bg-purple-500/30 focus:text-white"
                 >
                   {formatTime(t, use24h)}
                 </SelectItem>
               ))}{" "}
             </SelectContent>
+            <div id="end-time-help" className="sr-only">
+              Choose the end time for checking room availability
+            </div>
           </Select>
         </motion.div>
         <motion.div
@@ -538,11 +579,12 @@ export default function CheckAvailabilityPage() {
           <Button
             type="submit"
             disabled={isChecking || isLoadingRooms || !!roomFetchError}
-            className="md:flex-1 bg-purple-600 hover:bg-purple-700 text-white rounded-full px-5 py-2.5 text-sm font-medium flex items-center justify-center gap-2 disabled:opacity-60"
+            className="md:flex-1 bg-purple-500 hover:bg-purple-500 text-white rounded-full px-5 py-2.5 text-sm font-medium flex items-center justify-center gap-2 disabled:opacity-60"
+            {...AriaAttributes.button(isChecking, "Check room availability")}
           >
             {" "}
             {isChecking ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <LoadingSpinner size="small" />
             ) : (
               <Search className="w-4 h-4" />
             )}{" "}
@@ -606,7 +648,7 @@ export default function CheckAvailabilityPage() {
           {checkResult && (
             <motion.div
               key="check-result"
-              variants={resultVariant}
+              variants={scaleVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
