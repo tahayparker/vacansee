@@ -1,21 +1,30 @@
 // src/pages/legal.tsx
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import { Scale } from "lucide-react";
+import { staggerContainerVariants, listItemVariants } from "@/lib/animations";
 
 export default function LegalPage() {
-  const sectionVariant = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
-  };
+  // Ensure page starts at the top
+  useEffect(() => {
+    // Force scroll to top with multiple methods to ensure it works
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
 
+    // Scroll immediately
+    scrollToTop();
+
+    // Also scroll after a small delay to ensure it sticks
+    const timeout = setTimeout(scrollToTop, 50);
+
+    return () => clearTimeout(timeout);
+  }, []);
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 py-6 pt-20 md:pt-24 flex-grow flex flex-col text-white">
+    <div className="w-full max-w-6xl mx-auto px-4 py-6 pt-20 md:pt-24 flex-grow flex flex-col text-white">
       <Head>
         <title>Legal - Terms of Service - vacansee</title>
       </Head>
@@ -23,11 +32,11 @@ export default function LegalPage() {
       <motion.div
         initial="hidden"
         animate="visible"
-        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+        variants={staggerContainerVariants}
         className="space-y-8"
       >
-        <motion.div variants={sectionVariant} className="text-center mb-10">
-          <Scale className="mx-auto h-12 w-12 text-purple-400 mb-4" />
+        <motion.div variants={listItemVariants} className="text-center mb-10">
+          <Scale className="mx-auto h-12 w-12 text-purple-500 mb-4" />
           <h1 className="text-4xl md:text-5xl font-bold text-white/95">
             Terms of Service
           </h1>
@@ -36,7 +45,7 @@ export default function LegalPage() {
           </p>
         </motion.div>
 
-        <motion.section variants={sectionVariant} className="space-y-3">
+        <motion.section variants={listItemVariants} className="space-y-3">
           <h2 className="text-2xl font-semibold text-white/90 border-b border-white/20 pb-2">
             1. Acceptance of Terms
           </h2>
@@ -48,7 +57,7 @@ export default function LegalPage() {
           </p>
         </motion.section>
 
-        <motion.section variants={sectionVariant} className="space-y-3">
+        <motion.section variants={listItemVariants} className="space-y-3">
           <h2 className="text-2xl font-semibold text-white/90 border-b border-white/20 pb-2">
             2. Service Description
           </h2>
@@ -60,7 +69,7 @@ export default function LegalPage() {
           </p>
         </motion.section>
 
-        <motion.section variants={sectionVariant} className="space-y-3">
+        <motion.section variants={listItemVariants} className="space-y-3">
           <h2 className="text-2xl font-semibold text-white/90 border-b border-white/20 pb-2">
             3. User Conduct
           </h2>
@@ -78,7 +87,7 @@ export default function LegalPage() {
           </p>
         </motion.section>
 
-        <motion.section variants={sectionVariant} className="space-y-3">
+        <motion.section variants={listItemVariants} className="space-y-3">
           <h2 className="text-2xl font-semibold text-white/90 border-b border-white/20 pb-2">
             4. Authentication
           </h2>
@@ -90,7 +99,7 @@ export default function LegalPage() {
           </p>
         </motion.section>
 
-        <motion.section variants={sectionVariant} className="space-y-3">
+        <motion.section variants={listItemVariants} className="space-y-3">
           <h2 className="text-2xl font-semibold text-white/90 border-b border-white/20 pb-2">
             5. Intellectual Property
           </h2>
@@ -102,7 +111,7 @@ export default function LegalPage() {
           </p>
         </motion.section>
 
-        <motion.section variants={sectionVariant} className="space-y-3">
+        <motion.section variants={listItemVariants} className="space-y-3">
           <h2 className="text-2xl font-semibold text-white/90 border-b border-white/20 pb-2">
             6. Disclaimers and Limitation of Liability
           </h2>
@@ -122,7 +131,7 @@ export default function LegalPage() {
           </p>
         </motion.section>
 
-        <motion.section variants={sectionVariant} className="space-y-3">
+        <motion.section variants={listItemVariants} className="space-y-3">
           <h2 className="text-2xl font-semibold text-white/90 border-b border-white/20 pb-2">
             7. Governing Law
           </h2>
@@ -133,7 +142,7 @@ export default function LegalPage() {
           </p>
         </motion.section>
 
-        <motion.section variants={sectionVariant} className="space-y-3">
+        <motion.section variants={listItemVariants} className="space-y-3">
           <h2 className="text-2xl font-semibold text-white/90 border-b border-white/20 pb-2">
             8. Changes to Terms
           </h2>
@@ -145,7 +154,7 @@ export default function LegalPage() {
           </p>
         </motion.section>
 
-        <motion.section variants={sectionVariant} className="space-y-3">
+        <motion.section variants={listItemVariants} className="space-y-3">
           <h2 className="text-2xl font-semibold text-white/90 border-b border-white/20 pb-2">
             9. Contact Us
           </h2>
@@ -153,7 +162,7 @@ export default function LegalPage() {
             For any questions regarding these Terms, please contact us{" "}
             <a
               href="mailto:https://tahayparker.vercel.app/contact"
-              className="underline text-purple-400"
+              className="underline text-purple-500"
             >
               here
             </a>
