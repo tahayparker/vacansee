@@ -1,7 +1,8 @@
 // src/pages/graph.tsx
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence
+import { motion, AnimatePresence } from "framer-motion";
+import { pageContainerVariants, headerSectionVariants, tableRowVariants, fadeVariants } from "@/lib/animations";
 import {
   Select,
   SelectContent,
@@ -11,9 +12,10 @@ import {
 } from "@/components/ui/select";
 import { getDay } from "date-fns"; // Import getDay function
 import { AlertCircle } from "lucide-react"; // Import for error display
-import { Montserrat } from "next/font/google";
+import { montserrat } from "@/lib/fonts";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
 import { formatTime } from "@/lib/utils";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 // --- Data Structures ---
 interface FrontendRoomData {
@@ -66,11 +68,7 @@ const timeIntervals = [
   "22:00",
 ];
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-montserrat",
-});
+// --- Main Page Component ---
 
 // --- Helper to get adjusted day index (Monday=0) ---
 function getAdjustedDayIndex(): number {
@@ -128,44 +126,6 @@ export default function GraphPage() {
       });
   }, []); // Fetch only once on mount
 
-  // --- Animation Variants ---
-  const pageContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 0.4, ease: "easeOut" } },
-  };
-
-  const headerSectionVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { delay: 0.1, duration: 0.4, ease: "easeOut" },
-    },
-  };
-
-  const tableContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { delay: 0.1, duration: 0.3, ease: "easeOut" },
-    }, // Faster transition
-    exit: { opacity: 0, transition: { duration: 0.2, ease: "easeIn" } },
-  };
-
-  const tableRowVariants = {
-    hidden: { opacity: 0, x: -15 }, // Slightly less x offset
-    visible: (i: number) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        delay: i * 0.025, // Faster stagger delay
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    }),
-    exit: { opacity: 0, x: 15, transition: { duration: 0.15, ease: "easeIn" } }, // Faster exit
-  };
-  // --- End Animation Variants ---
 
   // --- Helper Functions ---
   const getCellColor = (avail: number) => {
@@ -216,7 +176,7 @@ export default function GraphPage() {
           >
             <SelectTrigger
               id="day-select"
-              className="w-full sm:w-[180px] bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500"
+              className="w-full sm:w-[135px] bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500"
             >
               <SelectValue placeholder="Select a day" />
             </SelectTrigger>
@@ -227,7 +187,7 @@ export default function GraphPage() {
                 <SelectItem
                   key={index}
                   value={index.toString()}
-                  className="focus:bg-purple-600/30 focus:text-white"
+                  className="focus:bg-purple-500/30 focus:text-white"
                 >
                   {" "}
                   {day}{" "}
@@ -250,7 +210,7 @@ export default function GraphPage() {
             className="flex flex-grow items-center justify-center pt-10"
           >
             {" "}
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400"></div>{" "}
+            <LoadingSpinner size="large" />{" "}
           </motion.div>
         ) : error ? (
           <motion.div
@@ -271,10 +231,10 @@ export default function GraphPage() {
           // Container for the table with its own animation and key
           <motion.div
             key={`table-container-${selectedDayIndex}`} // Key changes when day changes
-            variants={tableContainerVariants}
+            variants={fadeVariants}
             initial="hidden"
             animate="visible"
-            exit="exit" // Use defined exit variant
+            exit="exit"
             className="relative flex-grow flex flex-col min-h-0 px-4 pb-4"
           >
             {/* Scrollable Container */}
