@@ -34,9 +34,9 @@ export default function SiteFooter() {
           </Link>
         </nav>
 
-        {/* Right Copyright */}
+        {/* Right footer text */}
         <p className="text-sm text-white/60">
-          © {new Date().getFullYear()} vacansee
+          Made with 🖤 by TP
         </p>
       </div>
     </footer>
