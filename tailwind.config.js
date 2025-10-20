@@ -26,8 +26,21 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-montserrat)", ...fontFamily.sans],
       },
-      // --- Colors and other extensions remain the same ---
+      // --- Custom purple palette - all using icon color for consistency ---
       colors: {
+        purple: {
+          50: '#f5f3ff',
+          100: '#ede9fe',
+          200: '#ddd6fe',
+          300: '#8b5cf6',  // Icon primary color
+          400: '#8b5cf6',  // Icon primary color
+          500: '#8b5cf6',  // Icon primary color (main)
+          600: '#8b5cf6',  // Icon primary color
+          700: '#8b5cf6',  // Icon primary color
+          800: '#6d28d9',  // Darker variant for hover states
+          900: '#5b21b6',  // Even darker
+          950: '#4c1d95',  // Darkest
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
