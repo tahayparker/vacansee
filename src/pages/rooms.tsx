@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"; // Shadcn Input
 import { AlertCircle, Search, ArrowUp, ArrowDown } from "lucide-react"; // Icons
 import Fuse from "fuse.js";
 import { cn } from "@/lib/utils"; // Utility for conditional classes
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 // --- Data Structures ---
 interface RoomData {
@@ -31,7 +32,7 @@ export default function RoomDetailsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sortConfig, setSortConfig] = useState<SortConfig>({
-    key: null,
+    key: "shortCode",
     direction: "asc",
   });
 
@@ -54,8 +55,8 @@ export default function RoomDetailsPage() {
           }
           throw new Error(errorMsg);
         }
-        const data: RoomData[] = await response.json();
-        setAllRooms(data);
+        const data: { total: number; rooms: RoomData[] } = await response.json();
+        setAllRooms(data.rooms);
       } catch (err: any) {
         console.error("Error fetching room details:", err);
         setError(err.message || "Failed to load room details.");
@@ -99,16 +100,42 @@ export default function RoomDetailsPage() {
       results.sort((a, b) => {
         let comparison = 0;
         if (key === "capacity") {
+          // Sort by capacity first
           const aCap = a.capacity === null ? -Infinity : a.capacity;
           const bCap = b.capacity === null ? -Infinity : b.capacity;
           comparison = aCap - bCap;
-        } else if (key === "name" || key === "shortCode") {
-          const aStr = a[key];
-          const bStr = b[key];
-          comparison = aStr.localeCompare(bStr, undefined, {
-            numeric: true,
+          
+          // Apply direction to capacity comparison
+          if (sortConfig.direction === "desc") {
+            comparison = comparison * -1;
+          }
+          
+          // If capacities are equal, sort by shortcode ascending (always)
+          if (comparison === 0) {
+            const aNum = parseFloat(a.shortCode);
+            const bNum = parseFloat(b.shortCode);
+            if (!isNaN(aNum) && !isNaN(bNum)) {
+              comparison = aNum - bNum;
+            } else {
+              comparison = a.shortCode.localeCompare(b.shortCode, undefined, { sensitivity: "base" });
+            }
+          }
+          // Return early for capacity - don't apply direction again
+          return comparison;
+        } else if (key === "name") {
+          // Sort by name lexicographically
+          comparison = a.name.localeCompare(b.name, undefined, {
             sensitivity: "base",
           });
+        } else if (key === "shortCode") {
+          // Sort by shortcode as number where possible
+          const aNum = parseFloat(a.shortCode);
+          const bNum = parseFloat(b.shortCode);
+          if (!isNaN(aNum) && !isNaN(bNum)) {
+            comparison = aNum - bNum;
+          } else {
+            comparison = a.shortCode.localeCompare(b.shortCode, undefined, { sensitivity: "base" });
+          }
         }
         return sortConfig.direction === "asc" ? comparison : comparison * -1;
       });
@@ -133,11 +160,11 @@ export default function RoomDetailsPage() {
     }
     if (sortConfig.direction === "asc") {
       return (
-        <ArrowUp className="ml-1.5 h-4 w-4 text-purple-400 flex-shrink-0" />
+        <ArrowUp className="ml-1.5 h-4 w-4 text-purple-500 flex-shrink-0" />
       );
     }
     return (
-      <ArrowDown className="ml-1.5 h-4 w-4 text-purple-400 flex-shrink-0" />
+      <ArrowDown className="ml-1.5 h-4 w-4 text-purple-500 flex-shrink-0" />
     );
   };
 
@@ -321,7 +348,7 @@ export default function RoomDetailsPage() {
                       {" "}
                       <div className="flex justify-center items-center">
                         {" "}
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-400"></div>{" "}
+                        <LoadingSpinner size="medium" />{" "}
                       </div>{" "}
                     </td>
                   </tr>
@@ -335,7 +362,7 @@ export default function RoomDetailsPage() {
                       {" "}
                       <div className="flex justify-center items-center">
                         {" "}
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-400"></div>{" "}
+                        <LoadingSpinner size="medium" />{" "}
                       </div>{" "}
                     </td>
                   </tr>
