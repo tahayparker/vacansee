@@ -101,17 +101,26 @@ def find_new_rooms_from_csv(csv_path: Path, existing_names: Set[str]) -> List[Di
 
 
 def insert_new_rooms(new_rooms: List[Dict[str, Any]]) -> bool:
-    """Inserts the list of new rooms into the Rooms table using batch RPC."""
+    """Inserts the list of new rooms into the Rooms table using direct inserts."""
     if not new_rooms:
         print("No new rooms to insert.")
         return True
 
-    print(f"Attempting to insert {len(new_rooms)} new rooms into '{ROOMS_TABLE}' via batch RPC...")
+    print(f"Attempting to insert {len(new_rooms)} new rooms into '{ROOMS_TABLE}'...")
     try:
-        # Call the RPC once with the full list
-        res = supabase.rpc("insert_rooms_batch", {"rooms": new_rooms}).execute()
-        inserted_count = len(res.data) if res.data else 0
-        print(f"Successfully inserted {inserted_count} new rooms.")
+        # Insert rooms in batches of 100
+        batch_size = 100
+        total_inserted = 0
+
+        for i in range(0, len(new_rooms), batch_size):
+            batch = new_rooms[i:i + batch_size]
+            print(f"Inserting batch of {len(batch)} rooms...")
+
+            res = supabase.table(ROOMS_TABLE).insert(batch).execute()
+            inserted_count = len(res.data) if res.data else 0
+            total_inserted += inserted_count
+
+        print(f"Successfully inserted {total_inserted} new rooms.")
         return True
     except (APIError, RequestError, HTTPStatusError) as db_err:
         print(f"Error inserting new rooms: {type(db_err).__name__} - {db_err}", file=sys.stderr)
@@ -141,12 +150,7 @@ if __name__ == "__main__":
         print(f"Script failed: {main_err}", file=sys.stderr)
         final_success = False
     finally:
-        # Ensure disconnect happens
-        try:
-            supabase.rpc("disconnect_db", {}).execute()
-        except Exception:
-            pass
-        print("Supabase client disconnected (attempted).")
+        print("Room update process completed.")
 
     if final_success:
         print("Room update script finished successfully.")
