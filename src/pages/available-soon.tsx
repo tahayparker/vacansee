@@ -2,8 +2,9 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import Head from "next/head";
 import { motion, AnimatePresence } from "framer-motion";
-import { DoorOpen, AlertCircle, Clock, Users } from "lucide-react";
+import { DoorOpen, AlertCircle, Clock } from "lucide-react";
 import { parseISO } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 import {
   Select,
   SelectContent,
@@ -12,8 +13,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Montserrat } from "next/font/google";
+import { montserrat } from "@/lib/fonts";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
+import { DUBAI_TIMEZONE, ROOM_GROUPINGS } from "@/constants";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 // --- Data Structures ---
 interface AvailableRoomInfo {
@@ -22,7 +25,9 @@ interface AvailableRoomInfo {
   capacity: number | null;
 }
 interface ApiResponseData {
-  checkedAtFutureTime: string;
+  checkedAt: string;
+  offsetMinutes: number;
+  targetTime: string;
   rooms: AvailableRoomInfo[];
 }
 interface ApiErrorResponse {
@@ -37,21 +42,9 @@ const durationOptions = [
   { label: "2 hours", value: 120 },
 ];
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-  weight: ["300", "400", "500", "600", "700", "800"],
-});
+// --- Main Page Component ---
 
-// --- UTC+4 Timezone Identifier ---
-const TARGET_TIMEZONE = "Etc/GMT-4"; // Represents UTC+4
-
-// --- Room Groupings ---
-const roomGroupings: Record<string, string[]> = {
-  "4.467": ["4.46", "4.47"],
-  "5.134": ["5.13", "5.14"],
-  "6.345": ["6.34", "6.35"],
-};
+const roomGroupings: Record<string, string[]> = ROOM_GROUPINGS;
 const mainGroupRooms = Object.keys(roomGroupings);
 
 export default function AvailableSoonPage() {
@@ -59,7 +52,7 @@ export default function AvailableSoonPage() {
   const [selectedDuration, setSelectedDuration] = useState<number>(
     durationOptions[0].value,
   );
-  const [checkedAtFutureTime, setCheckedAtFutureTime] = useState<string | null>(
+  const [checkedAt, setCheckedAt] = useState<string | null>(
     null,
   );
   const [isLoading, setIsLoading] = useState(true);
@@ -70,7 +63,7 @@ export default function AvailableSoonPage() {
   const fetchData = useCallback(async (duration: number) => {
     setIsLoading(true);
     setError(null);
-    setCheckedAtFutureTime(null);
+    setCheckedAt(null);
     setAvailableRooms([]);
     console.log(
       `[AvailableSoonPage] Fetching for duration: ${duration} minutes`,
@@ -112,7 +105,7 @@ export default function AvailableSoonPage() {
       if (
         !data ||
         !Array.isArray(data.rooms) ||
-        typeof data.checkedAtFutureTime !== "string"
+        typeof data.checkedAt !== "string"
       ) {
         throw new Error("Invalid data format received from API");
       }
@@ -142,8 +135,8 @@ export default function AvailableSoonPage() {
       );
 
       setAvailableRooms(filteredRooms);
-      setCheckedAtFutureTime(
-        data.checkedAtFutureTime || responseTimestamp.toISOString(),
+      setCheckedAt(
+        data.checkedAt || responseTimestamp.toISOString(),
       );
     } catch (err: any) {
       console.error(
@@ -166,35 +159,27 @@ export default function AvailableSoonPage() {
     fetchData(selectedDuration);
   }, [selectedDuration, fetchData]);
 
-  // --- Format Timestamp in UTC+4 ---
+  // --- Format Timestamp in Dubai timezone using date-fns ---
   const formattedCheckedTime = useMemo(() => {
-    if (!checkedAtFutureTime) return "--:--";
+    if (!checkedAt) return "--:--";
     try {
-      const dateObj = parseISO(checkedAtFutureTime);
-      return dateObj.toLocaleTimeString("en-US", {
-        timeZone: TARGET_TIMEZONE,
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: !use24h,
-      });
+      const dateObj = parseISO(checkedAt);
+      const timeFormat = use24h ? "HH:mm" : "h:mm a";
+      return formatInTimeZone(dateObj, DUBAI_TIMEZONE, timeFormat);
     } catch {
       return "Invalid Time";
     }
-  }, [checkedAtFutureTime, use24h]);
+  }, [checkedAt, use24h]);
+
   const formattedCheckedDay = useMemo(() => {
-    if (!checkedAtFutureTime) return "Loading...";
+    if (!checkedAt) return "Loading...";
     try {
-      const dateObj = parseISO(checkedAtFutureTime);
-      return dateObj.toLocaleDateString("en-US", {
-        timeZone: TARGET_TIMEZONE,
-        weekday: "long",
-        month: "short",
-        day: "numeric",
-      });
+      const dateObj = parseISO(checkedAt);
+      return formatInTimeZone(dateObj, DUBAI_TIMEZONE, "EEEE, MMM d");
     } catch {
       return "Invalid Date";
     }
-  }, [checkedAtFutureTime]);
+  }, [checkedAt]);
 
   // --- Animation Variants ---
   const containerVariants = {
@@ -250,8 +235,7 @@ export default function AvailableSoonPage() {
             exit={{ opacity: 0 }}
             className="flex justify-center items-center py-20"
           >
-            {" "}
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-purple-400"></div>{" "}
+            <LoadingSpinner size="large" />
           </motion.div>
         ) : availableRooms.length === 0 ? (
           <motion.p
@@ -282,7 +266,7 @@ export default function AvailableSoonPage() {
                 className="w-fit bg-black/20 border border-white/15 rounded-full shadow-lg backdrop-blur-sm px-4 py-2 flex items-center gap-2.5 hover:bg-white/10 hover:border-white/25 transition-all duration-200 group cursor-default"
               >
                 {" "}
-                <DoorOpen className="w-4 h-4 text-purple-400 flex-shrink-0 group-hover:scale-110 transition-transform" />{" "}
+                <DoorOpen className="w-4 h-4 text-purple-500 flex-shrink-0 group-hover:scale-110 transition-transform" />{" "}
                 <span
                   className="text-white text-sm font-medium truncate"
                   title={room.name}
@@ -318,12 +302,12 @@ export default function AvailableSoonPage() {
         <div className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center text-white inline-block mr-2">
             {" "}
-            Rooms Available Soon{" "}
+            Available Soon{" "}
           </h1>
           {!isLoading && !error && (
-            <span className="inline-flex items-center gap-1.5 text-lg text-purple-300 font-medium align-middle">
+            <span className="inline-flex items-center gap-1.5 text-lg text-purple-500 font-medium align-middle">
               {" "}
-              <Users className="w-5 h-5" /> ({availableRooms.length}){" "}
+              <DoorOpen className="w-5 h-5" /> ({availableRooms.length}){" "}
             </span>
           )}
         </div>
@@ -334,7 +318,7 @@ export default function AvailableSoonPage() {
           <Clock className="w-4 h-4" />
           <span>
             {" "}
-            Checking availability for ~
+            Available at ~
             <span className="font-medium text-gray-300">
               {formattedCheckedTime}
             </span>{" "}
@@ -350,7 +334,7 @@ export default function AvailableSoonPage() {
             htmlFor="duration-select"
             className="text-sm font-medium text-gray-300"
           >
-            Show rooms available in:
+            Available in:
           </label>
           <Select
             value={selectedDuration.toString()}
@@ -358,7 +342,7 @@ export default function AvailableSoonPage() {
           >
             <SelectTrigger
               id="duration-select"
-              className={`w-[180px] bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500 font-sans ${montserrat.variable}`}
+              className={`w-[135px] bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500 font-sans ${montserrat.variable}`}
             >
               {" "}
               <SelectValue placeholder="Select duration" />{" "}
@@ -371,7 +355,7 @@ export default function AvailableSoonPage() {
                 <SelectItem
                   key={option.value}
                   value={option.value.toString()}
-                  className="focus:bg-purple-600/30 focus:text-white"
+                  className="focus:bg-purple-500/30 focus:text-white"
                 >
                   {" "}
                   {option.label}{" "}
