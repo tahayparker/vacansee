@@ -2,10 +2,13 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Head from "next/head";
 import { motion, AnimatePresence } from "framer-motion";
-import { DoorOpen, AlertCircle, Clock, Users } from "lucide-react";
-import { DateTime } from "luxon"; // Use Luxon for formatting
+import { DoorOpen, AlertCircle, Clock } from "lucide-react";
+import { parseISO } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 import { Button } from "@/components/ui/button";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
+import { DUBAI_TIMEZONE } from "@/constants";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 // --- Data Structures (Client-side representation) ---
 interface AvailableRoomInfo {
@@ -21,9 +24,6 @@ interface ApiResponseData {
 interface ApiErrorResponse {
   error: string;
 }
-
-// --- Constants ---
-const DUBAI_TIMEZONE = "Asia/Dubai"; // For formatting display time
 
 export default function AvailableNowPage() {
   const [availableRooms, setAvailableRooms] = useState<AvailableRoomInfo[]>([]);
@@ -101,13 +101,14 @@ export default function AvailableNowPage() {
     }
   }, [fetchData]);
 
-  // --- Format Timestamp using Luxon (from checkedAt state) ---
+  // --- Format Timestamp using date-fns (from checkedAt state) ---
+  // All times are in Dubai timezone
   const formattedCheckedTime = useMemo(() => {
     if (!checkedAt) return "--:--";
     try {
-      return DateTime.fromISO(checkedAt)
-        .setZone(DUBAI_TIMEZONE)
-        .toFormat(use24h ? "HH:mm" : "h:mm a");
+      const dateObj = parseISO(checkedAt);
+      const timeFormat = use24h ? "HH:mm" : "h:mm a";
+      return formatInTimeZone(dateObj, DUBAI_TIMEZONE, timeFormat);
     } catch {
       return "Invalid Time";
     }
@@ -116,9 +117,8 @@ export default function AvailableNowPage() {
   const formattedCheckedDay = useMemo(() => {
     if (!checkedAt) return "Loading...";
     try {
-      return DateTime.fromISO(checkedAt)
-        .setZone(DUBAI_TIMEZONE)
-        .toFormat("cccc, LLL d");
+      const dateObj = parseISO(checkedAt);
+      return formatInTimeZone(dateObj, DUBAI_TIMEZONE, "EEEE, MMM d");
     } catch {
       return "Invalid Date";
     }
@@ -183,8 +183,7 @@ export default function AvailableNowPage() {
             exit={{ opacity: 0 }}
             className="flex justify-center items-center py-20"
           >
-            {" "}
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-purple-400"></div>{" "}
+            <LoadingSpinner size="large" />
           </motion.div>
         ) : availableRooms.length === 0 ? (
           <motion.p
@@ -213,7 +212,7 @@ export default function AvailableNowPage() {
                 layout
                 className="w-fit bg-black/20 border border-white/15 rounded-full shadow-lg backdrop-blur-sm px-4 py-2 flex items-center gap-2.5 hover:bg-white/10 hover:border-white/25 transition-all duration-200 group cursor-default"
               >
-                <DoorOpen className="w-4 h-4 text-purple-400 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                <DoorOpen className="w-4 h-4 text-purple-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
                 <span
                   className="text-white text-sm font-medium truncate"
                   title={room.name}
@@ -250,11 +249,11 @@ export default function AvailableNowPage() {
         <div className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center text-white inline-block mr-2">
             {" "}
-            Rooms Available Now{" "}
+            Available Now{" "}
           </h1>
           {!isLoading && !error && (
-            <span className="inline-flex items-center gap-1.5 text-lg text-purple-300 font-medium align-middle">
-              <Users className="w-5 h-5" />({availableRooms.length})
+            <span className="inline-flex items-center gap-1.5 text-lg text-purple-500 font-medium align-middle">
+              <DoorOpen className="w-5 h-5" />({availableRooms.length})
             </span>
           )}
         </div>
@@ -262,13 +261,14 @@ export default function AvailableNowPage() {
           <Clock className="w-4 h-4" />
           <span>
             {" "}
-            Checked{" "}
-            <span className="font-medium text-gray-300">
-              {formattedCheckedDay}
-            </span>{" "}
+            Available {" "}
             at ~
             <span className="font-medium text-gray-300">
               {formattedCheckedTime}
+            </span>{" "}
+            on{" "}
+            <span className="font-medium text-gray-300">
+              {formattedCheckedDay}
             </span>{" "}
           </span>
         </div>
