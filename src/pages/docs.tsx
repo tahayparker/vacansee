@@ -1,261 +1,365 @@
-// src/pages/docs.tsx
-import React from "react";
+/**
+ * Documentation Page
+ *
+ * Provides comprehensive information about vacansee including features,
+ * tech stack, getting started guide, and contact information.
+ */
+
+import React, { useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { motion } from "framer-motion";
-// Updated icons to match the consistent style
 import {
   ListChecks,
   Cpu,
   Terminal,
-  GitBranch,
+  RefreshCw,
   Mail,
   Info,
   Target,
   Settings,
+  Shield,
+  Zap,
+  Database,
 } from "lucide-react";
+import { staggerContainerVariants, listItemVariants } from "@/lib/animations";
 
+/**
+ * Documentation page component
+ */
 export default function DocsPage() {
-  const sectionVariant = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
-  };
+  // Ensure page starts at the top
+  useEffect(() => {
+    // Force scroll to top with multiple methods to ensure it works
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
 
-  const listItemVariant = {
-    hidden: { opacity: 0, x: -10 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
-  };
+    // Scroll immediately
+    scrollToTop();
 
+    // Also scroll after a small delay to ensure it sticks
+    const timeout = setTimeout(scrollToTop, 50);
+
+    return () => clearTimeout(timeout);
+  }, []);
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 py-6 pt-20 md:pt-24 flex-grow flex flex-col text-white">
+    <div className="w-full max-w-6xl mx-auto px-4 py-6 pt-20 md:pt-24 flex-grow flex flex-col text-white">
       <Head>
         <title>Documentation - vacansee</title>
+        <meta
+          name="description"
+          content="Learn about vacansee - find available rooms on campus with real-time scheduling data"
+        />
       </Head>
 
       <motion.div
         initial="hidden"
         animate="visible"
-        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-        className="space-y-10" // Increased spacing between sections slightly
+        variants={staggerContainerVariants}
       >
-        {/* --- Header Section (Slightly adjusted) --- */}
-        <motion.div variants={sectionVariant} className="text-center mb-12">
-          {" "}
-          {/* Increased mb */}
-          {/* Using Settings icon for general info */}
-          <Settings className="mx-auto h-12 w-12 text-purple-400 mb-4" />
+        <div className="space-y-10 text-justify">
+        {/* Header Section */}
+        <motion.div variants={listItemVariants} className="text-center mb-12">
+          <Settings className="mx-auto h-12 w-12 text-purple-500 mb-4" />
           <h1 className="text-4xl md:text-5xl font-bold text-white/95">
             vacansee Documentation
           </h1>
           <p className="text-lg text-white/70 mt-2">
-            Overview, Features, and Setup Information.
+            Everything you need to know about finding available rooms on campus.
           </p>
         </motion.div>
 
-        {/* --- What is vacansee? Section (Styled Consistently) --- */}
-        <motion.section variants={sectionVariant} className="space-y-4">
+        {/* What is vacansee? */}
+        <motion.section variants={listItemVariants} className="space-y-4">
           <div className="flex items-center gap-3 border-b border-white/20 pb-2 mb-3">
-            <Info className="h-6 w-6 text-purple-400 flex-shrink-0" />
+            <Info className="h-6 w-6 text-purple-500 flex-shrink-0" />
             <h2 className="text-2xl font-semibold text-white/90">
               What is vacansee?
             </h2>
           </div>
-          <p className="text-white/80 text-lg">
-            vacansee is a modern web application designed to provide real-time
-            information about room availability and scheduling within the
-            university campus.
+          <p className="text-white/80 text-lg text-justify">
+            vacansee is a modern web application designed to help students find available
+            rooms across campus in real-time. No more wandering the halls or checking
+            multiple locations – get instant information about room availability right
+            when you need it.
           </p>
-          <p className="text-white/80 text-lg">
-            It aims to replace legacy systems with a faster, more intuitive, and
-            visually appealing interface.
+          <p className="text-white/80 text-lg text-justify">
+            Built with performance and usability in mind, vacansee provides a fast,
+            intuitive interface that works seamlessly on all devices.
           </p>
         </motion.section>
 
-        {/* --- Our Goal Section (Styled Consistently) --- */}
-        <motion.section variants={sectionVariant} className="space-y-4">
+        {/* Our Goal */}
+        <motion.section variants={listItemVariants} className="space-y-4">
           <div className="flex items-center gap-3 border-b border-white/20 pb-2 mb-3">
-            <Target className="h-6 w-6 text-purple-400 flex-shrink-0" />
+            <Target className="h-6 w-6 text-purple-500 flex-shrink-0" />
             <h2 className="text-2xl font-semibold text-white/90">Our Goal</h2>
           </div>
-          <p className="text-white/80 text-lg">
-            The primary goal is to make finding an available room quick and
-            effortless. Whether you need a quiet place to study, a room for a
-            group meeting, or just want to see the campus schedule at a glance,
-            vacansee provides the necessary tools.
+          <p className="text-white/80 text-lg text-justify">
+            The primary goal is to make finding an available room quick and effortless.
+            Whether you need a quiet place to study, a room for a group meeting, or just
+            want to see the campus schedule at a glance, vacansee provides the necessary
+            tools to help you succeed.
           </p>
         </motion.section>
 
-        {/* Features Section (Unchanged structure, content updated slightly) */}
-        <motion.section variants={sectionVariant} className="space-y-4">
+        {/* Features */}
+        <motion.section variants={listItemVariants} className="space-y-4">
           <div className="flex items-center gap-3 border-b border-white/20 pb-2 mb-3">
-            <ListChecks className="h-6 w-6 text-purple-400 flex-shrink-0" />
+            <ListChecks className="h-6 w-6 text-purple-500 flex-shrink-0" />
             <h2 className="text-2xl font-semibold text-white/90">Features</h2>
           </div>
           <ul className="list-disc list-inside space-y-2 text-white/80 pl-1 text-lg">
-            <motion.li variants={listItemVariant}>
-              Real-time &quot;Available Now&quot; Check
+            <motion.li variants={listItemVariants}>
+              <strong>Real-time Availability</strong> - Check which rooms are available
+              right now
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              &quot;Available Soon&quot; Projections (30m, 1h, etc.)
+            <motion.li variants={listItemVariants}>
+              <strong>Future Projections</strong> - See what rooms will be available soon
+              (30m, 1h, 2h ahead)
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Specific Time Slot Availability Check
+            <motion.li variants={listItemVariants}>
+              <strong>Custom Time Checks</strong> - Verify availability for specific time
+              slots
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Room Details List (Name, Code, Capacity)
+            <motion.li variants={listItemVariants}>
+              <strong>Interactive Graphs</strong> - Visualize room schedules with color-coded
+              availability
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Interactive Schedule Graph View
+            <motion.li variants={listItemVariants}>
+              <strong>Custom Graph Builder</strong> - Create personalized schedule views
+              with filters
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Fuzzy Search for Rooms (Check & Custom Graph)
+            <motion.li variants={listItemVariants}>
+              <strong>Room Information</strong> - Browse complete room details including
+              capacity
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Automatic Timetable Updates
+            <motion.li variants={listItemVariants}>
+              <strong>Smart Search</strong> - Fuzzy search to find rooms quickly
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Mobile Responsive Design
+            <motion.li variants={listItemVariants}>
+              <strong>Export Capability</strong> - Save custom graphs as images
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Secure Authentication (Google/GitHub)
+            <motion.li variants={listItemVariants}>
+              <strong>Responsive Design</strong> - Works perfectly on desktop, tablet, and
+              mobile
+            </motion.li>
+            <motion.li variants={listItemVariants}>
+              <strong>Secure Authentication</strong> - Protected access via Google/GitHub OAuth
+            </motion.li>
+            <motion.li variants={listItemVariants}>
+              <strong>Performance Optimized</strong> - Fast loading with intelligent caching
             </motion.li>
           </ul>
         </motion.section>
 
-        {/* Tech Stack Section (Unchanged structure) */}
-        <motion.section variants={sectionVariant} className="space-y-4">
+        {/* Tech Stack */}
+        <motion.section variants={listItemVariants} className="space-y-4">
           <div className="flex items-center gap-3 border-b border-white/20 pb-2 mb-3">
-            <Cpu className="h-6 w-6 text-purple-400 flex-shrink-0" />
+            <Cpu className="h-6 w-6 text-purple-500 flex-shrink-0" />
             <h2 className="text-2xl font-semibold text-white/90">Tech Stack</h2>
           </div>
-          <ul className="list-disc list-inside space-y-2 text-white/80 pl-1 text-lg">
-            <motion.li variants={listItemVariant}>
-              <strong>Frontend:</strong> Next.js (Pages Router), TypeScript,
-              Tailwind CSS, Shadcn UI, Framer Motion
-            </motion.li>
-            <motion.li variants={listItemVariant}>
-              <strong>Backend:</strong> Next.js API Routes, Prisma ORM
-            </motion.li>
-            <motion.li variants={listItemVariant}>
-              <strong>Database:</strong> PostgreSQL (hosted on Supabase)
-            </motion.li>
-            <motion.li variants={listItemVariant}>
-              <strong>Authentication:</strong> Supabase Auth (OAuth)
-            </motion.li>
-            <motion.li variants={listItemVariant}>
-              <strong>Deployment & Analytics:</strong> Vercel
-            </motion.li>
-            <motion.li variants={listItemVariant}>
-              <strong>Styling:</strong> Tailwind CSS, CSS Modules
-            </motion.li>
-            <motion.li variants={listItemVariant}>
-              <strong>Data Handling:</strong> Python scripts (Scraping &
-              Schedule Generation)
-            </motion.li>
-            <motion.li variants={listItemVariant}>
-              <strong>Libraries:</strong> Fuse.js, Luxon, date-fns, Lucide Icons
-            </motion.li>
-          </ul>
+          <div className="grid md:grid-cols-2 gap-4 text-white/80 text-lg">
+            <div>
+              <h3 className="font-semibold text-purple-500 mb-2">Frontend</h3>
+              <ul className="list-disc list-inside space-y-1 pl-1">
+                <li>Next.js 15 (Pages Router)</li>
+                <li>TypeScript</li>
+                <li>Tailwind CSS 4</li>
+                <li>Shadcn UI Components</li>
+                <li>Framer Motion</li>
+                <li>Fuse.js (Fuzzy Search)</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-purple-500 mb-2">Backend</h3>
+              <ul className="list-disc list-inside space-y-1 pl-1">
+                <li>Next.js API Routes</li>
+                <li>Prisma ORM</li>
+                <li>PostgreSQL Database</li>
+                <li>Zod Validation</li>
+                <li>In-memory Caching</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-purple-500 mb-2">Authentication</h3>
+              <ul className="list-disc list-inside space-y-1 pl-1">
+                <li>Supabase Auth</li>
+                <li>OAuth Providers</li>
+                <li>Secure Sessions</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-purple-500 mb-2">Infrastructure</h3>
+              <ul className="list-disc list-inside space-y-1 pl-1">
+                <li>Vercel Hosting</li>
+                <li>GitHub Actions</li>
+                <li>Supabase (Database)</li>
+                <li>Performance Monitoring</li>
+              </ul>
+            </div>
+          </div>
         </motion.section>
 
-        {/* Getting Started Section (Unchanged structure) */}
-        <motion.section variants={sectionVariant} className="space-y-4">
+        {/* Architecture Highlights */}
+        <motion.section variants={listItemVariants} className="space-y-4">
           <div className="flex items-center gap-3 border-b border-white/20 pb-2 mb-3">
-            <Terminal className="h-6 w-6 text-purple-400 flex-shrink-0" />
+            <Database className="h-6 w-6 text-purple-500 flex-shrink-0" />
+            <h2 className="text-2xl font-semibold text-white/90">
+              Architecture Highlights
+            </h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-lg">
+            <div className="flex items-start gap-3">
+              <Shield className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
+              <div>
+                <strong>Security First:</strong> Rate limiting, input validation, security
+                headers, and secure authentication protect user data and prevent abuse.
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Zap className="h-5 w-5 text-yellow-400 mt-1 flex-shrink-0" />
+              <div>
+                <strong>Performance Optimized:</strong> Stale-while-revalidate caching,
+                database indexes, and optimized queries ensure lightning-fast responses.
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Cpu className="h-5 w-5 text-blue-400 mt-1 flex-shrink-0" />
+              <div>
+                <strong>Clean Architecture:</strong> Separation of concerns with services,
+                hooks, and utilities makes the codebase maintainable and scalable.
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Getting Started */}
+        <motion.section variants={listItemVariants} className="space-y-4">
+          <div className="flex items-center gap-3 border-b border-white/20 pb-2 mb-3">
+            <Terminal className="h-6 w-6 text-purple-500 flex-shrink-0" />
             <h2 className="text-2xl font-semibold text-white/90">
               Getting Started (Development)
             </h2>
           </div>
-          <p className="text-white/80 text-lg">
-            To set up the project locally:
+          <p className="text-white/80 text-lg text-justify">
+            To set up the project locally for development:
           </p>
           <ol className="list-decimal list-inside space-y-2 text-white/80 pl-1 text-lg">
-            <motion.li variants={listItemVariant}>
-              Clone the repository from GitHub.
+            <motion.li variants={listItemVariants}>
+              Clone the repository from GitHub
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Install dependencies using `npm install` or `yarn install`.
+            <motion.li variants={listItemVariants}>
+              Install dependencies: <code className="bg-white/10 px-2 py-1 rounded">npm install</code>
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Create a `.env` file with Supabase/Prisma connection details.
+            <motion.li variants={listItemVariants}>
+              Copy <code className="bg-white/10 px-2 py-1 rounded">.env.example</code> to{" "}
+              <code className="bg-white/10 px-2 py-1 rounded">.env.local</code> and configure
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Initialize the database schema: `npx prisma db push`.
+            <motion.li variants={listItemVariants}>
+              Generate Prisma client: <code className="bg-white/10 px-2 py-1 rounded">npx prisma generate</code>
             </motion.li>
-            <motion.li variants={listItemVariant}>
-              Run the development server: `npm run dev`.
+            <motion.li variants={listItemVariants}>
+              Push schema to database: <code className="bg-white/10 px-2 py-1 rounded">npx prisma db push</code>
+            </motion.li>
+            <motion.li variants={listItemVariants}>
+              Run development server: <code className="bg-white/10 px-2 py-1 rounded">npm run dev</code>
             </motion.li>
           </ol>
           <p className="text-sm text-white/70">
-            Refer to the project&apos;s{" "}
+            For detailed setup instructions, see{" "}
             <Link
-              href="https://github.com/tahayparker/vacansee"
+              href="https://github.com/tahayparker/vacansee/blob/main/CONTRIBUTING.md"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-purple-400 hover:underline"
+              className="text-purple-500 hover:underline"
             >
-              README on GitHub
+              CONTRIBUTING.md
             </Link>{" "}
-            for detailed setup.
+            on GitHub.
           </p>
         </motion.section>
 
-        {/* --- MODIFIED: Automatic Updates Section --- */}
-        <motion.section variants={sectionVariant} className="space-y-4">
+        {/* Data Updates */}
+        <motion.section variants={listItemVariants} className="space-y-4">
           <div className="flex items-center gap-3 border-b border-white/20 pb-2 mb-3">
-            <GitBranch className="h-6 w-6 text-purple-400 flex-shrink-0" />
-            <h2 className="text-2xl font-semibold text-white/90">
-              Automatic Updates
-            </h2>
+            <RefreshCw className="h-6 w-6 text-purple-500 flex-shrink-0" />
+            <h2 className="text-2xl font-semibold text-white/90">Data Updates</h2>
           </div>
-          <p className="text-white/80 text-lg">
-            {/* Updated frequency */}
-            The core timetable data powering the application is automatically
-            updated every 4 hours via a GitHub Actions workflow. This ensures
-            the schedule information remains reasonably current throughout the
-            day.
+          <p className="text-white/80 text-lg text-justify">
+            Schedule data is automatically updated every 4 hours via GitHub Actions
+            workflows. This ensures the application always displays current room
+            availability based on the latest timetable information.
           </p>
           <p className="text-sm text-white/70">
-            The workflow involves scraping the source timetable, updating the
-            database, generating static schedule files, and committing changes.
+            The automated workflow collects timetable data, processes it, updates the
+            database, generates optimized schedule files, and commits changes to the
+            repository.
           </p>
         </motion.section>
-        {/* --- END MODIFICATION --- */}
 
-        {/* Contact Section (Unchanged structure) */}
-        <motion.section variants={sectionVariant} className="space-y-4">
+        {/* Contact */}
+        <motion.section variants={listItemVariants} className="space-y-0">
           <div className="flex items-center gap-3 border-b border-white/20 pb-2 mb-3">
-            <Mail className="h-6 w-6 text-purple-400 flex-shrink-0" />
-            <h2 className="text-2xl font-semibold text-white/90">Contact</h2>
+            <Mail className="h-6 w-6 text-purple-500 flex-shrink-0" />
+            <h2 className="text-2xl font-semibold text-white/90">Contact & Links</h2>
           </div>
-          <p className="text-white/80 text-lg">
-            For inquiries about the project, please contact Taha Parker via his
-            <Link
-              href="https://tahayparker.vercel.app/contact"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-purple-400 hover:underline ml-1"
-            >
-              website
-            </Link>
-            .
-          </p>
-          <p className="text-white/80 text-lg">
-            Project Link:{" "}
-            <Link
-              href="https://github.com/tahayparker/vacansee"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-purple-400 hover:underline"
-            >
-              https://github.com/tahayparker/vacansee
-            </Link>
-          </p>
+          <div className="space-y-2 text-white/80 text-lg">
+            <p>
+              <strong>Created by:</strong> Taha Parker
+            </p>
+            <p>
+              <strong>Contact:</strong>{" "}
+              <Link
+                href="https://tahayparker.vercel.app/contact"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-500 hover:underline"
+              >
+                Personal Website
+              </Link>
+            </p>
+            <p>
+              <strong>Source Code:</strong>{" "}
+              <Link
+                href="https://github.com/tahayparker/vacansee"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-500 hover:underline"
+              >
+                GitHub Repository
+              </Link>
+            </p>
+            <p>
+              <strong>Sister Project:</strong>{" "}
+              <Link
+                href="https://vaila.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-500 hover:underline"
+              >
+                vaila - Professor Availability
+              </Link>
+            </p>
+          </div>
         </motion.section>
+
+        {/* Footer Note */}
+        <motion.div
+          variants={listItemVariants}
+          className="text-center text-white/60 text-sm pt-6 border-t border-white/10"
+        >
+          <p>
+            For students, by students. Built with 🖤 by TP.
+          </p>
+          <p className="mt-2">
+            Proudly open source and continuously improving.
+          </p>
+        </motion.div>
+        </div>
       </motion.div>
     </div>
   );
