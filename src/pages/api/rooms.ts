@@ -86,7 +86,7 @@ export default async function handler(
       {
         ttl: CACHE_TTL.ROOMS * 1000,
         staleTime: CACHE_TTL.ROOMS * 0.8 * 1000,
-      }
+      },
     );
 
     logger.info("Rooms list fetched successfully", {
@@ -97,7 +97,7 @@ export default async function handler(
     // Set cache headers for client-side caching
     res.setHeader(
       "Cache-Control",
-      `public, max-age=${CACHE_TTL.ROOMS}, stale-while-revalidate=${CACHE_TTL.ROOMS * 2}`
+      `public, max-age=${CACHE_TTL.ROOMS}, stale-while-revalidate=${CACHE_TTL.ROOMS * 2}`,
     );
 
     return res.status(200).json({
