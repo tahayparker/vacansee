@@ -35,9 +35,7 @@ export default function SiteFooter() {
         </nav>
 
         {/* Right footer text */}
-        <p className="text-sm text-white/60">
-          Made with 🖤 by TP
-        </p>
+        <p className="text-sm text-white/60">Made with 🖤 by TP</p>
       </div>
     </footer>
   );
