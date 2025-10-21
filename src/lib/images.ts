@@ -5,7 +5,7 @@
  * Includes lazy loading, WebP support, and responsive image handling.
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 /**
  * Image optimization configuration
@@ -28,7 +28,7 @@ export const imageConfig = {
   },
 
   // Formats to try in order of preference
-  formats: ['webp', 'avif', 'jpeg', 'png'],
+  formats: ["webp", "avif", "jpeg", "png"],
 } as const;
 
 /**
@@ -37,9 +37,9 @@ export const imageConfig = {
 export function generateImageSources(
   src: string,
   sizes: number[],
-  quality: number = 85
+  quality: number = 85,
 ): Array<{ src: string; width: number; quality: number }> {
-  return sizes.map(size => ({
+  return sizes.map((size) => ({
     src: `${src}?w=${size}&q=${quality}`,
     width: size,
     quality,
@@ -55,7 +55,8 @@ export function supportsWebP(): Promise<boolean> {
     webP.onload = webP.onerror = () => {
       resolve(webP.height === 2);
     };
-    webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+    webP.src =
+      "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
   });
 }
 
@@ -68,7 +69,8 @@ export function supportsAVIF(): Promise<boolean> {
     avif.onload = avif.onerror = () => {
       resolve(avif.height === 2);
     };
-    avif.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAABcAAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQAMAAAAABNjb2xybmNseAACAAIABoAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAAB9tZGF0EgAKCBgABogQEAwgMgkfAAAAR3N0YmwCCAAgBBEgnAAEEZQABAAAB4k=';
+    avif.src =
+      "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAABcAAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQAMAAAAABNjb2xybmNseAACAAIABoAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAAB9tZGF0EgAKCBgABogQEAwgMgkfAAAAR3N0YmwCCAAgBBEgnAAEEZQABAAAB4k=";
   });
 }
 
@@ -76,9 +78,9 @@ export function supportsAVIF(): Promise<boolean> {
  * Get optimal image format for current browser
  */
 export async function getOptimalFormat(): Promise<string> {
-  if (await supportsAVIF()) return 'avif';
-  if (await supportsWebP()) return 'webp';
-  return 'jpeg';
+  if (await supportsAVIF()) return "avif";
+  if (await supportsWebP()) return "webp";
+  return "jpeg";
 }
 
 /**
@@ -88,14 +90,14 @@ export async function optimizeImageUrl(
   src: string,
   width?: number,
   quality?: number,
-  format?: string
+  format?: string,
 ): Promise<string> {
-  const optimalFormat = format || await getOptimalFormat();
+  const optimalFormat = format || (await getOptimalFormat());
   const params = new URLSearchParams();
 
-  if (width) params.set('w', width.toString());
-  if (quality) params.set('q', quality.toString());
-  if (optimalFormat !== 'jpeg') params.set('f', optimalFormat);
+  if (width) params.set("w", width.toString());
+  if (quality) params.set("q", quality.toString());
+  if (optimalFormat !== "jpeg") params.set("f", optimalFormat);
 
   const queryString = params.toString();
   return queryString ? `${src}?${queryString}` : src;
@@ -104,10 +106,13 @@ export async function optimizeImageUrl(
 /**
  * Hook for lazy loading images
  */
-export function useLazyImage(src: string, options: {
-  threshold?: number;
-  rootMargin?: string;
-} = {}) {
+export function useLazyImage(
+  src: string,
+  options: {
+    threshold?: number;
+    rootMargin?: string;
+  } = {},
+) {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -126,8 +131,8 @@ export function useLazyImage(src: string, options: {
       },
       {
         threshold: options.threshold || 0.1,
-        rootMargin: options.rootMargin || '50px',
-      }
+        rootMargin: options.rootMargin || "50px",
+      },
     );
 
     observer.observe(img);
@@ -163,10 +168,12 @@ export function useLazyImage(src: string, options: {
 export function useResponsiveImage(
   src: string,
   sizes: number[],
-  quality: number = 85
+  quality: number = 85,
 ) {
-  const [sources, setSources] = useState<Array<{ src: string; width: number }>>([]);
-  const [optimalSrc, setOptimalSrc] = useState<string>('');
+  const [sources, setSources] = useState<Array<{ src: string; width: number }>>(
+    [],
+  );
+  const [optimalSrc, setOptimalSrc] = useState<string>("");
 
   useEffect(() => {
     const generateSources = async () => {
@@ -175,15 +182,16 @@ export function useResponsiveImage(
         sizes.map(async (size) => ({
           src: await optimizeImageUrl(src, size, quality, format),
           width: size,
-        }))
+        })),
       );
 
       setSources(newSources);
 
       // Set optimal source based on viewport
       const viewportWidth = window.innerWidth;
-      const optimalSize = sizes.find(size => size >= viewportWidth) || sizes[sizes.length - 1];
-      const optimalSource = newSources.find(s => s.width === optimalSize);
+      const optimalSize =
+        sizes.find((size) => size >= viewportWidth) || sizes[sizes.length - 1];
+      const optimalSource = newSources.find((s) => s.width === optimalSize);
       if (optimalSource) {
         setOptimalSrc(optimalSource.src);
       }
@@ -213,14 +221,18 @@ export function preloadImage(src: string): Promise<HTMLImageElement> {
 /**
  * Preload multiple images
  */
-export async function preloadImages(srcs: string[]): Promise<HTMLImageElement[]> {
+export async function preloadImages(
+  srcs: string[],
+): Promise<HTMLImageElement[]> {
   return Promise.all(srcs.map(preloadImage));
 }
 
 /**
  * Get image dimensions
  */
-export function getImageDimensions(src: string): Promise<{ width: number; height: number }> {
+export function getImageDimensions(
+  src: string,
+): Promise<{ width: number; height: number }> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => {
