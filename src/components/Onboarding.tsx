@@ -57,8 +57,7 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
   },
   {
     title: "Available now",
-    description:
-      "See which rooms are free right this minute.",
+    description: "See which rooms are free right this minute.",
     icon: <Clock className="w-12 h-12 text-green-400" />,
     tip: "Times are shown in Dubai timezone.",
   },
@@ -71,8 +70,7 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
   },
   {
     title: "Search & filters",
-    description:
-      "Look up specific rooms and quickly check a particular time.",
+    description: "Look up specific rooms and quickly check a particular time.",
     icon: <Search className="w-12 h-12 text-yellow-400" />,
     tip: "Search by name or code to jump straight there.",
   },
@@ -106,13 +104,11 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
   },
   {
     title: "You're all set 🎉",
-    description:
-      "That’s everything you need. Welcome to vacansee!",
+    description: "That’s everything you need. Welcome to vacansee!",
     icon: <DoorOpen className="w-12 h-12 text-purple-500" />,
     tip: "Enjoy!",
   },
 ];
-
 
 // ============================================================================
 // COMPONENT
@@ -121,7 +117,8 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
 export function Onboarding({ onComplete, forceShow = false }: OnboardingProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-  const { preferences, isAuthenticated, isLoading, markOnboardingAsSeen } = useUserPreferences();
+  const { preferences, isAuthenticated, isLoading, markOnboardingAsSeen } =
+    useUserPreferences();
 
   // Check if user has completed onboarding
   useEffect(() => {
@@ -132,8 +129,15 @@ export function Onboarding({ onComplete, forceShow = false }: OnboardingProps) {
     }
 
     // Only show if user is authenticated and hasn't seen onboarding
-    const seenThisSession = typeof window !== 'undefined' && sessionStorage.getItem(ONBOARDING_SESSION_FLAG) === 'true';
-    if (!isLoading && isAuthenticated && !preferences.hasSeenOnboarding && !seenThisSession) {
+    const seenThisSession =
+      typeof window !== "undefined" &&
+      sessionStorage.getItem(ONBOARDING_SESSION_FLAG) === "true";
+    if (
+      !isLoading &&
+      isAuthenticated &&
+      !preferences.hasSeenOnboarding &&
+      !seenThisSession
+    ) {
       setIsOpen(true);
       setCurrentStep(0);
     }
@@ -156,8 +160,10 @@ export function Onboarding({ onComplete, forceShow = false }: OnboardingProps) {
       }
     }
 
-    if (typeof window !== 'undefined') {
-      try { sessionStorage.setItem(ONBOARDING_SESSION_FLAG, 'true'); } catch {}
+    if (typeof window !== "undefined") {
+      try {
+        sessionStorage.setItem(ONBOARDING_SESSION_FLAG, "true");
+      } catch {}
     }
     setIsOpen(false);
     setCurrentStep(0);
@@ -277,7 +283,7 @@ export function Onboarding({ onComplete, forceShow = false }: OnboardingProps) {
                     aria-label="Previous"
                     className={cn(
                       "h-10 w-10 p-0 rounded-full flex items-center justify-center",
-                      isFirstStep && "invisible"
+                      isFirstStep && "invisible",
                     )}
                   >
                     <ChevronLeft className="w-5 h-5" />
@@ -292,7 +298,7 @@ export function Onboarding({ onComplete, forceShow = false }: OnboardingProps) {
                           "w-2 h-2 rounded-full transition-all duration-300",
                           index === currentStep
                             ? "bg-purple-500 w-6"
-                            : "bg-white/20"
+                            : "bg-white/20",
                         )}
                       />
                     ))}
@@ -336,9 +342,13 @@ export function useOnboardingStatus() {
   const { preferences, isAuthenticated } = useUserPreferences();
 
   return {
-    hasCompletedOnboarding: isAuthenticated ? preferences.hasSeenOnboarding : true,
+    hasCompletedOnboarding: isAuthenticated
+      ? preferences.hasSeenOnboarding
+      : true,
     resetOnboarding: () => {
-      console.warn('resetOnboarding is deprecated. User preferences are now stored in Supabase user metadata.');
-    }
+      console.warn(
+        "resetOnboarding is deprecated. User preferences are now stored in Supabase user metadata.",
+      );
+    },
   };
 }
