@@ -65,7 +65,7 @@ export function ScrollToTop({ showAfter = 300, className }: ScrollToTopProps) {
             "transition-all duration-200",
             "flex items-center justify-center",
             "focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black/90",
-            className
+            className,
           )}
           aria-label="Scroll to top"
           whileHover={{ scale: 1.1 }}
