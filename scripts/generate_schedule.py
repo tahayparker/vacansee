@@ -56,6 +56,17 @@ TIME_SLOTS = [
     "22:00",
     "22:30",
 ]
+# Mapping of combined rooms to their individual components.
+# Rule:
+# - If a combined room is busy, both individual rooms are busy.
+# - If one individual room is busy, the combined room is busy, but the other individual room is not.
+COMBINED_ROOM_MAP: Dict[str, Tuple[str, str]] = {
+    "2.62/63": ("2.62", "2.63"),
+    "2.66/67": ("2.66", "2.67"),
+    "4.467": ("4.46", "4.47"),
+    "5.134": ("5.13", "5.14"),
+    "6.345": ("6.34", "6.35"),
+}
 SCRIPT_DIR = Path(__file__).parent
 OUTPUT_JSON_PATH = SCRIPT_DIR.parent / "public" / "scheduleData.json"
 
@@ -197,13 +208,54 @@ def generate_schedule_data_from_csv(csv_path: Path) -> List[Dict[str, Any]]:
             for room in timings_by_day_room[day]:
                 rooms_set.add(room)
 
+    # Expand rooms_set to include mapped counterparts so graphs include both combined and individual rooms
+    def expand_rooms_set(base_rooms: set) -> set:
+        expanded = set(base_rooms)
+        # If combined present, include individuals; if any individual present, include combined
+        for combined, (a, b) in COMBINED_ROOM_MAP.items():
+            if combined in base_rooms:
+                expanded.update([a, b])
+            if a in base_rooms or b in base_rooms:
+                expanded.add(combined)
+        return expanded
+
+    rooms_set = expand_rooms_set(rooms_set)
+
     for day in DAYS_OF_WEEK:
         print(f"Processing day: {day}")
         day_data: Dict[str, Any] = {"day": day, "rooms": []}
-        timings_for_day = timings_by_day_room.get(day, {})
+        timings_for_day = dict(timings_by_day_room.get(day, {}))  # shallow copy
+
+        # Build effective timings for the day honoring combined/individual rules without cross-leakage
+        effective_timings = defaultdict(list)
+        # Start with original timings
+        for room_name, intervals in timings_for_day.items():
+            # de-duplicate while preserving as list of tuples
+            unique = list({(s, e) for (s, e) in intervals})
+            effective_timings[room_name].extend(sorted(unique))
+
+        # Apply mapping rules using ORIGINAL per-room timings only
+        for combined, (a, b) in COMBINED_ROOM_MAP.items():
+            orig_combined = timings_for_day.get(combined, [])
+            orig_a = timings_for_day.get(a, [])
+            orig_b = timings_for_day.get(b, [])
+
+            # Combined becomes busy for any interval where either individual is busy (union)
+            for s, e in set(orig_combined + orig_a + orig_b):
+                if (s, e) not in effective_timings[combined]:
+                    effective_timings[combined].append((s, e))
+
+            # Each individual inherits ONLY the combined's original busy intervals
+            for s, e in set(orig_combined):
+                if (s, e) not in effective_timings[a]:
+                    effective_timings[a].append((s, e))
+                if (s, e) not in effective_timings[b]:
+                    effective_timings[b].append((s, e))
+
+        # Now compute availability using effective_timings and the expanded rooms_set
         for room in sorted(rooms_set):
             room_output_data = {"room": room, "availability": []}
-            timings_for_this_room = timings_for_day.get(room, [])
+            timings_for_this_room = effective_timings.get(room, [])
             slot_count = len(TIME_SLOTS)
             for i in range(slot_count - 1):
                 start_time = TIME_SLOTS[i]
