@@ -261,8 +261,7 @@ export default function AvailableNowPage() {
           <Clock className="w-4 h-4" />
           <span>
             {" "}
-            Available {" "}
-            at ~
+            Available at ~
             <span className="font-medium text-gray-300">
               {formattedCheckedTime}
             </span>{" "}
