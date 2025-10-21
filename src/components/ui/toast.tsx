@@ -25,7 +25,11 @@ export interface Toast {
 
 interface ToastContextValue {
   toasts: Toast[];
-  addToast: (message: string, variant?: ToastVariant, duration?: number) => void;
+  addToast: (
+    message: string,
+    variant?: ToastVariant,
+    duration?: number,
+  ) => void;
   removeToast: (id: string) => void;
   success: (message: string, duration?: number) => void;
   error: (message: string, duration?: number) => void;
@@ -65,7 +69,11 @@ export function ToastProvider({ children, maxToasts = 1 }: ToastProviderProps) {
   }, []);
 
   const addToast = useCallback(
-    (message: string, variant: ToastVariant = "info", duration: number = 5000) => {
+    (
+      message: string,
+      variant: ToastVariant = "info",
+      duration: number = 5000,
+    ) => {
       const id = `toast-${Date.now()}-${Math.random()}`;
       const newToast: Toast = { id, message, variant, duration };
 
@@ -85,28 +93,31 @@ export function ToastProvider({ children, maxToasts = 1 }: ToastProviderProps) {
         }, duration);
       }
     },
-    [maxToasts, removeToast]
+    [maxToasts, removeToast],
   );
 
   // Convenience methods
   const success = useCallback(
-    (message: string, duration?: number) => addToast(message, "success", duration),
-    [addToast]
+    (message: string, duration?: number) =>
+      addToast(message, "success", duration),
+    [addToast],
   );
 
   const error = useCallback(
-    (message: string, duration?: number) => addToast(message, "error", duration),
-    [addToast]
+    (message: string, duration?: number) =>
+      addToast(message, "error", duration),
+    [addToast],
   );
 
   const warning = useCallback(
-    (message: string, duration?: number) => addToast(message, "warning", duration),
-    [addToast]
+    (message: string, duration?: number) =>
+      addToast(message, "warning", duration),
+    [addToast],
   );
 
   const info = useCallback(
     (message: string, duration?: number) => addToast(message, "info", duration),
-    [addToast]
+    [addToast],
   );
 
   const value: ToastContextValue = {
@@ -170,7 +181,7 @@ function ToastItem({ toast, onRemove }: ToastItemProps) {
       transition={{ duration: 0.2 }}
       className={cn(
         "flex items-center gap-3 px-4 py-3 rounded-lg border whitespace-nowrap bg-black/95 backdrop-blur-sm shadow-lg",
-        variantStyles[variant]
+        variantStyles[variant],
       )}
     >
       <Icon className={cn("w-5 h-5 flex-shrink-0", iconColor)} />
