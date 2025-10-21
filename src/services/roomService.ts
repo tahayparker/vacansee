@@ -18,7 +18,7 @@ export function filterExcludedRooms(rooms: Room[]): Room[] {
   return rooms.filter((room) => {
     const roomNameLower = room.name.toLowerCase();
     return !EXCLUDED_ROOM_PATTERNS.some((pattern) =>
-      roomNameLower.includes(pattern.toLowerCase())
+      roomNameLower.includes(pattern.toLowerCase()),
     );
   });
 }
@@ -61,7 +61,9 @@ export function applyRoomGrouping(rooms: Room[]): Room[] {
  * getRoomShortCode("5.13") // Returns "5.13"
  * ```
  */
-export function getRoomShortCode(roomIdentifier: string | null | undefined): string {
+export function getRoomShortCode(
+  roomIdentifier: string | null | undefined,
+): string {
   if (!roomIdentifier) return "";
 
   // Split by common delimiters and return the first part
@@ -114,7 +116,7 @@ export function processRoomsList(rooms: Room[]): Room[] {
 export function isRoomExcluded(roomName: string): boolean {
   const nameLower = roomName.toLowerCase();
   return EXCLUDED_ROOM_PATTERNS.some((pattern) =>
-    nameLower.includes(pattern.toLowerCase())
+    nameLower.includes(pattern.toLowerCase()),
   );
 }
 
