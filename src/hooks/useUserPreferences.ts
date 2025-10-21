@@ -1,6 +1,6 @@
 // src/hooks/useUserPreferences.ts
-import { useState, useEffect, useCallback } from 'react';
-import { getSupabaseBrowserClient } from '@/lib/supabase/client';
+import { useState, useEffect, useCallback } from "react";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export interface UserPreferences {
   hasSeenOnboarding: boolean;
@@ -18,11 +18,13 @@ export function useUserPreferences() {
   // Load preferences from Supabase user_metadata on mount
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
-    
+
     const loadPreferences = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
-        
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
         if (user) {
           setIsAuthenticated(true);
           setPreferences({
@@ -33,7 +35,7 @@ export function useUserPreferences() {
           setIsAuthenticated(false);
         }
       } catch (error) {
-        console.error('Error loading user preferences:', error);
+        console.error("Error loading user preferences:", error);
         setIsAuthenticated(false);
       } finally {
         setIsLoading(false);
@@ -43,21 +45,28 @@ export function useUserPreferences() {
     loadPreferences();
 
     // Listen for auth state changes, including USER_UPDATED when metadata changes
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      if ((event === 'SIGNED_IN' || event === 'USER_UPDATED') && session?.user) {
-        setIsAuthenticated(true);
-        setPreferences({
-          hasSeenOnboarding: session.user.user_metadata?.hasSeenOnboarding ?? false,
-          hasSeenPwaPrompt: session.user.user_metadata?.hasSeenPwaPrompt ?? false,
-        });
-      } else if (event === 'SIGNED_OUT') {
-        setIsAuthenticated(false);
-        setPreferences({
-          hasSeenOnboarding: false,
-          hasSeenPwaPrompt: false,
-        });
-      }
-    });
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (
+          (event === "SIGNED_IN" || event === "USER_UPDATED") &&
+          session?.user
+        ) {
+          setIsAuthenticated(true);
+          setPreferences({
+            hasSeenOnboarding:
+              session.user.user_metadata?.hasSeenOnboarding ?? false,
+            hasSeenPwaPrompt:
+              session.user.user_metadata?.hasSeenPwaPrompt ?? false,
+          });
+        } else if (event === "SIGNED_OUT") {
+          setIsAuthenticated(false);
+          setPreferences({
+            hasSeenOnboarding: false,
+            hasSeenPwaPrompt: false,
+          });
+        }
+      },
+    );
 
     return () => {
       authListener?.subscription.unsubscribe();
@@ -71,17 +80,17 @@ export function useUserPreferences() {
     try {
       const supabase = getSupabaseBrowserClient();
       const { error } = await supabase.auth.updateUser({
-        data: { hasSeenOnboarding: true }
+        data: { hasSeenOnboarding: true },
       });
 
       if (error) {
-        console.error('Error updating onboarding preference:', error);
+        console.error("Error updating onboarding preference:", error);
         throw error;
       }
 
-      setPreferences(prev => ({ ...prev, hasSeenOnboarding: true }));
+      setPreferences((prev) => ({ ...prev, hasSeenOnboarding: true }));
     } catch (error) {
-      console.error('Failed to update onboarding preference:', error);
+      console.error("Failed to update onboarding preference:", error);
       throw error;
     }
   }, [isAuthenticated]);
@@ -92,15 +101,15 @@ export function useUserPreferences() {
     try {
       const supabase = getSupabaseBrowserClient();
       const { error } = await supabase.auth.updateUser({
-        data: { hasSeenOnboarding: false }
+        data: { hasSeenOnboarding: false },
       });
       if (error) {
-        console.error('Error resetting onboarding preference:', error);
+        console.error("Error resetting onboarding preference:", error);
         throw error;
       }
-      setPreferences(prev => ({ ...prev, hasSeenOnboarding: false }));
+      setPreferences((prev) => ({ ...prev, hasSeenOnboarding: false }));
     } catch (error) {
-      console.error('Failed to reset onboarding preference:', error);
+      console.error("Failed to reset onboarding preference:", error);
       throw error;
     }
   }, [isAuthenticated]);
@@ -112,17 +121,17 @@ export function useUserPreferences() {
     try {
       const supabase = getSupabaseBrowserClient();
       const { error } = await supabase.auth.updateUser({
-        data: { hasSeenPwaPrompt: true }
+        data: { hasSeenPwaPrompt: true },
       });
 
       if (error) {
-        console.error('Error updating PWA prompt preference:', error);
+        console.error("Error updating PWA prompt preference:", error);
         throw error;
       }
 
-      setPreferences(prev => ({ ...prev, hasSeenPwaPrompt: true }));
+      setPreferences((prev) => ({ ...prev, hasSeenPwaPrompt: true }));
     } catch (error) {
-      console.error('Failed to update PWA prompt preference:', error);
+      console.error("Failed to update PWA prompt preference:", error);
       throw error;
     }
   }, [isAuthenticated]);
