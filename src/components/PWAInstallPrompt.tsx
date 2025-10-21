@@ -5,25 +5,27 @@
  * Handles the beforeinstallprompt event and provides a custom install UI.
  */
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Download, X, Smartphone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useUserPreferences } from '@/hooks/useUserPreferences';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Download, X, Smartphone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
 export default function PWAInstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const { preferences, isAuthenticated, isLoading, markPwaPromptAsSeen } = useUserPreferences();
+  const { preferences, isAuthenticated, isLoading, markPwaPromptAsSeen } =
+    useUserPreferences();
 
   useEffect(() => {
     // Set client-side flag
@@ -32,7 +34,9 @@ export default function PWAInstallPrompt() {
     // Check if app is already installed
     const checkIfInstalled = () => {
       // Check if running in standalone mode
-      const standalone = window.matchMedia('(display-mode: standalone)').matches;
+      const standalone = window.matchMedia(
+        "(display-mode: standalone)",
+      ).matches;
       setIsStandalone(standalone);
 
       // Check if running on iOS
@@ -54,10 +58,18 @@ export default function PWAInstallPrompt() {
       // Show install prompt after a delay (don't be too pushy)
       // Only show if user is authenticated and hasn't seen it before
       setTimeout(() => {
-        if (!isInstalled && !isStandalone && isAuthenticated && !preferences.hasSeenPwaPrompt && !isLoading) {
+        if (
+          !isInstalled &&
+          !isStandalone &&
+          isAuthenticated &&
+          !preferences.hasSeenPwaPrompt &&
+          !isLoading
+        ) {
           setShowInstallPrompt(true);
           // Mark as seen in Supabase
-          markPwaPromptAsSeen().catch(err => console.error('Failed to mark PWA prompt as seen:', err));
+          markPwaPromptAsSeen().catch((err) =>
+            console.error("Failed to mark PWA prompt as seen:", err),
+          );
         }
       }, 3000);
     };
@@ -69,14 +81,24 @@ export default function PWAInstallPrompt() {
       setDeferredPrompt(null);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    window.addEventListener('appinstalled', handleAppInstalled);
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    window.addEventListener("appinstalled", handleAppInstalled);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', handleAppInstalled);
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt,
+      );
+      window.removeEventListener("appinstalled", handleAppInstalled);
     };
-  }, [isInstalled, isStandalone, isAuthenticated, preferences, isLoading, markPwaPromptAsSeen]);
+  }, [
+    isInstalled,
+    isStandalone,
+    isAuthenticated,
+    preferences,
+    isLoading,
+    markPwaPromptAsSeen,
+  ]);
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) return;
@@ -85,16 +107,16 @@ export default function PWAInstallPrompt() {
       await deferredPrompt.prompt();
       const choiceResult = await deferredPrompt.userChoice;
 
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the install prompt');
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the install prompt");
       } else {
-        console.log('User dismissed the install prompt');
+        console.log("User dismissed the install prompt");
       }
 
       setDeferredPrompt(null);
       setShowInstallPrompt(false);
     } catch (error) {
-      console.error('Error showing install prompt:', error);
+      console.error("Error showing install prompt:", error);
     }
   };
 
@@ -108,7 +130,13 @@ export default function PWAInstallPrompt() {
   }
 
   // Don't show if already installed, not authenticated, or user has seen it before
-  if (isInstalled || isStandalone || !isAuthenticated || preferences.hasSeenPwaPrompt || isLoading) {
+  if (
+    isInstalled ||
+    isStandalone ||
+    !isAuthenticated ||
+    preferences.hasSeenPwaPrompt ||
+    isLoading
+  ) {
     return null;
   }
 
@@ -127,7 +155,9 @@ export default function PWAInstallPrompt() {
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <Smartphone className="h-5 w-5 text-purple-500" />
-                  <h3 className="text-white font-semibold text-sm">Install vacansee</h3>
+                  <h3 className="text-white font-semibold text-sm">
+                    Install vacansee
+                  </h3>
                 </div>
                 <Button
                   variant="ghost"
@@ -142,7 +172,10 @@ export default function PWAInstallPrompt() {
               <div className="text-gray-300 text-xs space-y-2">
                 <p>Install vacansee on your iPhone for quick access:</p>
                 <ol className="list-decimal list-inside space-y-1 text-xs">
-                  <li>Tap the Share button <span className="text-purple-500">⎋</span></li>
+                  <li>
+                    Tap the Share button{" "}
+                    <span className="text-purple-500">⎋</span>
+                  </li>
                   <li>Scroll down and tap &quot;Add to Home Screen&quot;</li>
                   <li>Tap &quot;Add&quot; to install</li>
                 </ol>
@@ -168,7 +201,9 @@ export default function PWAInstallPrompt() {
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center gap-2">
                 <Download className="h-5 w-5 text-purple-500" />
-                <h3 className="text-white font-semibold text-sm">Install vacansee</h3>
+                <h3 className="text-white font-semibold text-sm">
+                  Install vacansee
+                </h3>
               </div>
               <Button
                 variant="ghost"
@@ -181,7 +216,8 @@ export default function PWAInstallPrompt() {
             </div>
 
             <p className="text-gray-300 text-xs mb-3">
-              Install vacansee on your device for quick access to room availability.
+              Install vacansee on your device for quick access to room
+              availability.
             </p>
 
             <div className="flex gap-2">
