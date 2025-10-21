@@ -79,9 +79,7 @@ export function getRoomShortCode(
  */
 export function sortRoomsByShortCode(rooms: Room[]): Room[] {
   return [...rooms].sort((a, b) => {
-    const codeA = getRoomShortCode(a.shortCode);
-    const codeB = getRoomShortCode(b.shortCode);
-    return codeA.localeCompare(codeB, undefined, { numeric: true });
+    return a.shortCode.localeCompare(b.shortCode, undefined, { numeric: true });
   });
 }
 
