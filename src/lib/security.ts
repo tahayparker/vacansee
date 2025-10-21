@@ -97,7 +97,7 @@ export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
           ? sanitizeString(item)
           : typeof item === "object" && item !== null
             ? sanitizeObject(item)
-            : item
+            : item,
       );
     } else if (typeof value === "object" && value !== null) {
       sanitized[key] = sanitizeObject(value);
@@ -144,7 +144,7 @@ export function isValidUrl(url: string): boolean {
  */
 export function isAlphanumeric(
   input: string,
-  allowedChars: string = "-_. "
+  allowedChars: string = "-_. ",
 ): boolean {
   const pattern = new RegExp(`^[a-zA-Z0-9${allowedChars}]+$`);
   return pattern.test(input);
@@ -210,7 +210,7 @@ export function simpleHash(str: string): number {
  */
 export function maskSensitiveData(
   value: string,
-  visibleChars: number = 3
+  visibleChars: number = 3,
 ): string {
   if (value.length <= visibleChars * 2) {
     return "*".repeat(value.length);
@@ -237,9 +237,7 @@ export function getClientIP(req: {
   // Try various headers in order of preference
   const forwardedFor = req.headers["x-forwarded-for"];
   if (forwardedFor) {
-    const ips = Array.isArray(forwardedFor)
-      ? forwardedFor[0]
-      : forwardedFor;
+    const ips = Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor;
     return ips.split(",")[0].trim();
   }
 
@@ -250,9 +248,7 @@ export function getClientIP(req: {
 
   const cfConnectingIp = req.headers["cf-connecting-ip"];
   if (cfConnectingIp) {
-    return Array.isArray(cfConnectingIp)
-      ? cfConnectingIp[0]
-      : cfConnectingIp;
+    return Array.isArray(cfConnectingIp) ? cfConnectingIp[0] : cfConnectingIp;
   }
 
   // Fallback to socket remote address
