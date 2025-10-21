@@ -90,10 +90,7 @@ export const ROOM_GROUPINGS: Record<string, string[]> = {
  * Room name patterns to exclude from availability listings
  * These are typically consultation rooms or online-only classes
  */
-export const EXCLUDED_ROOM_PATTERNS = [
-  "consultation",
-  "online",
-] as const;
+export const EXCLUDED_ROOM_PATTERNS = ["consultation", "online"] as const;
 
 // ============================================================================
 // API CONSTANTS
@@ -205,12 +202,13 @@ export const EXTERNAL_URLS = {
   GITHUB_REPO: "https://github.com/tahayparker/vacansee",
   VAILA_APP: "https://vaila.vercel.app/",
   AUTHOR_WEBSITE: "https://tahayparker.vercel.app/contact",
-  SCHEDULE_DATA_URL: "https://raw.githubusercontent.com/tahayparker/vacansee/refs/heads/main/public/scheduleData.json",
+  SCHEDULE_DATA_URL:
+    "https://raw.githubusercontent.com/tahayparker/vacansee/refs/heads/main/public/scheduleData.json",
 } as const;
 
 // ============================================================================
 // TYPE EXPORTS
 // ============================================================================
 
-export type DayOfWeek = typeof DAYS_OF_WEEK[number];
-export type TimeInterval = typeof TIME_INTERVALS[number];
+export type DayOfWeek = (typeof DAYS_OF_WEEK)[number];
+export type TimeInterval = (typeof TIME_INTERVALS)[number];
