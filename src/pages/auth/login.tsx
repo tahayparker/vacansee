@@ -190,57 +190,60 @@ export default function LoginPage() {
         animate="visible"
         className="w-full max-w-md space-y-6 rounded-xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-lg"
       >
-        <motion.div variants={itemVariants} className="space-y-2 text-center text-white">
+        <motion.div
+          variants={itemVariants}
+          className="space-y-2 text-center text-white"
+        >
           <h1 className="text-3xl font-bold tracking-tight">Sign In</h1>
           <p className="text-md text-gray-300">
             Choose your preferred provider to continue
           </p>
         </motion.div>
 
-          {errorMessage && (
-            <motion.div
-              variants={itemVariants}
-              className="rounded-md border border-red-500/60 bg-red-950/50 p-4 text-center text-sm text-red-200 flex items-center justify-center gap-2"
-            >
-              <AlertCircle className="h-5 w-5 flex-shrink-0 text-red-400" />
-              <span>{errorMessage}</span>
-            </motion.div>
-          )}
-
-          <motion.div variants={itemVariants} className="space-y-4">
-            {/* Google Button */}
-            <button
-              type="button"
-              onClick={() => handleOAuthLogin("google")}
-              disabled={isLoading}
-              className="w-full rounded-full border border-solid border-white/[.3] transition-colors flex items-center justify-center gap-3 hover:bg-white/[.1] hover:border-white/[.5] font-medium text-base h-12 px-5 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Google className="size-5" />
-              <span>{isLoading ? "Processing..." : "Sign in with Google"}</span>
-            </button>
-
-            {/* GitHub Button */}
-            <button
-              type="button"
-              onClick={() => handleOAuthLogin("github")}
-              disabled={isLoading}
-              className="w-full rounded-full border border-solid border-white/[.3] transition-colors flex items-center justify-center gap-3 hover:bg-white/[.1] hover:border-white/[.5] font-medium text-base h-12 px-5 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Github className="size-5" />
-              <span>{isLoading ? "Processing..." : "Sign in with GitHub"}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleOAuthLogin("azure")}
-              disabled={isLoading}
-              className="w-full rounded-full border border-solid border-white/[.3] transition-colors flex items-center justify-center gap-3 hover:bg-white/[.1] hover:border-white/[.5] font-medium text-base h-12 px-5 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Azure className="size-5" />
-              <span>{isLoading ? "Processing..." : "Sign in with Azure"}</span>
-            </button>
+        {errorMessage && (
+          <motion.div
+            variants={itemVariants}
+            className="rounded-md border border-red-500/60 bg-red-950/50 p-4 text-center text-sm text-red-200 flex items-center justify-center gap-2"
+          >
+            <AlertCircle className="h-5 w-5 flex-shrink-0 text-red-400" />
+            <span>{errorMessage}</span>
           </motion.div>
+        )}
+
+        <motion.div variants={itemVariants} className="space-y-4">
+          {/* Google Button */}
+          <button
+            type="button"
+            onClick={() => handleOAuthLogin("google")}
+            disabled={isLoading}
+            className="w-full rounded-full border border-solid border-white/[.3] transition-colors flex items-center justify-center gap-3 hover:bg-white/[.1] hover:border-white/[.5] font-medium text-base h-12 px-5 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Google className="size-5" />
+            <span>{isLoading ? "Processing..." : "Sign in with Google"}</span>
+          </button>
+
+          {/* GitHub Button */}
+          <button
+            type="button"
+            onClick={() => handleOAuthLogin("github")}
+            disabled={isLoading}
+            className="w-full rounded-full border border-solid border-white/[.3] transition-colors flex items-center justify-center gap-3 hover:bg-white/[.1] hover:border-white/[.5] font-medium text-base h-12 px-5 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Github className="size-5" />
+            <span>{isLoading ? "Processing..." : "Sign in with GitHub"}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOAuthLogin("azure")}
+            disabled={isLoading}
+            className="w-full rounded-full border border-solid border-white/[.3] transition-colors flex items-center justify-center gap-3 hover:bg-white/[.1] hover:border-white/[.5] font-medium text-base h-12 px-5 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Azure className="size-5" />
+            <span>{isLoading ? "Processing..." : "Sign in with Azure"}</span>
+          </button>
         </motion.div>
-      </div>
+      </motion.div>
+    </div>
   );
 }
