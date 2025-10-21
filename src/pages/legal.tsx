@@ -10,7 +10,7 @@ export default function LegalPage() {
   useEffect(() => {
     // Force scroll to top with multiple methods to ensure it works
     const scrollToTop = () => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
     };
