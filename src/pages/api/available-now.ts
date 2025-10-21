@@ -24,6 +24,11 @@ import { handleApiError, DatabaseError } from "@/lib/errors";
 import { logger, generateRequestId } from "@/lib/logger";
 import type { AvailableNowResponse } from "@/types/api";
 import type { Room } from "@/types/shared";
+import {
+  getShortCodeFromName,
+  expandBookedShortCodes,
+  getRoomNamesForShortCodes,
+} from "@/services/roomCombos";
 
 export default async function handler(
   req: NextApiRequest,
@@ -83,15 +88,26 @@ export default async function handler(
 
     const bookedRoomNames = bookedTimings.map((timing) => timing.Room);
 
-    logger.debug("Booked rooms found", {
+    // Expand booked rooms to include related rooms (combined/individual)
+    const bookedShortCodes = new Set(
+      bookedRoomNames.map((name) => getShortCodeFromName(name)),
+    );
+    const expandedBookedShortCodes = expandBookedShortCodes(bookedShortCodes);
+    const expandedBookedRoomNames = await getRoomNamesForShortCodes(
+      prisma,
+      Array.from(expandedBookedShortCodes),
+    );
+
+    logger.debug("Booked rooms expanded", {
       requestId,
-      count: bookedRoomNames.length,
+      originalCount: bookedRoomNames.length,
+      expandedCount: expandedBookedRoomNames.length,
     });
 
-    // Query available rooms
+    // Query available rooms (excluding expanded booked list)
     const availableRoomsData = await prisma.rooms.findMany({
       where: {
-        Name: { notIn: bookedRoomNames },
+        Name: { notIn: expandedBookedRoomNames },
       },
       select: { Name: true, ShortCode: true, Capacity: true },
     });
