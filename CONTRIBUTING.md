@@ -37,17 +37,20 @@ Follow these steps to get the development environment running:
 ### Development Setup
 
 1. **Fork and Clone**
+
    ```bash
    git clone https://github.com/YOUR_USERNAME/vacansee.git
    cd vacansee
    ```
 
 2. **Install Dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Environment Setup**
+
    ```bash
    cp .env.example .env.local
    ```
@@ -58,6 +61,7 @@ Follow these steps to get the development environment running:
    - Other required configuration
 
 4. **Database Setup**
+
    ```bash
    # Generate Prisma client
    npx prisma generate
@@ -70,6 +74,7 @@ Follow these steps to get the development environment running:
    ```
 
 5. **Run Development Server**
+
    ```bash
    npm run dev
    ```
@@ -144,7 +149,10 @@ vacansee/
 
 ```typescript
 // ✅ CORRECT - Use timeService
-import { getCurrentDubaiTime, getCurrentTimeString } from "@/services/timeService";
+import {
+  getCurrentDubaiTime,
+  getCurrentTimeString,
+} from "@/services/timeService";
 
 const now = getCurrentDubaiTime(); // Date in Dubai TZ
 const timeStr = getCurrentTimeString(); // "14:30" in Dubai
@@ -154,6 +162,7 @@ const now = new Date(); // Server timezone, not Dubai!
 ```
 
 **Why?**
+
 - Room schedules are in Dubai time
 - Server time varies (UTC, local, etc.)
 - Must be consistent across API and UI
@@ -179,7 +188,7 @@ const RequestSchema = z.object({
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const requestId = generateRequestId();
   const ip = getClientIP(req);
@@ -199,7 +208,9 @@ export default async function handler(
 
     // 4. Authentication
     const supabase = createSupabaseRouteHandlerClient(req, res);
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     if (!session) {
       return res.status(401).json({ error: "Authentication required" });
     }
@@ -313,6 +324,7 @@ footer (optional)
 ```
 
 Types:
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -323,6 +335,7 @@ Types:
 - `chore`: Build process or auxiliary tool changes
 
 Example:
+
 ```
 feat(rooms): add capacity filter to room search
 
@@ -379,11 +392,13 @@ export function RoomCard({ room, onSelect }: RoomCardProps) {
 
 ```tsx
 // Good
-<div className={cn(
-  "flex items-center gap-2",
-  isActive && "bg-purple-600",
-  className
-)}>
+<div
+  className={cn(
+    "flex items-center gap-2",
+    isActive && "bg-purple-600",
+    className,
+  )}
+>
   {children}
 </div>
 ```
@@ -427,6 +442,7 @@ export default async function handler(req, res) {
 3. Test the endpoint locally
 
 Example:
+
 ```typescript
 // src/types/api.ts
 export const NewFeatureRequestSchema = z.object({
@@ -477,12 +493,12 @@ import prisma from "@/lib/prisma";
 // Use indexes for performance
 const bookedRooms = await prisma.timings.findMany({
   where: {
-    Day: currentDay,           // Indexed
+    Day: currentDay, // Indexed
     StartTime: { lte: endTime },
     EndTime: { gt: startTime },
   },
-  select: { Room: true },      // Select only needed fields
-  distinct: ["Room"],          // Avoid duplicates
+  select: { Room: true }, // Select only needed fields
+  distinct: ["Room"], // Avoid duplicates
 });
 ```
 
@@ -501,7 +517,7 @@ const data = await cacheGetOrSet(
   {
     ttl: CACHE_TTL.SCHEDULE * 1000,
     staleTime: CACHE_TTL.SCHEDULE * 0.8 * 1000,
-  }
+  },
 );
 ```
 
@@ -618,12 +634,14 @@ npm run analyze
 ### Pull Request Process
 
 1. **Update your fork**
+
    ```bash
    git checkout main
    git pull upstream main
    ```
 
 2. **Create a feature branch**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -634,12 +652,14 @@ npm run analyze
    - Test your changes locally
 
 4. **Commit your changes**
+
    ```bash
    git add .
    git commit -m "feat: add your feature"
    ```
 
 5. **Push to your fork**
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -673,6 +693,7 @@ npm run analyze
 ## Resources
 
 ### External Documentation
+
 - [Next.js Docs](https://nextjs.org/docs)
 - [Prisma Docs](https://www.prisma.io/docs)
 - [Supabase Docs](https://supabase.com/docs)
