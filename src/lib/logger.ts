@@ -79,7 +79,7 @@ class Logger {
     level: LogLevel,
     message: string,
     context?: LogContext,
-    error?: Error
+    error?: Error,
   ): LogEntry {
     return {
       timestamp: new Date().toISOString(),
@@ -108,7 +108,7 @@ class Logger {
         `[${entry.timestamp}] ${entry.level}:`,
         entry.message,
         entry.context || "",
-        entry.error || ""
+        entry.error || "",
       );
     } else {
       // In production, output JSON for easier parsing
@@ -174,7 +174,7 @@ class Logger {
     path: string,
     statusCode: number,
     duration: number,
-    context?: LogContext
+    context?: LogContext,
   ): void {
     const level = statusCode >= 400 ? LogLevel.WARN : LogLevel.INFO;
     const message = `${method} ${path} - ${statusCode} (${duration}ms)`;
@@ -199,7 +199,11 @@ class Logger {
   /**
    * Log performance metric
    */
-  logPerformance(operation: string, duration: number, context?: LogContext): void {
+  logPerformance(
+    operation: string,
+    duration: number,
+    context?: LogContext,
+  ): void {
     this.info(`Performance: ${operation} took ${duration}ms`, {
       ...context,
       type: "performance",
@@ -213,7 +217,7 @@ class Logger {
  * Default logger instance
  */
 export const logger = new Logger(
-  process.env.NODE_ENV === "development" ? LogLevel.DEBUG : LogLevel.INFO
+  process.env.NODE_ENV === "development" ? LogLevel.DEBUG : LogLevel.INFO,
 );
 
 /**
