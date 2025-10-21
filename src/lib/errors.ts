@@ -19,7 +19,7 @@ export class AppError extends Error {
     code: string = "INTERNAL_ERROR",
     statusCode: number = 500,
     isOperational: boolean = true,
-    details?: Record<string, any>
+    details?: Record<string, any>,
   ) {
     super(message);
     this.name = this.constructor.name;
@@ -54,7 +54,7 @@ export class ApiError extends AppError {
     message: string = "An API error occurred",
     code: string = "API_ERROR",
     statusCode: number = 500,
-    details?: Record<string, any>
+    details?: Record<string, any>,
   ) {
     super(message, code, statusCode, true, details);
   }
@@ -66,7 +66,7 @@ export class ApiError extends AppError {
 export class ValidationError extends AppError {
   constructor(
     message: string = "Validation failed",
-    details?: Record<string, any>
+    details?: Record<string, any>,
   ) {
     super(message, "VALIDATION_ERROR", 400, true, details);
   }
@@ -78,7 +78,7 @@ export class ValidationError extends AppError {
 export class AuthenticationError extends AppError {
   constructor(
     message: string = "Authentication required",
-    details?: Record<string, any>
+    details?: Record<string, any>,
   ) {
     super(message, "AUTHENTICATION_ERROR", 401, true, details);
   }
@@ -90,7 +90,7 @@ export class AuthenticationError extends AppError {
 export class AuthorizationError extends AppError {
   constructor(
     message: string = "You don't have permission to access this resource",
-    details?: Record<string, any>
+    details?: Record<string, any>,
   ) {
     super(message, "AUTHORIZATION_ERROR", 403, true, details);
   }
@@ -102,7 +102,7 @@ export class AuthorizationError extends AppError {
 export class NotFoundError extends AppError {
   constructor(
     message: string = "Resource not found",
-    details?: Record<string, any>
+    details?: Record<string, any>,
   ) {
     super(message, "NOT_FOUND", 404, true, details);
   }
@@ -114,7 +114,7 @@ export class NotFoundError extends AppError {
 export class RateLimitError extends AppError {
   constructor(
     message: string = "Too many requests, please try again later",
-    details?: Record<string, any>
+    details?: Record<string, any>,
   ) {
     super(message, "RATE_LIMIT_EXCEEDED", 429, true, details);
   }
@@ -126,7 +126,7 @@ export class RateLimitError extends AppError {
 export class DatabaseError extends AppError {
   constructor(
     message: string = "Database operation failed",
-    details?: Record<string, any>
+    details?: Record<string, any>,
   ) {
     super(message, "DATABASE_ERROR", 500, true, details);
   }
@@ -138,7 +138,7 @@ export class DatabaseError extends AppError {
 export class ExternalServiceError extends AppError {
   constructor(
     message: string = "External service error",
-    details?: Record<string, any>
+    details?: Record<string, any>,
   ) {
     super(message, "EXTERNAL_SERVICE_ERROR", 502, true, details);
   }
@@ -172,13 +172,9 @@ export function normalizeError(error: unknown): AppError {
 
   // Standard Error
   if (error instanceof Error) {
-    return new AppError(
-      error.message,
-      "INTERNAL_ERROR",
-      500,
-      false,
-      { originalError: error.name }
-    );
+    return new AppError(error.message, "INTERNAL_ERROR", 500, false, {
+      originalError: error.name,
+    });
   }
 
   // Unknown error type
@@ -187,7 +183,7 @@ export function normalizeError(error: unknown): AppError {
     "UNKNOWN_ERROR",
     500,
     false,
-    { originalError: String(error) }
+    { originalError: String(error) },
   );
 }
 
@@ -227,7 +223,7 @@ export function handleApiError(error: unknown): {
  * Automatically catches and handles errors
  */
 export function asyncHandler<T extends any[], R>(
-  fn: (...args: T) => Promise<R>
+  fn: (...args: T) => Promise<R>,
 ): (...args: T) => Promise<R> {
   return async (...args: T): Promise<R> => {
     try {
