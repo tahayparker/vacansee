@@ -86,7 +86,7 @@ export function LoadingSpinner({
       className={cn(
         "inline-flex flex-col items-center justify-center gap-3",
         centered && !fullHeight && "mx-auto",
-        className
+        className,
       )}
     >
       {/* Inline spinner for consistency with the rest of the app */}
@@ -95,7 +95,7 @@ export function LoadingSpinner({
           "animate-spin rounded-full border-purple-500",
           sizeClasses[size],
           borderClasses[size], // Use dynamic border width
-          "transition-all duration-200"
+          "transition-all duration-200",
         )}
         aria-label="Loading"
         role="status"
@@ -103,10 +103,12 @@ export function LoadingSpinner({
 
       {/* Optional loading message */}
       {message && (
-        <p className={cn(
-          textSizeClasses[size],
-          "text-white/70 font-medium animate-pulse"
-        )}>
+        <p
+          className={cn(
+            textSizeClasses[size],
+            "text-white/70 font-medium animate-pulse",
+          )}
+        >
           {message}
         </p>
       )}
@@ -143,19 +145,19 @@ export function LoadingSpinner({
  * Uses large size and full height by default
  */
 export function FullPageLoader({ message }: { message?: string }): JSX.Element {
-  return (
-    <LoadingSpinner
-      size="large"
-      message={message}
-      fullHeight
-    />
-  );
+  return <LoadingSpinner size="large" message={message} fullHeight />;
 }
 
 /**
  * Loading spinner for inline use (small size)
  */
-export function InlineLoader({ message, className }: { message?: string; className?: string }): JSX.Element {
+export function InlineLoader({
+  message,
+  className,
+}: {
+  message?: string;
+  className?: string;
+}): JSX.Element {
   return (
     <LoadingSpinner
       size="small"
@@ -168,10 +170,18 @@ export function InlineLoader({ message, className }: { message?: string; classNa
 /**
  * Loading spinner for button states
  */
-export function ButtonLoader({ className }: { className?: string }): JSX.Element {
+export function ButtonLoader({
+  className,
+}: {
+  className?: string;
+}): JSX.Element {
   return (
     <div
-      className={cn("h-4 w-4 animate-spin rounded-full border-purple-500", borderClasses.small, className)}
+      className={cn(
+        "h-4 w-4 animate-spin rounded-full border-purple-500",
+        borderClasses.small,
+        className,
+      )}
       aria-label="Loading"
     />
   );
@@ -195,10 +205,7 @@ export function LoadingOverlay({
       {children}
       {isLoading && (
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 rounded-lg">
-          <LoadingSpinner
-            size="large"
-            message={message}
-          />
+          <LoadingSpinner size="large" message={message} />
         </div>
       )}
     </div>
