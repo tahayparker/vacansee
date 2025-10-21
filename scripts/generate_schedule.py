@@ -208,15 +208,30 @@ def generate_schedule_data_from_csv(csv_path: Path) -> List[Dict[str, Any]]:
             for room in timings_by_day_room[day]:
                 rooms_set.add(room)
 
-    # Expand rooms_set to include mapped counterparts so graphs include both combined and individual rooms
+    # Helper to extract short code from full room name
+    def get_room_short_code(room_name: str) -> str:
+        """Extract short code (before first dash) from room name."""
+        return room_name.split("-")[0].strip() if "-" in room_name else room_name.strip()
+
+    # Build a mapping from short code to full room names
+    shortcode_to_rooms: Dict[str, List[str]] = defaultdict(list)
+    for room in rooms_set:
+        short_code = get_room_short_code(room)
+        shortcode_to_rooms[short_code].append(room)
+
+    # Expand rooms_set to include mapped counterparts
     def expand_rooms_set(base_rooms: set) -> set:
         expanded = set(base_rooms)
-        # If combined present, include individuals; if any individual present, include combined
-        for combined, (a, b) in COMBINED_ROOM_MAP.items():
-            if combined in base_rooms:
-                expanded.update([a, b])
-            if a in base_rooms or b in base_rooms:
-                expanded.add(combined)
+        base_shortcodes = {get_room_short_code(r) for r in base_rooms}
+        
+        for combined_code, (ind_a_code, ind_b_code) in COMBINED_ROOM_MAP.items():
+            # If combined room exists in data, add both individuals if they exist
+            if combined_code in base_shortcodes:
+                expanded.update(shortcode_to_rooms.get(ind_a_code, []))
+                expanded.update(shortcode_to_rooms.get(ind_b_code, []))
+            # If any individual exists, add the combined room if it exists
+            if ind_a_code in base_shortcodes or ind_b_code in base_shortcodes:
+                expanded.update(shortcode_to_rooms.get(combined_code, []))
         return expanded
 
     rooms_set = expand_rooms_set(rooms_set)
@@ -226,7 +241,7 @@ def generate_schedule_data_from_csv(csv_path: Path) -> List[Dict[str, Any]]:
         day_data: Dict[str, Any] = {"day": day, "rooms": []}
         timings_for_day = dict(timings_by_day_room.get(day, {}))  # shallow copy
 
-        # Build effective timings for the day honoring combined/individual rules without cross-leakage
+        # Build effective timings for the day honoring combined/individual rules
         effective_timings = defaultdict(list)
         # Start with original timings
         for room_name, intervals in timings_for_day.items():
@@ -234,23 +249,44 @@ def generate_schedule_data_from_csv(csv_path: Path) -> List[Dict[str, Any]]:
             unique = list({(s, e) for (s, e) in intervals})
             effective_timings[room_name].extend(sorted(unique))
 
-        # Apply mapping rules using ORIGINAL per-room timings only
-        for combined, (a, b) in COMBINED_ROOM_MAP.items():
-            orig_combined = timings_for_day.get(combined, [])
-            orig_a = timings_for_day.get(a, [])
-            orig_b = timings_for_day.get(b, [])
+        # Apply mapping rules using short codes to match full room names
+        for combined_code, (ind_a_code, ind_b_code) in COMBINED_ROOM_MAP.items():
+            # Find all full room names that match these short codes
+            combined_rooms = shortcode_to_rooms.get(combined_code, [])
+            ind_a_rooms = shortcode_to_rooms.get(ind_a_code, [])
+            ind_b_rooms = shortcode_to_rooms.get(ind_b_code, [])
 
-            # Combined becomes busy for any interval where either individual is busy (union)
-            for s, e in set(orig_combined + orig_a + orig_b):
-                if (s, e) not in effective_timings[combined]:
-                    effective_timings[combined].append((s, e))
+            # Collect original busy intervals for each category
+            orig_combined = []
+            for room in combined_rooms:
+                orig_combined.extend(timings_for_day.get(room, []))
+            
+            orig_a = []
+            for room in ind_a_rooms:
+                orig_a.extend(timings_for_day.get(room, []))
+            
+            orig_b = []
+            for room in ind_b_rooms:
+                orig_b.extend(timings_for_day.get(room, []))
 
-            # Each individual inherits ONLY the combined's original busy intervals
-            for s, e in set(orig_combined):
-                if (s, e) not in effective_timings[a]:
-                    effective_timings[a].append((s, e))
-                if (s, e) not in effective_timings[b]:
-                    effective_timings[b].append((s, e))
+            # Rule: Combined becomes busy if EITHER individual is busy (union)
+            union_intervals = set(orig_combined + orig_a + orig_b)
+            for combined_room in combined_rooms:
+                for s, e in union_intervals:
+                    if (s, e) not in effective_timings[combined_room]:
+                        effective_timings[combined_room].append((s, e))
+
+            # Rule: Each individual inherits the combined's busy intervals
+            combined_intervals = set(orig_combined)
+            for ind_room in ind_a_rooms:
+                for s, e in combined_intervals:
+                    if (s, e) not in effective_timings[ind_room]:
+                        effective_timings[ind_room].append((s, e))
+            
+            for ind_room in ind_b_rooms:
+                for s, e in combined_intervals:
+                    if (s, e) not in effective_timings[ind_room]:
+                        effective_timings[ind_room].append((s, e))
 
         # Now compute availability using effective_timings and the expanded rooms_set
         for room in sorted(rooms_set):
