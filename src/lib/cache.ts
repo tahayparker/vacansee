@@ -81,11 +81,7 @@ export interface CacheGetResult<T> {
  * cacheSet('schedule', scheduleData, { ttl: 300000 }); // Cache for 5 minutes
  * ```
  */
-export function cacheSet<T>(
-  key: string,
-  data: T,
-  options: CacheOptions
-): void {
+export function cacheSet<T>(key: string, data: T, options: CacheOptions): void {
   const now = Date.now();
   const { ttl, staleTime = ttl * 0.8 } = options;
 
@@ -243,7 +239,7 @@ export function cacheStats(): {
 export async function cacheGetOrSet<T>(
   key: string,
   factory: () => Promise<T>,
-  options: CacheOptions
+  options: CacheOptions,
 ): Promise<T> {
   const result = cacheGet<T>(key);
 
@@ -253,7 +249,9 @@ export async function cacheGetOrSet<T>(
 
   // If stale, return stale data and revalidate in background
   if (result.hit && result.stale) {
-    logger.debug(`Returning stale data for: ${key}, revalidating in background`);
+    logger.debug(
+      `Returning stale data for: ${key}, revalidating in background`,
+    );
 
     // Revalidate in background (don't await)
     factory()
@@ -294,7 +292,7 @@ export async function cacheGetOrSet<T>(
 export function withCache<TArgs extends any[], TReturn>(
   fn: (...args: TArgs) => Promise<TReturn>,
   keyGenerator: (...args: TArgs) => string,
-  options: CacheOptions
+  options: CacheOptions,
 ): (...args: TArgs) => Promise<TReturn> {
   return async (...args: TArgs): Promise<TReturn> => {
     const key = keyGenerator(...args);
