@@ -120,7 +120,8 @@ const getRoomShortCode = (
   roomIdentifier: string | null | undefined,
 ): string => {
   if (!roomIdentifier) return "";
-  return roomIdentifier.split(/[- /]/)[0];
+  // Split by dash or space, but preserve slashes for combined rooms (e.g. "2.62/63")
+  return roomIdentifier.split(/[- ]/)[0];
 };
 
 const getCellColor = (avail: number) => {
