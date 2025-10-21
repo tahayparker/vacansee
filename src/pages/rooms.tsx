@@ -55,7 +55,8 @@ export default function RoomDetailsPage() {
           }
           throw new Error(errorMsg);
         }
-        const data: { total: number; rooms: RoomData[] } = await response.json();
+        const data: { total: number; rooms: RoomData[] } =
+          await response.json();
         setAllRooms(data.rooms);
       } catch (err: any) {
         console.error("Error fetching room details:", err);
@@ -104,12 +105,12 @@ export default function RoomDetailsPage() {
           const aCap = a.capacity === null ? -Infinity : a.capacity;
           const bCap = b.capacity === null ? -Infinity : b.capacity;
           comparison = aCap - bCap;
-          
+
           // Apply direction to capacity comparison
           if (sortConfig.direction === "desc") {
             comparison = comparison * -1;
           }
-          
+
           // If capacities are equal, sort by shortcode ascending (always)
           if (comparison === 0) {
             const aNum = parseFloat(a.shortCode);
@@ -117,7 +118,9 @@ export default function RoomDetailsPage() {
             if (!isNaN(aNum) && !isNaN(bNum)) {
               comparison = aNum - bNum;
             } else {
-              comparison = a.shortCode.localeCompare(b.shortCode, undefined, { sensitivity: "base" });
+              comparison = a.shortCode.localeCompare(b.shortCode, undefined, {
+                sensitivity: "base",
+              });
             }
           }
           // Return early for capacity - don't apply direction again
@@ -134,7 +137,9 @@ export default function RoomDetailsPage() {
           if (!isNaN(aNum) && !isNaN(bNum)) {
             comparison = aNum - bNum;
           } else {
-            comparison = a.shortCode.localeCompare(b.shortCode, undefined, { sensitivity: "base" });
+            comparison = a.shortCode.localeCompare(b.shortCode, undefined, {
+              sensitivity: "base",
+            });
           }
         }
         return sortConfig.direction === "asc" ? comparison : comparison * -1;
