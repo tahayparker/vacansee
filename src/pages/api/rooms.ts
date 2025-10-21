@@ -12,7 +12,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
-import { processRoomsList } from "@/services/roomService";
 import { addSecurityHeaders, getClientIP } from "@/lib/security";
 import { rateLimit } from "@/lib/rateLimit";
 import { handleApiError, DatabaseError } from "@/lib/errors";
@@ -68,20 +67,27 @@ export default async function handler(
             ShortCode: true,
             Capacity: true,
           },
-          orderBy: {
-            Name: "asc",
-          },
         });
 
-        // Convert to our Room type format
-        const roomsList: Room[] = roomsData.map((room) => ({
-          name: room.Name,
-          shortCode: room.ShortCode,
-          capacity: room.Capacity,
-        }));
+        // Convert to our Room type format and filter out consultation/online rooms
+        const roomsList: Room[] = roomsData
+          .map((room) => ({
+            name: room.Name,
+            shortCode: room.ShortCode,
+            capacity: room.Capacity,
+          }))
+          .filter(
+            (room) =>
+              !room.name.toLowerCase().includes("consultation") &&
+              !room.name.toLowerCase().includes("online"),
+          );
 
-        // Process rooms to filter out excluded patterns (consultation, online, etc.)
-        return processRoomsList(roomsList);
+        // Sort by name lexicographically, ignoring case (matches Notepad++ "Sort Lines Lex. Ascending Ignoring Case")
+        roomsList.sort((a, b) =>
+          a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+        );
+
+        return roomsList;
       },
       {
         ttl: CACHE_TTL.ROOMS * 1000,
