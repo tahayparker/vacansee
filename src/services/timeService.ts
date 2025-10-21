@@ -166,7 +166,7 @@ export function isTimeEqual(timeA: string, timeB: string): boolean {
 export function isCurrentTimeBetween(
   startTime: string,
   endTime: string,
-  currentTime?: string
+  currentTime?: string,
 ): boolean {
   const current = currentTime || getCurrentTimeString();
   const start = parseTimeString(startTime);
@@ -178,8 +178,10 @@ export function isCurrentTimeBetween(
     return isAfter(now, start) || isBefore(now, end);
   }
 
-  return (isAfter(now, start) || isEqual(now, start)) &&
-         (isBefore(now, end) || isEqual(now, end));
+  return (
+    (isAfter(now, start) || isEqual(now, start)) &&
+    (isBefore(now, end) || isEqual(now, end))
+  );
 }
 
 /**
@@ -202,7 +204,10 @@ export function addMinutesToTime(timeString: string, minutes: number): string {
  * @param endTime - End time in HH:mm format
  * @returns Difference in minutes
  */
-export function getTimeDifferenceInMinutes(startTime: string, endTime: string): number {
+export function getTimeDifferenceInMinutes(
+  startTime: string,
+  endTime: string,
+): number {
   const start = parseTimeString(startTime);
   const end = parseTimeString(endTime);
   return differenceInMinutes(end, start);
@@ -219,7 +224,7 @@ export function getTimeDifferenceInMinutes(startTime: string, endTime: string): 
 export function generateTimeSlots(
   startTime: string,
   endTime: string,
-  intervalMinutes: number = 30
+  intervalMinutes: number = 30,
 ): string[] {
   const slots: string[] = [];
   let current = parseTimeString(startTime);
