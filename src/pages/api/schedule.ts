@@ -69,11 +69,14 @@ export default async function handler(
           });
 
           try {
-            const githubResponse = await fetch(EXTERNAL_URLS.SCHEDULE_DATA_URL, {
-              headers: {
-                "User-Agent": "vacansee-app",
+            const githubResponse = await fetch(
+              EXTERNAL_URLS.SCHEDULE_DATA_URL,
+              {
+                headers: {
+                  "User-Agent": "vacansee-app",
+                },
               },
-            });
+            );
 
             if (githubResponse.ok) {
               const githubData = await githubResponse.text();
@@ -111,7 +114,7 @@ export default async function handler(
 
             if (!fs.existsSync(schedulePath)) {
               throw new ExternalServiceError(
-                "Schedule data not found in GitHub or locally"
+                "Schedule data not found in GitHub or locally",
               );
             }
 
@@ -134,13 +137,13 @@ export default async function handler(
       {
         ttl: CACHE_TTL.SCHEDULE * 1000, // Convert to milliseconds
         staleTime: CACHE_TTL.SCHEDULE * 0.8 * 1000, // 80% of TTL
-      }
+      },
     );
 
     // Add cache headers for browser caching
     res.setHeader(
       "Cache-Control",
-      `public, max-age=${CACHE_TTL.SCHEDULE}, stale-while-revalidate=${CACHE_TTL.SCHEDULE * 2}`
+      `public, max-age=${CACHE_TTL.SCHEDULE}, stale-while-revalidate=${CACHE_TTL.SCHEDULE * 2}`,
     );
 
     logger.info("Schedule data sent successfully", {
