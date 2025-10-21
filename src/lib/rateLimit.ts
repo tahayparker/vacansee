@@ -80,7 +80,7 @@ export interface RateLimitResult {
  */
 export function checkRateLimit(
   identifier: string,
-  options: RateLimiterOptions = {}
+  options: RateLimiterOptions = {},
 ): RateLimitResult {
   const {
     maxRequests = RATE_LIMIT.MAX_REQUESTS,
@@ -150,7 +150,7 @@ export function checkRateLimit(
  */
 export async function rateLimit(
   identifier: string,
-  options?: RateLimiterOptions
+  options?: RateLimiterOptions,
 ): Promise<void> {
   const result = checkRateLimit(identifier, options);
 
@@ -162,7 +162,7 @@ export async function rateLimit(
         limit: result.limit,
         resetIn: result.resetIn,
         remaining: result.remaining,
-      }
+      },
     );
   }
 }
@@ -173,7 +173,9 @@ export async function rateLimit(
  * @param result - Rate limit result
  * @returns Headers object
  */
-export function getRateLimitHeaders(result: RateLimitResult): Record<string, string> {
+export function getRateLimitHeaders(
+  result: RateLimitResult,
+): Record<string, string> {
   return {
     "X-RateLimit-Limit": result.limit.toString(),
     "X-RateLimit-Remaining": result.remaining.toString(),
@@ -190,9 +192,11 @@ export function getRateLimitHeaders(result: RateLimitResult): Record<string, str
  */
 export function clearRateLimit(
   identifier: string,
-  keyGenerator?: (id: string) => string
+  keyGenerator?: (id: string) => string,
 ): void {
-  const key = keyGenerator ? keyGenerator(identifier) : `ratelimit:${identifier}`;
+  const key = keyGenerator
+    ? keyGenerator(identifier)
+    : `ratelimit:${identifier}`;
   rateLimitStore.delete(key);
 }
 
@@ -205,9 +209,11 @@ export function clearRateLimit(
  */
 export function getRateLimitStats(
   identifier: string,
-  keyGenerator?: (id: string) => string
+  keyGenerator?: (id: string) => string,
 ): { count: number; resetIn: number } | null {
-  const key = keyGenerator ? keyGenerator(identifier) : `ratelimit:${identifier}`;
+  const key = keyGenerator
+    ? keyGenerator(identifier)
+    : `ratelimit:${identifier}`;
   const entry = rateLimitStore.get(key);
 
   if (!entry) {
