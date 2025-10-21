@@ -47,9 +47,17 @@ import {
 } from "date-fns";
 import Fuse from "fuse.js";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
-import { useFormPersistence, useSearchPersistence } from "@/hooks/useFormPersistence";
+import {
+  useFormPersistence,
+  useSearchPersistence,
+} from "@/hooks/useFormPersistence";
 import { montserrat } from "@/lib/fonts";
-import { AriaAttributes, KeyboardKeys, isKey, AriaAnnouncer } from "@/lib/accessibility";
+import {
+  AriaAttributes,
+  KeyboardKeys,
+  isKey,
+  AriaAnnouncer,
+} from "@/lib/accessibility";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 // --- Data Structures (Unchanged) ---
@@ -108,17 +116,20 @@ const timeSlots = generateTimeSlots();
 // --- Main Page Component ---
 export default function CheckAvailabilityPage() {
   // --- Form persistence ---
-  const form = useFormPersistence({
-    selectedRoomName: "",
-    day: "",
-    startTime: "",
-    endTime: "",
-  }, {
-    debounceDelay: 500,
-    persist: true,
-    storageKey: "check-availability-form",
-    clearOnSubmit: true,
-  });
+  const form = useFormPersistence(
+    {
+      selectedRoomName: "",
+      day: "",
+      startTime: "",
+      endTime: "",
+    },
+    {
+      debounceDelay: 500,
+      persist: true,
+      storageKey: "check-availability-form",
+      clearOnSubmit: true,
+    },
+  );
 
   // --- Search persistence ---
   const search = useSearchPersistence("", {
@@ -156,7 +167,8 @@ export default function CheckAvailabilityPage() {
           }
           throw new Error(errorMsg);
         }
-        const data: { total: number; rooms: RoomListData[] } = await response.json();
+        const data: { total: number; rooms: RoomListData[] } =
+          await response.json();
         setAllRooms(data.rooms);
         setRoomFetchError(null);
       } catch (err: any) {
@@ -183,7 +195,9 @@ export default function CheckAvailabilityPage() {
   // --- Event Handlers with persistence ---
   const handleNow = useCallback(() => {
     // Get current time in Dubai timezone (Asia/Dubai, UTC+4)
-    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Dubai' }));
+    const now = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "Asia/Dubai" }),
+    );
     const currentMinutes = now.getMinutes();
     const startMinutes = currentMinutes < 30 ? 0 : 30;
     const startTimeExact = setMinutes(
@@ -208,7 +222,9 @@ export default function CheckAvailabilityPage() {
     setCheckResult(null);
   }, [form]);
   const handleAllDay = useCallback(() => {
-    const todayJsIndex = getDay(new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Dubai' })));
+    const todayJsIndex = getDay(
+      new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Dubai" })),
+    );
     const todayAdjusted = todayJsIndex === 0 ? 6 : todayJsIndex - 1;
 
     form.setFields({
@@ -240,7 +256,12 @@ export default function CheckAvailabilityPage() {
         return;
       }
 
-      if (!selectedRoom || !form.values.day || !form.values.startTime || !form.values.endTime) {
+      if (
+        !selectedRoom ||
+        !form.values.day ||
+        !form.values.startTime ||
+        !form.values.endTime
+      ) {
         setFormError("Please select a room, day, start time, and end time.");
         return;
       }
@@ -281,7 +302,6 @@ export default function CheckAvailabilityPage() {
         form.handleSubmit(async () => {
           // Form is already cleared by the hook
         });
-
       } catch (err: any) {
         console.error("Check availability error:", err);
         setFormError(err.message || "Failed to check availability.");
@@ -420,7 +440,10 @@ export default function CheckAvailabilityPage() {
                               setComboboxOpen(false);
                               search.clearQuery();
                               if (foundRoom) {
-                                form.setField('selectedRoomName', foundRoom.name);
+                                form.setField(
+                                  "selectedRoomName",
+                                  foundRoom.name,
+                                );
                               }
                             }}
                             className="font-sans aria-selected:bg-purple-500/30 aria-selected:text-white text-sm cursor-pointer"
@@ -439,7 +462,8 @@ export default function CheckAvailabilityPage() {
                     </CommandList>
                   </Command>
                   <div id="room-search-help" className="sr-only">
-                    Type to search for rooms. Use arrow keys to navigate and Enter to select.
+                    Type to search for rooms. Use arrow keys to navigate and
+                    Enter to select.
                   </div>
                 </>
               )}
@@ -458,7 +482,10 @@ export default function CheckAvailabilityPage() {
           >
             Day
           </label>
-          <Select value={form.values.day} onValueChange={(value) => form.setField('day', value)}>
+          <Select
+            value={form.values.day}
+            onValueChange={(value) => form.setField("day", value)}
+          >
             <SelectTrigger
               id="day"
               className="w-full bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500"
@@ -499,7 +526,10 @@ export default function CheckAvailabilityPage() {
           >
             Start Time
           </label>
-          <Select value={form.values.startTime} onValueChange={(value) => form.setField('startTime', value)}>
+          <Select
+            value={form.values.startTime}
+            onValueChange={(value) => form.setField("startTime", value)}
+          >
             <SelectTrigger
               id="startTime"
               className="w-full bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500"
@@ -540,7 +570,10 @@ export default function CheckAvailabilityPage() {
           >
             End Time
           </label>
-          <Select value={form.values.endTime} onValueChange={(value) => form.setField('endTime', value)}>
+          <Select
+            value={form.values.endTime}
+            onValueChange={(value) => form.setField("endTime", value)}
+          >
             <SelectTrigger
               id="endTime"
               className="w-full bg-black/20 border-white/20 text-white focus:ring-purple-500 focus:border-purple-500"
