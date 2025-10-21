@@ -32,7 +32,7 @@ export interface Timing {
   /** Class name/section */
   class: string;
   /** Day of the week */
-  day: typeof DAYS_OF_WEEK[number];
+  day: (typeof DAYS_OF_WEEK)[number];
   /** Start time in HH:mm format */
   startTime: string;
   /** End time in HH:mm format */
