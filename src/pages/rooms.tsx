@@ -32,7 +32,7 @@ export default function RoomDetailsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sortConfig, setSortConfig] = useState<SortConfig>({
-    key: "shortCode",
+    key: "name",
     direction: "asc",
   });
 
@@ -100,48 +100,37 @@ export default function RoomDetailsPage() {
       const key = sortConfig.key;
       results.sort((a, b) => {
         let comparison = 0;
+
         if (key === "capacity") {
           // Sort by capacity first
           const aCap = a.capacity === null ? -Infinity : a.capacity;
           const bCap = b.capacity === null ? -Infinity : b.capacity;
           comparison = aCap - bCap;
 
-          // Apply direction to capacity comparison
+          // Apply direction to capacity
           if (sortConfig.direction === "desc") {
             comparison = comparison * -1;
           }
 
-          // If capacities are equal, sort by shortcode ascending (always)
+          // If capacities are equal, sort by name (lex, ignore case)
           if (comparison === 0) {
-            const aNum = parseFloat(a.shortCode);
-            const bNum = parseFloat(b.shortCode);
-            if (!isNaN(aNum) && !isNaN(bNum)) {
-              comparison = aNum - bNum;
-            } else {
-              comparison = a.shortCode.localeCompare(b.shortCode, undefined, {
-                sensitivity: "base",
-              });
-            }
+            const an = a.name.toLowerCase();
+            const bn = b.name.toLowerCase();
+            if (an < bn) comparison = -1;
+            else if (an > bn) comparison = 1;
+            else comparison = 0;
           }
-          // Return early for capacity - don't apply direction again
+
           return comparison;
         } else if (key === "name") {
-          // Sort by name lexicographically
-          comparison = a.name.localeCompare(b.name, undefined, {
-            sensitivity: "base",
-          });
-        } else if (key === "shortCode") {
-          // Sort by shortcode as number where possible
-          const aNum = parseFloat(a.shortCode);
-          const bNum = parseFloat(b.shortCode);
-          if (!isNaN(aNum) && !isNaN(bNum)) {
-            comparison = aNum - bNum;
-          } else {
-            comparison = a.shortCode.localeCompare(b.shortCode, undefined, {
-              sensitivity: "base",
-            });
-          }
+          // Sort by name lexicographically, ignoring case (ASCII-based)
+          const an = a.name.toLowerCase();
+          const bn = b.name.toLowerCase();
+          if (an < bn) comparison = -1;
+          else if (an > bn) comparison = 1;
+          else comparison = 0;
         }
+
         return sortConfig.direction === "asc" ? comparison : comparison * -1;
       });
     }
@@ -151,6 +140,8 @@ export default function RoomDetailsPage() {
   // --- Sorting Handler ---
   const handleSort = (key: SortKey) => {
     if (isSearching) return;
+    // Disable sorting by shortCode
+    if (key === "shortCode") return;
     let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
@@ -290,18 +281,9 @@ export default function RoomDetailsPage() {
                     "hidden md:table-cell",
                     // Takes 25% width only on desktop
                     "md:w-[25%]",
-                    "group px-6 py-3 text-center text-base font-semibold text-white border-b border-r border-white/20",
-                    !isSearching && "cursor-pointer",
-                    isSearching && "cursor-default",
+                    "group px-6 py-3 text-center text-base font-semibold text-white border-b border-r border-white/20 cursor-default",
                   )}
-                  onClick={() => handleSort("shortCode")}
-                  aria-sort={
-                    isSearching || sortConfig.key !== "shortCode"
-                      ? "none"
-                      : sortConfig.direction === "asc"
-                        ? "ascending"
-                        : "descending"
-                  }
+                  aria-sort={"none"}
                 >
                   {/* Also hide inner div content on mobile */}
                   <div className="hidden md:flex items-center justify-center">
