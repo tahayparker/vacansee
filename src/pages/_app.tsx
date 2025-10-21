@@ -52,14 +52,17 @@ export default function App({ Component, pageProps }: AppProps) {
 
   // Register service worker for PWA functionality
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       navigator.serviceWorker
-        .register('/sw.js')
+        .register("/sw.js")
         .then((registration) => {
-          console.log('Service Worker registered successfully:', registration.scope);
+          console.log(
+            "Service Worker registered successfully:",
+            registration.scope,
+          );
         })
         .catch((error) => {
-          console.error('Service Worker registration failed:', error);
+          console.error("Service Worker registration failed:", error);
         });
     }
   }, []);
@@ -72,18 +75,18 @@ export default function App({ Component, pageProps }: AppProps) {
   // Ensure all pages start at the top on navigation
   useEffect(() => {
     const handleRouteChange = () => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     };
 
     // Scroll immediately on route change start
-    router.events.on('routeChangeStart', handleRouteChange);
-    
+    router.events.on("routeChangeStart", handleRouteChange);
+
     // Also scroll when route change completes (for safety)
-    router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on("routeChangeComplete", handleRouteChange);
 
     return () => {
-      router.events.off('routeChangeStart', handleRouteChange);
-      router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off("routeChangeStart", handleRouteChange);
+      router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, [router.events]);
 
