@@ -5,106 +5,108 @@
  * Caches static assets and API responses for offline access.
  */
 
-const CACHE_VERSION = '1.0.0';
+const CACHE_VERSION = "1.0.0";
 const CACHE_NAME = `vacansee-v${CACHE_VERSION}`;
 const STATIC_CACHE_NAME = `vacansee-static-v${CACHE_VERSION}`;
 const API_CACHE_NAME = `vacansee-api-v${CACHE_VERSION}`;
-const OFFLINE_PAGE = '/offline.html';
+const OFFLINE_PAGE = "/offline.html";
 
 // Static assets to cache on install
 const STATIC_ASSETS = [
   OFFLINE_PAGE,
-  '/manifest.json',
-  '/favicon.ico',
-  '/apple-icon.png',
-  '/web-app-manifest-192x192.png',
-  '/web-app-manifest-512x512.png'
+  "/manifest.json",
+  "/favicon.ico",
+  "/apple-icon.png",
+  "/web-app-manifest-192x192.png",
+  "/web-app-manifest-512x512.png",
 ];
 
 // Pages to cache on first visit
 const CACHED_PAGES = [
-  '/',
-  '/available-now',
-  '/available-soon',
-  '/check',
-  '/rooms',
-  '/graph',
-  '/custom-graph'
+  "/",
+  "/available-now",
+  "/available-soon",
+  "/check",
+  "/rooms",
+  "/graph",
+  "/custom-graph",
 ];
 
 // API endpoints to cache
 const API_ENDPOINTS = [
-  '/api/schedule',
-  '/api/rooms',
-  '/api/available-now',
-  '/api/available-soon'
+  "/api/schedule",
+  "/api/rooms",
+  "/api/available-now",
+  "/api/available-soon",
 ];
 
 // Install event - cache static assets
-self.addEventListener('install', (event) => {
-  console.log('Service Worker: Installing...');
+self.addEventListener("install", (event) => {
+  console.log("Service Worker: Installing...");
 
   event.waitUntil(
-    caches.open(STATIC_CACHE_NAME)
+    caches
+      .open(STATIC_CACHE_NAME)
       .then((cache) => {
-        console.log('Service Worker: Caching static assets');
+        console.log("Service Worker: Caching static assets");
         // Cache critical assets with fallback for failures
         return Promise.allSettled(
-          STATIC_ASSETS.map(url => 
-            cache.add(url).catch(err => {
+          STATIC_ASSETS.map((url) =>
+            cache.add(url).catch((err) => {
               console.warn(`Failed to cache ${url}:`, err);
               return null;
-            })
-          )
+            }),
+          ),
         );
       })
       .then(() => {
-        console.log('Service Worker: Static assets cached');
+        console.log("Service Worker: Static assets cached");
         return self.skipWaiting();
       })
       .catch((error) => {
-        console.error('Service Worker: Failed to cache static assets', error);
-      })
+        console.error("Service Worker: Failed to cache static assets", error);
+      }),
   );
 });
 
 // Activate event - clean up old caches
-self.addEventListener('activate', (event) => {
-  console.log('Service Worker: Activating...');
+self.addEventListener("activate", (event) => {
+  console.log("Service Worker: Activating...");
 
   const currentCaches = [STATIC_CACHE_NAME, API_CACHE_NAME];
-  
+
   event.waitUntil(
-    caches.keys()
+    caches
+      .keys()
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
             if (!currentCaches.includes(cacheName)) {
-              console.log('Service Worker: Deleting old cache', cacheName);
+              console.log("Service Worker: Deleting old cache", cacheName);
               return caches.delete(cacheName);
             }
-          })
+          }),
         );
       })
       .then(() => {
-        console.log('Service Worker: Activated');
+        console.log("Service Worker: Activated");
         return self.clients.claim();
-      })
+      }),
   );
 });
 
 // Fetch event - serve from cache or network
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
   // Skip non-GET requests
-  if (request.method !== 'GET') {
+  if (request.method !== "GET") {
     return;
   }
 
   // Handle API requests with stale-while-revalidate strategy
-  if (url.pathname.startsWith('/api/')) {
+  if (url.pathname.startsWith("/api/")) {
     event.respondWith(handleApiRequest(request));
     return;
   }
@@ -116,7 +118,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Handle navigation requests with network-first strategy
-  if (request.mode === 'navigate') {
+  if (request.mode === "navigate") {
     event.respondWith(handleNavigationRequest(request));
     return;
   }
@@ -166,9 +168,9 @@ async function handleStaticRequest(request) {
     }
     return response;
   } catch (error) {
-    console.error('Service Worker: Failed to fetch static asset', error);
+    console.error("Service Worker: Failed to fetch static asset", error);
     // Return offline page for navigation requests
-    if (request.mode === 'navigate') {
+    if (request.mode === "navigate") {
       const offlineResponse = await cache.match(OFFLINE_PAGE);
       if (offlineResponse) {
         return offlineResponse;
@@ -186,21 +188,21 @@ async function handleNavigationRequest(request) {
     // Try network first with timeout
     const networkResponse = await Promise.race([
       fetch(request),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Network timeout')), 5000)
-      )
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Network timeout")), 5000),
+      ),
     ]);
-    
+
     // Cache successful page responses
     if (networkResponse.ok) {
       const cache = await caches.open(STATIC_CACHE_NAME);
       cache.put(request, networkResponse.clone());
     }
-    
+
     return networkResponse;
   } catch (error) {
-    console.log('Service Worker: Network failed, trying cache', error);
-    
+    console.log("Service Worker: Network failed, trying cache", error);
+
     // If network fails, try to serve from cache
     const cache = await caches.open(STATIC_CACHE_NAME);
     const cachedResponse = await cache.match(request);
@@ -214,16 +216,13 @@ async function handleNavigationRequest(request) {
     if (offlineResponse) {
       return offlineResponse;
     }
-    
+
     // Last resort fallback
-    return new Response(
-      'Offline - Please check your connection',
-      { 
-        status: 503,
-        statusText: 'Service Unavailable',
-        headers: { 'Content-Type': 'text/plain' }
-      }
-    );
+    return new Response("Offline - Please check your connection", {
+      status: 503,
+      statusText: "Service Unavailable",
+      headers: { "Content-Type": "text/plain" },
+    });
   }
 }
 
@@ -234,20 +233,35 @@ function isStaticAsset(request) {
   const url = new URL(request.url);
 
   // Check if it's a static file extension
-  const staticExtensions = ['.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.otf'];
-  const hasStaticExtension = staticExtensions.some(ext => url.pathname.endsWith(ext));
+  const staticExtensions = [
+    ".js",
+    ".css",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".gif",
+    ".svg",
+    ".ico",
+    ".woff",
+    ".woff2",
+    ".ttf",
+    ".otf",
+  ];
+  const hasStaticExtension = staticExtensions.some((ext) =>
+    url.pathname.endsWith(ext),
+  );
 
   // Check if it's a Next.js static asset
-  const isNextStatic = url.pathname.startsWith('/_next/static/');
+  const isNextStatic = url.pathname.startsWith("/_next/static/");
 
   return hasStaticExtension || isNextStatic;
 }
 
 // Handle background sync for offline actions
-self.addEventListener('sync', (event) => {
-  console.log('Service Worker: Background sync', event.tag);
+self.addEventListener("sync", (event) => {
+  console.log("Service Worker: Background sync", event.tag);
 
-  if (event.tag === 'background-sync') {
+  if (event.tag === "background-sync") {
     event.waitUntil(doBackgroundSync());
   }
 });
@@ -255,50 +269,46 @@ self.addEventListener('sync', (event) => {
 async function doBackgroundSync() {
   // Implement background sync logic here
   // For example, sync offline form submissions when back online
-  console.log('Service Worker: Performing background sync');
+  console.log("Service Worker: Performing background sync");
 }
 
 // Handle push notifications (for future use)
-self.addEventListener('push', (event) => {
-  console.log('Service Worker: Push notification received');
+self.addEventListener("push", (event) => {
+  console.log("Service Worker: Push notification received");
 
   const options = {
-    body: event.data ? event.data.text() : 'New notification from vacansee',
-    icon: '/web-app-manifest-192x192.png',
-    badge: '/web-app-manifest-192x192.png',
+    body: event.data ? event.data.text() : "New notification from vacansee",
+    icon: "/web-app-manifest-192x192.png",
+    badge: "/web-app-manifest-192x192.png",
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
-      primaryKey: 1
+      primaryKey: 1,
     },
     actions: [
       {
-        action: 'explore',
-        title: 'Open vacansee',
-        icon: '/web-app-manifest-192x192.png'
+        action: "explore",
+        title: "Open vacansee",
+        icon: "/web-app-manifest-192x192.png",
       },
       {
-        action: 'close',
-        title: 'Close',
-        icon: '/web-app-manifest-192x192.png'
-      }
-    ]
+        action: "close",
+        title: "Close",
+        icon: "/web-app-manifest-192x192.png",
+      },
+    ],
   };
 
-  event.waitUntil(
-    self.registration.showNotification('vacansee', options)
-  );
+  event.waitUntil(self.registration.showNotification("vacansee", options));
 });
 
 // Handle notification clicks
-self.addEventListener('notificationclick', (event) => {
-  console.log('Service Worker: Notification clicked');
+self.addEventListener("notificationclick", (event) => {
+  console.log("Service Worker: Notification clicked");
 
   event.notification.close();
 
-  if (event.action === 'explore') {
-    event.waitUntil(
-      clients.openWindow('/')
-    );
+  if (event.action === "explore") {
+    event.waitUntil(clients.openWindow("/"));
   }
 });
