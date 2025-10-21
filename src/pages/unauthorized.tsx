@@ -59,7 +59,13 @@ export default function UnauthorizedPage() {
     if (router.isReady) {
       validateAccess();
     }
-  }, [router.isReady, router.query.auth_error, supabase.auth, router, hasValidated]);
+  }, [
+    router.isReady,
+    router.query.auth_error,
+    supabase.auth,
+    router,
+    hasValidated,
+  ]);
 
   const handleSignOut = async () => {
     setIsSignOutLoading(true);
@@ -137,7 +143,10 @@ export default function UnauthorizedPage() {
           Please click the button below to go home. Your account will be signed
           out.
         </motion.p>
-        <motion.div variants={itemVariants} className="flex justify-center pt-4">
+        <motion.div
+          variants={itemVariants}
+          className="flex justify-center pt-4"
+        >
           <Button
             variant="outline"
             onClick={handleSignOut}
