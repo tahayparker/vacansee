@@ -289,7 +289,11 @@ export default function SiteHeader({
         {!maintenanceMode && isMounted && (
           <div className="flex items-center gap-1 sm:gap-2">
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex" role="navigation" aria-label="Main navigation">
+            <nav
+              className="hidden md:flex"
+              role="navigation"
+              aria-label="Main navigation"
+            >
               <ul className="flex items-center gap-x-1" role="menubar">
                 {navItems.map((navItem) => (
                   <NavLink
@@ -343,9 +347,13 @@ export default function SiteHeader({
                       aria-label="Profile"
                     >
                       <span className="flex items-center justify-center">
-                        {user.user_metadata?.avatar_url || user.user_metadata?.picture ? (
+                        {user.user_metadata?.avatar_url ||
+                        user.user_metadata?.picture ? (
                           <Image
-                            src={user.user_metadata?.avatar_url || user.user_metadata?.picture}
+                            src={
+                              user.user_metadata?.avatar_url ||
+                              user.user_metadata?.picture
+                            }
                             alt="Profile"
                             width={20}
                             height={20}
@@ -479,11 +487,14 @@ export default function SiteHeader({
               <motion.button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 onKeyDown={(e) => {
-                  if (e.key === KeyboardKeys.ENTER || e.key === KeyboardKeys.SPACE) {
+                  if (
+                    e.key === KeyboardKeys.ENTER ||
+                    e.key === KeyboardKeys.SPACE
+                  ) {
                     e.preventDefault();
                     setIsMenuOpen(!isMenuOpen);
                     AriaAnnouncer.getInstance().announce(
-                      isMenuOpen ? 'Menu closed' : 'Menu opened'
+                      isMenuOpen ? "Menu closed" : "Menu opened",
                     );
                   }
                 }}
@@ -596,9 +607,13 @@ export default function SiteHeader({
                           onClick={() => setIsMenuOpen(false)}
                           className="flex items-center gap-3 w-full p-3 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors duration-200 ease-in-out mb-2"
                         >
-                          {user.user_metadata?.avatar_url || user.user_metadata?.picture ? (
+                          {user.user_metadata?.avatar_url ||
+                          user.user_metadata?.picture ? (
                             <Image
-                              src={user.user_metadata?.avatar_url || user.user_metadata?.picture}
+                              src={
+                                user.user_metadata?.avatar_url ||
+                                user.user_metadata?.picture
+                              }
                               alt={userDisplayName}
                               width={32}
                               height={32}
@@ -607,7 +622,9 @@ export default function SiteHeader({
                           ) : (
                             <UserRound className="h-8 w-8 flex-shrink-0" />
                           )}
-                          <span className="flex-grow text-base font-medium">Profile</span>
+                          <span className="flex-grow text-base font-medium">
+                            Profile
+                          </span>
                         </Link>
                         <button
                           onClick={handleSignOut}
