@@ -24,20 +24,23 @@ export const RoomSchema = z.object({
 /**
  * Schema for availability check request
  */
-export const AvailabilityCheckRequestSchema = z.object({
-  roomName: z.string().min(1, "Room name is required"),
-  day: z.enum(DAYS_OF_WEEK, {
-    errorMap: () => ({ message: "Invalid day of week" }),
-  }),
-  startTime: z.string().regex(/^\d{2}:\d{2}$/, "Start time must be in HH:mm format"),
-  endTime: z.string().regex(/^\d{2}:\d{2}$/, "End time must be in HH:mm format"),
-}).refine(
-  (data) => data.startTime < data.endTime,
-  {
+export const AvailabilityCheckRequestSchema = z
+  .object({
+    roomName: z.string().min(1, "Room name is required"),
+    day: z.enum(DAYS_OF_WEEK, {
+      errorMap: () => ({ message: "Invalid day of week" }),
+    }),
+    startTime: z
+      .string()
+      .regex(/^\d{2}:\d{2}$/, "Start time must be in HH:mm format"),
+    endTime: z
+      .string()
+      .regex(/^\d{2}:\d{2}$/, "End time must be in HH:mm format"),
+  })
+  .refine((data) => data.startTime < data.endTime, {
     message: "End time must be after start time",
     path: ["endTime"],
-  }
-);
+  });
 
 /**
  * Schema for conflict details
@@ -103,7 +106,9 @@ export const ErrorResponseSchema = z.object({
 /**
  * Request body for checking room availability
  */
-export type AvailabilityCheckRequest = z.infer<typeof AvailabilityCheckRequestSchema>;
+export type AvailabilityCheckRequest = z.infer<
+  typeof AvailabilityCheckRequestSchema
+>;
 
 /**
  * Request parameters for room search
@@ -130,7 +135,9 @@ export interface AvailableSoonRequest {
 /**
  * Response from availability check endpoint
  */
-export type AvailabilityCheckResponse = z.infer<typeof AvailabilityCheckResponseSchema>;
+export type AvailabilityCheckResponse = z.infer<
+  typeof AvailabilityCheckResponseSchema
+>;
 
 /**
  * Response from available now endpoint
@@ -236,7 +243,7 @@ export type ExtractData<T> = T extends ApiSuccessResponse<infer U> ? U : never;
  * Type guard to check if response is successful
  */
 export function isSuccessResponse<T>(
-  response: ApiResponse<T>
+  response: ApiResponse<T>,
 ): response is ApiSuccessResponse<T> {
   return response.success === true;
 }
@@ -245,7 +252,7 @@ export function isSuccessResponse<T>(
  * Type guard to check if response is an error
  */
 export function isErrorResponse(
-  response: ApiResponse
+  response: ApiResponse,
 ): response is ApiErrorResponse {
   return response.success === false;
 }
