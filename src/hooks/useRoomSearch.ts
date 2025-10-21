@@ -65,7 +65,7 @@ export interface UseRoomSearchResult {
  */
 export function useRoomSearch(
   rooms: Room[],
-  options: UseRoomSearchOptions = {}
+  options: UseRoomSearchOptions = {},
 ): UseRoomSearchResult {
   const {
     threshold = 0.4,
