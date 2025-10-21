@@ -27,38 +27,40 @@ export default function Profile() {
     // router.replace("/");
   };
 
-
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
-    supabase.auth.getUser().then(async ({ data }) => {
-      const user = data.user;
-      if (!user) {
-        setIsLoading(false);
-        return;
-      }
-      const meta = (user.user_metadata || {}) as Record<string, any>;
-      // Common OAuth metadata keys: name, full_name, picture, avatar_url
-      const userName = meta.name || meta.full_name || "";
-      const userAvatar = meta.avatar_url || meta.picture || "";
-      setName(userName || user.email?.split("@")[0] || "");
-      setEmail(user.email || "");
-
-      // Optimize avatar image if available
-      if (userAvatar) {
-        try {
-          const optimizedUrl = await imageOptimization.avatar(userAvatar, 96);
-          setOptimizedAvatarUrl(optimizedUrl);
-        } catch (error) {
-          console.warn('Failed to optimize avatar image:', error);
-          setOptimizedAvatarUrl(userAvatar);
+    supabase.auth
+      .getUser()
+      .then(async ({ data }) => {
+        const user = data.user;
+        if (!user) {
+          setIsLoading(false);
+          return;
         }
-      }
+        const meta = (user.user_metadata || {}) as Record<string, any>;
+        // Common OAuth metadata keys: name, full_name, picture, avatar_url
+        const userName = meta.name || meta.full_name || "";
+        const userAvatar = meta.avatar_url || meta.picture || "";
+        setName(userName || user.email?.split("@")[0] || "");
+        setEmail(user.email || "");
 
-      setIsLoading(false);
-    }).catch((error) => {
-      console.error("Error fetching user data:", error);
-      setIsLoading(false);
-    });
+        // Optimize avatar image if available
+        if (userAvatar) {
+          try {
+            const optimizedUrl = await imageOptimization.avatar(userAvatar, 96);
+            setOptimizedAvatarUrl(optimizedUrl);
+          } catch (error) {
+            console.warn("Failed to optimize avatar image:", error);
+            setOptimizedAvatarUrl(userAvatar);
+          }
+        }
+
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+        setIsLoading(false);
+      });
   }, []);
 
   const handleResetOnboarding = async () => {
@@ -66,8 +68,10 @@ export default function Profile() {
       setResetting(true);
       setResetDone(false);
       // Clear session guard so the tour can re-open immediately
-      if (typeof window !== 'undefined') {
-        try { sessionStorage.removeItem('vacansee_onboarding_done'); } catch {}
+      if (typeof window !== "undefined") {
+        try {
+          sessionStorage.removeItem("vacansee_onboarding_done");
+        } catch {}
       }
       await resetOnboarding();
       setResetDone(true);
@@ -78,18 +82,23 @@ export default function Profile() {
     }
   };
 
-
   // Show loading spinner while fetching user data (no card until data is ready)
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 w-full px-4" style={{ minHeight: 'calc(100vh - 80px)' }}>
+      <div
+        className="flex flex-col items-center justify-center gap-4 w-full px-4"
+        style={{ minHeight: "calc(100vh - 80px)" }}
+      >
         <LoadingSpinner size="medium" message="Loading profile..." />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 w-full px-4" style={{ minHeight: 'calc(100vh - 80px)' }}>
+    <div
+      className="flex flex-col items-center justify-center gap-4 w-full px-4"
+      style={{ minHeight: "calc(100vh - 80px)" }}
+    >
       <style jsx>{`
         :global(.pc-card-wrapper:hover),
         :global(.pc-card-wrapper.active) {
@@ -131,16 +140,26 @@ export default function Profile() {
           <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-4xl font-bold text-white overflow-hidden">
             {optimizedAvatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={optimizedAvatarUrl} alt="avatar" className="w-full h-full object-cover" />
+              <img
+                src={optimizedAvatarUrl}
+                alt="avatar"
+                className="w-full h-full object-cover"
+              />
             ) : (
               (name || email || " ").charAt(0).toUpperCase()
             )}
           </div>
           <div className="w-full max-w-xs mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-1">{name || " "}</h2>
+            <h2 className="text-2xl font-bold text-white mb-1">
+              {name || " "}
+            </h2>
             <p className="text-neutral-300">{email || " "}</p>
             <div className="mt-4">
-              <Button onClick={handleSignOut} variant="destructive" className="w-full flex items-center gap-2 justify-center">
+              <Button
+                onClick={handleSignOut}
+                variant="destructive"
+                className="w-full flex items-center gap-2 justify-center"
+              >
                 <LogOut className="h-4 w-4" />
                 Sign out
               </Button>
@@ -150,10 +169,15 @@ export default function Profile() {
       </SpotlightCard>
       <SpotlightCard className="w-full max-w-md">
         <div className="space-y-4">
-          <h3 className="text-xl text-center font-semibold text-white">Settings</h3>
+          <h3 className="text-xl text-center font-semibold text-white">
+            Settings
+          </h3>
           <div className="flex items-center justify-between">
             <span className="text-md text-white">Time format</span>
-            <Tabs value={use24h ? "24h" : "12h"} onValueChange={(val) => setTimeFormat(val === "24h")}>
+            <Tabs
+              value={use24h ? "24h" : "12h"}
+              onValueChange={(val) => setTimeFormat(val === "24h")}
+            >
               <TabsList className="bg-black/40 border border-white/10 w-40">
                 <TabsTrigger
                   value="12h"
@@ -176,17 +200,25 @@ export default function Profile() {
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-2">
               <span className="text-md text-white">Onboarding</span>
-              <Button onClick={handleResetOnboarding} disabled={resetting} variant="outline" className="flex items-center gap-2">
+              <Button
+                onClick={handleResetOnboarding}
+                disabled={resetting}
+                variant="outline"
+                className="flex items-center gap-2"
+              >
                 <RotateCcw className="h-4 w-4" />
-                {resetting ? 'Resetting…' : 'Reset onboarding'}
+                {resetting ? "Resetting…" : "Reset onboarding"}
               </Button>
             </div>
-            <p className="text-sm text-white/60">See the welcome tour again to revisit key features.</p>
+            <p className="text-sm text-white/60">
+              See the welcome tour again to revisit key features.
+            </p>
             {resetDone && (
-              <span className="text-xs text-green-400">Reset. The tour will appear now.</span>
+              <span className="text-xs text-green-400">
+                Reset. The tour will appear now.
+              </span>
             )}
           </div>
-
         </div>
       </SpotlightCard>
     </div>
