@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 
 interface SpotlightCardProps extends React.PropsWithChildren {
   className?: string;
@@ -6,7 +6,7 @@ interface SpotlightCardProps extends React.PropsWithChildren {
 
 const SpotlightCard: React.FC<SpotlightCardProps> = ({
   children,
-  className = '',
+  className = "",
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -14,7 +14,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
     <div
       ref={divRef}
       className={`relative rounded-3xl border border-neutral-800 bg-neutral-900/70 overflow-hidden p-8 ${className}`}
-      style={{ backdropFilter: 'blur(12px)' }}
+      style={{ backdropFilter: "blur(12px)" }}
     >
       {/* Spotlight overlay removed */}
       {children}
