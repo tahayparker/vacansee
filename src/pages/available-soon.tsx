@@ -52,9 +52,7 @@ export default function AvailableSoonPage() {
   const [selectedDuration, setSelectedDuration] = useState<number>(
     durationOptions[0].value,
   );
-  const [checkedAt, setCheckedAt] = useState<string | null>(
-    null,
-  );
+  const [checkedAt, setCheckedAt] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { use24h } = useTimeFormat();
@@ -135,9 +133,7 @@ export default function AvailableSoonPage() {
       );
 
       setAvailableRooms(filteredRooms);
-      setCheckedAt(
-        data.checkedAt || responseTimestamp.toISOString(),
-      );
+      setCheckedAt(data.checkedAt || responseTimestamp.toISOString());
     } catch (err: any) {
       console.error(
         "[AvailableSoonPage] Error fetching/processing available rooms:",
