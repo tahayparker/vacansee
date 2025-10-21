@@ -2,7 +2,12 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import Head from "next/head";
 import { motion, AnimatePresence } from "framer-motion";
-import { pageContainerVariants, headerSectionVariants, tableRowVariants, fadeVariants } from "@/lib/animations";
+import {
+  pageContainerVariants,
+  headerSectionVariants,
+  tableRowVariants,
+  fadeVariants,
+} from "@/lib/animations";
 import {
   Select,
   SelectContent,
@@ -16,12 +21,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
@@ -31,9 +31,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { AlertCircle, Search, Download, Share2, FileImage, FileSpreadsheet, Maximize2, Minimize2 } from "lucide-react";
+import {
+  AlertCircle,
+  Search,
+  Download,
+  Share2,
+  FileImage,
+  FileSpreadsheet,
+  Maximize2,
+  Minimize2,
+} from "lucide-react";
 import { formatTime, cn } from "@/lib/utils";
-import { useFormPersistence, useSearchPersistence } from "@/hooks/useFormPersistence";
+import {
+  useFormPersistence,
+  useSearchPersistence,
+} from "@/hooks/useFormPersistence";
 import { montserrat } from "@/lib/fonts";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
 import { useToast } from "@/components/ui/toast";
@@ -104,7 +116,9 @@ const allTimeIntervals = [
 // --- Main Page Component ---
 
 // --- Helper Functions ---
-const getRoomShortCode = (roomIdentifier: string | null | undefined): string => {
+const getRoomShortCode = (
+  roomIdentifier: string | null | undefined,
+): string => {
   if (!roomIdentifier) return "";
   return roomIdentifier.split(/[- /]/)[0];
 };
@@ -121,7 +135,9 @@ export default function CustomGraphPage() {
   const [isTableContained, setIsTableContained] = useState(true);
 
   // Check if we have URL params
-  const hasUrlParams = typeof window !== 'undefined' && new URLSearchParams(window.location.search).toString().length > 0;
+  const hasUrlParams =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).toString().length > 0;
   const { use24h } = useTimeFormat();
   const { success, error: showError } = useToast();
 
@@ -150,7 +166,7 @@ export default function CustomGraphPage() {
       timeRangeEnd: null as number | null,
     };
 
-    if (typeof window === 'undefined' || !hasUrlParams) {
+    if (typeof window === "undefined" || !hasUrlParams) {
       return defaults;
     }
 
@@ -158,48 +174,54 @@ export default function CustomGraphPage() {
     const result = { ...defaults };
 
     // Parse days
-    const days = urlParams.get('days');
+    const days = urlParams.get("days");
     if (days) {
-      const dayIndices = days.split(',').map(Number).filter(n => !isNaN(n));
+      const dayIndices = days
+        .split(",")
+        .map(Number)
+        .filter((n) => !isNaN(n));
       if (dayIndices.length > 0) {
         result.selectedDays = dayIndices;
         if (isConsecutiveRange(dayIndices)) {
           const sorted = [...dayIndices].sort((a, b) => a - b);
-          result.dayMode = 'range';
+          result.dayMode = "range";
           result.dayRangeStart = sorted[0];
           result.dayRangeEnd = sorted[sorted.length - 1];
         } else {
-          result.dayMode = 'individual';
+          result.dayMode = "individual";
         }
       }
     }
 
     // Parse times
-    const times = urlParams.get('times');
+    const times = urlParams.get("times");
     if (times) {
-      const timeIndices = times.split(',').map(Number).filter(n => !isNaN(n));
+      const timeIndices = times
+        .split(",")
+        .map(Number)
+        .filter((n) => !isNaN(n));
       if (timeIndices.length > 0) {
         result.selectedTimeSlots = timeIndices;
         if (isConsecutiveRange(timeIndices)) {
           const sorted = [...timeIndices].sort((a, b) => a - b);
-          result.timeMode = 'range';
+          result.timeMode = "range";
           result.timeRangeStart = sorted[0];
           result.timeRangeEnd = sorted[sorted.length - 1];
         } else {
-          result.timeMode = 'individual';
+          result.timeMode = "individual";
         }
       }
     }
 
     // Parse rooms
-    const rooms = urlParams.get('rooms');
+    const rooms = urlParams.get("rooms");
     if (rooms) {
-      result.selectedRooms = rooms.split(',');
+      result.selectedRooms = rooms.split(",");
     }
 
     // Parse groupBy
-    const groupBy = urlParams.get('groupBy');
-    if (groupBy && (groupBy === 'rooms' || groupBy === 'date')) {
+    const groupBy = urlParams.get("groupBy");
+    if (groupBy && (groupBy === "rooms" || groupBy === "date")) {
       result.groupBy = groupBy;
     }
 
@@ -231,7 +253,7 @@ export default function CustomGraphPage() {
             .json()
             .then((errData) => {
               throw new Error(
-                errData.error || `HTTP error! status: ${response.status}`
+                errData.error || `HTTP error! status: ${response.status}`,
               );
             })
             .catch(() => {
@@ -275,7 +297,10 @@ export default function CustomGraphPage() {
 
   // When switching TO range mode, update range values to match current selections if they form a consecutive range
   useEffect(() => {
-    if (filters.values.dayMode === "range" && filters.values.selectedDays.length > 0) {
+    if (
+      filters.values.dayMode === "range" &&
+      filters.values.selectedDays.length > 0
+    ) {
       // Check if current selections form a consecutive range
       if (isConsecutiveRange(filters.values.selectedDays)) {
         const sorted = [...filters.values.selectedDays].sort((a, b) => a - b);
@@ -283,9 +308,12 @@ export default function CustomGraphPage() {
         const newEnd = sorted[sorted.length - 1];
 
         // Only update if different from current range values
-        if (filters.values.dayRangeStart !== newStart || filters.values.dayRangeEnd !== newEnd) {
-          filters.setField('dayRangeStart', newStart);
-          filters.setField('dayRangeEnd', newEnd);
+        if (
+          filters.values.dayRangeStart !== newStart ||
+          filters.values.dayRangeEnd !== newEnd
+        ) {
+          filters.setField("dayRangeStart", newStart);
+          filters.setField("dayRangeEnd", newEnd);
         }
       }
     }
@@ -293,17 +321,25 @@ export default function CustomGraphPage() {
   }, [filters.values.dayMode]);
 
   useEffect(() => {
-    if (filters.values.timeMode === "range" && filters.values.selectedTimeSlots.length > 0) {
+    if (
+      filters.values.timeMode === "range" &&
+      filters.values.selectedTimeSlots.length > 0
+    ) {
       // Check if current selections form a consecutive range
       if (isConsecutiveRange(filters.values.selectedTimeSlots)) {
-        const sorted = [...filters.values.selectedTimeSlots].sort((a, b) => a - b);
+        const sorted = [...filters.values.selectedTimeSlots].sort(
+          (a, b) => a - b,
+        );
         const newStart = sorted[0];
         const newEnd = sorted[sorted.length - 1];
 
         // Only update if different from current range values
-        if (filters.values.timeRangeStart !== newStart || filters.values.timeRangeEnd !== newEnd) {
-          filters.setField('timeRangeStart', newStart);
-          filters.setField('timeRangeEnd', newEnd);
+        if (
+          filters.values.timeRangeStart !== newStart ||
+          filters.values.timeRangeEnd !== newEnd
+        ) {
+          filters.setField("timeRangeStart", newStart);
+          filters.setField("timeRangeEnd", newEnd);
         }
       }
     }
@@ -312,28 +348,59 @@ export default function CustomGraphPage() {
 
   // Update selections based on range mode when range values change
   useEffect(() => {
-    if (filters.values.dayMode === "range" && filters.values.dayRangeStart !== null && filters.values.dayRangeEnd !== null) {
-      const start = Math.min(filters.values.dayRangeStart, filters.values.dayRangeEnd);
-      const end = Math.max(filters.values.dayRangeStart, filters.values.dayRangeEnd);
-      const newDays = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+    if (
+      filters.values.dayMode === "range" &&
+      filters.values.dayRangeStart !== null &&
+      filters.values.dayRangeEnd !== null
+    ) {
+      const start = Math.min(
+        filters.values.dayRangeStart,
+        filters.values.dayRangeEnd,
+      );
+      const end = Math.max(
+        filters.values.dayRangeStart,
+        filters.values.dayRangeEnd,
+      );
+      const newDays = Array.from(
+        { length: end - start + 1 },
+        (_, i) => start + i,
+      );
 
       // Only update if different
-      if (JSON.stringify(newDays) !== JSON.stringify(filters.values.selectedDays)) {
-        filters.setField('selectedDays', newDays);
+      if (
+        JSON.stringify(newDays) !== JSON.stringify(filters.values.selectedDays)
+      ) {
+        filters.setField("selectedDays", newDays);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.values.dayRangeStart, filters.values.dayRangeEnd]);
 
   useEffect(() => {
-    if (filters.values.timeMode === "range" && filters.values.timeRangeStart !== null && filters.values.timeRangeEnd !== null) {
-      const start = Math.min(filters.values.timeRangeStart, filters.values.timeRangeEnd);
-      const end = Math.max(filters.values.timeRangeStart, filters.values.timeRangeEnd);
-      const newSlots = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+    if (
+      filters.values.timeMode === "range" &&
+      filters.values.timeRangeStart !== null &&
+      filters.values.timeRangeEnd !== null
+    ) {
+      const start = Math.min(
+        filters.values.timeRangeStart,
+        filters.values.timeRangeEnd,
+      );
+      const end = Math.max(
+        filters.values.timeRangeStart,
+        filters.values.timeRangeEnd,
+      );
+      const newSlots = Array.from(
+        { length: end - start + 1 },
+        (_, i) => start + i,
+      );
 
       // Only update if different
-      if (JSON.stringify(newSlots) !== JSON.stringify(filters.values.selectedTimeSlots)) {
-        filters.setField('selectedTimeSlots', newSlots);
+      if (
+        JSON.stringify(newSlots) !==
+        JSON.stringify(filters.values.selectedTimeSlots)
+      ) {
+        filters.setField("selectedTimeSlots", newSlots);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -371,7 +438,8 @@ export default function CustomGraphPage() {
       if (!dayData) return;
 
       dayData.rooms.forEach((roomData) => {
-        if (!roomData || !filters.values.selectedRooms.includes(roomData.room)) return;
+        if (!roomData || !filters.values.selectedRooms.includes(roomData.room))
+          return;
 
         // Filter availability based on selected time slots
         const filteredAvailability = filters.values.selectedTimeSlots
@@ -392,7 +460,7 @@ export default function CustomGraphPage() {
       // Sort by room first, then by day
       rows.sort((a, b) => {
         const roomCompare = getRoomShortCode(a.room).localeCompare(
-          getRoomShortCode(b.room)
+          getRoomShortCode(b.room),
         );
         if (roomCompare !== 0) return roomCompare;
         return a.dayIndex - b.dayIndex;
@@ -406,8 +474,13 @@ export default function CustomGraphPage() {
     }
 
     return rows;
-  }, [scheduleData, filters.values.selectedDays, filters.values.selectedRooms, filters.values.selectedTimeSlots, filters.values.groupBy]);
-
+  }, [
+    scheduleData,
+    filters.values.selectedDays,
+    filters.values.selectedRooms,
+    filters.values.selectedTimeSlots,
+    filters.values.groupBy,
+  ]);
 
   // --- Toggle handlers ---
   const toggleDay = (dayIndex: number) => {
@@ -415,7 +488,7 @@ export default function CustomGraphPage() {
     const newDays = currentDays.includes(dayIndex)
       ? currentDays.filter((d) => d !== dayIndex)
       : [...currentDays, dayIndex].sort((a, b) => a - b);
-    filters.setField('selectedDays', newDays);
+    filters.setField("selectedDays", newDays);
   };
 
   const toggleTimeSlot = (slotIndex: number) => {
@@ -423,7 +496,7 @@ export default function CustomGraphPage() {
     const newSlots = currentSlots.includes(slotIndex)
       ? currentSlots.filter((t) => t !== slotIndex)
       : [...currentSlots, slotIndex].sort((a, b) => a - b);
-    filters.setField('selectedTimeSlots', newSlots);
+    filters.setField("selectedTimeSlots", newSlots);
   };
 
   const toggleRoom = (room: string) => {
@@ -431,7 +504,7 @@ export default function CustomGraphPage() {
     const newRooms = currentRooms.includes(room)
       ? currentRooms.filter((r) => r !== room)
       : [...currentRooms, room];
-    filters.setField('selectedRooms', newRooms);
+    filters.setField("selectedRooms", newRooms);
   };
 
   // --- Export Graph as PNG ---
@@ -440,66 +513,66 @@ export default function CustomGraphPage() {
 
     try {
       // Create a temporary container for the graph with footer
-      const tempContainer = document.createElement('div');
-      tempContainer.style.position = 'absolute';
-      tempContainer.style.left = '-9999px';
-      tempContainer.style.background = '#000000';
+      const tempContainer = document.createElement("div");
+      tempContainer.style.position = "absolute";
+      tempContainer.style.left = "-9999px";
+      tempContainer.style.background = "#000000";
       document.body.appendChild(tempContainer);
 
       // Clone the graph
       const graphClone = graphRef.current.cloneNode(true) as HTMLElement;
 
       // Set minimum width for the container
-      graphClone.style.minWidth = '720px';
-      graphClone.style.width = 'auto';
+      graphClone.style.minWidth = "720px";
+      graphClone.style.width = "auto";
 
       // Optimize table for export
-      const table = graphClone.querySelector('table');
+      const table = graphClone.querySelector("table");
       if (table) {
         const tableEl = table as HTMLElement;
 
         // Let the table expand to fit the container
-        tableEl.style.width = '100%';
-        tableEl.style.minWidth = '720px';
+        tableEl.style.width = "100%";
+        tableEl.style.minWidth = "720px";
 
         // Style header row cells to adjust naturally
-        const headerRow = table.querySelector('thead tr');
+        const headerRow = table.querySelector("thead tr");
         if (headerRow) {
-          const headerCells = headerRow.querySelectorAll('th');
+          const headerCells = headerRow.querySelectorAll("th");
           headerCells.forEach((th, index) => {
             const thEl = th as HTMLElement;
             if (index === 0) {
               // Room column header - keep fixed
-              thEl.style.width = '120px';
-              thEl.style.minWidth = '120px';
-              thEl.style.maxWidth = '120px';
-              thEl.style.textAlign = 'center';
+              thEl.style.width = "120px";
+              thEl.style.minWidth = "120px";
+              thEl.style.maxWidth = "120px";
+              thEl.style.textAlign = "center";
             } else {
               // Time column headers - let them expand to fill available space
-              thEl.style.width = 'auto';
-              thEl.style.minWidth = '0';
-              thEl.style.textAlign = 'center';
-              thEl.style.paddingLeft = '8px';
-              thEl.style.paddingRight = '8px';
+              thEl.style.width = "auto";
+              thEl.style.minWidth = "0";
+              thEl.style.textAlign = "center";
+              thEl.style.paddingLeft = "8px";
+              thEl.style.paddingRight = "8px";
             }
           });
         }
 
         // Style body rows
-        const bodyRows = table.querySelectorAll('tbody tr');
+        const bodyRows = table.querySelectorAll("tbody tr");
         bodyRows.forEach((tr) => {
-          const cells = tr.querySelectorAll('td');
+          const cells = tr.querySelectorAll("td");
           cells.forEach((td, index) => {
             const tdEl = td as HTMLElement;
             if (index === 0) {
               // Room name cells - keep fixed
-              tdEl.style.width = '120px';
-              tdEl.style.minWidth = '120px';
-              tdEl.style.maxWidth = '120px';
+              tdEl.style.width = "120px";
+              tdEl.style.minWidth = "120px";
+              tdEl.style.maxWidth = "120px";
             } else {
               // Data cells - let them expand to fill available space
-              tdEl.style.width = 'auto';
-              tdEl.style.minWidth = '0';
+              tdEl.style.width = "auto";
+              tdEl.style.minWidth = "0";
             }
           });
         });
@@ -508,26 +581,26 @@ export default function CustomGraphPage() {
       tempContainer.appendChild(graphClone);
 
       // Add footer
-      const footer = document.createElement('div');
-      footer.style.width = '100%';
-      footer.style.padding = '16px 24px';
-      footer.style.background = '#000000';
-      footer.style.borderTop = '2px solid rgba(255, 255, 255, 0.15)';
-      footer.style.display = 'flex';
-      footer.style.justifyContent = 'space-between';
-      footer.style.alignItems = 'center';
-      footer.style.fontFamily = 'Montserrat, sans-serif';
-      footer.style.color = '#ffffff';
+      const footer = document.createElement("div");
+      footer.style.width = "100%";
+      footer.style.padding = "16px 24px";
+      footer.style.background = "#000000";
+      footer.style.borderTop = "2px solid rgba(255, 255, 255, 0.15)";
+      footer.style.display = "flex";
+      footer.style.justifyContent = "space-between";
+      footer.style.alignItems = "center";
+      footer.style.fontFamily = "Montserrat, sans-serif";
+      footer.style.color = "#ffffff";
 
-      const leftText = document.createElement('span');
-      leftText.textContent = 'vacansee - vacancy, instantly.';
-      leftText.style.fontWeight = '500';
-      leftText.style.fontSize = '14px';
+      const leftText = document.createElement("span");
+      leftText.textContent = "vacansee - vacancy, instantly.";
+      leftText.style.fontWeight = "500";
+      leftText.style.fontSize = "14px";
 
-      const rightText = document.createElement('span');
-      rightText.textContent = 'Built with 🖤 by TP';
-      rightText.style.fontWeight = '500';
-      rightText.style.fontSize = '12px';
+      const rightText = document.createElement("span");
+      rightText.textContent = "Built with 🖤 by TP";
+      rightText.style.fontWeight = "500";
+      rightText.style.fontSize = "12px";
 
       footer.appendChild(leftText);
       footer.appendChild(rightText);
@@ -535,7 +608,7 @@ export default function CustomGraphPage() {
 
       // Capture the image (html2canvas-pro supports modern CSS including oklab)
       const canvas = await html2canvas(tempContainer, {
-        backgroundColor: '#000000',
+        backgroundColor: "#000000",
         scale: 2,
         logging: false,
       });
@@ -546,20 +619,20 @@ export default function CustomGraphPage() {
       // Download with formatted datetime
       const now = new Date();
       const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
       const datetime = `${year}${month}${day}-${hours}${minutes}${seconds}`;
 
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.download = `vacansee-custom-graph-${datetime}.png`;
-      link.href = canvas.toDataURL('image/png');
+      link.href = canvas.toDataURL("image/png");
       link.click();
     } catch (error) {
-      console.error('Error exporting graph:', error);
-      alert('Failed to export graph. Please try again.');
+      console.error("Error exporting graph:", error);
+      alert("Failed to export graph. Please try again.");
     }
   };
 
@@ -572,44 +645,55 @@ export default function CustomGraphPage() {
       const csvRows: string[] = [];
 
       // Add metadata as comments
-      csvRows.push('# vacansee - Custom Graph Export');
+      csvRows.push("# vacansee - Custom Graph Export");
       csvRows.push(`# Generated: ${now.toLocaleString()}`);
-      csvRows.push(`# Days: ${filters.values.selectedDays.map(d => daysOfWeek[d]).join(', ')}`);
-      csvRows.push(`# Time Range: ${formatTime(filteredTimeIntervals[0], use24h)} - ${formatTime(filteredTimeIntervals[filteredTimeIntervals.length - 1], use24h)}`);
-      csvRows.push(`# Rooms: ${filters.values.selectedRooms.length} room(s) selected`);
-      csvRows.push(`# Grouped By: ${filters.values.groupBy === 'rooms' ? 'Rooms' : 'Days'}`);
-      csvRows.push('#');
+      csvRows.push(
+        `# Days: ${filters.values.selectedDays.map((d) => daysOfWeek[d]).join(", ")}`,
+      );
+      csvRows.push(
+        `# Time Range: ${formatTime(filteredTimeIntervals[0], use24h)} - ${formatTime(filteredTimeIntervals[filteredTimeIntervals.length - 1], use24h)}`,
+      );
+      csvRows.push(
+        `# Rooms: ${filters.values.selectedRooms.length} room(s) selected`,
+      );
+      csvRows.push(
+        `# Grouped By: ${filters.values.groupBy === "rooms" ? "Rooms" : "Days"}`,
+      );
+      csvRows.push("#");
 
       // Create CSV headers
-      const headers = ['Room', 'Day', 'Time Slot', 'Availability'];
-      csvRows.push(headers.join(','));
+      const headers = ["Room", "Day", "Time Slot", "Availability"];
+      csvRows.push(headers.join(","));
 
       // Add data rows
-      tableRows.forEach(row => {
+      tableRows.forEach((row) => {
         const dayName = daysOfWeek[row.dayIndex];
         const timeSlots = filteredTimeIntervals.map((interval, idx) => {
           const availability = row.availability[idx];
-          const status = availability === 1 ? 'Available' : 'Occupied';
-          return [row.room, dayName, interval, status].join(',');
+          const status = availability === 1 ? "Available" : "Occupied";
+          return [row.room, dayName, interval, status].join(",");
         });
         csvRows.push(...timeSlots);
       });
 
       // Create and download CSV
-      const csvContent = csvRows.join('\n');
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const csvContent = csvRows.join("\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      const datetime = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+      const datetime = new Date()
+        .toISOString()
+        .replace(/[:.]/g, "-")
+        .slice(0, 19);
       link.download = `vacansee-custom-graph-${datetime}.csv`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Error exporting CSV:', error);
-      alert('Failed to export CSV. Please try again.');
+      console.error("Error exporting CSV:", error);
+      alert("Failed to export CSV. Please try again.");
     }
   };
 
@@ -629,22 +713,28 @@ export default function CustomGraphPage() {
         Author: "Taha Parker via vacansee",
         CreatedDate: now,
         Company: "vacansee",
-        Comments: `Generated on ${now.toLocaleString()}. Days: ${filters.values.selectedDays.map(d => daysOfWeek[d]).join(', ')}. Time Range: ${formatTime(filteredTimeIntervals[0], use24h)} - ${formatTime(filteredTimeIntervals[filteredTimeIntervals.length - 1], use24h)}. Grouped by: ${filters.values.groupBy === 'rooms' ? 'Rooms' : 'Days'}.`,
-        Keywords: "vacansee, custom graph, excel, xlsx, csv, export, download, rooms, days, times, availability, vacant, occupied, available, occupied, tp, taha parker, garfield, lasagna",
+        Comments: `Generated on ${now.toLocaleString()}. Days: ${filters.values.selectedDays.map((d) => daysOfWeek[d]).join(", ")}. Time Range: ${formatTime(filteredTimeIntervals[0], use24h)} - ${formatTime(filteredTimeIntervals[filteredTimeIntervals.length - 1], use24h)}. Grouped by: ${filters.values.groupBy === "rooms" ? "Rooms" : "Days"}.`,
+        Keywords:
+          "vacansee, custom graph, excel, xlsx, csv, export, download, rooms, days, times, availability, vacant, occupied, available, occupied, tp, taha parker, garfield, lasagna",
       };
 
       // === MAIN SHEET (All Data) ===
       const mainWsData: any[][] = [];
 
       // Header row: Room/Day + time slots
-      const headerRow = ['Room/Day', ...filteredTimeIntervals.map(time => formatTime(time, use24h))];
+      const headerRow = [
+        "Room/Day",
+        ...filteredTimeIntervals.map((time) => formatTime(time, use24h)),
+      ];
       mainWsData.push(headerRow);
 
       // Data rows: one row per room-day combination
-      tableRows.forEach(row => {
+      tableRows.forEach((row) => {
         const rowData = [
           `${getRoomShortCode(row.room)} - ${row.day.substring(0, 3)}`,
-          ...row.availability.map(val => val === 1 ? 'Available' : 'Occupied')
+          ...row.availability.map((val) =>
+            val === 1 ? "Available" : "Occupied",
+          ),
         ];
         mainWsData.push(rowData);
       });
@@ -654,19 +744,19 @@ export default function CustomGraphPage() {
       // Set column widths for main sheet
       const mainColWidths = [
         { wch: 18 }, // Room/Day column
-        ...filteredTimeIntervals.map(() => ({ wch: 12 })) // Time columns
+        ...filteredTimeIntervals.map(() => ({ wch: 12 })), // Time columns
       ];
-      mainWs['!cols'] = mainColWidths;
+      mainWs["!cols"] = mainColWidths;
 
       // Apply styles to main sheet
-      const mainRange = XLSX.utils.decode_range(mainWs['!ref'] || 'A1');
+      const mainRange = XLSX.utils.decode_range(mainWs["!ref"] || "A1");
 
       // Define border style
       const borderStyle = {
         top: { style: "thin", color: { rgb: "000000" } as any },
         bottom: { style: "thin", color: { rgb: "000000" } as any },
         left: { style: "thin", color: { rgb: "000000" } as any },
-        right: { style: "thin", color: { rgb: "000000" } as any }
+        right: { style: "thin", color: { rgb: "000000" } as any },
       } as any;
 
       // Style header row
@@ -675,9 +765,13 @@ export default function CustomGraphPage() {
         if (!mainWs[cellAddress]) continue;
         mainWs[cellAddress].s = {
           font: { bold: true, color: { rgb: "000000" } },
-          fill: { patternType: "solid", fgColor: { rgb: "FFFFFF" }, bgColor: { rgb: "FFFFFF" } },
+          fill: {
+            patternType: "solid",
+            fgColor: { rgb: "FFFFFF" },
+            bgColor: { rgb: "FFFFFF" },
+          },
           alignment: { horizontal: "center", vertical: "center" },
-          border: borderStyle
+          border: borderStyle,
         };
       }
 
@@ -691,57 +785,68 @@ export default function CustomGraphPage() {
             // First column: Room/Day labels with white background
             mainWs[cellAddress].s = {
               font: { bold: true, color: { rgb: "000000" } },
-              fill: { patternType: "solid", fgColor: { rgb: "FFFFFF" }, bgColor: { rgb: "FFFFFF" } },
+              fill: {
+                patternType: "solid",
+                fgColor: { rgb: "FFFFFF" },
+                bgColor: { rgb: "FFFFFF" },
+              },
               alignment: { horizontal: "right", vertical: "center" },
-              border: borderStyle
+              border: borderStyle,
             };
           } else {
             // Data cells: color based on availability
             const value = mainWs[cellAddress].v;
-            const isAvailable = value === 'Available';
+            const isAvailable = value === "Available";
             mainWs[cellAddress].s = {
               fill: {
                 patternType: "solid",
                 fgColor: { rgb: isAvailable ? "90EE90" : "FF6B6B" },
-                bgColor: { rgb: isAvailable ? "90EE90" : "FF6B6B" }
+                bgColor: { rgb: isAvailable ? "90EE90" : "FF6B6B" },
               },
               alignment: { horizontal: "center", vertical: "center" },
-              border: borderStyle
+              border: borderStyle,
             };
           }
         }
       }
 
-      XLSX.utils.book_append_sheet(wb, mainWs, 'All Data');
+      XLSX.utils.book_append_sheet(wb, mainWs, "All Data");
 
       // === GROUPED SHEETS ===
-      if (filters.values.groupBy === 'date') {
+      if (filters.values.groupBy === "date") {
         // Group by days: Create a sheet for each day
-        const sortedDays = [...filters.values.selectedDays].sort((a, b) => a - b);
+        const sortedDays = [...filters.values.selectedDays].sort(
+          (a, b) => a - b,
+        );
         sortedDays.forEach((dayIndex) => {
           const dayName = daysOfWeek[dayIndex];
-          const dayRows = tableRows.filter(row => row.dayIndex === dayIndex);
+          const dayRows = tableRows.filter((row) => row.dayIndex === dayIndex);
 
           if (dayRows.length === 0) return;
 
           const dayWsData: any[][] = [];
 
           // Header: Room + time slots
-          dayWsData.push(['Room', ...filteredTimeIntervals.map(time => formatTime(time, use24h))]);
+          dayWsData.push([
+            "Room",
+            ...filteredTimeIntervals.map((time) => formatTime(time, use24h)),
+          ]);
 
           // Data rows: one per room
-          dayRows.forEach(row => {
+          dayRows.forEach((row) => {
             dayWsData.push([
               getRoomShortCode(row.room),
-              ...row.availability.map(val => val === 1 ? 'Available' : 'Occupied')
+              ...row.availability.map((val) =>
+                val === 1 ? "Available" : "Occupied",
+              ),
             ]);
           });
 
           const dayWs = XLSX.utils.aoa_to_sheet(dayWsData);
-          dayWs['!cols'] = mainColWidths;
+          dayWs["!cols"] = mainColWidths;
 
           // Apply styles
-          const dayRange = XLSX.utils.decode_range(dayWs['!ref'] || 'A1');
+          const dayRange = XLSX.utils.decode_range(dayWs["!ref"] || "A1");
 
           // Header row
           for (let col = dayRange.s.c; col <= dayRange.e.c; col++) {
@@ -749,9 +854,13 @@ export default function CustomGraphPage() {
             if (!dayWs[cellAddress]) continue;
             dayWs[cellAddress].s = {
               font: { bold: true, color: { rgb: "000000" } },
-              fill: { patternType: "solid", fgColor: { rgb: "FFFFFF" }, bgColor: { rgb: "FFFFFF" } },
+              fill: {
+                patternType: "solid",
+                fgColor: { rgb: "FFFFFF" },
+                bgColor: { rgb: "FFFFFF" },
+              },
               alignment: { horizontal: "center", vertical: "center" },
-              border: borderStyle
+              border: borderStyle,
             };
           }
 
@@ -764,28 +873,34 @@ export default function CustomGraphPage() {
               if (col === 0) {
                 dayWs[cellAddress].s = {
                   font: { bold: true, color: { rgb: "000000" } },
-                  fill: { patternType: "solid", fgColor: { rgb: "FFFFFF" }, bgColor: { rgb: "FFFFFF" } },
+                  fill: {
+                    patternType: "solid",
+                    fgColor: { rgb: "FFFFFF" },
+                    bgColor: { rgb: "FFFFFF" },
+                  },
                   alignment: { horizontal: "right", vertical: "center" },
-                  border: borderStyle
+                  border: borderStyle,
                 };
               } else {
                 const value = dayWs[cellAddress].v;
-                const isAvailable = value === 'Available';
+                const isAvailable = value === "Available";
                 dayWs[cellAddress].s = {
                   fill: {
                     patternType: "solid",
                     fgColor: { rgb: isAvailable ? "90EE90" : "FF6B6B" },
-                    bgColor: { rgb: isAvailable ? "90EE90" : "FF6B6B" }
+                    bgColor: { rgb: isAvailable ? "90EE90" : "FF6B6B" },
                   },
                   alignment: { horizontal: "center", vertical: "center" },
-                  border: borderStyle
+                  border: borderStyle,
                 };
               }
             }
           }
 
           // Clean sheet name (max 31 chars, no special chars)
-          const cleanSheetName = dayName.substring(0, 31).replace(/[\\/?*\[\]]/g, '');
+          const cleanSheetName = dayName
+            .substring(0, 31)
+            .replace(/[\\/?*\[\]]/g, "");
           XLSX.utils.book_append_sheet(wb, dayWs, cleanSheetName);
         });
       } else {
@@ -794,28 +909,33 @@ export default function CustomGraphPage() {
           return getRoomShortCode(a).localeCompare(getRoomShortCode(b));
         });
         sortedRooms.forEach((room) => {
-          const roomRows = tableRows.filter(row => row.room === room);
+          const roomRows = tableRows.filter((row) => row.room === room);
 
           if (roomRows.length === 0) return;
 
           const roomWsData: any[][] = [];
 
           // Header: Day + time slots
-          roomWsData.push(['Day', ...filteredTimeIntervals.map(time => formatTime(time, use24h))]);
+          roomWsData.push([
+            "Day",
+            ...filteredTimeIntervals.map((time) => formatTime(time, use24h)),
+          ]);
 
           // Data rows: one per day
-          roomRows.forEach(row => {
+          roomRows.forEach((row) => {
             roomWsData.push([
               row.day.substring(0, 3),
-              ...row.availability.map(val => val === 1 ? 'Available' : 'Occupied')
+              ...row.availability.map((val) =>
+                val === 1 ? "Available" : "Occupied",
+              ),
             ]);
           });
 
           const roomWs = XLSX.utils.aoa_to_sheet(roomWsData);
-          roomWs['!cols'] = mainColWidths;
+          roomWs["!cols"] = mainColWidths;
 
           // Apply styles
-          const roomRange = XLSX.utils.decode_range(roomWs['!ref'] || 'A1');
+          const roomRange = XLSX.utils.decode_range(roomWs["!ref"] || "A1");
 
           // Header row
           for (let col = roomRange.s.c; col <= roomRange.e.c; col++) {
@@ -823,9 +943,13 @@ export default function CustomGraphPage() {
             if (!roomWs[cellAddress]) continue;
             roomWs[cellAddress].s = {
               font: { bold: true, color: { rgb: "000000" } },
-              fill: { patternType: "solid", fgColor: { rgb: "FFFFFF" }, bgColor: { rgb: "FFFFFF" } },
+              fill: {
+                patternType: "solid",
+                fgColor: { rgb: "FFFFFF" },
+                bgColor: { rgb: "FFFFFF" },
+              },
               alignment: { horizontal: "center", vertical: "center" },
-              border: borderStyle
+              border: borderStyle,
             };
           }
 
@@ -838,49 +962,55 @@ export default function CustomGraphPage() {
               if (col === 0) {
                 roomWs[cellAddress].s = {
                   font: { bold: true, color: { rgb: "000000" } },
-                  fill: { patternType: "solid", fgColor: { rgb: "FFFFFF" }, bgColor: { rgb: "FFFFFF" } },
+                  fill: {
+                    patternType: "solid",
+                    fgColor: { rgb: "FFFFFF" },
+                    bgColor: { rgb: "FFFFFF" },
+                  },
                   alignment: { horizontal: "right", vertical: "center" },
-                  border: borderStyle
+                  border: borderStyle,
                 };
               } else {
                 const value = roomWs[cellAddress].v;
-                const isAvailable = value === 'Available';
+                const isAvailable = value === "Available";
                 roomWs[cellAddress].s = {
                   fill: {
                     patternType: "solid",
                     fgColor: { rgb: isAvailable ? "90EE90" : "FF6B6B" },
-                    bgColor: { rgb: isAvailable ? "90EE90" : "FF6B6B" }
+                    bgColor: { rgb: isAvailable ? "90EE90" : "FF6B6B" },
                   },
                   alignment: { horizontal: "center", vertical: "center" },
-                  border: borderStyle
+                  border: borderStyle,
                 };
               }
             }
           }
 
           // Clean sheet name (max 31 chars, no special chars)
-          const cleanSheetName = getRoomShortCode(room).substring(0, 31).replace(/[\\/?*\[\]]/g, '');
+          const cleanSheetName = getRoomShortCode(room)
+            .substring(0, 31)
+            .replace(/[\\/?*\[\]]/g, "");
           XLSX.utils.book_append_sheet(wb, roomWs, cleanSheetName);
         });
       }
 
       // Generate filename with timestamp
       const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
       const datetime = `${year}${month}${day}-${hours}${minutes}${seconds}`;
 
       // Write file with BookType explicitly set
       XLSX.writeFile(wb, `vacansee-custom-graph-${datetime}.xlsx`, {
-        bookType: 'xlsx',
-        cellStyles: true
+        bookType: "xlsx",
+        cellStyles: true,
       });
     } catch (error) {
-      console.error('Error exporting XLSX:', error);
-      alert('Failed to export XLSX. Please try again.');
+      console.error("Error exporting XLSX:", error);
+      alert("Failed to export XLSX. Please try again.");
     }
   };
 
@@ -891,38 +1021,48 @@ export default function CustomGraphPage() {
     // Always use simple arrays - no mode parameters needed
     // The receiver will auto-detect if it's a range or not
     if (filters.values.selectedDays.length > 0) {
-      params.set('days', filters.values.selectedDays.join(','));
+      params.set("days", filters.values.selectedDays.join(","));
     }
 
     if (filters.values.selectedTimeSlots.length > 0) {
-      params.set('times', filters.values.selectedTimeSlots.join(','));
+      params.set("times", filters.values.selectedTimeSlots.join(","));
     }
 
     if (filters.values.selectedRooms.length > 0) {
-      params.set('rooms', filters.values.selectedRooms.join(','));
+      params.set("rooms", filters.values.selectedRooms.join(","));
     }
 
     if (filters.values.groupBy) {
-      params.set('groupBy', filters.values.groupBy);
+      params.set("groupBy", filters.values.groupBy);
     }
 
     const shareableURL = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
 
     // Detect if device is mobile (not just if browser supports Web Share API)
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      ) ||
       (navigator.maxTouchPoints > 0 && window.innerWidth < 768);
 
     // On mobile: use native share if available
     if (isMobile && navigator.share) {
       try {
         await navigator.share({
-          title: 'vacansee Custom Graph',
-          text: 'Check out this custom room availability graph',
+          title: "vacansee Custom Graph",
+          text: "Check out this custom room availability graph",
           url: shareableURL,
         });
       } catch (err) {
-        if (!(err && typeof err === 'object' && 'name' in err && (err as any).name === 'AbortError')) {
-          showError('Failed to open share sheet.');
+        if (
+          !(
+            err &&
+            typeof err === "object" &&
+            "name" in err &&
+            (err as any).name === "AbortError"
+          )
+        ) {
+          showError("Failed to open share sheet.");
         }
       }
       return;
@@ -931,9 +1071,9 @@ export default function CustomGraphPage() {
     // On desktop or mobile without share API: copy to clipboard and show toast
     try {
       await navigator.clipboard.writeText(shareableURL);
-      success('Shareable URL has been copied to your clipboard!');
+      success("Shareable URL has been copied to your clipboard!");
     } catch {
-      showError('Failed to copy URL to clipboard.');
+      showError("Failed to copy URL to clipboard.");
     }
   };
 
@@ -946,7 +1086,7 @@ export default function CustomGraphPage() {
       variants={pageContainerVariants}
       initial="hidden"
       animate="visible"
-      className={`w-full max-w-full mx-auto px-0 py-6 pt-20 md:pt-24 flex flex-col ${shouldUseFullHeight ? 'h-screen' : ''}`}
+      className={`w-full max-w-full mx-auto px-0 py-6 pt-20 md:pt-24 flex flex-col ${shouldUseFullHeight ? "h-screen" : ""}`}
     >
       <Head>
         <title>Custom Graph - vacansee</title>
@@ -963,7 +1103,12 @@ export default function CustomGraphPage() {
 
         {/* Filter Accordion */}
         <div className="bg-black/20 backdrop-blur-sm border border-white/15 rounded-lg p-4 pt-2 pb-2">
-          <Accordion type="single" defaultValue={hasUrlParams ? undefined : "days"} collapsible className="w-full">
+          <Accordion
+            type="single"
+            defaultValue={hasUrlParams ? undefined : "days"}
+            collapsible
+            className="w-full"
+          >
             {/* Days Filter */}
             <AccordionItem value="days" className="border-white/10">
               <AccordionTrigger className="text-white hover:text-white/80 text-lg font-bold py-2">
@@ -972,14 +1117,22 @@ export default function CustomGraphPage() {
               <AccordionContent className="pt-3 pb-3">
                 <Tabs
                   value={filters.values.dayMode}
-                  onValueChange={(val) => filters.setField('dayMode', val as "range" | "individual")}
+                  onValueChange={(val) =>
+                    filters.setField("dayMode", val as "range" | "individual")
+                  }
                   className="w-full"
                 >
                   <TabsList className="bg-black/40 border border-white/10">
-                    <TabsTrigger value="range" className="text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white">
+                    <TabsTrigger
+                      value="range"
+                      className="text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white"
+                    >
                       Range
                     </TabsTrigger>
-                    <TabsTrigger value="individual" className="text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white">
+                    <TabsTrigger
+                      value="individual"
+                      className="text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white"
+                    >
                       Individual
                     </TabsTrigger>
                   </TabsList>
@@ -991,8 +1144,14 @@ export default function CustomGraphPage() {
                         </label>
                         <div className="flex-1">
                           <Select
-                            value={filters.values.dayRangeStart !== null ? filters.values.dayRangeStart.toString() : undefined}
-                            onValueChange={(val) => filters.setField('dayRangeStart', parseInt(val))}
+                            value={
+                              filters.values.dayRangeStart !== null
+                                ? filters.values.dayRangeStart.toString()
+                                : undefined
+                            }
+                            onValueChange={(val) =>
+                              filters.setField("dayRangeStart", parseInt(val))
+                            }
                           >
                             <SelectTrigger className="bg-black/20 border-white/20 text-white">
                               <SelectValue placeholder="Select start day" />
@@ -1014,11 +1173,19 @@ export default function CustomGraphPage() {
                         </div>
                       </div>
                       <div className="flex gap-3 items-center flex-1">
-                        <label className="text-sm text-gray-300 whitespace-nowrap">To:</label>
+                        <label className="text-sm text-gray-300 whitespace-nowrap">
+                          To:
+                        </label>
                         <div className="flex-1">
                           <Select
-                            value={filters.values.dayRangeEnd !== null ? filters.values.dayRangeEnd.toString() : undefined}
-                            onValueChange={(val) => filters.setField('dayRangeEnd', parseInt(val))}
+                            value={
+                              filters.values.dayRangeEnd !== null
+                                ? filters.values.dayRangeEnd.toString()
+                                : undefined
+                            }
+                            onValueChange={(val) =>
+                              filters.setField("dayRangeEnd", parseInt(val))
+                            }
                           >
                             <SelectTrigger className="bg-black/20 border-white/20 text-white">
                               <SelectValue placeholder="Select end day" />
@@ -1053,7 +1220,7 @@ export default function CustomGraphPage() {
                             "rounded-full border-2 transition-all",
                             filters.values.selectedDays.includes(idx)
                               ? "bg-purple-500 border-purple-500 text-white hover:bg-purple-500 hover:border-purple-500"
-                              : "bg-black/20 border-white/20 text-white hover:bg-white/10"
+                              : "bg-black/20 border-white/20 text-white hover:bg-white/10",
                           )}
                         >
                           {day}
@@ -1073,14 +1240,22 @@ export default function CustomGraphPage() {
               <AccordionContent className="pt-3 pb-3">
                 <Tabs
                   value={filters.values.timeMode}
-                  onValueChange={(val) => filters.setField('timeMode', val as "range" | "individual")}
+                  onValueChange={(val) =>
+                    filters.setField("timeMode", val as "range" | "individual")
+                  }
                   className="w-full"
                 >
                   <TabsList className="bg-black/40 border border-white/10">
-                    <TabsTrigger value="range" className="text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white">
+                    <TabsTrigger
+                      value="range"
+                      className="text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white"
+                    >
                       Range
                     </TabsTrigger>
-                    <TabsTrigger value="individual" className="text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white">
+                    <TabsTrigger
+                      value="individual"
+                      className="text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white"
+                    >
                       Individual
                     </TabsTrigger>
                   </TabsList>
@@ -1092,8 +1267,14 @@ export default function CustomGraphPage() {
                         </label>
                         <div className="flex-1">
                           <Select
-                            value={filters.values.timeRangeStart !== null ? filters.values.timeRangeStart.toString() : undefined}
-                            onValueChange={(val) => filters.setField('timeRangeStart', parseInt(val))}
+                            value={
+                              filters.values.timeRangeStart !== null
+                                ? filters.values.timeRangeStart.toString()
+                                : undefined
+                            }
+                            onValueChange={(val) =>
+                              filters.setField("timeRangeStart", parseInt(val))
+                            }
                           >
                             <SelectTrigger className="bg-black/20 border-white/20 text-white">
                               <SelectValue placeholder="Select start time" />
@@ -1115,11 +1296,19 @@ export default function CustomGraphPage() {
                         </div>
                       </div>
                       <div className="flex gap-3 items-center flex-1">
-                        <label className="text-sm text-gray-300 whitespace-nowrap">To:</label>
+                        <label className="text-sm text-gray-300 whitespace-nowrap">
+                          To:
+                        </label>
                         <div className="flex-1">
                           <Select
-                            value={filters.values.timeRangeEnd !== null ? filters.values.timeRangeEnd.toString() : undefined}
-                            onValueChange={(val) => filters.setField('timeRangeEnd', parseInt(val))}
+                            value={
+                              filters.values.timeRangeEnd !== null
+                                ? filters.values.timeRangeEnd.toString()
+                                : undefined
+                            }
+                            onValueChange={(val) =>
+                              filters.setField("timeRangeEnd", parseInt(val))
+                            }
                           >
                             <SelectTrigger className="bg-black/20 border-white/20 text-white">
                               <SelectValue placeholder="Select end time" />
@@ -1155,7 +1344,7 @@ export default function CustomGraphPage() {
                             "rounded-full border-2 transition-all",
                             filters.values.selectedTimeSlots.includes(idx)
                               ? "bg-purple-500 border-purple-500 text-white hover:bg-purple-500 hover:border-purple-500"
-                              : "bg-black/20 border-white/20 text-white hover:bg-white/10"
+                              : "bg-black/20 border-white/20 text-white hover:bg-white/10",
                           )}
                         >
                           {formatTime(time, use24h)}
@@ -1192,28 +1381,41 @@ export default function CustomGraphPage() {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          const allFilteredSelected = filteredRooms.every(room =>
-                            filters.values.selectedRooms.includes(room)
+                          const allFilteredSelected = filteredRooms.every(
+                            (room) =>
+                              filters.values.selectedRooms.includes(room),
                           );
                           if (allFilteredSelected) {
                             // Deselect all filtered rooms
-                            filters.setField('selectedRooms',
-                              filters.values.selectedRooms.filter(r => !filteredRooms.includes(r))
+                            filters.setField(
+                              "selectedRooms",
+                              filters.values.selectedRooms.filter(
+                                (r) => !filteredRooms.includes(r),
+                              ),
                             );
                           } else {
                             // Select all filtered rooms
-                            const newRooms = [...new Set([...filters.values.selectedRooms, ...filteredRooms])];
-                            filters.setField('selectedRooms', newRooms);
+                            const newRooms = [
+                              ...new Set([
+                                ...filters.values.selectedRooms,
+                                ...filteredRooms,
+                              ]),
+                            ];
+                            filters.setField("selectedRooms", newRooms);
                           }
                         }}
                         className={cn(
                           "rounded-full border-2 transition-all whitespace-nowrap",
-                          filteredRooms.every(room => filters.values.selectedRooms.includes(room)) && filteredRooms.length > 0
+                          filteredRooms.every((room) =>
+                            filters.values.selectedRooms.includes(room),
+                          ) && filteredRooms.length > 0
                             ? "bg-purple-500 border-purple-500 text-white hover:bg-purple-500 hover:border-purple-500"
-                            : "bg-black/20 border-white/20 text-white hover:bg-white/10"
+                            : "bg-black/20 border-white/20 text-white hover:bg-white/10",
                         )}
                       >
-                        {filteredRooms.every(room => filters.values.selectedRooms.includes(room)) && filteredRooms.length > 0
+                        {filteredRooms.every((room) =>
+                          filters.values.selectedRooms.includes(room),
+                        ) && filteredRooms.length > 0
                           ? "Deselect All"
                           : "Select All"}
                       </Button>
@@ -1233,7 +1435,7 @@ export default function CustomGraphPage() {
                           "rounded-full border-2 transition-all",
                           filters.values.selectedRooms.includes(room)
                             ? "bg-purple-500 border-purple-500 text-white hover:bg-purple-500 hover:border-purple-500"
-                            : "bg-black/20 border-white/20 text-white hover:bg-white/10"
+                            : "bg-black/20 border-white/20 text-white hover:bg-white/10",
                         )}
                       >
                         {room}
@@ -1253,14 +1455,18 @@ export default function CustomGraphPage() {
                 <div className="flex gap-2">
                   <Toggle
                     pressed={filters.values.groupBy === "rooms"}
-                    onPressedChange={(pressed) => pressed && filters.setField('groupBy', "rooms")}
+                    onPressedChange={(pressed) =>
+                      pressed && filters.setField("groupBy", "rooms")
+                    }
                     className="data-[state=on]:bg-purple-500 data-[state=on]:text-white text-white border border-white/20 rounded-full px-4"
                   >
                     Rooms
                   </Toggle>
                   <Toggle
                     pressed={filters.values.groupBy === "date"}
-                    onPressedChange={(pressed) => pressed && filters.setField('groupBy', "date")}
+                    onPressedChange={(pressed) =>
+                      pressed && filters.setField("groupBy", "date")
+                    }
                     className="data-[state=on]:bg-purple-500 data-[state=on]:text-white text-white border border-white/20 rounded-full px-4"
                   >
                     Day
@@ -1272,56 +1478,68 @@ export default function CustomGraphPage() {
         </div>
 
         {/* View Toggle, Export and Share Buttons */}
-        {filters.values.selectedDays.length > 0 && filters.values.selectedTimeSlots.length > 0 && filters.values.selectedRooms.length > 0 && tableRows.length > 0 && (
-          <div className="flex flex-nowrap justify-end gap-1.5 md:gap-3 mt-4">
-            <Button
-              onClick={() => setIsTableContained(!isTableContained)}
-              variant="outline"
-              className="bg-black/20 border-white/20 hover:bg-white/10 text-white font-semibold flex items-center gap-1 md:gap-2 rounded-full px-2 md:px-6 text-xs md:text-base whitespace-nowrap"
-            >
-              {isTableContained ? (
-                <>
-                  <Maximize2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                  Expand
-                </>
-              ) : (
-                <>
-                  <Minimize2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                  Contain
-                </>
-              )}
-            </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button className="bg-purple-500 hover:bg-purple-500 text-white font-semibold flex items-center gap-1 md:gap-2 rounded-full px-2 md:px-6 text-xs md:text-base whitespace-nowrap">
-                  <Download className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                  Export
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={exportGraphAsPNG} className="cursor-pointer">
-                  <FileImage className="w-4 h-4 mr-2" />
-                  Export as PNG
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={exportGraphAsXLSX} className="cursor-pointer">
-                  <FileSpreadsheet className="w-4 h-4 mr-2" />
-                  Export as XLSX
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={exportGraphAsCSV} className="cursor-pointer">
-                  <FileSpreadsheet className="w-4 h-4 mr-2" />
-                  Export as CSV
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Button
-              onClick={generateShareableURL}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center gap-1 md:gap-2 rounded-full px-2 md:px-6 text-xs md:text-base whitespace-nowrap"
-            >
-              <Share2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
-              Share
-            </Button>
-          </div>
-        )}
+        {filters.values.selectedDays.length > 0 &&
+          filters.values.selectedTimeSlots.length > 0 &&
+          filters.values.selectedRooms.length > 0 &&
+          tableRows.length > 0 && (
+            <div className="flex flex-nowrap justify-end gap-1.5 md:gap-3 mt-4">
+              <Button
+                onClick={() => setIsTableContained(!isTableContained)}
+                variant="outline"
+                className="bg-black/20 border-white/20 hover:bg-white/10 text-white font-semibold flex items-center gap-1 md:gap-2 rounded-full px-2 md:px-6 text-xs md:text-base whitespace-nowrap"
+              >
+                {isTableContained ? (
+                  <>
+                    <Maximize2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                    Expand
+                  </>
+                ) : (
+                  <>
+                    <Minimize2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                    Contain
+                  </>
+                )}
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="bg-purple-500 hover:bg-purple-500 text-white font-semibold flex items-center gap-1 md:gap-2 rounded-full px-2 md:px-6 text-xs md:text-base whitespace-nowrap">
+                    <Download className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                    Export
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem
+                    onClick={exportGraphAsPNG}
+                    className="cursor-pointer"
+                  >
+                    <FileImage className="w-4 h-4 mr-2" />
+                    Export as PNG
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={exportGraphAsXLSX}
+                    className="cursor-pointer"
+                  >
+                    <FileSpreadsheet className="w-4 h-4 mr-2" />
+                    Export as XLSX
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={exportGraphAsCSV}
+                    className="cursor-pointer"
+                  >
+                    <FileSpreadsheet className="w-4 h-4 mr-2" />
+                    Export as CSV
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Button
+                onClick={generateShareableURL}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center gap-1 md:gap-2 rounded-full px-2 md:px-6 text-xs md:text-base whitespace-nowrap"
+              >
+                <Share2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                Share
+              </Button>
+            </div>
+          )}
       </motion.div>
 
       {/* Schedule Table Area */}
@@ -1350,7 +1568,9 @@ export default function CustomGraphPage() {
               <p className="text-sm">{error}</p>
             </div>
           </motion.div>
-        ) : filters.values.selectedDays.length === 0 || filters.values.selectedTimeSlots.length === 0 || filters.values.selectedRooms.length === 0 ? (
+        ) : filters.values.selectedDays.length === 0 ||
+          filters.values.selectedTimeSlots.length === 0 ||
+          filters.values.selectedRooms.length === 0 ? (
           <motion.div
             key="no-selection"
             initial={{ opacity: 0 }}
@@ -1373,7 +1593,7 @@ export default function CustomGraphPage() {
             }}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
             exit="exit"
-            className={`relative flex flex-col px-4 ${shouldUseFullHeight ? 'min-h-0 pb-4' : 'mb-6'}`}
+            className={`relative flex flex-col px-4 ${shouldUseFullHeight ? "min-h-0 pb-4" : "mb-6"}`}
             ref={graphRef}
           >
             <motion.div
@@ -1381,7 +1601,7 @@ export default function CustomGraphPage() {
                 flexGrow: shouldUseFullHeight ? 1 : 0,
               }}
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-              className={`w-full overflow-auto hide-scrollbar border-l border-t border-b border-white/15 rounded-lg shadow-lg bg-black/20 backdrop-blur-sm ${shouldUseFullHeight ? 'min-h-0' : ''}`}
+              className={`w-full overflow-auto hide-scrollbar border-l border-t border-b border-white/15 rounded-lg shadow-lg bg-black/20 backdrop-blur-sm ${shouldUseFullHeight ? "min-h-0" : ""}`}
             >
               <table className="border-separate border-spacing-0 w-full min-w-fit">
                 <thead className="sticky top-0 z-30">
@@ -1393,7 +1613,11 @@ export default function CustomGraphPage() {
                       <th
                         key={time}
                         className={`sticky top-0 bg-black text-white z-30 px-6 md:px-6 py-3 md:py-3 border-b border-white/15 text-center text-xs md:text-sm font-medium whitespace-nowrap ${index === filteredTimeIntervals.length - 1 ? "" : "border-r border-white/15"}`}
-                        style={{ minWidth: "75px", width: "auto", maxWidth: "fit-content" }}
+                        style={{
+                          minWidth: "75px",
+                          width: "auto",
+                          maxWidth: "fit-content",
+                        }}
                       >
                         {formatTime(time, use24h)}
                       </th>
@@ -1428,7 +1652,11 @@ export default function CustomGraphPage() {
                             key={idx}
                             className={`relative z-0 border-b border-black/50 ${getCellColor(avail)} transition-colors duration-150 group-hover:brightness-110 ${idx === row.availability.length - 1 ? "" : "border-r border-black/100"}`}
                             title={`${getRoomShortCode(row.room)} - ${row.day} - ${filteredTimeIntervals[idx]} - ${avail === 1 ? "Available" : "Occupied"}`}
-                            style={{ minWidth: "35px", width: "auto", maxWidth: "fit-content" }}
+                            style={{
+                              minWidth: "35px",
+                              width: "auto",
+                              maxWidth: "fit-content",
+                            }}
                           >
                             <div className="h-5 md:h-6"></div>
                           </td>
