@@ -29,7 +29,7 @@ export function Skeleton({ className, animate = true }: SkeletonProps) {
       className={cn(
         "bg-white/5 rounded-md",
         animate && "animate-pulse",
-        className
+        className,
       )}
     />
   );
@@ -160,7 +160,7 @@ export function TextSkeleton({ lines = 3, className }: TextSkeletonProps) {
           key={i}
           className={cn(
             "h-4",
-            i === lines - 1 ? "w-2/3" : "w-full" // Last line shorter
+            i === lines - 1 ? "w-2/3" : "w-full", // Last line shorter
           )}
         />
       ))}
@@ -188,13 +188,7 @@ export function TableRowSkeleton({ columns = 4 }: { columns?: number }) {
   return (
     <div className="flex items-center gap-4 py-3 border-b border-white/10">
       {Array.from({ length: columns }).map((_, i) => (
-        <Skeleton
-          key={i}
-          className={cn(
-            "h-4",
-            i === 0 ? "w-1/4" : "flex-1"
-          )}
-        />
+        <Skeleton key={i} className={cn("h-4", i === 0 ? "w-1/4" : "flex-1")} />
       ))}
     </div>
   );
@@ -203,7 +197,13 @@ export function TableRowSkeleton({ columns = 4 }: { columns?: number }) {
 /**
  * Skeleton for full table
  */
-export function TableSkeleton({ rows = 5, columns = 4 }: { rows?: number; columns?: number }) {
+export function TableSkeleton({
+  rows = 5,
+  columns = 4,
+}: {
+  rows?: number;
+  columns?: number;
+}) {
   return (
     <div className="space-y-2">
       {/* Header */}
@@ -224,7 +224,11 @@ export function TableSkeleton({ rows = 5, columns = 4 }: { rows?: number; column
 /**
  * Skeleton for avatar/profile picture
  */
-export function AvatarSkeleton({ size = "medium" }: { size?: "small" | "medium" | "large" }) {
+export function AvatarSkeleton({
+  size = "medium",
+}: {
+  size?: "small" | "medium" | "large";
+}) {
   const sizeClasses = {
     small: "w-8 h-8",
     medium: "w-12 h-12",
