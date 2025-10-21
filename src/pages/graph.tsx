@@ -2,7 +2,12 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import { motion, AnimatePresence } from "framer-motion";
-import { pageContainerVariants, headerSectionVariants, tableRowVariants, fadeVariants } from "@/lib/animations";
+import {
+  pageContainerVariants,
+  headerSectionVariants,
+  tableRowVariants,
+  fadeVariants,
+} from "@/lib/animations";
 import {
   Select,
   SelectContent,
@@ -126,17 +131,18 @@ export default function GraphPage() {
       });
   }, []); // Fetch only once on mount
 
-
   // --- Helper Functions ---
   const getCellColor = (avail: number) => {
     return avail === 1 ? "bg-green-500/70" : "bg-red-600/80";
   };
   // Only show the room shortcode (before any dash or space)
-  const getRoomShortCode = (roomIdentifier: string | null | undefined): string => {
+  const getRoomShortCode = (
+    roomIdentifier: string | null | undefined,
+  ): string => {
     if (!roomIdentifier) return "";
     // Split by dash, space, or slash, take first part
     return roomIdentifier.split(/[- /]/)[0];
-  }
+  };
 
   const currentDayData = scheduleData[selectedDayIndex];
 
