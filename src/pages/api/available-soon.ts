@@ -28,6 +28,11 @@ import { handleApiError, ValidationError, DatabaseError } from "@/lib/errors";
 import { logger, generateRequestId } from "@/lib/logger";
 import type { AvailableSoonResponse } from "@/types/api";
 import type { Room } from "@/types/shared";
+import {
+  getShortCodeFromName,
+  expandBookedShortCodes,
+  getRoomNamesForShortCodes,
+} from "@/services/roomCombos";
 
 /**
  * Request body validation schema
@@ -115,15 +120,27 @@ export default async function handler(
 
     const occupiedRoomNames = bookedRoomsResult.map((timing) => timing.Room);
 
-    logger.debug("Occupied rooms at future time", {
+    // Expand occupied rooms to include related rooms (combined/individual)
+    const occupiedShortCodes = new Set(
+      occupiedRoomNames.map((name) => getShortCodeFromName(name)),
+    );
+    const expandedOccupiedShortCodes =
+      expandBookedShortCodes(occupiedShortCodes);
+    const expandedOccupiedRoomNames = await getRoomNamesForShortCodes(
+      prisma,
+      Array.from(expandedOccupiedShortCodes),
+    );
+
+    logger.debug("Occupied rooms expanded", {
       requestId,
-      count: occupiedRoomNames.length,
+      originalCount: occupiedRoomNames.length,
+      expandedCount: expandedOccupiedRoomNames.length,
     });
 
-    // Query available rooms
+    // Query available rooms (excluding expanded occupied list)
     const availableRoomsData = await prisma.rooms.findMany({
       where: {
-        Name: { notIn: occupiedRoomNames },
+        Name: { notIn: expandedOccupiedRoomNames },
       },
       select: { Name: true, ShortCode: true, Capacity: true },
     });
