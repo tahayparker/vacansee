@@ -5,10 +5,10 @@
  * Automatically saves form data as user types and restores it on page load.
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useDebounce } from './useDebounce';
-import { useLocalStorage } from './useLocalStorage';
-import { logger } from '@/lib/logger';
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useDebounce } from "./useDebounce";
+import { useLocalStorage } from "./useLocalStorage";
+import { logger } from "@/lib/logger";
 
 export interface FormPersistenceOptions {
   /** Debounce delay in milliseconds (default: 500) */
@@ -39,7 +39,9 @@ export interface FormPersistenceResult<T> {
   /** Whether form is currently being saved */
   isSaving: boolean;
   /** Submit handler that clears persisted data */
-  handleSubmit: (onSubmit: (values: T) => void | Promise<void>) => Promise<void>;
+  handleSubmit: (
+    onSubmit: (values: T) => void | Promise<void>,
+  ) => Promise<void>;
 }
 
 /**
@@ -78,7 +80,7 @@ export interface FormPersistenceResult<T> {
  */
 export function useFormPersistence<T extends Record<string, any>>(
   initialValues: T,
-  options: FormPersistenceOptions = {}
+  options: FormPersistenceOptions = {},
 ): FormPersistenceResult<T> {
   const {
     debounceDelay = 500,
@@ -93,10 +95,8 @@ export function useFormPersistence<T extends Record<string, any>>(
   const key = storageKey || `form-${randomKey.current}`;
 
   // Local storage for persistence
-  const [persistedData, setPersistedData, clearPersistedData] = useLocalStorage<T>(
-    key,
-    initialValues
-  );
+  const [persistedData, setPersistedData, clearPersistedData] =
+    useLocalStorage<T>(key, initialValues);
 
   // Form state
   const [values, setValues] = useState<T>(persistedData);
@@ -121,7 +121,8 @@ export function useFormPersistence<T extends Record<string, any>>(
   useEffect(() => {
     if (!persist || isInitialLoad.current) return;
 
-    const hasChanges = JSON.stringify(debouncedValues) !== JSON.stringify(persistedData);
+    const hasChanges =
+      JSON.stringify(debouncedValues) !== JSON.stringify(persistedData);
 
     if (hasChanges) {
       setIsSaving(true);
@@ -129,8 +130,8 @@ export function useFormPersistence<T extends Record<string, any>>(
       // Optional validation before save
       if (validateBeforeSave) {
         // Add your validation logic here
-        const isValid = Object.values(debouncedValues).every(value =>
-          value !== null && value !== undefined && value !== ''
+        const isValid = Object.values(debouncedValues).every(
+          (value) => value !== null && value !== undefined && value !== "",
         );
 
         if (!isValid) {
@@ -147,19 +148,26 @@ export function useFormPersistence<T extends Record<string, any>>(
         setIsSaving(false);
       }, 100);
 
-      logger.info('Form data auto-saved', { key, values: debouncedValues });
+      logger.info("Form data auto-saved", { key, values: debouncedValues });
     }
-  }, [debouncedValues, persist, persistedData, setPersistedData, validateBeforeSave, key]);
+  }, [
+    debouncedValues,
+    persist,
+    persistedData,
+    setPersistedData,
+    validateBeforeSave,
+    key,
+  ]);
 
   // Update single field
   const setField = useCallback(<K extends keyof T>(field: K, value: T[K]) => {
-    setValues(prev => ({ ...prev, [field]: value }));
+    setValues((prev) => ({ ...prev, [field]: value }));
     setHasUnsavedChanges(true);
   }, []);
 
   // Update multiple fields
   const setFields = useCallback((updates: Partial<T>) => {
-    setValues(prev => ({ ...prev, ...updates }));
+    setValues((prev) => ({ ...prev, ...updates }));
     setHasUnsavedChanges(true);
   }, []);
 
@@ -179,21 +187,24 @@ export function useFormPersistence<T extends Record<string, any>>(
   }, [clearPersistedData]);
 
   // Submit handler
-  const handleSubmit = useCallback(async (onSubmit: (values: T) => void | Promise<void>) => {
-    try {
-      await onSubmit(values);
+  const handleSubmit = useCallback(
+    async (onSubmit: (values: T) => void | Promise<void>) => {
+      try {
+        await onSubmit(values);
 
-      if (clearOnSubmit) {
-        clearPersistedData();
-        setHasUnsavedChanges(false);
+        if (clearOnSubmit) {
+          clearPersistedData();
+          setHasUnsavedChanges(false);
+        }
+
+        logger.info("Form submitted successfully", { key, values });
+      } catch (error) {
+        logger.error("Form submission failed", error as Error, { key, values });
+        throw error;
       }
-
-      logger.info('Form submitted successfully', { key, values });
-    } catch (error) {
-      logger.error('Form submission failed', error as Error, { key, values });
-      throw error;
-    }
-  }, [values, clearOnSubmit, clearPersistedData, key]);
+    },
+    [values, clearOnSubmit, clearPersistedData, key],
+  );
 
   return {
     values,
@@ -215,17 +226,17 @@ export function useFormPersistence<T extends Record<string, any>>(
  * @returns Search utilities
  */
 export function useSearchPersistence(
-  initialQuery: string = '',
+  initialQuery: string = "",
   options: {
     debounceDelay?: number;
     persist?: boolean;
     storageKey?: string;
-  } = {}
+  } = {},
 ) {
   const {
     debounceDelay = 300,
     persist = true,
-    storageKey = 'search-query',
+    storageKey = "search-query",
   } = options;
 
   const form = useFormPersistence(
@@ -235,14 +246,14 @@ export function useSearchPersistence(
       persist,
       storageKey,
       clearOnSubmit: false, // Don't clear search on submit
-    }
+    },
   );
 
   return {
     query: form.values.query,
-    setQuery: (query: string) => form.setField('query', query),
+    setQuery: (query: string) => form.setField("query", query),
     debouncedQuery: useDebounce(form.values.query, debounceDelay),
-    clearQuery: () => form.setField('query', ''),
+    clearQuery: () => form.setField("query", ""),
     hasUnsavedChanges: form.hasUnsavedChanges,
     isSaving: form.isSaving,
   };
@@ -259,7 +270,7 @@ export function useSearchPersistence(
 export function useFormValidation<T extends Record<string, any>>(
   initialValues: T,
   validationRules: Partial<Record<keyof T, (value: any) => string | null>>,
-  options: FormPersistenceOptions = {}
+  options: FormPersistenceOptions = {},
 ) {
   const form = useFormPersistence(initialValues, {
     ...options,
@@ -269,21 +280,24 @@ export function useFormValidation<T extends Record<string, any>>(
   const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
 
   // Validate single field
-  const validateField = useCallback(<K extends keyof T>(field: K, value: T[K]) => {
-    const rule = validationRules[field];
-    if (!rule) return null;
+  const validateField = useCallback(
+    <K extends keyof T>(field: K, value: T[K]) => {
+      const rule = validationRules[field];
+      if (!rule) return null;
 
-    const error = rule(value);
-    setErrors(prev => ({ ...prev, [field]: error || undefined }));
-    return error;
-  }, [validationRules]);
+      const error = rule(value);
+      setErrors((prev) => ({ ...prev, [field]: error || undefined }));
+      return error;
+    },
+    [validationRules],
+  );
 
   // Validate all fields
   const validateAll = useCallback(() => {
     const newErrors: Partial<Record<keyof T, string>> = {};
     let isValid = true;
 
-    Object.keys(validationRules).forEach(key => {
+    Object.keys(validationRules).forEach((key) => {
       const field = key as keyof T;
       const rule = validationRules[field];
       if (rule) {
@@ -300,10 +314,13 @@ export function useFormValidation<T extends Record<string, any>>(
   }, [form.values, validationRules]);
 
   // Update field with validation
-  const setFieldWithValidation = useCallback(<K extends keyof T>(field: K, value: T[K]) => {
-    form.setField(field, value);
-    validateField(field, value);
-  }, [form, validateField]);
+  const setFieldWithValidation = useCallback(
+    <K extends keyof T>(field: K, value: T[K]) => {
+      form.setField(field, value);
+      validateField(field, value);
+    },
+    [form, validateField],
+  );
 
   return {
     ...form,
@@ -311,6 +328,6 @@ export function useFormValidation<T extends Record<string, any>>(
     validateField,
     validateAll,
     setField: setFieldWithValidation,
-    isValid: Object.values(errors).every(error => !error),
+    isValid: Object.values(errors).every((error) => !error),
   };
 }
