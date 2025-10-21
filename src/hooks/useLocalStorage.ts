@@ -28,7 +28,7 @@ import { logger } from "@/lib/logger";
  */
 export function useLocalStorage<T>(
   key: string,
-  initialValue: T
+  initialValue: T,
 ): [T, (value: T | ((val: T) => T)) => void, () => void] {
   // State to store our value
   const [storedValue, setStoredValue] = useState<T>(() => {
@@ -65,7 +65,7 @@ export function useLocalStorage<T>(
         logger.error(`Error setting localStorage key "${key}"`, error as Error);
       }
     },
-    [key, storedValue]
+    [key, storedValue],
   );
 
   // Remove value from localStorage
@@ -94,7 +94,7 @@ export function useLocalStorage<T>(
 export function useLocalStorageWithExpiry<T>(
   key: string,
   initialValue: T,
-  ttl: number
+  ttl: number,
 ): [T, (value: T | ((val: T) => T)) => void, () => void] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     if (typeof window === "undefined") {
@@ -141,7 +141,7 @@ export function useLocalStorageWithExpiry<T>(
         logger.error(`Error setting localStorage key "${key}"`, error as Error);
       }
     },
-    [key, storedValue, ttl]
+    [key, storedValue, ttl],
   );
 
   const removeValue = useCallback(() => {
