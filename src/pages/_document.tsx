@@ -8,9 +8,15 @@ export default function Document() {
         {/* PWA Meta Tags */}
         <meta name="application-name" content="vacansee" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
         <meta name="apple-mobile-web-app-title" content="vacansee" />
-        <meta name="description" content="The ultimate guide to finding empty rooms in UOWD. Check room availability, schedules, and find the perfect study space." />
+        <meta
+          name="description"
+          content="The ultimate guide to finding empty rooms in UOWD. Check room availability, schedules, and find the perfect study space."
+        />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
@@ -33,7 +39,10 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
 
         {/* Splash Screens for iOS */}
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
         <link rel="apple-touch-startup-image" href="/apple-icon.png" />
       </Head>
       <body style={{ backgroundColor: "#000000", margin: 0, padding: 0 }}>
