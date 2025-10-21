@@ -333,7 +333,7 @@ export const labelExpandVariants: Variants = {
  */
 export function createStaggerContainer(
   staggerDelay: number = 0.1,
-  delayChildren: number = 0.05
+  delayChildren: number = 0.05,
 ): Variants {
   return {
     hidden: { opacity: 0 },
@@ -356,7 +356,7 @@ export function createStaggerContainer(
  */
 export function createSlideVariants(
   direction: "up" | "down" | "left" | "right",
-  distance: number = 20
+  distance: number = 20,
 ): Variants {
   const axis = direction === "up" || direction === "down" ? "y" : "x";
   const value =
