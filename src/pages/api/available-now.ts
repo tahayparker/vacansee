@@ -18,7 +18,6 @@ import {
   getCurrentDayName,
   formatDubaiDateToISO,
 } from "@/services/timeService";
-import { processRoomsList } from "@/services/roomService";
 import { addSecurityHeaders, getClientIP } from "@/lib/security";
 import { rateLimit } from "@/lib/rateLimit";
 import { handleApiError, DatabaseError } from "@/lib/errors";
@@ -89,7 +88,7 @@ export default async function handler(
       count: bookedRoomNames.length,
     });
 
-    // Query available rooms (filtering happens in processRoomsList)
+    // Query available rooms
     const availableRoomsData = await prisma.rooms.findMany({
       where: {
         Name: { notIn: bookedRoomNames },
@@ -97,33 +96,25 @@ export default async function handler(
       select: { Name: true, ShortCode: true, Capacity: true },
     });
 
-    // Convert to Room type and sort by shortcode as number
-    const roomsBeforeProcessing: Room[] = availableRoomsData
+    // Convert to Room type, filter, and sort by name
+    const processedRooms: Room[] = availableRoomsData
       .map((room) => ({
         name: room.Name,
         shortCode: room.ShortCode,
         capacity: room.Capacity,
       }))
-      .sort((a, b) => {
-        const aNum = parseFloat(a.shortCode);
-        const bNum = parseFloat(b.shortCode);
-        // If both are valid numbers, compare numerically
-        if (!isNaN(aNum) && !isNaN(bNum)) {
-          return aNum - bNum;
-        }
-        // Otherwise, compare lexicographically
-        return a.shortCode.localeCompare(b.shortCode, undefined, {
-          sensitivity: "base",
-        });
-      });
-
-    // Apply room filtering and grouping logic
-    const processedRooms = processRoomsList(roomsBeforeProcessing);
+      .filter(
+        (room) =>
+          !room.name.toLowerCase().includes("consultation") &&
+          !room.name.toLowerCase().includes("online"),
+      )
+      .sort((a, b) =>
+        a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+      );
 
     logger.info("Available rooms processed", {
       requestId,
-      totalRooms: roomsBeforeProcessing.length,
-      filteredRooms: processedRooms.length,
+      totalRooms: processedRooms.length,
     });
 
     // Get checked timestamp in ISO format
