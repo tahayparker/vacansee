@@ -14,7 +14,14 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
-import { addMinutesToCurrentTime, getCurrentTimeString, getCurrentDayName, getDayNameInDubai, getTimeStringInDubai, formatDubaiDateToISO } from "@/services/timeService";
+import {
+  addMinutesToCurrentTime,
+  getCurrentTimeString,
+  getCurrentDayName,
+  getDayNameInDubai,
+  getTimeStringInDubai,
+  formatDubaiDateToISO,
+} from "@/services/timeService";
 import { processRoomsList } from "@/services/roomService";
 import { addSecurityHeaders, getClientIP } from "@/lib/security";
 import { rateLimit } from "@/lib/rateLimit";
@@ -137,7 +144,9 @@ export default async function handler(
           return aNum - bNum;
         }
         // Otherwise, compare lexicographically
-        return a.shortCode.localeCompare(b.shortCode, undefined, { sensitivity: "base" });
+        return a.shortCode.localeCompare(b.shortCode, undefined, {
+          sensitivity: "base",
+        });
       });
 
     // Apply room filtering and grouping logic
