@@ -7,7 +7,6 @@ import Link from "next/link";
 
 // Main Page Component - Returns ONLY content, no layout wrappers
 export default function Home() {
-
   // Return the content block directly. _app.tsx handles centering.
   // Added py-10 for vertical spacing within the centered block
   return (
@@ -30,8 +29,8 @@ export default function Home() {
           variants={slideUpVariants}
           className="text-lg sm:text-xl text-white/80 mb-10 max-w-2xl mx-auto"
         >
-          Stop wandering the halls. vacansee shows
-          you available rooms right when you need them.
+          Stop wandering the halls. vacansee shows you available rooms right
+          when you need them.
         </motion.p>
         <motion.div
           variants={slideUpVariants}
