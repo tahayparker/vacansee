@@ -36,7 +36,10 @@ const performanceMarks = new Map<string, PerformanceMark>();
  * endMeasure('fetch-schedule');
  * ```
  */
-export function startMeasure(name: string, metadata?: Record<string, any>): void {
+export function startMeasure(
+  name: string,
+  metadata?: Record<string, any>,
+): void {
   performanceMarks.set(name, {
     name,
     startTime: performance.now(),
@@ -99,7 +102,7 @@ export function endMeasure(name: string): number | null {
 export async function measureAsync<T>(
   name: string,
   fn: () => Promise<T>,
-  metadata?: Record<string, any>
+  metadata?: Record<string, any>,
 ): Promise<T> {
   startMeasure(name, metadata);
   try {
@@ -123,7 +126,7 @@ export async function measureAsync<T>(
 export function measureSync<T>(
   name: string,
   fn: () => T,
-  metadata?: Record<string, any>
+  metadata?: Record<string, any>,
 ): T {
   startMeasure(name, metadata);
   try {
@@ -163,7 +166,10 @@ export function trackWebVitals(): void {
   // Track First Contentful Paint (FCP)
   const observer = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
-      if (entry.entryType === "paint" && entry.name === "first-contentful-paint") {
+      if (
+        entry.entryType === "paint" &&
+        entry.name === "first-contentful-paint"
+      ) {
         logger.info("FCP", { duration: entry.startTime });
       }
 
@@ -175,11 +181,16 @@ export function trackWebVitals(): void {
       // Track First Input Delay (FID)
       if (entry.entryType === "first-input") {
         const fidEntry = entry as PerformanceEventTiming;
-        logger.info("FID", { duration: fidEntry.processingStart - fidEntry.startTime });
+        logger.info("FID", {
+          duration: fidEntry.processingStart - fidEntry.startTime,
+        });
       }
 
       // Track Cumulative Layout Shift (CLS)
-      if (entry.entryType === "layout-shift" && !(entry as any).hadRecentInput) {
+      if (
+        entry.entryType === "layout-shift" &&
+        !(entry as any).hadRecentInput
+      ) {
         logger.info("CLS", { value: (entry as any).value });
       }
     }
@@ -187,7 +198,14 @@ export function trackWebVitals(): void {
 
   // Observe different entry types
   try {
-    observer.observe({ entryTypes: ["paint", "largest-contentful-paint", "first-input", "layout-shift"] });
+    observer.observe({
+      entryTypes: [
+        "paint",
+        "largest-contentful-paint",
+        "first-input",
+        "layout-shift",
+      ],
+    });
   } catch (error) {
     // Some browsers may not support all entry types
     logger.debug("PerformanceObserver not fully supported", { error });
@@ -253,11 +271,15 @@ export function getMemoryUsage(): {
 export function logPerformanceSummary(): void {
   if (typeof window === "undefined") return;
 
-  const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
+  const navigation = performance.getEntriesByType(
+    "navigation",
+  )[0] as PerformanceNavigationTiming;
 
   if (navigation) {
     logger.info("Performance Summary", {
-      domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
+      domContentLoaded:
+        navigation.domContentLoadedEventEnd -
+        navigation.domContentLoadedEventStart,
       loadComplete: navigation.loadEventEnd - navigation.loadEventStart,
       domInteractive: navigation.domInteractive - navigation.fetchStart,
       transferSize: navigation.transferSize,
@@ -305,7 +327,8 @@ export function createPerformancePanel(): void {
   // Add title
   const title = document.createElement("div");
   title.textContent = "⚡ Performance";
-  title.style.cssText = "font-weight: bold; margin-bottom: 8px; font-size: 14px;";
+  title.style.cssText =
+    "font-weight: bold; margin-bottom: 8px; font-size: 14px;";
   panel.appendChild(title);
 
   // Add metrics container
@@ -353,7 +376,7 @@ export function createPerformancePanel(): void {
     if (marks.length > 0) {
       html += `<div style="margin-bottom: 8px;">
         <strong>Active Measurements:</strong><br/>
-        ${marks.map(mark => `${mark.name}: ${(performance.now() - mark.startTime).toFixed(0)}ms`).join("<br/>")}
+        ${marks.map((mark) => `${mark.name}: ${(performance.now() - mark.startTime).toFixed(0)}ms`).join("<br/>")}
       </div>`;
     }
 
