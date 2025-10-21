@@ -31,12 +31,12 @@ export class AriaAnnouncer {
   }
 
   private createLiveRegion(): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
-    this.liveRegion = document.createElement('div');
-    this.liveRegion.setAttribute('aria-live', 'polite');
-    this.liveRegion.setAttribute('aria-atomic', 'true');
-    this.liveRegion.className = 'sr-only';
+    this.liveRegion = document.createElement("div");
+    this.liveRegion.setAttribute("aria-live", "polite");
+    this.liveRegion.setAttribute("aria-atomic", "true");
+    this.liveRegion.className = "sr-only";
     this.liveRegion.style.cssText = `
       position: absolute;
       width: 1px;
@@ -51,16 +51,16 @@ export class AriaAnnouncer {
     document.body.appendChild(this.liveRegion);
   }
 
-  announce(message: string, priority: 'polite' | 'assertive' = 'polite'): void {
+  announce(message: string, priority: "polite" | "assertive" = "polite"): void {
     if (!this.liveRegion) return;
 
-    this.liveRegion.setAttribute('aria-live', priority);
+    this.liveRegion.setAttribute("aria-live", priority);
     this.liveRegion.textContent = message;
 
     // Clear after announcement
     setTimeout(() => {
       if (this.liveRegion) {
-        this.liveRegion.textContent = '';
+        this.liveRegion.textContent = "";
       }
     }, 1000);
   }
@@ -70,22 +70,25 @@ export class AriaAnnouncer {
  * Keyboard navigation helpers
  */
 export const KeyboardKeys = {
-  ENTER: 'Enter',
-  SPACE: ' ',
-  ESCAPE: 'Escape',
-  TAB: 'Tab',
-  ARROW_UP: 'ArrowUp',
-  ARROW_DOWN: 'ArrowDown',
-  ARROW_LEFT: 'ArrowLeft',
-  ARROW_RIGHT: 'ArrowRight',
-  HOME: 'Home',
-  END: 'End',
+  ENTER: "Enter",
+  SPACE: " ",
+  ESCAPE: "Escape",
+  TAB: "Tab",
+  ARROW_UP: "ArrowUp",
+  ARROW_DOWN: "ArrowDown",
+  ARROW_LEFT: "ArrowLeft",
+  ARROW_RIGHT: "ArrowRight",
+  HOME: "Home",
+  END: "End",
 } as const;
 
 /**
  * Check if a key event matches the expected key
  */
-export function isKey(key: string, event: React.KeyboardEvent | KeyboardEvent): boolean {
+export function isKey(
+  key: string,
+  event: React.KeyboardEvent | KeyboardEvent,
+): boolean {
   return event.key === key;
 }
 
@@ -97,7 +100,7 @@ export function handleListNavigation(
   currentIndex: number,
   totalItems: number,
   onSelect: (index: number) => void,
-  onNavigate?: (index: number) => void
+  onNavigate?: (index: number) => void,
 ): boolean {
   switch (event.key) {
     case KeyboardKeys.ARROW_DOWN:
@@ -141,7 +144,7 @@ export function handleListNavigation(
  */
 export function trapFocus(element: HTMLElement): () => void {
   const focusableElements = element.querySelectorAll(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
   ) as NodeListOf<HTMLElement>;
 
   const firstElement = focusableElements[0];
@@ -163,11 +166,11 @@ export function trapFocus(element: HTMLElement): () => void {
     }
   };
 
-  element.addEventListener('keydown', handleKeyDown);
+  element.addEventListener("keydown", handleKeyDown);
 
   // Return cleanup function
   return () => {
-    element.removeEventListener('keydown', handleKeyDown);
+    element.removeEventListener("keydown", handleKeyDown);
   };
 }
 
@@ -184,42 +187,42 @@ export function srOnly(text: string): string {
 export const AriaAttributes = {
   // Button with loading state
   button: (isLoading: boolean, label: string) => ({
-    'aria-label': isLoading ? `${label} (loading)` : label,
-    'aria-disabled': isLoading,
+    "aria-label": isLoading ? `${label} (loading)` : label,
+    "aria-disabled": isLoading,
   }),
 
   // Form field with error
   formField: (hasError: boolean, errorMessage?: string) => ({
-    'aria-invalid': hasError,
-    'aria-describedby': hasError ? 'error-message' : undefined,
-    'aria-errormessage': hasError ? errorMessage : undefined,
+    "aria-invalid": hasError,
+    "aria-describedby": hasError ? "error-message" : undefined,
+    "aria-errormessage": hasError ? errorMessage : undefined,
   }),
 
   // Loading state
-  loading: (isLoading: boolean, loadingText: string = 'Loading') => ({
-    'aria-busy': isLoading,
-    'aria-live': isLoading ? 'polite' : 'off',
-    'aria-label': isLoading ? loadingText : undefined,
+  loading: (isLoading: boolean, loadingText: string = "Loading") => ({
+    "aria-busy": isLoading,
+    "aria-live": isLoading ? "polite" : "off",
+    "aria-label": isLoading ? loadingText : undefined,
   }),
 
   // Expandable content
   expandable: (isExpanded: boolean, label: string) => ({
-    'aria-expanded': isExpanded,
-    'aria-label': label,
+    "aria-expanded": isExpanded,
+    "aria-label": label,
   }),
 
   // Navigation
   navigation: (currentPage?: string) => ({
-    'aria-label': 'Main navigation',
-    'aria-current': currentPage ? 'page' : undefined,
+    "aria-label": "Main navigation",
+    "aria-current": currentPage ? "page" : undefined,
   }),
 
   // Search
   search: (hasResults: boolean) => ({
-    'aria-label': 'Search rooms',
-    'aria-expanded': hasResults,
-    'aria-haspopup': 'listbox',
-    'aria-activedescendant': hasResults ? 'search-result-0' : undefined,
+    "aria-label": "Search rooms",
+    "aria-expanded": hasResults,
+    "aria-haspopup": "listbox",
+    "aria-activedescendant": hasResults ? "search-result-0" : undefined,
   }),
 } as const;
 
@@ -242,9 +245,9 @@ export const A11yTestHelpers = {
   isVisibleToScreenReader: (element: HTMLElement): boolean => {
     const style = window.getComputedStyle(element);
     return (
-      style.display !== 'none' &&
-      style.visibility !== 'hidden' &&
-      element.getAttribute('aria-hidden') !== 'true'
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      element.getAttribute("aria-hidden") !== "true"
     );
   },
 
@@ -253,12 +256,12 @@ export const A11yTestHelpers = {
    */
   hasFocusManagement: (element: HTMLElement): boolean => {
     return (
-      element.hasAttribute('tabindex') ||
-      element.tagName === 'BUTTON' ||
-      element.tagName === 'A' ||
-      element.tagName === 'INPUT' ||
-      element.tagName === 'SELECT' ||
-      element.tagName === 'TEXTAREA'
+      element.hasAttribute("tabindex") ||
+      element.tagName === "BUTTON" ||
+      element.tagName === "A" ||
+      element.tagName === "INPUT" ||
+      element.tagName === "SELECT" ||
+      element.tagName === "TEXTAREA"
     );
   },
 
@@ -269,12 +272,18 @@ export const A11yTestHelpers = {
     const errors: string[] = [];
 
     // Check for required ARIA attributes
-    if (element.getAttribute('aria-expanded') && !element.getAttribute('aria-controls')) {
-      errors.push('Element with aria-expanded should have aria-controls');
+    if (
+      element.getAttribute("aria-expanded") &&
+      !element.getAttribute("aria-controls")
+    ) {
+      errors.push("Element with aria-expanded should have aria-controls");
     }
 
-    if (element.getAttribute('aria-haspopup') && !element.getAttribute('aria-expanded')) {
-      errors.push('Element with aria-haspopup should have aria-expanded');
+    if (
+      element.getAttribute("aria-haspopup") &&
+      !element.getAttribute("aria-expanded")
+    ) {
+      errors.push("Element with aria-haspopup should have aria-expanded");
     }
 
     return errors;
