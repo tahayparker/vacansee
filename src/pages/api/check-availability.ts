@@ -19,6 +19,11 @@ import { handleApiError, ValidationError, DatabaseError } from "@/lib/errors";
 import { logger, generateRequestId } from "@/lib/logger";
 import { AvailabilityCheckRequestSchema } from "@/types/api";
 import type { AvailabilityCheckResponse } from "@/types/api";
+import {
+  getShortCodeFromName,
+  expandShortCodesForQuery,
+  getRoomNamesForShortCodes,
+} from "@/services/roomCombos";
 
 export default async function handler(
   req: NextApiRequest,
@@ -69,11 +74,29 @@ export default async function handler(
       userId: session.user.id,
     });
 
-    // Query for overlapping bookings
+    // Extract short code and expand to related rooms
+    const shortCode = getShortCodeFromName(roomName);
+    const relatedShortCodes = expandShortCodesForQuery(shortCode);
+    const relatedRoomNames = await getRoomNamesForShortCodes(
+      prisma,
+      relatedShortCodes,
+    );
+
+    logger.debug("Checking related rooms", {
+      requestId,
+      originalRoom: roomName,
+      shortCode,
+      relatedShortCodes,
+      relatedRoomNames,
+    });
+
+    // Query for overlapping bookings across all related rooms
     // A conflict exists if: (booking starts before request ends) AND (booking ends after request starts)
     const conflicts = await prisma.timings.findMany({
       where: {
-        Room: roomName,
+        Room: {
+          in: relatedRoomNames.length > 0 ? relatedRoomNames : [roomName],
+        },
         Day: day,
         StartTime: { lt: endTime }, // Booking starts before requested end time
         EndTime: { gt: startTime }, // Booking ends after requested start time
