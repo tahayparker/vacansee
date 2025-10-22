@@ -7,21 +7,21 @@
   "description": "The ultimate guide to finding empty rooms in UOWD. Check room availability, schedules, and find the perfect study space.",
   "icons": [
     {
-      "src": "/icon-192.svg",
+      "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-512.svg",
+      "src": "/web-app-manifest-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-180.svg",
+      "src": "/apple-icon.png",
       "sizes": "180x180",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     }
   ],
@@ -50,9 +50,8 @@
       "url": "/available-now",
       "icons": [
         {
-          "src": "/icon-192.svg",
-          "sizes": "192x192",
-          "type": "image/svg+xml"
+          "src": "/web-app-manifest-192x192.png",
+          "sizes": "192x192"
         }
       ]
     },
@@ -63,9 +62,8 @@
       "url": "/available-soon",
       "icons": [
         {
-          "src": "/icon-192.svg",
-          "sizes": "192x192",
-          "type": "image/svg+xml"
+          "src": "/web-app-manifest-192x192.png",
+          "sizes": "192x192"
         }
       ]
     },
@@ -76,9 +74,8 @@
       "url": "/check",
       "icons": [
         {
-          "src": "/icon-192.svg",
-          "sizes": "192x192",
-          "type": "image/svg+xml"
+          "src": "/web-app-manifest-192x192.png",
+          "sizes": "192x192"
         }
       ]
     }
