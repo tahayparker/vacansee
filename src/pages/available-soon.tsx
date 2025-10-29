@@ -17,6 +17,7 @@ import { montserrat } from "@/lib/fonts";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
 import { DUBAI_TIMEZONE, ROOM_GROUPINGS } from "@/constants";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 // --- Data Structures ---
 interface AvailableRoomInfo {
@@ -48,6 +49,9 @@ const roomGroupings: Record<string, string[]> = ROOM_GROUPINGS;
 const mainGroupRooms = Object.keys(roomGroupings);
 
 export default function AvailableSoonPage() {
+  // Check authentication first
+  const { loading: authLoading, isAuthenticated } = useRequireAuth();
+  
   const [availableRooms, setAvailableRooms] = useState<AvailableRoomInfo[]>([]);
   const [selectedDuration, setSelectedDuration] = useState<number>(
     durationOptions[0].value,
@@ -56,6 +60,20 @@ export default function AvailableSoonPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { use24h } = useTimeFormat();
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // --- Data Fetching and Filtering ---
   const fetchData = useCallback(async (duration: number) => {
