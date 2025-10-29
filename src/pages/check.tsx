@@ -59,6 +59,7 @@ import {
   AriaAnnouncer,
 } from "@/lib/accessibility";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 // --- Data Structures (Unchanged) ---
 interface RoomListData {
@@ -115,6 +116,9 @@ const timeSlots = generateTimeSlots();
 
 // --- Main Page Component ---
 export default function CheckAvailabilityPage() {
+  // Check authentication first
+  const { loading: authLoading, isAuthenticated } = useRequireAuth();
+  
   // --- Form persistence ---
   const form = useFormPersistence(
     {
@@ -148,6 +152,20 @@ export default function CheckAvailabilityPage() {
   const [isLoadingRooms, setIsLoadingRooms] = useState(true);
   const [roomFetchError, setRoomFetchError] = useState<string | null>(null);
   const { use24h } = useTimeFormat();
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // --- Fetch Rooms (Unchanged) ---
   useEffect(() => {
