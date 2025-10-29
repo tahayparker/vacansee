@@ -7,6 +7,7 @@ import { AlertCircle, Search, ArrowUp, ArrowDown } from "lucide-react"; // Icons
 import Fuse from "fuse.js";
 import { cn } from "@/lib/utils"; // Utility for conditional classes
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 // --- Data Structures ---
 interface RoomData {
@@ -26,6 +27,9 @@ interface SortConfig {
 
 // --- Main Page Component ---
 export default function RoomDetailsPage() {
+  // Check authentication first
+  const { loading: authLoading, isAuthenticated } = useRequireAuth();
+  
   // State
   const [allRooms, setAllRooms] = useState<RoomData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,6 +41,20 @@ export default function RoomDetailsPage() {
   });
 
   const isSearching = searchQuery.trim() !== "";
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // --- Fetch All Rooms ---
   useEffect(() => {
