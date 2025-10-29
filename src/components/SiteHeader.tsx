@@ -232,13 +232,21 @@ export default function SiteHeader({
     setIsMenuOpen(false);
     setLoadingAuth(true);
     try {
-      const { error } = await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut({ scope: "local" });
       if (error) {
         console.error("Error signing out:", error);
         setLoadingAuth(false);
       } else {
         console.log("Signed out successfully");
-        router.push("/");
+        // Clear any persisted form data or session-related storage
+        try {
+          localStorage.clear();
+          sessionStorage.clear();
+        } catch (storageError) {
+          console.warn("Could not clear storage:", storageError);
+        }
+        // Force a hard redirect to clear all cached state
+        window.location.href = "/";
       }
     } catch (error) {
       console.error("Exception during sign out:", error);
