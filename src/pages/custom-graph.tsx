@@ -53,6 +53,7 @@ import Fuse from "fuse.js";
 import html2canvas from "html2canvas-pro";
 import * as XLSX from "xlsx-js-style";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 // --- Data Structures ---
 interface FrontendRoomData {
@@ -130,6 +131,9 @@ const getCellColor = (avail: number) => {
 
 // --- Main Page Component ---
 export default function CustomGraphPage() {
+  // Check authentication first
+  const { loading: authLoading, isAuthenticated } = useRequireAuth();
+  
   const [scheduleData, setScheduleData] = useState<FrontendScheduleDay[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -141,6 +145,20 @@ export default function CustomGraphPage() {
     new URLSearchParams(window.location.search).toString().length > 0;
   const { use24h } = useTimeFormat();
   const { success, error: showError } = useToast();
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // Helper to check if an array is a continuous range
   const isConsecutiveRange = (arr: number[]): boolean => {
