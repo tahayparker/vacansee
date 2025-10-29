@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
 import { DUBAI_TIMEZONE } from "@/constants";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 // --- Data Structures (Client-side representation) ---
 interface AvailableRoomInfo {
@@ -26,12 +27,29 @@ interface ApiErrorResponse {
 }
 
 export default function AvailableNowPage() {
+  // Check authentication first
+  const { loading: authLoading, isAuthenticated } = useRequireAuth();
+  
   const [availableRooms, setAvailableRooms] = useState<AvailableRoomInfo[]>([]);
   const [checkedAt, setCheckedAt] = useState<string | null>(null); // Store ISO string from API
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const fetchInitiated = useRef(false); // Ref to prevent double fetch in Strict Mode
   const { use24h } = useTimeFormat();
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // --- Data Fetching Function (Client-side) ---
   const fetchData = useCallback(async () => {
