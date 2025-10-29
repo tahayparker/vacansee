@@ -9,8 +9,11 @@ import { useTimeFormat } from "@/contexts/TimeFormatContext";
 import { imageOptimization } from "@/lib/images";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 export default function Profile() {
+  // Check authentication first
+  const { loading: authLoading, isAuthenticated } = useRequireAuth();
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [optimizedAvatarUrl, setOptimizedAvatarUrl] = useState<string>("");
@@ -22,9 +25,33 @@ export default function Profile() {
 
   const handleSignOut = async () => {
     const supabase = getSupabaseBrowserClient();
-    await supabase.auth.signOut();
-    // Optional: you could route to home if needed
-    // router.replace("/");
+    try {
+      await supabase.auth.signOut();
+      
+      // Clear all storage
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+      } catch (storageError) {
+        console.warn("Could not clear storage:", storageError);
+      }
+      
+      // Clear all cookies
+      try {
+        document.cookie.split(";").forEach((c) => {
+          const cookieName = c.split("=")[0].trim();
+          document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+          document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
+        });
+      } catch (cookieError) {
+        console.warn("Could not clear cookies:", cookieError);
+      }
+      
+      // Force hard redirect
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
   };
 
   useEffect(() => {
@@ -62,6 +89,20 @@ export default function Profile() {
         setIsLoading(false);
       });
   }, []);
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const handleResetOnboarding = async () => {
     try {
