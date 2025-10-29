@@ -21,6 +21,7 @@ import { montserrat } from "@/lib/fonts";
 import { useTimeFormat } from "@/contexts/TimeFormatContext";
 import { formatTime } from "@/lib/utils";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 // --- Data Structures ---
 interface FrontendRoomData {
@@ -84,6 +85,9 @@ function getAdjustedDayIndex(): number {
 
 // --- Main Page Component ---
 export default function GraphPage() {
+  // Check authentication first
+  const { loading: authLoading, isAuthenticated } = useRequireAuth();
+  
   const [scheduleData, setScheduleData] = useState<FrontendScheduleDay[]>([]);
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(() =>
     getAdjustedDayIndex(),
@@ -91,6 +95,20 @@ export default function GraphPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { use24h } = useTimeFormat();
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated (will be redirected)
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // --- Data Fetching ---
   useEffect(() => {
