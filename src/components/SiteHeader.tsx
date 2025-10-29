@@ -232,22 +232,38 @@ export default function SiteHeader({
     setIsMenuOpen(false);
     setLoadingAuth(true);
     try {
-      const { error } = await supabase.auth.signOut({ scope: "local" });
+      // Sign out from Supabase (removes auth cookies and clears session)
+      const { error } = await supabase.auth.signOut();
       if (error) {
         console.error("Error signing out:", error);
         setLoadingAuth(false);
-      } else {
-        console.log("Signed out successfully");
-        // Clear any persisted form data or session-related storage
-        try {
-          localStorage.clear();
-          sessionStorage.clear();
-        } catch (storageError) {
-          console.warn("Could not clear storage:", storageError);
-        }
-        // Force a hard redirect to clear all cached state
-        window.location.href = "/";
+        return;
       }
+      
+      console.log("Signed out successfully");
+      
+      // Clear all local storage and session storage
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+      } catch (storageError) {
+        console.warn("Could not clear storage:", storageError);
+      }
+      
+      // Clear all cookies manually as a safeguard
+      try {
+        document.cookie.split(";").forEach((c) => {
+          const cookieName = c.split("=")[0].trim();
+          // Clear the cookie by setting it to expire in the past
+          document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+          document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
+        });
+      } catch (cookieError) {
+        console.warn("Could not clear cookies:", cookieError);
+      }
+      
+      // Force a hard redirect to clear all cached state and trigger middleware check
+      window.location.href = "/";
     } catch (error) {
       console.error("Exception during sign out:", error);
       setLoadingAuth(false);
