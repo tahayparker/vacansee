@@ -96,20 +96,6 @@ export default function GraphPage() {
   const [error, setError] = useState<string | null>(null);
   const { use24h } = useTimeFormat();
 
-  // Show loading spinner while checking auth
-  if (authLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner size="large" />
-      </div>
-    );
-  }
-
-  // Don't render page content if not authenticated (will be redirected)
-  if (!isAuthenticated) {
-    return null;
-  }
-
   // --- Data Fetching ---
   useEffect(() => {
     setIsLoading(true);
@@ -163,6 +149,20 @@ export default function GraphPage() {
   };
 
   const currentDayData = scheduleData[selectedDayIndex];
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // --- Render Page Content ---
   return (
