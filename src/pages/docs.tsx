@@ -21,6 +21,7 @@ import {
   Shield,
   Zap,
   Database,
+  BookOpen,
 } from "lucide-react";
 import { staggerContainerVariants, listItemVariants } from "@/lib/animations";
 
@@ -105,6 +106,45 @@ export default function DocsPage() {
               group meeting, or just want to see the campus schedule at a
               glance, vacansee provides the necessary tools to help you succeed.
             </p>
+          </motion.section>
+
+          {/* How to Use */}
+          <motion.section variants={listItemVariants} className="space-y-4">
+            <div className="flex items-center gap-3 border-b border-white/20 pb-2 mb-3">
+              <BookOpen className="h-6 w-6 text-purple-500 flex-shrink-0" />
+              <h2 className="text-2xl font-semibold text-white/90">How to Use</h2>
+            </div>
+            <p className="text-white/80 text-lg text-justify">
+              Getting started with vacansee is simple. First, sign in using your
+              Google or GitHub account for secure access. Once logged in, you'll
+              find several pages to help you find available rooms:
+            </p>
+            <ul className="list-disc list-inside space-y-2 text-white/80 pl-1 text-lg">
+              <li>
+                <strong>Available Now:</strong> View which rooms are free right now
+                at a glance
+              </li>
+              <li>
+                <strong>Available Soon:</strong> See upcoming room availability
+                with quick filters (30m, 1h, 2h ahead)
+              </li>
+              <li>
+                <strong>Check Availability:</strong> Enter a specific time to
+                verify room availability for any moment you need
+              </li>
+              <li>
+                <strong>Graph:</strong> Visualize room schedules throughout the day
+                with interactive, color-coded timelines
+              </li>
+              <li>
+                <strong>Custom Graph:</strong> Create personalized schedule views
+                with custom filters, then export them as images
+              </li>
+              <li>
+                <strong>Room Details:</strong> Browse all available spaces with
+                complete information including capacity and location
+              </li>
+            </ul>
           </motion.section>
 
           {/* Features */}
