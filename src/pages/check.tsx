@@ -153,20 +153,6 @@ export default function CheckAvailabilityPage() {
   const [roomFetchError, setRoomFetchError] = useState<string | null>(null);
   const { use24h } = useTimeFormat();
 
-  // Show loading spinner while checking auth
-  if (authLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner size="large" />
-      </div>
-    );
-  }
-
-  // Don't render page content if not authenticated
-  if (!isAuthenticated) {
-    return null;
-  }
-
   // --- Fetch Rooms (Unchanged) ---
   useEffect(() => {
     const fetchRooms = async () => {
@@ -344,6 +330,20 @@ export default function CheckAvailabilityPage() {
     success: "bg-green-950/50 border-green-500/60",
     destructive: "bg-red-950/30 border-red-500/60",
   };
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // --- Render ---
   return (
