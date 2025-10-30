@@ -146,20 +146,6 @@ export default function CustomGraphPage() {
   const { use24h } = useTimeFormat();
   const { success, error: showError } = useToast();
 
-  // Show loading spinner while checking auth
-  if (authLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner size="large" />
-      </div>
-    );
-  }
-
-  // Don't render page content if not authenticated
-  if (!isAuthenticated) {
-    return null;
-  }
-
   // Helper to check if an array is a continuous range
   const isConsecutiveRange = (arr: number[]): boolean => {
     if (arr.length <= 1) return false;
@@ -1095,6 +1081,20 @@ export default function CustomGraphPage() {
       showError("Failed to copy URL to clipboard.");
     }
   };
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // --- Render Page Content ---
   // Only use full height container if there are enough rows (more than 6)
