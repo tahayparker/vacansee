@@ -41,8 +41,6 @@ async function requiresAuthentication(pathname: string): Promise<boolean> {
 }
 
 export async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
-  const supabase = createMiddlewareClient({ req, res });
   const { pathname } = req.nextUrl;
 
   console.log(`[Middleware] Method: ${req.method}, Path: "${pathname}"`);
@@ -67,7 +65,7 @@ export async function middleware(req: NextRequest) {
       console.log(
         `[Middleware] Maintenance: Allowing static/internal asset path "${pathname}".`,
       );
-      return res;
+      return NextResponse.next();
     }
 
     if (!ALLOWED_DURING_MAINTENANCE.includes(pathname)) {
@@ -80,12 +78,12 @@ export async function middleware(req: NextRequest) {
     console.log(
       `[Middleware] Maintenance Mode ON. Path "${pathname}" IS allowed.`,
     );
-    return res;
+    return NextResponse.next();
   }
 
   if (req.method === "OPTIONS") {
     console.log(`[Middleware] Allowing OPTIONS request for CORS preflight.`);
-    return res;
+    return NextResponse.next();
   }
 
   const needsAuth = await requiresAuthentication(pathname);
@@ -94,6 +92,9 @@ export async function middleware(req: NextRequest) {
     console.log(
       `[Middleware] Authentication required for "${pathname}". Checking session...`,
     );
+    // Only create Supabase client when auth is actually needed
+    const res = NextResponse.next();
+    const supabase = createMiddlewareClient({ req, res });
     const {
       data: { session },
     } = await supabase.auth.getSession();
@@ -127,7 +128,7 @@ export async function middleware(req: NextRequest) {
   }
 
   console.log(`[Middleware] Proceeding with request for path "${pathname}"`);
-  return res;
+  return NextResponse.next();
 }
 
 export const config = {
