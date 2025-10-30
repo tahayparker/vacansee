@@ -37,20 +37,6 @@ export default function AvailableNowPage() {
   const fetchInitiated = useRef(false); // Ref to prevent double fetch in Strict Mode
   const { use24h } = useTimeFormat();
 
-  // Show loading spinner while checking auth
-  if (authLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner size="large" />
-      </div>
-    );
-  }
-
-  // Don't render page content if not authenticated
-  if (!isAuthenticated) {
-    return null;
-  }
-
   // --- Data Fetching Function (Client-side) ---
   const fetchData = useCallback(async () => {
     setError(null);
@@ -158,6 +144,20 @@ export default function AvailableNowPage() {
       transition: { type: "spring", stiffness: 100, damping: 12 },
     },
   };
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // --- Render Logic (Client-side) ---
   const renderContent = () => {
