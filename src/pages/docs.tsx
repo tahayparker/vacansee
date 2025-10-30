@@ -116,7 +116,7 @@ export default function DocsPage() {
             </div>
             <p className="text-white/80 text-lg text-justify">
               Getting started with vacansee is simple. First, sign in using your
-              Google or GitHub account for secure access. Once logged in, you'll
+              Google or GitHub account for secure access. Once logged in, you&apos;ll
               find several pages to help you find available rooms:
             </p>
             <ul className="list-disc list-inside space-y-2 text-white/80 pl-1 text-lg">
