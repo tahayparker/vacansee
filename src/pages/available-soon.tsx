@@ -61,20 +61,6 @@ export default function AvailableSoonPage() {
   const [error, setError] = useState<string | null>(null);
   const { use24h } = useTimeFormat();
 
-  // Show loading spinner while checking auth
-  if (authLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner size="large" />
-      </div>
-    );
-  }
-
-  // Don't render page content if not authenticated
-  if (!isAuthenticated) {
-    return null;
-  }
-
   // --- Data Fetching and Filtering ---
   const fetchData = useCallback(async (duration: number) => {
     setIsLoading(true);
@@ -211,6 +197,20 @@ export default function AvailableSoonPage() {
       transition: { type: "spring", stiffness: 100, damping: 12 },
     },
   };
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Don't render page content if not authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
 
   // --- Render Logic ---
   const renderContent = () => {
