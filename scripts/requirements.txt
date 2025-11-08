@@ -4,3 +4,5 @@ httpx
 postgrest
 python-dotenv
 supabase
+playwright
+pyotp
