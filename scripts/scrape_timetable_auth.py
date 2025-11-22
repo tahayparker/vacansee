@@ -19,6 +19,7 @@ from typing import Optional, Dict, List, Any
 # Third-party imports
 import pyotp
 from playwright.sync_api import sync_playwright, Page, Browser, BrowserContext, TimeoutError as PlaywrightTimeout
+from playwright_stealth import stealth_sync
 from bs4 import BeautifulSoup
 from postgrest.exceptions import APIError
 from dotenv import load_dotenv
@@ -111,48 +112,6 @@ class TimetableScraper:
         self.context: Optional[BrowserContext] = None
         self.page: Optional[Page] = None
 
-    def _apply_stealth(self, context: BrowserContext):
-        """Apply manual stealth scripts to the browser context."""
-        # 1. Override navigator.webdriver
-        context.add_init_script("""
-            Object.defineProperty(navigator, 'webdriver', {
-                get: () => undefined
-            });
-        """)
-
-        # 2. Mock languages (Plugins mock removed as it can be detected if done poorly)
-        context.add_init_script("""
-            Object.defineProperty(navigator, 'languages', {
-                get: () => ['en-US', 'en']
-            });
-        """)
-
-        # 3. WebGL Vendor/Renderer override (optional but good)
-        context.add_init_script("""
-            const getParameter = WebGLRenderingContext.prototype.getParameter;
-            WebGLRenderingContext.prototype.getParameter = function(parameter) {
-                // UNMASKED_VENDOR_WEBGL
-                if (parameter === 37445) {
-                    return 'Intel Inc.';
-                }
-                // UNMASKED_RENDERER_WEBGL
-                if (parameter === 37446) {
-                    return 'Intel(R) Iris(TM) Plus Graphics 640';
-                }
-                return getParameter(parameter);
-            };
-        """)
-
-        # 4. Permissions mock
-        context.add_init_script("""
-            const originalQuery = window.navigator.permissions.query;
-            window.navigator.permissions.query = (parameters) => (
-                parameters.name === 'notifications' ?
-                Promise.resolve({ state: Notification.permission }) :
-                originalQuery(parameters)
-            );
-        """)
-
     def start_browser(self):
         """Initialize Playwright with stealth settings."""
         print("[BROWSER] Starting Playwright...")
@@ -184,13 +143,16 @@ class TimetableScraper:
             timezone_id='Asia/Dubai',
         )
 
-        print("[BROWSER] Applying stealth scripts...")
-        self._apply_stealth(self.context)
+        print("[BROWSER] Creating new page...")
         self.page = self.context.new_page()
+
+        print("[BROWSER] Applying playwright-stealth...")
+        # Apply playwright-stealth for advanced fingerprint evasion
+        stealth_sync(self.page)
 
         # Random mouse movements to simulate human
         self.page.mouse.move(random.randint(0, 500), random.randint(0, 500))
-        print("[BROWSER] ✓ Browser ready")
+        print("[BROWSER] ✓ Browser ready with stealth mode")
 
     def close(self):
         if self.context:
