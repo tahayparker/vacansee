@@ -197,7 +197,7 @@ class TimetableScraper:
 
     def handle_cloudflare(self):
         """Check for and handle Cloudflare challenge."""
-        time.sleep(2) # Wait a bit for page to settle
+        time.sleep(3)  # Increased wait time as per user feedback
         try:
             # Check for common Cloudflare markers
             title = self.page.title().lower()
@@ -224,15 +224,25 @@ class TimetableScraper:
                 except:
                     pass
 
-                # Wait for the challenge to clear
+                # Wait for the challenge to clear using a polling loop
                 print("Waiting for challenge to clear...")
-                self.page.wait_for_condition(
-                    lambda: "Just a moment" not in self.page.title() and
-                            not self.page.get_by_text("Just a moment").is_visible(),
-                    timeout=60000
-                )
-                print("Cloudflare challenge passed (hopefully).")
-                time.sleep(2)
+                max_wait = 60  # seconds
+                start_time = time.time()
+                while time.time() - start_time < max_wait:
+                    try:
+                        title = self.page.title().lower()
+                        if "just a moment" not in title:
+                            # Double-check the text isn't visible
+                            if not self.page.get_by_text("Just a moment").is_visible(timeout=1000):
+                                print("Cloudflare challenge passed!")
+                                time.sleep(3)  # Extra wait after clearing
+                                break
+                    except:
+                        pass
+                    time.sleep(1)
+                else:
+                    print("Warning: Cloudflare challenge may not have cleared within timeout")
+                    time.sleep(2)
         except Exception as e:
             print(f"Error in Cloudflare handling (might be false positive): {e}")
 
@@ -250,6 +260,7 @@ class TimetableScraper:
             if self.page.get_by_text("Timetable Viewer is restricted").is_visible():
                 print("Clicking 'here' to login...")
                 self.page.get_by_text("here").click()
+                time.sleep(2)  # Added wait
                 self.page.wait_for_load_state("domcontentloaded")
                 self.handle_cloudflare()
 
@@ -257,6 +268,7 @@ class TimetableScraper:
             if self.page.locator("button.btn-danger:has-text('Login')").is_visible():
                 print("Clicking UOWD Login button...")
                 self.page.locator("button.btn-danger:has-text('Login')").click()
+                time.sleep(5)  # Longer wait for redirect to Microsoft
                 self.page.wait_for_load_state("domcontentloaded")
                 self.handle_cloudflare()
 
@@ -264,20 +276,20 @@ class TimetableScraper:
             print("Checking for Microsoft login...")
             # Email
             email_input = self.page.locator('input[type="email"]')
-            if email_input.is_visible(timeout=10000):
+            if email_input.is_visible(timeout=15000):
                 print(f"Entering email: {self.email}")
-                human_type(email_input, self.email)
+                email_input.fill(self.email)  # Using .fill() instead of human_type
                 self.page.locator('input[type="submit"]').click()
-                time.sleep(2)
+                time.sleep(4)  # Longer wait
                 self.handle_cloudflare()
 
             # Password
             password_input = self.page.locator('input[type="password"]')
-            if password_input.is_visible(timeout=10000):
+            if password_input.is_visible(timeout=15000):
                 print("Entering password...")
-                human_type(password_input, self.password)
+                password_input.fill(self.password)  # Using .fill() instead of human_type
                 self.page.locator('input[type="submit"]').click()
-                time.sleep(2)
+                time.sleep(4)  # Longer wait for MFA page
                 self.handle_cloudflare()
 
             # TOTP
@@ -292,7 +304,7 @@ class TimetableScraper:
                     verify_btn.click()
                 else:
                     totp_input.press("Enter")
-                time.sleep(3)
+                time.sleep(4)  # Longer wait
                 self.handle_cloudflare()
 
             # Stay signed in?
@@ -300,6 +312,7 @@ class TimetableScraper:
             if stay_signed_in.is_visible(timeout=5000):
                 print("Clicking 'Stay signed in'...")
                 stay_signed_in.click()
+                time.sleep(3)  # Added wait
                 self.page.wait_for_load_state("networkidle")
                 self.handle_cloudflare()
 
@@ -338,7 +351,7 @@ class TimetableScraper:
         if month in [1, 2]: sem_name = f"Winter {year}"
         elif month == 3: sem_name = f"Winter {year}" if week <= 3 else f"Spring {year}"
         elif month in [4, 5]: sem_name = f"Spring {year}"
-        elif month == 6: sem_name = f"Spring {year}"
+        elif month == 6]: sem_name = f"Spring {year}"
         elif month == 7: sem_name = f"Summer {year}"
         elif month == 8: sem_name = f"Summer {year}" if week <= 2 else f"Autumn {year}"
         elif month in [9, 10, 11]: sem_name = f"Autumn {year}"
