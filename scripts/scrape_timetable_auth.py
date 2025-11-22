@@ -226,7 +226,7 @@ class TimetableScraper:
 
                 # Wait for the challenge to clear using a polling loop
                 print("Waiting for challenge to clear...")
-                max_wait = 60  # seconds
+                max_wait = 120  # seconds (increased for CI environment)
                 start_time = time.time()
                 while time.time() - start_time < max_wait:
                     try:
