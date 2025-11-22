@@ -22,8 +22,9 @@ from typing import Optional, Dict, List, Any
 
 # Third-party imports
 import pyotp
-import cloudscraper
+import pyotp
 from playwright.sync_api import sync_playwright, Page, Browser, TimeoutError as PlaywrightTimeout
+from playwright_stealth import stealth_sync
 from bs4 import BeautifulSoup
 from postgrest.exceptions import APIError
 
@@ -157,42 +158,9 @@ class AuthenticatedTimetableScraper:
         self.headless = headless
         self.browser: Optional[Browser] = None
         self.page: Optional[Page] = None
-        self.scraper = cloudscraper.create_scraper(
-            browser={
-                "browser": "chrome",
-                "platform": "windows",
-                "desktop": True,
-                "mobile": False,
-            }
-        )
         print("AuthenticatedTimetableScraper initialized.")
 
-    def bypass_cloudflare_and_get_cookies(self, url: str) -> List[Dict]:
-        """Use cloudscraper to bypass Cloudflare and return cookies for Playwright."""
-        print(f"Using cloudscraper to bypass Cloudflare for {url}...")
-        try:
-            response = self.scraper.get(url, timeout=30)
-            response.raise_for_status()
-            print("Cloudscraper successfully bypassed Cloudflare")
 
-            # Convert requests cookies to Playwright format
-            playwright_cookies = []
-            for cookie in self.scraper.cookies:
-                playwright_cookies.append({
-                    'name': cookie.name,
-                    'value': cookie.value,
-                    'domain': cookie.domain,
-                    'path': cookie.path,
-                    'expires': cookie.expires if cookie.expires else -1,
-                    'httpOnly': cookie.has_nonstandard_attr('HttpOnly'),
-                    'secure': cookie.secure,
-                    'sameSite': 'Lax'
-                })
-
-            return playwright_cookies
-        except Exception as e:
-            print(f"Cloudscraper failed: {e}")
-            return []
 
     def get_current_semester_text(self) -> str:
         """Return the current semester text based on date."""
@@ -663,34 +631,9 @@ class AuthenticatedTimetableScraper:
                 }
             )
 
-            # Add JavaScript to hide webdriver property
-            context.add_init_script("""{
-                Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
-
-                // Disable WebAuthn to prevent Windows Hello/FIDO prompts
-                if (window.PublicKeyCredential) {
-                    window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable = () => Promise.resolve(false);
-                    window.PublicKeyCredential.isConditionalMediationAvailable = () => Promise.resolve(false);
-                }
-
-                // Remove credentials API entirely
-                delete navigator.credentials;
-
-                // Fake permissions
-            }""")
-
-            self.page = context.new_page()
-
-            # Get Cloudflare-bypassed cookies from cloudscraper
-            print("\n--- Step 0: Bypassing Cloudflare ---")
-            cf_cookies = self.bypass_cloudflare_and_get_cookies(BASE_URL)
-            if cf_cookies:
-                print(f"Adding {len(cf_cookies)} cookies to browser context...")
-                context.add_cookies(cf_cookies)
-                # Give time for cookies to be set
-                time.sleep(2)
-            else:
-                print("Warning: No Cloudflare cookies obtained, may face challenges")
+            # Apply stealth to the page
+            print("Applying playwright-stealth...")
+            stealth_sync(self.page)
 
             # Authenticate
             print("\n--- Step 1: Authentication ---")
