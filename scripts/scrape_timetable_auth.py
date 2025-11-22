@@ -272,42 +272,56 @@ class TimetableScraper:
                 self.page.wait_for_load_state("domcontentloaded")
                 self.handle_cloudflare()
 
-            # 3. Microsoft SSO
-            print("Checking for Microsoft login...")
-            # Email
+            # 3. Microsoft SSO - Email
+            print("Checking for Microsoft login (Email)...")
             email_input = self.page.locator('input[type="email"]')
             if email_input.is_visible(timeout=15000):
                 print(f"Entering email: {self.email}")
-                email_input.fill(self.email)  # Using .fill() instead of human_type
+                email_input.fill(self.email)
+                time.sleep(1)
                 self.page.locator('input[type="submit"]').click()
-                time.sleep(4)  # Longer wait
+                time.sleep(2)
                 self.handle_cloudflare()
 
-            # Password
+            # 4. Microsoft SSO - Password
+            print("Checking for Microsoft login (Password)...")
+            try:
+                self.page.wait_for_selector('input[type="password"]', state="visible", timeout=10000)
+            except:
+                pass
+
             password_input = self.page.locator('input[type="password"]')
-            if password_input.is_visible(timeout=15000):
+            if password_input.is_visible(timeout=10000):
                 print("Entering password...")
-                password_input.fill(self.password)  # Using .fill() instead of human_type
+                password_input.fill(self.password)
+                time.sleep(1)
                 self.page.locator('input[type="submit"]').click()
-                time.sleep(4)  # Longer wait for MFA page
+                time.sleep(2)
                 self.handle_cloudflare()
 
-            # TOTP
+            # 5. Microsoft SSO - TOTP
+            print("Checking for Microsoft login (TOTP)...")
+            try:
+                self.page.wait_for_selector('input[name="otc"], input[id*="OTC"]', state="visible", timeout=10000)
+            except:
+                pass
+
             totp_input = self.page.locator('input[name="otc"], input[id*="OTC"]')
             if totp_input.is_visible(timeout=10000):
                 print("Entering TOTP...")
                 code = generate_totp(self.totp_secret)
                 totp_input.fill(code)
-                # Try verify button or enter
+                time.sleep(1)
+
                 verify_btn = self.page.locator('input[type="submit"]')
                 if verify_btn.is_visible():
                     verify_btn.click()
                 else:
                     totp_input.press("Enter")
-                time.sleep(4)  # Longer wait
+                time.sleep(4)
                 self.handle_cloudflare()
 
-            # Stay signed in?
+            # 6. Stay signed in?
             stay_signed_in = self.page.locator('input[value="Yes"], button:has-text("Yes")')
             if stay_signed_in.is_visible(timeout=5000):
                 print("Clicking 'Stay signed in'...")
@@ -328,9 +342,6 @@ class TimetableScraper:
                 print("Login verification failed: 'label' not found.")
 
             print(f"Login might have failed. Current URL: {self.page.url}")
-            # Dump page if login failed
-            with open("debug_login_fail.html", "w", encoding="utf-8") as f:
-                f.write(self.page.content())
             return False
 
         except Exception as e:
@@ -351,7 +362,7 @@ class TimetableScraper:
         if month in [1, 2]: sem_name = f"Winter {year}"
         elif month == 3: sem_name = f"Winter {year}" if week <= 3 else f"Spring {year}"
         elif month in [4, 5]: sem_name = f"Spring {year}"
-        elif month == 6]: sem_name = f"Spring {year}"
+        elif month == 6: sem_name = f"Spring {year}"
         elif month == 7: sem_name = f"Summer {year}"
         elif month == 8: sem_name = f"Summer {year}" if week <= 2 else f"Autumn {year}"
         elif month in [9, 10, 11]: sem_name = f"Autumn {year}"
