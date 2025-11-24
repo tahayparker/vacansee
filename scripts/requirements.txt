@@ -1,9 +1,13 @@
+# Core dependencies
+python-dotenv
+supabase
+postgrest
+
+# For non-authenticated scraping (scrape_timetable.py)
 beautifulsoup4
 cloudscraper
 httpx
-postgrest
-python-dotenv
-supabase
+
+# For authenticated scraping (scrape_timetable_auth.py)
 playwright
-playwright-stealth
 pyotp
