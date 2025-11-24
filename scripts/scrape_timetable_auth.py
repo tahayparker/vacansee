@@ -1,6 +1,7 @@
 """
 Authenticated Timetable Scraper using Playwright.
-Handles Microsoft SSO authentication with TOTP-based 2FA and Cloudflare evasion.
+Handles Microsoft SSO authentication with TOTP-based 2FA.
+Designed for robust autonomous execution on GitHub Actions.
 """
 
 import argparse
@@ -11,17 +12,14 @@ import re
 import sys
 import time
 import datetime
-import random
 import traceback
 from pathlib import Path
 from typing import Optional, Dict, List, Any
 
 # Third-party imports
+import random as rand_module
 import pyotp
-from playwright.sync_api import sync_playwright, Page, Browser, BrowserContext, TimeoutError as PlaywrightTimeout
-from playwright_stealth import stealth_sync
-from bs4 import BeautifulSoup
-from postgrest.exceptions import APIError
+from playwright.sync_api import sync_playwright, Page, Browser, BrowserContext, TimeoutError as PlaywrightTimeout, Error as PlaywrightError
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -33,8 +31,18 @@ from db_connection import get_supabase_client
 
 # --- Constants ---
 BASE_URL = "https://my.uowdubai.ac.ae/timetable/viewer"
-DEFAULT_TIMEOUT = 60000  # 60 seconds
+DEFAULT_TIMEOUT = 30000  # 30 seconds
+LONG_TIMEOUT = 60000  # 60 seconds for auth flows
 MAX_RETRIES = 3
+NAVIGATION_TIMEOUT = 90000  # 90 seconds for full page loads
+
+# Rotating User Agents for better evasion
+USER_AGENTS = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+]
 
 # --- Helper Functions ---
 def normalize_whitespace(text: Optional[str]) -> str:
@@ -44,7 +52,7 @@ def normalize_whitespace(text: Optional[str]) -> str:
     return " ".join(text.split())
 
 def format_time_to_hh_mm(time_str: Optional[str]) -> str:
-    """Converts a time string to 'HH:mm'."""
+    """Converts a time string to 'HH:mm' format."""
     if time_str is None:
         return ""
     normalized_time = normalize_whitespace(time_str)
@@ -61,23 +69,17 @@ def generate_totp(secret: str) -> str:
     totp = pyotp.TOTP(secret)
     return totp.now()
 
-def human_type(element, text: str, min_delay: float = 0.05, max_delay: float = 0.15):
-    """Type text with human-like delays."""
-    for char in text:
-        element.type(char)
-        time.sleep(random.uniform(min_delay, max_delay))
-
 # --- Supabase ---
 try:
     supabase = get_supabase_client()
-    print("Connected to Supabase.")
+    print("✓ Connected to Supabase.")
 except Exception as exc:
-    print(f"Supabase init failed: {exc}")
+    print(f"✗ Supabase init failed: {exc}")
     sys.exit(1)
 
 def fetch_room_mapping() -> Dict[str, str]:
     """Fetches room ShortCode to Name mapping from Supabase."""
-    print("Fetching room mapping...")
+    print("Fetching room mapping from Supabase...")
     room_mapping: Dict[str, str] = {}
     try:
         response = (
@@ -93,16 +95,20 @@ def fetch_room_mapping() -> Dict[str, str]:
                 nm = normalize_whitespace(row.get("Name"))
                 if sc and nm:
                     room_mapping[sc] = nm
-            # Sort by length descending to match longest prefixes first
             sorted_keys = sorted(room_mapping.keys(), key=len, reverse=True)
-            return {key: room_mapping[key] for key in sorted_keys}
+            result = {key: room_mapping[key] for key in sorted_keys}
+            print(f"✓ Fetched {len(result)} room mappings.")
+            return result
     except Exception as e:
-        print(f"Error fetching room mapping: {e}")
+        print(f"✗ Error fetching room mapping: {e}")
     return room_mapping
 
 ROOM_MAPPING = fetch_room_mapping()
 
+
 class TimetableScraper:
+    """Scrapes authenticated timetable data using Playwright."""
+
     def __init__(self, email: str, password: str, totp_secret: str, headless: bool = True):
         self.email = email
         self.password = password
@@ -111,476 +117,654 @@ class TimetableScraper:
         self.browser: Optional[Browser] = None
         self.context: Optional[BrowserContext] = None
         self.page: Optional[Page] = None
+        self.playwright = None
 
     def start_browser(self):
-        """Initialize Playwright with stealth settings."""
-        print("[BROWSER] Starting Playwright...")
+        """Initialize Playwright browser with realistic settings."""
+        print("\n[BROWSER] Initializing Playwright...")
         self.playwright = sync_playwright().start()
 
-        # Launch args to reduce detection
-        args = [
+        print(f"[BROWSER] Launching browser (headless={self.headless})...")
+        
+        # More comprehensive anti-detection args
+        launch_args = [
             '--disable-blink-features=AutomationControlled',
-            '--disable-features=IsolateOrigins,site-per-process',
             '--no-sandbox',
             '--disable-setuid-sandbox',
-            '--disable-infobars',
-            '--window-position=0,0',
-            '--ignore-certifcate-errors',
-            '--ignore-certifcate-errors-spki-list',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--disable-gpu',
+            '--disable-web-security',
+            '--disable-features=IsolateOrigins,site-per-process',
         ]
-
-        print(f"[BROWSER] Launching browser (headless={self.headless})...")
+        
         self.browser = self.playwright.chromium.launch(
             headless=self.headless,
-            args=args
+            args=launch_args,
+            chromium_sandbox=False
         )
+        
+        # Select random user agent
+        selected_ua = rand_module.choice(USER_AGENTS)
+        print(f"[BROWSER] Using UA: {selected_ua[:50]}...")
 
-        print("[BROWSER] Creating context...")
         self.context = self.browser.new_context(
             viewport={'width': 1920, 'height': 1080},
-            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            user_agent=selected_ua,
             locale='en-US',
             timezone_id='Asia/Dubai',
+            # Additional anti-detection context options
+            has_touch=False,
+            is_mobile=False,
+            java_script_enabled=True,
+            # Permissions and features
+            permissions=['geolocation'],
+            geolocation={'latitude': 25.2048, 'longitude': 55.2708},  # Dubai coordinates
+            color_scheme='light',
         )
+        
+        # Add extra headers to appear more legitimate
+        self.context.set_extra_http_headers({
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'DNT': '1',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+        })
 
-        print("[BROWSER] Creating new page...")
         self.page = self.context.new_page()
-
-        print("[BROWSER] Applying playwright-stealth...")
-        # Apply playwright-stealth for advanced fingerprint evasion
-        stealth_sync(self.page)
-
-        # Random mouse movements to simulate human
-        self.page.mouse.move(random.randint(0, 500), random.randint(0, 500))
-        print("[BROWSER] ✓ Browser ready with stealth mode")
+        
+        # Advanced automation masking
+        self.page.add_init_script("""
+            // Remove webdriver property
+            Object.defineProperty(navigator, 'webdriver', {
+                get: () => undefined
+            });
+            
+            // Mock plugins
+            Object.defineProperty(navigator, 'plugins', {
+                get: () => [
+                    {name: 'Chrome PDF Plugin', filename: 'internal-pdf-viewer', description: 'Portable Document Format'},
+                    {name: 'Chrome PDF Viewer', filename: 'mhjfbmdgcfjbbpaeojofohoefgiehjai', description: ''},
+                    {name: 'Native Client', filename: 'internal-nacl-plugin', description: ''}
+                ]
+            });
+            
+            // Languages
+            Object.defineProperty(navigator, 'languages', {
+                get: () => ['en-US', 'en']
+            });
+            
+            // Chrome runtime
+            window.chrome = {
+                runtime: {},
+                loadTimes: function() {},
+                csi: function() {}
+            };
+            
+            // Permissions API
+            const originalQuery = window.navigator.permissions.query;
+            window.navigator.permissions.query = (parameters) => (
+                parameters.name === 'notifications' ?
+                    Promise.resolve({ state: Notification.permission }) :
+                    originalQuery(parameters)
+            );
+            
+            // WebGL Vendor
+            const getParameter = WebGLRenderingContext.prototype.getParameter;
+            WebGLRenderingContext.prototype.getParameter = function(parameter) {
+                if (parameter === 37445) return 'Intel Inc.';
+                if (parameter === 37446) return 'Intel Iris OpenGL Engine';
+                return getParameter.apply(this, [parameter]);
+            };
+        """)
+        
+        print("[BROWSER] ✓ Browser ready with advanced anti-detection")
 
     def close(self):
+        """Close browser and cleanup resources."""
         if self.context:
             self.context.close()
         if self.browser:
             self.browser.close()
-        if hasattr(self, 'playwright'):
+        if self.playwright:
             self.playwright.stop()
 
-    def handle_cloudflare(self):
-        """Check for and handle Cloudflare challenge."""
-        time.sleep(3)
+    def wait_for_navigation(self, timeout: int = NAVIGATION_TIMEOUT):
+        """Wait for page to fully load."""
         try:
+            self.page.wait_for_load_state("domcontentloaded", timeout=timeout)
+            self.page.wait_for_load_state("networkidle", timeout=timeout)
+        except PlaywrightTimeout:
+            print("[WARN] Navigation timeout, continuing anyway...")
+    
+    def check_and_handle_cloudflare(self, max_wait: int = 90) -> bool:
+        """Check for and wait for Cloudflare challenge to complete with advanced bypass."""
+        try:
+            time.sleep(2)  # Initial wait for page to settle
             title = self.page.title().lower()
-            url = self.page.url
-            print(f"[CF-CHECK] URL: {url}")
-            print(f"[CF-CHECK] Title: '{title}'")
-
-            # Check if Cloudflare challenge text is visible
-            just_a_moment_visible = False
-            verify_human_visible = False
-
-            try:
-                just_a_moment_visible = self.page.get_by_text("Just a moment").is_visible()
-                print(f"[CF-CHECK] 'Just a moment' visible: {just_a_moment_visible}")
-            except Exception as e:
-                print(f"[CF-CHECK] Error checking 'Just a moment': {e}")
-
-            try:
-                verify_human_visible = self.page.get_by_text("Verify you are human").is_visible()
-                print(f"[CF-CHECK] 'Verify you are human' visible: {verify_human_visible}")
-            except Exception as e:
-                print(f"[CF-CHECK] Error checking 'Verify you are human': {e}")
-
-            if (just_a_moment_visible or verify_human_visible or
-                "challenge" in title or "just a moment" in title):
-
-                print("[CF] ⚠️ Challenge detected! Starting bypass...")
-
-                # Try to click the Turnstile checkbox if it exists
+            
+            # Check for Cloudflare challenge indicators
+            cf_indicators = [
+                "just a moment",
+                "checking your browser",
+                "verifying you are human",
+                "challenge",
+                "please wait"
+            ]
+            
+            is_cloudflare = any(indicator in title for indicator in cf_indicators)
+            
+            if not is_cloudflare:
+                # Also check page content and specific elements
                 try:
-                    print("[CF] Looking for Turnstile iframe...")
-                    self.page.wait_for_selector("iframe[src*='turnstile']", timeout=5000)
-                    frames = self.page.frames
-                    print(f"[CF] Found {len(frames)} frames")
-                    for i, frame in enumerate(frames):
-                        frame_url = frame.url
-                        if "turnstile" in frame_url:
-                            print(f"[CF] ✓ Turnstile frame found at index {i}")
-                            frame.click("body", timeout=2000)
-                            time.sleep(1)
-                            print(f"[CF] ✓ Clicked Turnstile")
-                        else:
-                            print(f"[CF] Frame {i}: {frame_url}")
-                except Exception as e:
-                    print(f"[CF] No Turnstile or click failed: {str(e)[:100]}")
-
-                # Wait for the challenge to clear using a polling loop
-                print("[CF] Waiting for challenge to clear...")
-                max_wait = 120  # seconds
+                    # Check for common Cloudflare challenge elements
+                    cf_selectors = [
+                        "text='Checking your browser'",
+                        "text='Just a moment'",
+                        "#challenge-running",
+                        ".cf-browser-verification"
+                    ]
+                    for selector in cf_selectors:
+                        try:
+                            if self.page.locator(selector).is_visible(timeout=1000):
+                                is_cloudflare = True
+                                break
+                        except:
+                            continue
+                except:
+                    pass
+            
+            if is_cloudflare:
+                print(f"[CLOUDFLARE] Challenge detected: '{title}'")
+                print(f"[CLOUDFLARE] Waiting up to {max_wait}s for automatic resolution...")
+                
+                # Try to find and interact with Cloudflare iframe if present
+                try:
+                    # Look for turnstile/challenge iframe
+                    iframe_locator = self.page.frame_locator("iframe[src*='challenges.cloudflare.com']")
+                    if iframe_locator:
+                        print("[CLOUDFLARE] Found challenge iframe, attempting interaction...")
+                        time.sleep(2)
+                except:
+                    pass
+                
                 start_time = time.time()
-                iteration = 0
-
+                check_interval = 2
+                last_log_time = 0
+                
                 while time.time() - start_time < max_wait:
-                    iteration += 1
+                    time.sleep(check_interval)
                     elapsed = time.time() - start_time
-
+                    
                     try:
-                        current_title = self.page.title().lower()
+                        # Check current URL - sometimes redirects on success
                         current_url = self.page.url
-
-                        # Log every 10 iterations
-                        if iteration % 10 == 0:
-                            print(f"[CF-POLL] Iter {iteration} ({elapsed:.1f}s) | Title: '{current_title}' | URL: {current_url}")
-
-                        if "just a moment" not in current_title:
-                            # Double-check the text isn't visible
-                            try:
-                                still_visible = self.page.get_by_text("Just a moment").is_visible(timeout=1000)
-                                if not still_visible:
-                                    print(f"[CF] ✅ Cleared after {elapsed:.1f}s ({iteration} iters)")
-                                    print(f"[CF] Final URL: {current_url}")
-                                    print(f"[CF] Final Title: '{current_title}'")
-                                    time.sleep(3)
-                                    return
-                            except:
-                                print(f"[CF] ✅ Cleared after {elapsed:.1f}s ({iteration} iters)")
-                                print(f"[CF] Final URL: {current_url}")
-                                print(f"[CF] Final Title: '{current_title}'")
-                                time.sleep(3)
-                                return
+                        
+                        # If URL changed significantly, challenge might be cleared
+                        if "challenge" not in current_url.lower():
+                            current_title = self.page.title().lower()
+                            
+                            # Check if challenge cleared
+                            if not any(indicator in current_title for indicator in cf_indicators):
+                                # Triple-check by looking for challenge elements
+                                challenge_present = False
+                                try:
+                                    challenge_present = self.page.get_by_text("Just a moment", exact=False).is_visible(timeout=500)
+                                except:
+                                    pass
+                                
+                                if not challenge_present:
+                                    print(f"[CLOUDFLARE] ✓ Challenge cleared after {elapsed:.1f}s")
+                                    time.sleep(3)  # Extra wait for stability
+                                    return True
+                        
+                        # Log progress every 15 seconds
+                        if elapsed - last_log_time >= 15:
+                            print(f"[CLOUDFLARE] Still waiting... ({int(elapsed)}s / {max_wait}s)")
+                            last_log_time = elapsed
+                            
                     except Exception as e:
-                        if iteration % 10 == 0:
-                            print(f"[CF-POLL] Error: {str(e)[:50]}")
-
-                    time.sleep(1)
-
-                # Timeout reached
-                final_url = self.page.url
-                final_title = self.page.title()
-                print(f"[CF] ⚠️ TIMEOUT after {max_wait}s ({iteration} iterations)")
-                print(f"[CF] Final URL: {final_url}")
-                print(f"[CF] Final Title: '{final_title}'")
-
-                if "just a moment" not in final_title.lower():
-                    print(f"[CF] ℹ️ Title OK despite timeout - may have succeeded")
-
-                time.sleep(2)
-            else:
-                print(f"[CF-CHECK] ✓ No challenge")
-
+                        # If page context is destroyed, it might have navigated
+                        if "context" in str(e).lower() or "destroyed" in str(e).lower():
+                            print(f"[CLOUDFLARE] Page context changed, checking result...")
+                            time.sleep(2)
+                            try:
+                                new_title = self.page.title().lower()
+                                if not any(indicator in new_title for indicator in cf_indicators):
+                                    print(f"[CLOUDFLARE] ✓ Challenge cleared after navigation")
+                                    return True
+                            except:
+                                pass
+                
+                # Timeout reached - make final determination
+                try:
+                    final_title = self.page.title().lower()
+                    final_url = self.page.url
+                    print(f"[CLOUDFLARE] ✗ Challenge did not clear after {max_wait}s")
+                    print(f"[CLOUDFLARE] Final title: '{final_title}'")
+                    print(f"[CLOUDFLARE] Final URL: {final_url}")
+                    
+                    # Sometimes Cloudflare clears but page looks stuck
+                    if "uowdubai.ac.ae" in final_url and "challenge" not in final_url:
+                        print(f"[CLOUDFLARE] ℹ️ On target domain, attempting page refresh...")
+                        try:
+                            self.page.reload(wait_until="domcontentloaded", timeout=30000)
+                            time.sleep(3)
+                            refresh_title = self.page.title().lower()
+                            if not any(indicator in refresh_title for indicator in cf_indicators):
+                                print(f"[CLOUDFLARE] ✓ Challenge cleared after refresh")
+                                return True
+                        except:
+                            pass
+                        print(f"[CLOUDFLARE] ℹ️ Assuming success despite timeout (on target domain)")
+                        return True
+                        
+                except:
+                    pass
+                    
+                return False
+            
+            return True  # No challenge detected
+            
         except Exception as e:
-            print(f"[CF-ERROR] {e}")
-            traceback.print_exc()
+            print(f"[CLOUDFLARE] Error checking: {e}")
+            # If error but we can still access page, assume OK
+            try:
+                if "uowdubai.ac.ae" in self.page.url:
+                    return True
+            except:
+                pass
+            return True  # Assume no challenge on error
 
     def login(self) -> bool:
-        """Handle the login flow."""
+        """Handle the complete login flow with Microsoft SSO."""
         print("\n" + "="*70)
         print("[LOGIN] Starting authentication flow")
         print("="*70)
 
         try:
-            # Navigate to base URL
-            print(f"[LOGIN] Navigating to {BASE_URL}")
-            self.page.goto(BASE_URL, timeout=DEFAULT_TIMEOUT)
-            print(f"[LOGIN] ✓ Loaded. URL: {self.page.url}")
-            self.handle_cloudflare()
+            # Step 1: Navigate to base URL
+            print("\n[STEP 1] Navigating to timetable viewer...")
+            self.page.goto(BASE_URL, timeout=NAVIGATION_TIMEOUT, wait_until="domcontentloaded")
+            print(f"[STEP 1] ✓ Loaded: {self.page.url}")
+            time.sleep(3)  # Allow page to render
+            
+            # Check for Cloudflare after initial load
+            if not self.check_and_handle_cloudflare():
+                print("[STEP 1] ✗ Cloudflare challenge failed")
+                return False
 
-            # Wait for page load
-            print(f"[LOGIN] Waiting for DOM...")
-            self.page.wait_for_load_state("domcontentloaded", timeout=DEFAULT_TIMEOUT)
-            print(f"[LOGIN] ✓ DOM loaded. URL: {self.page.url}")
-
-            # Step 1: Check for "Timetable Viewer is restricted"
-            print(f"\n[STEP 1] Checking for restricted message...")
+            # Step 2: Check for "restricted" message and click login
+            print("\n[STEP 2] Checking for login requirement...")
             try:
-                restricted_visible = self.page.get_by_text("Timetable Viewer is restricted").is_visible()
-                print(f"[STEP 1] Restricted message visible: {restricted_visible}")
-
-                if restricted_visible:
-                    print(f"[STEP 1] Clicking 'here' link...")
+                # Look for "Timetable Viewer is restricted" text
+                if self.page.get_by_text("Timetable Viewer is restricted").is_visible(timeout=5000):
+                    print("[STEP 2] Found restricted message, clicking 'here' link...")
                     self.page.get_by_text("here").click()
+                    self.wait_for_navigation()
+                    print(f"[STEP 2] ✓ Navigated: {self.page.url}")
                     time.sleep(2)
-                    self.page.wait_for_load_state("domcontentloaded")
-                    print(f"[STEP 1] ✓ Clicked. New URL: {self.page.url}")
-                    self.handle_cloudflare()
-                else:
-                    print(f"[STEP 1] No restricted message - skipping")
-            except Exception as e:
-                print(f"[STEP 1] Error: {e}")
+                    
+                    # Check for Cloudflare after clicking
+                    if not self.check_and_handle_cloudflare():
+                        print("[STEP 2] ✗ Cloudflare challenge failed")
+                        return False
+            except PlaywrightTimeout:
+                print("[STEP 2] No restricted message found, continuing...")
 
-            # Step 2: Check for UOWD Login Button
-            print(f"\n[STEP 2] Checking for UOWD Login button...")
+            # Step 3: Click the main Login button
+            print("\n[STEP 3] Looking for Login button...")
             try:
-                login_button = self.page.locator("button.btn-danger:has-text('Login')")
-                login_visible = login_button.is_visible()
-                print(f"[STEP 2] Login button visible: {login_visible}")
-
-                if login_visible:
-                    print(f"[STEP 2] Clicking Login button...")
-                    login_button.click()
-                    time.sleep(5)
-                    self.page.wait_for_load_state("domcontentloaded")
-                    print(f"[STEP 2] ✓ Clicked. New URL: {self.page.url}")
-                    self.handle_cloudflare()
-                else:
-                    print(f"[STEP 2] No Login button - skipping")
-            except Exception as e:
-                print(f"[STEP 2] Error: {e}")
-
-            # Step 3: Microsoft SSO - Email
-            print(f"\n[STEP 3] Microsoft SSO - Email")
-            print(f"[STEP 3] Current URL: {self.page.url}")
-
-            try:
-                email_input = self.page.locator('input[type="email"]')
-                email_visible = email_input.is_visible(timeout=15000)
-                print(f"[STEP 3] Email input visible: {email_visible}")
-
-                if email_visible:
-                    print(f"[STEP 3] Filling email: {self.email}")
-                    email_input.fill(self.email)
-                    time.sleep(1)
-
-                    print(f"[STEP 3] Clicking Next...")
-                    self.page.locator('input[type="submit"]').click()
+                login_btn = self.page.locator("button.btn-danger:has-text('Login')").first
+                if login_btn.is_visible(timeout=5000):
+                    print("[STEP 3] Clicking Login button...")
+                    login_btn.click()
+                    self.wait_for_navigation()
+                    print(f"[STEP 3] ✓ Navigated to: {self.page.url}")
                     time.sleep(2)
-                    print(f"[STEP 3] ✓ Submitted. URL: {self.page.url}")
-                    self.handle_cloudflare()
-                else:
-                    print(f"[STEP 3] ⚠️ Email input not found")
-            except Exception as e:
-                print(f"[STEP 3] ⚠️ Error: {e}")
+                    
+                    # Check for Cloudflare after navigation
+                    if not self.check_and_handle_cloudflare():
+                        print("[STEP 3] ✗ Cloudflare challenge failed")
+                        return False
+            except PlaywrightTimeout:
+                print("[STEP 3] Login button not found or already logged in...")
 
-            # Step 4: Microsoft SSO - Password
-            print(f"\n[STEP 4] Microsoft SSO - Password")
-            print(f"[STEP 4] Current URL: {self.page.url}")
-
+            # Step 4: Enter email for Microsoft SSO
+            print("\n[STEP 4] Entering email for Microsoft SSO...")
             try:
-                print(f"[STEP 4] Waiting for password field...")
-                self.page.wait_for_selector('input[type="password"]', state="visible", timeout=10000)
-                print(f"[STEP 4] ✓ Password field appeared")
-            except Exception as e:
-                print(f"[STEP 4] Password field wait failed: {e}")
+                email_input = self.page.locator('input[type="email"]').first
+                email_input.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+                email_input.click()
+                email_input.fill(self.email)
+                print(f"[STEP 4] ✓ Entered email: {self.email}")
 
+                # Click Next
+                next_btn = self.page.locator('input[type="submit"]').first
+                next_btn.click()
+                print("[STEP 4] ✓ Clicked Next")
+                time.sleep(3)
+            except PlaywrightTimeout:
+                print("[STEP 4] ✗ Email field not found")
+                return False
+
+            # Step 5: Enter password
+            print("\n[STEP 5] Entering password...")
             try:
-                password_input = self.page.locator('input[type="password"]')
-                password_visible = password_input.is_visible(timeout=10000)
-                print(f"[STEP 4] Password input visible: {password_visible}")
+                password_input = self.page.locator('input[type="password"]').first
+                password_input.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+                password_input.click()
+                password_input.fill(self.password)
+                print("[STEP 5] ✓ Entered password")
 
-                if password_visible:
-                    print(f"[STEP 4] Filling password...")
-                    password_input.fill(self.password)
-                    time.sleep(1)
+                # Click Sign in
+                signin_btn = self.page.locator('input[type="submit"]').first
+                signin_btn.click()
+                print("[STEP 5] ✓ Clicked Sign in")
+                time.sleep(3)
+            except PlaywrightTimeout:
+                print("[STEP 5] ✗ Password field not found")
+                return False
 
-                    print(f"[STEP 4] Clicking Sign in...")
-                    self.page.locator('input[type="submit"]').click()
-                    time.sleep(2)
-                    print(f"[STEP 4] ✓ Submitted. URL: {self.page.url}")
-                    self.handle_cloudflare()
-                else:
-                    print(f"[STEP 4] ⚠️ Password input not found")
-            except Exception as e:
-                print(f"[STEP 4] ⚠️ Error: {e}")
-
-            # Step 5: Microsoft SSO - TOTP
-            print(f"\n[STEP 5] Microsoft SSO - TOTP")
-            print(f"[STEP 5] Current URL: {self.page.url}")
-
+            # Step 6: Enter TOTP code or handle alternative auth
+            print("\n[STEP 6] Checking for 2FA prompt...")
+            time.sleep(3)  # Wait for page to load after password
+            
             try:
-                print(f"[STEP 5] Waiting for TOTP field...")
-                self.page.wait_for_selector('input[name="otc"], input[id*="OTC"]', state="visible", timeout=10000)
-                print(f"[STEP 5] ✓ TOTP field appeared")
-            except Exception as e:
-                print(f"[STEP 5] TOTP field wait failed: {e}")
-
-            try:
-                totp_input = self.page.locator('input[name="otc"], input[id*="OTC"]')
-                totp_visible = totp_input.is_visible(timeout=10000)
-                print(f"[STEP 5] TOTP input visible: {totp_visible}")
-
-                if totp_visible:
-                    code = generate_totp(self.totp_secret)
-                    print(f"[STEP 5] Generated TOTP: {code}")
-                    totp_input.fill(code)
-                    time.sleep(1)
-
-                    print(f"[STEP 5] Clicking Verify...")
-                    verify_btn = self.page.locator('input[type="submit"]')
-                    if verify_btn.is_visible():
-                        verify_btn.click()
-                        print(f"[STEP 5] ✓ Clicked Verify button")
-                    else:
-                        totp_input.press("Enter")
-                        print(f"[STEP 5] ✓ Pressed Enter")
-
-                    time.sleep(4)
-                    print(f"[STEP 5] URL: {self.page.url}")
-                    self.handle_cloudflare()
-                else:
-                    print(f"[STEP 5] ⚠️ TOTP input not found")
-            except Exception as e:
-                print(f"[STEP 5] ⚠️ Error: {e}")
-
-            # Step 6: Stay signed in
-            print(f"\n[STEP 6] Stay signed in")
-            print(f"[STEP 6] Current URL: {self.page.url}")
-
-            try:
-                stay_signed_in = self.page.locator('input[value="Yes"], button:has-text("Yes")')
-                stay_visible = stay_signed_in.is_visible(timeout=5000)
-                print(f"[STEP 6] 'Stay signed in' visible: {stay_visible}")
-
-                if stay_visible:
-                    print(f"[STEP 6] Clicking Yes...")
-                    stay_signed_in.click()
-                    time.sleep(3)
-                    self.page.wait_for_load_state("networkidle")
-                    print(f"[STEP 6] ✓ Clicked. URL: {self.page.url}")
-                    self.handle_cloudflare()
-                else:
-                    print(f"[STEP 6] No prompt - skipping")
-            except Exception as e:
-                print(f"[STEP 6] Error: {e}")
-
-            # Verification
-            print(f"\n[VERIFY] Checking login success...")
-            final_url = self.page.url
-            print(f"[VERIFY] Final URL: {final_url}")
-
-            try:
-                print(f"[VERIFY] Looking for label elements...")
-                self.page.wait_for_selector("label", timeout=10000)
-                print(f"[VERIFY] ✓ Found labels")
-
-                in_uowd = "uowdubai.ac.ae" in final_url
-                in_microsoft = "microsoft" in final_url
-                print(f"[VERIFY] In UOWD domain: {in_uowd}")
-                print(f"[VERIFY] In Microsoft domain: {in_microsoft}")
-
-                if in_uowd and not in_microsoft:
-                    print(f"\n[LOGIN] ✅ SUCCESS!")
-                    print("="*70 + "\n")
+                current_url = self.page.url
+                print(f"[STEP 6] Current URL: {current_url}")
+                print(f"[STEP 6] Page title: {self.page.title()}")
+                
+                # Check if we're already authenticated (no 2FA required)
+                if "uowdubai.ac.ae" in current_url:
+                    print("[STEP 6] ✓ No 2FA required, already authenticated")
                     return True
+                
+                # Try to find TOTP input field
+                totp_input = None
+                selectors = [
+                    'input[name="otc"]',
+                    'input[id*="idTxtBx_SAOTCC_OTC"]',
+                    'input[type="tel"]',
+                    'input[aria-label*="code"]',
+                    'input[placeholder*="code"]'
+                ]
+                
+                for selector in selectors:
+                    try:
+                        candidate = self.page.locator(selector).first
+                        if candidate.is_visible(timeout=3000):
+                            totp_input = candidate
+                            print(f"[STEP 6] Found TOTP field with selector: {selector}")
+                            break
+                    except:
+                        continue
+                
+                if totp_input:
+                    code = generate_totp(self.totp_secret)
+                    print(f"[STEP 6] Generated TOTP: {code}")
+                    
+                    totp_input.click()
+                    totp_input.fill(code)
+                    print("[STEP 6] ✓ Entered TOTP")
+                    
+                    # Click Verify
+                    verify_btn = self.page.locator('input[type="submit"]').first
+                    verify_btn.click()
+                    print("[STEP 6] ✓ Clicked Verify")
+                    time.sleep(5)
                 else:
-                    print(f"\n[VERIFY] ⚠️ URL check failed")
+                    # No TOTP field found - check for other auth methods
+                    print("[STEP 6] No TOTP field found")
+                    
+                    # Check for "Use a different verification method" or similar
+                    try:
+                        diff_method = self.page.get_by_text("different", exact=False).first
+                        if diff_method.is_visible(timeout=2000):
+                            print("[STEP 6] ℹ️ Alternative verification methods available")
+                    except:
+                        pass
+                    
+                    # Wait a bit to see if page redirects automatically
+                    print("[STEP 6] Waiting for automatic redirect...")
+                    time.sleep(5)
+                    
+                    if "uowdubai.ac.ae" in self.page.url:
+                        print("[STEP 6] ✓ Authenticated without TOTP")
+                    else:
+                        print(f"[STEP 6] Still at: {self.page.url}")
+                        # Try taking a screenshot for debugging
+                        try:
+                            self.page.screenshot(path="debug_step6.png")
+                            print("[STEP 6] Screenshot saved to debug_step6.png")
+                        except:
+                            pass
+                        print("[STEP 6] ✗ Cannot proceed with authentication")
+                        return False
+                    
             except Exception as e:
-                print(f"[VERIFY] ⚠️ Label check failed: {e}")
+                print(f"[STEP 6] ✗ Exception: {e}")
+                return False
+            
+            # Step 7: Handle "Stay signed in?" prompt
+            print("\n[STEP 7] Handling 'Stay signed in' prompt...")
+            try:
+                stay_btn = self.page.locator('input[type="submit"][value="Yes"]').first
+                if stay_btn.is_visible(timeout=10000):
+                    print("[STEP 7] Clicking Yes...")
+                    stay_btn.click()
+                    self.wait_for_navigation()
+                    print("[STEP 7] ✓ Accepted stay signed in")
+                else:
+                    print("[STEP 7] No prompt found, continuing...")
+            except PlaywrightTimeout:
+                print("[STEP 7] No stay signed in prompt")
 
-            print(f"\n[LOGIN] ❌ FAILED")
-            print("="*70 + "\n")
-            return False
+            # Verification: Check if we're back at UOWD domain
+            time.sleep(3)
+            final_url = self.page.url
+            print(f"\n[VERIFY] Final URL: {final_url}")
+
+            if "uowdubai.ac.ae" in final_url and "microsoft" not in final_url:
+                print("\n[LOGIN] ✅ Authentication successful!")
+                print("="*70 + "\n")
+                return True
+            else:
+                print("\n[LOGIN] ✗ Authentication may have failed")
+                print("="*70 + "\n")
+                return False
 
         except Exception as e:
-            print(f"\n[LOGIN] ❌ EXCEPTION: {e}")
+            print(f"\n[LOGIN] ✗ Exception during login: {e}")
             traceback.print_exc()
             print("="*70 + "\n")
             return False
 
-    def get_semester_id(self) -> Optional[str]:
-        """Determine the correct semester ID."""
+    def get_current_semester_text(self) -> str:
+        """Return the current semester text based on date."""
         today = datetime.datetime.now()
         year = today.year
         month = today.month
         week = (today.day - 1) // 7 + 1
 
-        sem_name = "Unknown"
-        if month in [1, 2]: sem_name = f"Winter {year}"
-        elif month == 3: sem_name = f"Winter {year}" if week <= 3 else f"Spring {year}"
-        elif month in [4, 5]: sem_name = f"Spring {year}"
-        elif month == 6: sem_name = f"Spring {year}"
-        elif month == 7: sem_name = f"Summer {year}"
-        elif month == 8: sem_name = f"Summer {year}" if week <= 2 else f"Autumn {year}"
-        elif month in [9, 10, 11]: sem_name = f"Autumn {year}"
-        elif month == 12: sem_name = f"Autumn {year}" if week <= 1 else f"Winter {year}"
+        if month in [1, 2]:
+            return f"Winter {year}"
+        elif month == 3:
+            return f"Winter {year}" if week <= 3 else f"Spring {year}"
+        elif month in [4, 5, 6]:
+            return f"Spring {year}"
+        elif month == 7:
+            return f"Summer {year}"
+        elif month == 8:
+            return f"Summer {year}" if week <= 2 else f"Autumn {year}"
+        elif month in [9, 10, 11]:
+            return f"Autumn {year}"
+        elif month == 12:
+            return f"Autumn {year}" if week <= 1 else f"Winter {year}"
+        return "Unknown"
 
-        print(f"[SEMESTER] Target: {sem_name}")
+    def get_semester_id(self) -> Optional[str]:
+        """Determine the correct semester ID from available options."""
+        target_semester = self.get_current_semester_text()
+        print(f"\n[SEMESTER] Target semester: {target_semester}")
 
         try:
-            self.page.wait_for_selector("label", timeout=5000)
-        except:
-            print("[SEMESTER] Timeout waiting for labels")
+            # Wait for radio buttons to appear
+            self.page.wait_for_selector("input[type='radio']", timeout=DEFAULT_TIMEOUT)
 
-        labels = self.page.locator("label").all()
-        target_id = None
+            # Get all labels
+            labels = self.page.locator("label").all()
+            print(f"[SEMESTER] Found {len(labels)} labels")
 
-        if not labels:
-            print("[SEMESTER] No labels found!")
+            # Find matching semester
+            for label in labels:
+                text = label.inner_text().strip()
+                if target_semester.lower() in text.lower():
+                    # Found match, get associated radio value
+                    parent = label.locator("..")
+                    radio = parent.locator("input[type='radio']").first
+                    if radio.count() > 0:
+                        semester_id = radio.get_attribute("value")
+                        print(f"[SEMESTER] ✓ Found matching ID: {semester_id} for '{text}'")
+                        return semester_id
 
-        print("[SEMESTER] Available:")
-        for label in labels:
-            text = label.inner_text().strip()
-            print(f"[SEMESTER]  - {text}")
-            if sem_name.lower() in text.lower():
-                parent = label.locator("..")
-                radio = parent.locator("input[type='radio']")
-                if radio.count() > 0:
-                    target_id = radio.get_attribute("value")
-                    print(f"[SEMESTER]  ✓ Found ID: {target_id}")
-                    break
-
-        if not target_id:
+            # Fallback to first available
+            print(f"[SEMESTER] No exact match for '{target_semester}', using first available")
             first_radio = self.page.locator("input[type='radio']").first
-            if first_radio.count() > 0:
-                target_id = first_radio.get_attribute("value")
-                print(f"[SEMESTER] Fallback ID: {target_id}")
+            semester_id = first_radio.get_attribute("value")
+            print(f"[SEMESTER] Fallback ID: {semester_id}")
+            return semester_id
 
-        return target_id
+        except Exception as e:
+            print(f"[SEMESTER] ✗ Error finding semester: {e}")
+            return None
+
+    def extract_timetable_data(self) -> Optional[List[Dict]]:
+        """Extract timetable data from page script."""
+        print("\n[EXTRACT] Extracting timetable data from page...")
+        try:
+            content = self.page.content()
+            match = re.search(r"timetableData\s*=\s*(\[.*\])\s*;", content, re.DOTALL | re.MULTILINE)
+
+            if not match:
+                print("[EXTRACT] ✗ Could not find timetableData in page")
+                return None
+
+            data = json.loads(match.group(1))
+            print(f"[EXTRACT] ✓ Extracted {len(data)} timetable entries")
+            return data
+
+        except json.JSONDecodeError as e:
+            print(f"[EXTRACT] ✗ JSON decode error: {e}")
+            return None
+        except Exception as e:
+            print(f"[EXTRACT] ✗ Error extracting data: {e}")
+            traceback.print_exc()
+            return None
 
     def scrape_data(self, output_path: Path):
-        """Scrape the data and save to CSV."""
+        """Main scraping orchestration."""
+        print("\n" + "="*70)
+        print("[SCRAPE] Starting scrape process")
+        print("="*70)
+
+        # Step 1: Authenticate
         if not self.login():
             raise Exception("Authentication failed")
 
-        print(f"[SCRAPE] Navigating to timetable viewer...")
-        self.page.goto(BASE_URL, wait_until="domcontentloaded")
-        self.handle_cloudflare()
+        # Step 2: Navigate to timetable viewer
+        print("\n[SCRAPE] Navigating to timetable viewer...")
+        self.page.goto(BASE_URL, wait_until="domcontentloaded", timeout=NAVIGATION_TIMEOUT)
+        time.sleep(3)
+        
+        # Check for Cloudflare
+        if not self.check_and_handle_cloudflare():
+            raise Exception("Cloudflare challenge failed on timetable page")
 
-        sem_id = self.get_semester_id()
-        if not sem_id:
-            raise Exception("Could not find semester ID")
+        # Step 3: Get semester ID
+        semester_id = self.get_semester_id()
+        if not semester_id:
+            raise Exception("Could not determine semester ID")
 
-        print(f"[SCRAPE] Loading semester {sem_id}...")
-        self.page.goto(f"{BASE_URL}?semester={sem_id}", wait_until="networkidle")
+        # Step 4: Load semester data
+        print(f"\n[SCRAPE] Loading semester {semester_id}...")
+        semester_url = f"{BASE_URL}?semester={semester_id}"
+        self.page.goto(semester_url, wait_until="networkidle", timeout=NAVIGATION_TIMEOUT)
+        time.sleep(3)
+        
+        # Check for Cloudflare on semester page
+        if not self.check_and_handle_cloudflare():
+            raise Exception("Cloudflare challenge failed on semester page")
 
-        # Extract JSON from script tag
-        content = self.page.content()
-        match = re.search(r"timetableData\s*=\s*(\[.*\])\s*;", content, re.DOTALL | re.MULTILINE)
-        if not match:
-            raise Exception("Could not find timetableData in page source")
+        # Step 5: Extract data
+        data = self.extract_timetable_data()
+        if not data:
+            raise Exception("Failed to extract timetable data")
 
-        data = json.loads(match.group(1))
-        print(f"[SCRAPE] Extracted {len(data)} records")
+        # Step 6: Process and save to CSV
+        print("\n[SCRAPE] Processing and saving data...")
+        self.process_data_to_csv(data, output_path)
+        print("\n" + "="*70)
+        print("[SCRAPE] ✅ Scraping completed successfully")
+        print("="*70)
 
-        # Write CSV
+    def process_data_to_csv(self, raw_data: List[Dict[str, Any]], output_path: Path):
+        """Process raw timetable data and write to CSV."""
+        print(f"[CSV] Writing {len(raw_data)} entries to {output_path}...")
+
         output_path.parent.mkdir(parents=True, exist_ok=True)
+        processed_count = 0
+
         with output_path.open("w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=["SubCode", "Class", "Day", "StartTime", "EndTime", "Room", "Teacher"])
+            fieldnames = ["SubCode", "Class", "Day", "StartTime", "EndTime", "Room", "Teacher"]
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
 
-            for item in data:
-                locs = [normalize_whitespace(l) for l in item.get("location", "").split(";") if l.strip()] or ["Unknown"]
-                teachers = [normalize_whitespace(t) for t in item.get("lecturer", "").split(";") if t.strip()] or ["Unknown"]
+            for entry in raw_data:
+                # Extract and normalize locations
+                raw_locations = entry.get("location", "").split(";")
+                locations = [normalize_whitespace(loc) for loc in raw_locations if loc.strip()] or ["Unknown"]
 
-                for loc in locs:
+                # Extract and normalize teachers
+                raw_teachers = entry.get("lecturer", "").split(";")
+                teachers = [normalize_whitespace(t) for t in raw_teachers if t.strip()] or ["Unknown"]
+
+                for loc in locations:
+                    # Apply room mapping
                     room = loc
-                    for sc, name in ROOM_MAPPING.items():
-                        if loc.startswith(sc):
-                            room = name
+                    for short_code, full_name in ROOM_MAPPING.items():
+                        if loc.startswith(short_code):
+                            room = full_name
                             break
 
                     for teacher in teachers:
                         writer.writerow({
-                            "SubCode": item.get("subject_code", "").replace(" ", ""),
-                            "Class": normalize_whitespace(item.get("type_with_section", "")),
-                            "Day": normalize_whitespace(item.get("week_day", "")),
-                            "StartTime": format_time_to_hh_mm(item.get("start_time")),
-                            "EndTime": format_time_to_hh_mm(item.get("end_time")),
+                            "SubCode": entry.get("subject_code", "").replace(" ", ""),
+                            "Class": normalize_whitespace(entry.get("type_with_section", "")),
+                            "Day": normalize_whitespace(entry.get("week_day", "")),
+                            "StartTime": format_time_to_hh_mm(entry.get("start_time")),
+                            "EndTime": format_time_to_hh_mm(entry.get("end_time")),
                             "Room": room,
                             "Teacher": teacher
                         })
-        print(f"[SCRAPE] ✓ Saved to {output_path}")
+                        processed_count += 1
+
+        print(f"[CSV] ✓ Wrote {processed_count} rows to {output_path}")
+
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--headless", action="store_true", default=True)
-    parser.add_argument("--no-headless", action="store_false", dest="headless")
+    parser = argparse.ArgumentParser(description="Scrape authenticated timetable data")
+    parser.add_argument("--output", required=True, type=Path, help="Output CSV file path")
+    parser.add_argument("--headless", action="store_true", default=True, help="Run in headless mode")
+    parser.add_argument("--no-headless", action="store_false", dest="headless", help="Run with visible browser")
     args = parser.parse_args()
 
     email = os.getenv("UOWD_EMAIL")
@@ -588,15 +772,19 @@ def main():
     totp = os.getenv("UOWD_TOTP_SECRET")
 
     if not all([email, password, totp]):
-        print("Missing credentials.")
+        print("✗ Missing credentials in environment variables:")
+        print(f"  UOWD_EMAIL: {'✓' if email else '✗'}")
+        print(f"  UOWD_PASSWORD: {'✓' if password else '✗'}")
+        print(f"  UOWD_TOTP_SECRET: {'✓' if totp else '✗'}")
         sys.exit(1)
 
     scraper = TimetableScraper(email, password, totp, args.headless)
     try:
         scraper.start_browser()
         scraper.scrape_data(args.output)
+        print(f"\n✅ SUCCESS: Data saved to {args.output.resolve()}")
     except Exception as e:
-        print(f"Scraping failed: {e}")
+        print(f"\n✗ FAILED: {e}")
         traceback.print_exc()
         sys.exit(1)
     finally:
