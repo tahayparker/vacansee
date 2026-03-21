@@ -2,7 +2,7 @@ name: Ping Supabase Database
 
 on:
   schedule:
-    - cron: '0 11 * * *'
+    - cron: '0 * * * *'
   workflow_dispatch: # Allows manual triggering from the GitHub UI
 
 jobs:
