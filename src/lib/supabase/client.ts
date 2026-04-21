@@ -1,12 +1,15 @@
-import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+import { createBrowserClient } from "@supabase/ssr";
 
-// Use ReturnType to correctly infer the client type
-let browserClient: ReturnType<typeof createPagesBrowserClient> | null = null;
+type BrowserClient = ReturnType<typeof createBrowserClient>;
 
-export function getSupabaseBrowserClient() {
-  // Check if the client already exists.
+let browserClient: BrowserClient | null = null;
+
+export function getSupabaseBrowserClient(): BrowserClient {
   if (!browserClient) {
-    browserClient = createPagesBrowserClient();
+    browserClient = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    );
   }
   return browserClient;
 }

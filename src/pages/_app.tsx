@@ -10,7 +10,7 @@ import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import { useEffect, useState, useRef } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useRouter } from "next/router";
-import type { Session } from "@supabase/supabase-js";
+import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import { cn } from "@/lib/utils";
 import { PUBLIC_PATHS } from "@/lib/paths";
 import { Analytics } from "@vercel/analytics/react";
@@ -109,7 +109,7 @@ export default function App({ Component, pageProps }: AppProps) {
     if (router.isReady) {
       supabase.auth
         .getSession()
-        .then(({ data: { session } }) => {
+        .then(({ data: { session } }: { data: { session: Session | null } }) => {
           if (isMounted) {
             console.log(
               "[_app Client] Initial getSession result:",
@@ -118,7 +118,7 @@ export default function App({ Component, pageProps }: AppProps) {
             handleSessionUpdate(session);
           }
         })
-        .catch((error) => {
+        .catch((error: unknown) => {
           console.error("[_app Client] Initial getSession error:", error);
           if (isMounted) {
             handleSessionUpdate(null);
@@ -131,7 +131,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      (event: AuthChangeEvent, session: Session | null) => {
         if (isMounted) {
           console.log(`[_app Client] onAuthStateChange event: ${event}`);
           handleSessionUpdate(session);

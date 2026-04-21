@@ -1,6 +1,7 @@
 // src/hooks/useUserPreferences.ts
 import { useState, useEffect, useCallback } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
 
 export interface UserPreferences {
   hasSeenOnboarding: boolean;
@@ -46,7 +47,7 @@ export function useUserPreferences() {
 
     // Listen for auth state changes, including USER_UPDATED when metadata changes
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      (event: AuthChangeEvent, session: Session | null) => {
         if (
           (event === "SIGNED_IN" || event === "USER_UPDATED") &&
           session?.user

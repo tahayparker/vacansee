@@ -1,5 +1,5 @@
 // src/middleware.ts
-import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
+import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { PUBLIC_PATHS } from "@/lib/paths";
@@ -42,6 +42,9 @@ async function requiresAuthentication(pathname: string): Promise<boolean> {
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  // `res` carries refreshed Supabase session cookies; must be returned so
+  // they propagate to the browser on authenticated paths.
+  let res = NextResponse.next({ request: req });
 
   console.log(`[Middleware] Method: ${req.method}, Path: "${pathname}"`);
 
@@ -92,9 +95,29 @@ export async function middleware(req: NextRequest) {
     console.log(
       `[Middleware] Authentication required for "${pathname}". Checking session...`,
     );
-    // Only create Supabase client when auth is actually needed
-    const res = NextResponse.next();
-    const supabase = createMiddlewareClient({ req, res });
+    // Only create Supabase client when auth is actually needed.
+    // Mirrors the @supabase/ssr middleware recipe so refreshed session
+    // cookies land on both the forwarded request and the outgoing response.
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return req.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value }) =>
+              req.cookies.set(name, value),
+            );
+            res = NextResponse.next({ request: req });
+            cookiesToSet.forEach(({ name, value, options }) =>
+              res.cookies.set(name, value, options),
+            );
+          },
+        },
+      },
+    );
     const {
       data: { session },
     } = await supabase.auth.getSession();
@@ -128,7 +151,7 @@ export async function middleware(req: NextRequest) {
   }
 
   console.log(`[Middleware] Proceeding with request for path "${pathname}"`);
-  return NextResponse.next();
+  return res;
 }
 
 export const config = {

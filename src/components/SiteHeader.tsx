@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
-import type { User } from "@supabase/supabase-js";
+import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import {
   DoorOpen,
@@ -191,7 +191,7 @@ export default function SiteHeader({
         if (isSubscribed) setLoadingAuth(false);
       }
       const { data: authListener } = supabase.auth.onAuthStateChange(
-        (_event, session) => {
+        (_event: AuthChangeEvent, session: Session | null) => {
           if (isSubscribed) {
             console.log("Auth state changed:", _event);
             setUser(session?.user ?? null);

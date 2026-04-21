@@ -10,6 +10,7 @@ import { imageOptimization } from "@/lib/images";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
+import type { User } from "@supabase/supabase-js";
 
 export default function Profile() {
   // Check authentication first
@@ -58,7 +59,7 @@ export default function Profile() {
     const supabase = getSupabaseBrowserClient();
     supabase.auth
       .getUser()
-      .then(async ({ data }) => {
+      .then(async ({ data }: { data: { user: User | null } }) => {
         const user = data.user;
         if (!user) {
           setIsLoading(false);
@@ -84,7 +85,7 @@ export default function Profile() {
 
         setIsLoading(false);
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.error("Error fetching user data:", error);
         setIsLoading(false);
       });
