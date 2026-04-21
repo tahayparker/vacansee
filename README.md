@@ -1,111 +1,257 @@
-# vacansee 🎓
+# vacansee
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-resentment.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/for-you.svg)](https://forthebadge.com)
+Real-time room availability for the University of Wollongong in Dubai.
+Scrapes the official timetable viewer, normalises it into a queryable
+schedule, and exposes search / browse / visualisation over the result.
 
-A modern web application designed to help students find available rooms on campus. Built with Next.js, Prisma, and TypeScript.
+Live: [vacan.see](https://vacan.see)
 
-## Features 🚀
+## What it does
 
-- **Real-time Room Availability** - Check which rooms are currently available
-- **Room Search** - Search for specific rooms and their availability
-- **Visual Timetable** - View room schedules in an interactive graph
-- **Automatic Updates** - Timetable data is automatically updated daily
-- **Mobile Responsive** - Works seamlessly on all devices
+- **Now / Soon** — shows rooms currently free and rooms that free up in
+  the next hour, filtered to the current day + session block.
+- **Check** — ad-hoc availability query: pick a room + time window, get
+  back whether it is free and what sits on either side.
+- **Rooms** — directory of every timetabled space with capacity + code.
+- **Graph** / **Custom graph** — weekly occupancy heatmap per room,
+  filterable by weekday, room subset, and session blocks.
+- **Profile** — Microsoft Entra SSO via Supabase; maintains
+  `time_format` preference (12h / 24h) and dismissed-onboarding flags.
 
-## Tech Stack 💻
+## Architecture
 
-- **Frontend**: Next.js, TypeScript, TailwindCSS
-- **Backend**: Next.js API Routes, [Prisma](https://www.prisma.io/orm)
-- **Database**: PostgreSQL hosted on [Supabase](https://supabase.com)
-- **Deployment**: [Vercel](https://vercel.com)
-- **Data Updates**: [GitHub Actions](https://github.com/actions)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with custom animations
-- **Badges**: [ForTheBadge](https://forthebadge.com)
-- **AI Assistance**: [Google AI Studio](https://www.aistudio.google.com/)
+```
++-----------------------------------+      +-----------------------------+
+| GitHub Actions                    |      | my.uowdubai.ac.ae           |
+|  - update-timetable.yml           | ---> |   /timetable/viewer         |
+|    - check_schedule.py (gate)     |      |   (Cloudflare-protected)    |
+|    - update_schedule.py (cal)     |      +-----------------------------+
+|    - scrape_timetable_auth.py     |
+|    - upload_timetable.py          |      +-----------------------------+
+|    - generate_schedule.py         | ---> | Supabase Postgres           |
++-----------------------------------+      |   Rooms / Teacher / Timings |
+            |                              +-----------------------------+
+            | writes public/classes.csv
+            | writes public/scheduleData.json
+            v
++-----------------------------------+      +-----------------------------+
+| Next.js Pages Router              | <--- | Supabase Auth (Entra SSO)   |
+|  - /api/* (Prisma -> Postgres)    |      +-----------------------------+
+|  - /api/schedule (static JSON)    |
+|  - Vercel serverless + edge MW    |
++-----------------------------------+
+```
 
-## Getting Started 🏁
+## Tech stack
 
-### Prerequisites
+| Layer | Choice |
+|---|---|
+| Frontend | Next.js 15 (Pages Router), React 19, TypeScript, Tailwind, Framer Motion |
+| Auth | Supabase (`@supabase/ssr`) on Microsoft Entra SSO |
+| DB ORM | Prisma 6 -> Supabase Postgres |
+| Middleware | Edge middleware for session refresh + maintenance mode |
+| Scraper | Python + Camoufox (Firefox fingerprint spoof) + Patchright fallback |
+| CI | GitHub Actions (cron + workflow_dispatch) |
+| Hosting | Vercel |
 
-- Node.js 16+
-- npm or yarn
-- PostgreSQL database
+## Repository layout
 
-### Installation
+```
+.
+├─ prisma/
+│  └─ schema.prisma            Rooms / Teacher / Timings
+├─ public/
+│  ├─ classes.csv              Scraper output, committed by CI
+│  ├─ scheduleData.json        Pre-aggregated weekly heatmap data
+│  └─ academic_schedule.json   Peak-window cache (semester dates)
+├─ scripts/                    Python scrapers + CI helpers
+│  ├─ scrape_timetable_auth.py Auth'd scraper (Camoufox + Patchright)
+│  ├─ update_schedule.py       Academic calendar parser
+│  ├─ check_schedule.py        Peak / off-peak gate (exits 78 to skip)
+│  ├─ upload_timetable.py      CSV -> Postgres via Prisma schema
+│  ├─ update_rooms.py          Sync Rooms table with timetable
+│  ├─ generate_schedule.py     Rebuild scheduleData.json
+│  ├─ db_connection.py         Shared Supabase client
+│  └─ requirements.txt
+├─ src/
+│  ├─ pages/                   Next.js Pages Router
+│  │  ├─ api/                  Serverless handlers (Prisma queries)
+│  │  └─ auth/                 Login + OAuth callback
+│  ├─ components/              UI + layout + widgets
+│  ├─ hooks/                   useRequireAuth, useUserPreferences
+│  ├─ lib/                     supabase clients, prisma, utils
+│  └─ middleware.ts            Session + maintenance mode
+└─ .github/workflows/
+   ├─ update-timetable.yml     Scrape + upload + regen (peak vs daily)
+   └─ ping-supabase.yml        Keep-alive ping for free-tier DB
+```
 
-1. Clone the repository
+## Getting started
+
+Requires Node 20+, Python 3.12+, and a Supabase project.
 
 ```bash
 git clone https://github.com/tahayparker/vacansee.git
 cd vacansee
-```
-
-2. Install dependencies
-
-```bash
 npm install
-# or
-yarn install
 ```
 
-3. Set up environment variables
+Copy `.env.example` to `.env.local` and fill the Supabase credentials
+(and the UOWD scraper creds if you plan to run the scraper locally):
 
-```bash
-# Create a .env file with the following variables
-DATABASE_URL="postgresql://username:password@localhost:5432/vacansee"
+```
+DATABASE_URL=            # Supabase pooled connection string
+DIRECT_URL=              # Supabase direct (used by Prisma migrations)
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+# Scraper only — not read by the web app
+UOWD_EMAIL=
+UOWD_PASSWORD=
+UOWD_TOTP_SECRET=        # base32 shared secret (not an OTP)
 ```
 
-4. Initialize the database
+Seed the schema + run dev:
 
 ```bash
-npx prisma db push
-```
-
-5. Run the development server
-
-```bash
+npx prisma generate
 npm run dev
-# or
-yarn dev
 ```
 
-The application will be available at `http://localhost:3000`
+Opens at `http://localhost:3000`.
 
-## Automatic Updates ⚡
+## Running the scraper locally
 
-The timetable data is automatically updated every day at 00:00 GST (04:00 UTC) using GitHub Actions. The workflow:
+```bash
+python -m venv .venv
+source .venv/bin/activate         # on Windows: .venv\Scripts\activate
+pip install -r scripts/requirements.txt
+python -m camoufox fetch
+python -m patchright install chromium --with-deps
 
-1. Scrapes the latest timetable data
-2. Updates the database
-3. Generates a new schedule JSON
-4. Commits the changes
+python scripts/scrape_timetable_auth.py --output public/classes.csv
+```
 
-## Contributing 🤝
+Flags:
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- `--headed` — run browser visibly (default is headless for CI).
+- `--backend camoufox|patchright|auto` — force a specific stealth
+  backend. Default `auto` tries both in order.
+- `--force-login` — ignore the cached `.storage_state.json` and
+  re-authenticate through MS OAuth from scratch.
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+The scraper persists a `.storage_state.json` after a successful login;
+subsequent runs reuse that session so they skip the MS OAuth round-trip
+until the cookies expire.
 
-## Inspiration ✨
+## Automated data refresh
 
-- Built for my friends so they can stop relying on me
-- Inspired by the need for an easier way to find available rooms
-- Definitely does not have any backstory
+[`.github/workflows/update-timetable.yml`](.github/workflows/update-timetable.yml)
+drives the CI pipeline. Two schedules:
 
-## Acknowledgments 🙏
+| Trigger | Cron | Behaviour |
+|---|---|---|
+| Peak 15-min | `*/15 * * * *` | Runs only if today is inside an active peak window (see below). Gated via `scripts/check_schedule.py`. |
+| Daily | `0 4 * * *` (08:00 GST) | Always runs, also refreshes `public/academic_schedule.json`. |
+| Manual | `workflow_dispatch` | Always runs. |
 
-- Thank you Mom Dad for not kicking me out of the house
-- Thank you Google engineers for making a really good product, and for the free AI Studio that helped me redesign this site
-- Thank you UOWD for finally getting rid of the PDF timetable and switching to the [website](https://my.uowdubai.ac.ae/timetable/viewer) instead (please keep it open for non-authenticated users, otherwise this project will die </3)
+Peak window per semester:
 
-## Contact 📧
+```
+peak_start = max(
+  tutorial_enrolment_start - 14 days,
+  previous_semester.final_exam_start,
+)
+peak_end   = last_date_to_enrol_in_subjects
+```
 
-Taha Parker - [@tahayparker](https://github.com/tahayparker)
+The clamp to `previous.final_exam_start` exists so a new semester's
+enrolment peak never overlaps an active teaching semester, which would
+cause the scraper to overwrite the current semester's CSV before
+teaching ends. The active semester itself is defined as the one whose
+first final-exam date is next in the future.
 
-Project Link: [https://github.com/tahayparker/vacansee](https://github.com/tahayparker/vacansee)
+The session cache (`.storage_state.json`) and the academic calendar
+cache (`public/academic_schedule.json`) persist across runs via
+`actions/cache` and the Git commit graph respectively. Scraper debug
+screenshots (`scripts/debug/`) are uploaded as an artifact on failure.
 
-[![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/powered-by-black-magic.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/it-works-dont-ask-me-how.svg)](https://forthebadge.com)
+## Safety rails in the scraper
+
+- Refuses to overwrite `public/classes.csv` with zero rows (an empty
+  viewer response, a failed auth, or a DOM drift no longer wipes the
+  current dataset).
+- Refuses to fall back to a different semester's radio when the
+  expected one is missing — avoids overwriting current data with
+  upcoming data during the transition gap.
+- CSV write is atomic via tmp-file + rename.
+- URL values never logged — post-OAuth URLs carry one-shot auth codes.
+
+## Database schema
+
+```prisma
+model Rooms {
+  id        Int    @id @default(autoincrement())
+  Name      String
+  ShortCode String
+  Capacity  Int?
+
+  @@index([ShortCode])
+  @@index([Name])
+}
+
+model Timings {
+  id        Int    @id @default(autoincrement())
+  SubCode   String
+  Class     String
+  Day       String
+  StartTime String
+  EndTime   String
+  Room      String
+  Teacher   String
+
+  @@index([Day, StartTime, EndTime])
+  @@index([Room])
+  @@index([Day])
+}
+
+model Teacher {
+  id    Int    @id @default(autoincrement())
+  Name  String
+  Email String
+  Phone String
+}
+```
+
+`Rooms.Name` (canonical) and `Rooms.ShortCode` (from the viewer) are
+resolved against each other at scrape time.
+
+## API routes
+
+| Method | Route | Purpose |
+|---|---|---|
+| `GET` | `/api/rooms` | List rooms with capacity + short code |
+| `GET` | `/api/available-now` | Rooms free at the current minute |
+| `GET` | `/api/available-soon` | Rooms freeing up within the next hour |
+| `GET` | `/api/check-availability` | Point-in-time availability for a room + window |
+| `GET` | `/api/schedule` | Static pre-aggregated weekly heatmap |
+| `GET` | `/api/auth/callback` | Supabase OAuth callback handler |
+
+All `/api/*` except `/api/auth/callback` require an authenticated
+session (enforced by `src/middleware.ts`).
+
+## Deployment
+
+Push to `main` on GitHub -> Vercel rebuilds automatically. CI-authored
+commits tagged `[skip deploy]` (`scripts/ignore-build-step.js`) skip
+the rebuild since they only change data files already baked into the
+running build at request time.
+
+## Contributing
+
+Fork, branch, submit a PR. Keep PRs focused — one concern per branch.
+Run `npm run lint` and `npm run build` before submitting. Conventional
+Commits preferred for subject lines.

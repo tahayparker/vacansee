@@ -153,7 +153,8 @@ def shot(page, tag: str) -> None:
         except Exception:
             # Some pages (e.g. viewer) exceed 32767px height. Fall back to viewport.
             page.screenshot(path=str(p), full_page=False)
-        log("SHOT", f"{p.name}  url={page.url}")
+        # URL intentionally omitted from log — it can contain auth codes.
+        log("SHOT", f"{p.name}")
     except Exception as exc:
         log("SHOT", f"failed: {exc}", ok=False)
 
@@ -297,7 +298,10 @@ class LoginFlow:
 
         for step in range(1, LOGIN_MAX_STEPS + 1):
             state = self._detect()
-            log("LOGIN", f"step {step:02d} | state={state} | url={self.page.url}")
+            # URL intentionally omitted — post-OAuth it contains auth codes
+            # that CodeQL flags as sensitive (py/clear-text-logging-
+            # sensitive-data). State alone is enough to trace flow.
+            log("LOGIN", f"step {step:02d} | state={state}")
 
             if state == "DONE":
                 log("LOGIN", "Authenticated at portal ✅")
@@ -550,8 +554,10 @@ class LoginFlow:
         self._unknown_count += 1
         shot(self.page, f"unknown_{self._unknown_count}")
         if self._unknown_count > 5:
-            raise RuntimeError(f"Stuck on unknown page. url={self.page.url}")
-        log("LOGIN", f"unknown page (retry {self._unknown_count}/5) url={self.page.url}")
+            # URL elided — it carries OAuth codes / SAML tokens that get
+            # flagged as sensitive when persisted in logs.
+            raise RuntimeError("Stuck on unknown page (see debug screenshot).")
+        log("LOGIN", f"unknown page (retry {self._unknown_count}/5)")
         time.sleep(3)
 
     def _ms_submit(self) -> None:

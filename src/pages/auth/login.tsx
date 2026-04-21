@@ -49,13 +49,8 @@ export default function LoginPage() {
     }
   }, [router.isReady, router.query.error, router]);
 
-  // Only allow same-origin relative paths. Resolved through `new URL`
-  // against window.location.origin so CodeQL can verify the origin
-  // invariant (js/client-side-unvalidated-url-redirection). Any value
-  // that resolves to a different origin — including protocol-relative
-  // (`//evil.com`), backslash-prefixed (`/\evil.com`), absolute URLs,
-  // and `javascript:` / `data:` schemes — collapses to `/`.
-  const safeRedirectPath = (raw: unknown): string => {
+  const getRedirectPathFromQuery = (): string => {
+    const raw = router.query.next;
     if (typeof raw !== "string" || raw.length === 0) return "/";
     if (!raw.startsWith("/") || raw.startsWith("//") || raw.startsWith("/\\")) {
       return "/";
@@ -69,9 +64,6 @@ export default function LoginPage() {
       return "/";
     }
   };
-
-  const getRedirectPathFromQuery = (): string =>
-    safeRedirectPath(router.query.next);
 
   const handleOAuthLogin = async (provider: Provider) => {
     setIsLoading(true);
@@ -112,9 +104,26 @@ export default function LoginPage() {
         data: { session },
       } = await supabase.auth.getSession();
       if (session) {
-        const finalRedirectUrl = safeRedirectPath(
-          Cookies.get("supabase-redirect-path"),
-        );
+        // Inline same-origin validation. Keeps the guard shape visible
+        // to CodeQL (js/client-side-unvalidated-url-redirection) rather
+        // than hiding it behind a helper it cannot trace.
+        const raw = Cookies.get("supabase-redirect-path");
+        let finalRedirectUrl = "/";
+        if (
+          typeof raw === "string" &&
+          raw.startsWith("/") &&
+          !raw.startsWith("//") &&
+          !raw.startsWith("/\\")
+        ) {
+          try {
+            const u = new URL(raw, window.location.origin);
+            if (u.origin === window.location.origin) {
+              finalRedirectUrl = u.pathname + u.search + u.hash;
+            }
+          } catch {
+            /* keep "/" */
+          }
+        }
         Cookies.remove("supabase-redirect-path", { path: "/" });
         console.log(
           "User already logged in (useEffect check), redirecting to:",
@@ -127,9 +136,24 @@ export default function LoginPage() {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event: string, session: Session | null) => {
         if (event === "SIGNED_IN" && session) {
-          const finalRedirectUrl = safeRedirectPath(
-            Cookies.get("supabase-redirect-path"),
-          );
+          // Inline same-origin validation (see useEffect above).
+          const raw = Cookies.get("supabase-redirect-path");
+          let finalRedirectUrl = "/";
+          if (
+            typeof raw === "string" &&
+            raw.startsWith("/") &&
+            !raw.startsWith("//") &&
+            !raw.startsWith("/\\")
+          ) {
+            try {
+              const u = new URL(raw, window.location.origin);
+              if (u.origin === window.location.origin) {
+                finalRedirectUrl = u.pathname + u.search + u.hash;
+              }
+            } catch {
+              /* keep "/" */
+            }
+          }
           Cookies.remove("supabase-redirect-path", { path: "/" });
           console.log(
             "Auth state changed to SIGNED_IN (listener), redirecting to:",
