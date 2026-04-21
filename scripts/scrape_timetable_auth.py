@@ -443,7 +443,7 @@ class LoginFlow:
         log("LOGIN", "login button clicked via no selector", ok=False)
 
     def _h_email(self) -> None:
-        log("LOGIN", f"filling email {self.email}")
+        log("LOGIN", "filling email")
         shot(self.page, "ms_email_before")
         sel = "input[placeholder='someone@example.com'], input[name='loginfmt']"
         self.page.wait_for_selector(sel, state="visible", timeout=DEFAULT_TIMEOUT_MS)

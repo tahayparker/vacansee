@@ -85,15 +85,18 @@ export function sanitizeString(input: string): string {
   // Loop until the output stabilises — single-pass replace can be bypassed
   // by nested payloads like `jajavascript:vascript:` which collapse back
   // into `javascript:` after one removal.
+  // Event-handler attributes (`onclick=`, etc.) are intentionally not
+  // regex-stripped: once `<` and `>` are gone they cannot fire, so the
+  // extra pattern was both redundant and CodeQL-flagged (js/incomplete-
+  // multi-character-sanitization).
   let out = input;
   let prev: string;
   do {
     prev = out;
-    out = out.replace(/[<>]/g, ""); // Remove angle brackets
+    out = out.replace(/[<>]/g, "");
     for (const pat of dangerousSchemes) {
       out = out.replace(pat, "");
     }
-    out = out.replace(/on\w+\s*=/gi, ""); // Remove event handlers
   } while (out !== prev);
 
   return out.trim();

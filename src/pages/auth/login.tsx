@@ -49,14 +49,25 @@ export default function LoginPage() {
     }
   }, [router.isReady, router.query.error, router]);
 
-  // Only allow same-origin relative paths; reject protocol-relative (`//...`),
-  // backslash-prefixed (`/\evil.com`), absolute URLs, and `javascript:` etc.
-  // Prevents open-redirect via the `?next=` query param or persisted cookie.
+  // Only allow same-origin relative paths. Resolved through `new URL`
+  // against window.location.origin so CodeQL can verify the origin
+  // invariant (js/client-side-unvalidated-url-redirection). Any value
+  // that resolves to a different origin — including protocol-relative
+  // (`//evil.com`), backslash-prefixed (`/\evil.com`), absolute URLs,
+  // and `javascript:` / `data:` schemes — collapses to `/`.
   const safeRedirectPath = (raw: unknown): string => {
     if (typeof raw !== "string" || raw.length === 0) return "/";
-    if (!raw.startsWith("/")) return "/";
-    if (raw.startsWith("//") || raw.startsWith("/\\")) return "/";
-    return raw;
+    if (!raw.startsWith("/") || raw.startsWith("//") || raw.startsWith("/\\")) {
+      return "/";
+    }
+    if (typeof window === "undefined") return raw;
+    try {
+      const u = new URL(raw, window.location.origin);
+      if (u.origin !== window.location.origin) return "/";
+      return u.pathname + u.search + u.hash;
+    } catch {
+      return "/";
+    }
   };
 
   const getRedirectPathFromQuery = (): string =>
