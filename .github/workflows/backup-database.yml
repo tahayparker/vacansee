@@ -2,10 +2,10 @@ name: Backup Database
 
 on:
   schedule:
-    # Daily at 02:00 UTC (06:00 GST). Runs after the daily timetable
-    # refresh (04:00 UTC = 08:00 GST) so the snapshot captures the
-    # freshest data.
-    - cron: "0 2 * * *"
+    # Daily at 05:00 UTC (09:00 GST). Runs ~1h after the daily
+    # timetable refresh (04:00 UTC = 08:00 GST) so the snapshot
+    # captures the freshly-scraped data rather than the previous day's.
+    - cron: "0 5 * * *"
   workflow_dispatch:
 
 permissions:
