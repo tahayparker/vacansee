@@ -481,7 +481,7 @@ class LoginFlow:
 
     def _h_totp(self) -> None:
         code = totp_code(self.totp_secret)
-        log("LOGIN", f"filling TOTP {code}")
+        log("LOGIN", "filling TOTP")
         shot(self.page, "ms_totp_before")
         sel = "input[name='otc'], input[id*='OTC'], input[id*='code'], input[name='otp']"
         self.page.wait_for_selector(sel, state="visible", timeout=DEFAULT_TIMEOUT_MS)
