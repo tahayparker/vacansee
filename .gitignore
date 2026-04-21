@@ -49,3 +49,8 @@ __pycache__/
 
 # .vscode
 .vscode/
+
+# scraper runtime
+.storage_state.json
+scripts/debug/
+downloaded_files/

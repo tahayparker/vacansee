@@ -1,13 +1,17 @@
-# Core dependencies
+# Core
 python-dotenv
 supabase
 postgrest
+pyotp
 
-# For non-authenticated scraping (scrape_timetable.py)
+# Legacy non-auth scraper (scrape_timetable.py)
 beautifulsoup4
 cloudscraper
 httpx
 
-# For authenticated scraping (scrape_timetable_auth.py)
+# Authenticated scraper (scrape_timetable_auth.py)
+# Primary stealth stack: Camoufox (Firefox + C++ fingerprint spoof)
+# Secondary: Patchright (patched Chromium Playwright)
 playwright
-pyotp
+camoufox[geoip]
+patchright
