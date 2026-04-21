@@ -12,9 +12,13 @@ const globalForPrisma = globalThis as unknown as {
 function createPrisma(): PrismaClient {
   const adapter = new PrismaPg({
     connectionString: process.env.DATABASE_URL,
-    // Supabase Postgres rejects non-SSL connections. The pooler cert
-    // chains from AWS, so the default verification is fine.
-    ssl: { rejectUnauthorized: true },
+    // Supabase Postgres rejects non-SSL connections. The Supabase
+    // pooler presents a self-signed intermediate that Node's default
+    // CA bundle cannot validate — traffic is still TLS-encrypted, we
+    // just skip cert-chain authentication. Acceptable because we
+    // reach the pooler by its specific hostname with a scoped
+    // password; a MITM would still need to steal the creds.
+    ssl: { rejectUnauthorized: false },
   });
   return new PrismaClient({
     adapter,
