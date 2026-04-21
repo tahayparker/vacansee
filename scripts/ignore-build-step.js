@@ -29,14 +29,14 @@ try {
   );
 
   if (shouldSkip) {
-    console.log("🚫 Build skipped - commit message contains skip instruction");
+    console.log("Build skipped - commit message contains skip instruction");
     process.exit(0); // Skip build
   } else {
-    console.log("✅ Proceeding with build");
+    console.log("Proceeding with build");
     process.exit(1); // Continue with build
   }
 } catch (error) {
   console.error("Error checking commit message:", error.message);
-  console.log("⚠️ Proceeding with build due to error");
+  console.log("Proceeding with build due to error");
   process.exit(1); // Continue with build on error
 }
