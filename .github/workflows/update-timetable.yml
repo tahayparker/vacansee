@@ -2,13 +2,22 @@ name: Update Timetable Data
 
 on:
   schedule:
-    # Run every 5 minutes
-    - cron: "0/5 * * * *"
-  workflow_dispatch: # Allow manual trigger
+    # Peak window: every 15 minutes — gated; runs the scraper only when
+    # `public/academic_schedule.json` says we're inside a semester's
+    # peak period (tutorial-enrolment start - 14 days .. last date to enrol).
+    - cron: "*/15 * * * *"
+    # Off-peak: once a day at 04:00 UTC (= 08:00 GMT+4). Also refreshes the
+    # academic calendar cache on every daily tick.
+    - cron: "0 4 * * *"
+  workflow_dispatch:
 
 jobs:
   update-timetable:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
+    concurrency:
+      group: update-timetable
+      cancel-in-progress: false
 
     steps:
       - name: Checkout repository
@@ -21,13 +30,55 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install supabase cloudscraper beautifulsoup4 python-dotenv httpx postgrest playwright pyotp
-          playwright install chromium
+          pip install -r scripts/requirements.txt
+
+      - name: Schedule gate (peak vs off-peak)
+        id: gate
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          python scripts/check_schedule.py || true
+
+      - name: Exit early if gate says skip
+        if: steps.gate.outputs.should_run != 'true'
+        run: |
+          echo "::notice::Off-peak 15-minute tick — skipping scraper run."
+          echo "Current semester: ${{ steps.gate.outputs.current_semester }}"
+          echo "Trigger: ${{ steps.gate.outputs.trigger }}"
+
+      - name: Install system dependencies for Camoufox + Patchright
+        if: steps.gate.outputs.should_run == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgtk-3-0 libasound2t64 libdbus-glib-1-2 libx11-xcb1 libxt6 \
+            libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libxcomposite1 \
+            libxdamage1 libxfixes3 libxrandr2 libxkbcommon0 libpango-1.0-0 \
+            libcairo2 libgbm1 fonts-liberation
+
+      - name: Fetch Camoufox browser
+        if: steps.gate.outputs.should_run == 'true'
+        run: python -m camoufox fetch
+
+      - name: Install Patchright Chromium (fallback backend)
+        if: steps.gate.outputs.should_run == 'true'
+        run: python -m patchright install chromium --with-deps
+
+      - name: Restore session cache
+        if: steps.gate.outputs.should_run == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: .storage_state.json
+          key: uowd-session-${{ github.run_id }}
+          restore-keys: |
+            uowd-session-
 
       - name: Set up environment variables
+        if: steps.gate.outputs.should_run == 'true'
         env:
           SUPABASE_URL_SECRET: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY_SECRET: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -35,134 +86,110 @@ jobs:
           UOWD_PASSWORD_SECRET: ${{ secrets.UOWD_PASSWORD }}
           UOWD_TOTP_SECRET_SECRET: ${{ secrets.UOWD_TOTP_SECRET }}
         run: |
-          echo "Setting environment variables..."
-          if [ -z "$SUPABASE_URL_SECRET" ]; then echo "Error: SUPABASE_URL secret not set."; exit 1; fi
-          if [ -z "$SUPABASE_SERVICE_KEY_SECRET" ]; then echo "Error: SUPABASE_SERVICE_ROLE_KEY secret not set."; exit 1; fi
-          if [ -z "$UOWD_EMAIL_SECRET" ]; then echo "Error: UOWD_EMAIL secret not set."; exit 1; fi
-          if [ -z "$UOWD_PASSWORD_SECRET" ]; then echo "Error: UOWD_PASSWORD secret not set."; exit 1; fi
-          if [ -z "$UOWD_TOTP_SECRET_SECRET" ]; then echo "Error: UOWD_TOTP_SECRET secret not set."; exit 1; fi
-          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> $GITHUB_ENV
-          echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" >> $GITHUB_ENV
-          echo "UOWD_EMAIL=${{ secrets.UOWD_EMAIL }}" >> $GITHUB_ENV
-          echo "UOWD_PASSWORD=${{ secrets.UOWD_PASSWORD }}" >> $GITHUB_ENV
-          echo "UOWD_TOTP_SECRET=${{ secrets.UOWD_TOTP_SECRET }}" >> $GITHUB_ENV
-          echo "Environment variables configured."
+          for v in SUPABASE_URL_SECRET SUPABASE_SERVICE_KEY_SECRET UOWD_EMAIL_SECRET UOWD_PASSWORD_SECRET UOWD_TOTP_SECRET_SECRET; do
+            if [ -z "${!v}" ]; then echo "::error::Secret $v not set."; exit 1; fi
+          done
+          {
+            echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}"
+            echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}"
+            echo "UOWD_EMAIL=${{ secrets.UOWD_EMAIL }}"
+            echo "UOWD_PASSWORD=${{ secrets.UOWD_PASSWORD }}"
+            echo "UOWD_TOTP_SECRET=${{ secrets.UOWD_TOTP_SECRET }}"
+          } >> "$GITHUB_ENV"
+
+      - name: Refresh academic calendar (daily / manual)
+        if: steps.gate.outputs.should_run == 'true' && (steps.gate.outputs.trigger == 'daily' || steps.gate.outputs.trigger == 'manual')
+        run: python scripts/update_schedule.py
 
       - name: Generate new timetable CSV data
         id: scrape
+        if: steps.gate.outputs.should_run == 'true'
         run: |
-          echo "Running authenticated timetable scraper..."
+          echo "Running authenticated timetable scraper…"
           python scripts/scrape_timetable_auth.py --output public/classes.csv
-          exit_code=$?
-          echo "Scraper finished with exit code $exit_code."
-          # Fail the job only if exit code is non-zero AND not 1
-          if [ $exit_code -ne 0 ] && [ $exit_code -ne 1 ]; then
-            echo "::error::Scraper failed with critical exit code $exit_code!"
-            exit $exit_code
-          fi
-          # If exit code was 1, the workflow continues
+
+      - name: Save session cache
+        if: steps.gate.outputs.should_run == 'true' && always() && hashFiles('.storage_state.json') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: .storage_state.json
+          key: uowd-session-${{ github.run_id }}
+
+      - name: Upload debug artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-debug-${{ github.run_id }}
+          path: scripts/debug/
+          retention-days: 7
+          if-no-files-found: ignore
 
       - name: Compare Generated CSV with Repository CSV
         id: check_csv_changes
+        if: steps.gate.outputs.should_run == 'true'
         run: |
-          echo "Comparing generated classes.csv with repository version..."
           if [ ! -f public/classes.csv ]; then
-            echo "::warning::Generated public/classes.csv not found. Skipping comparison and commit."
-            # Set output to false if file doesn't exist, prevent commit attempt
-            echo "csv_changed=false" >> $GITHUB_OUTPUT
+            echo "::warning::Generated public/classes.csv not found."
+            echo "csv_changed=false" >> "$GITHUB_OUTPUT"
           else
-            # Stage the potentially new/modified file to compare against HEAD
-            git add public/classes.csv
-            if git diff --quiet HEAD -- public/classes.csv; then
-              echo "No changes detected in classes.csv"
-              echo "csv_changed=false" >> $GITHUB_OUTPUT
-              # Unstage if no changes found
-              git reset public/classes.csv
+            git add public/classes.csv public/academic_schedule.json
+            if git diff --quiet HEAD -- public/classes.csv public/academic_schedule.json; then
+              echo "No data changes"
+              echo "csv_changed=false" >> "$GITHUB_OUTPUT"
+              git reset public/classes.csv public/academic_schedule.json
             else
-              echo "Changes detected in classes.csv"
-              echo "csv_changed=true" >> $GITHUB_OUTPUT
-              # Keep the file staged for commit
+              echo "Data changed"
+              echo "csv_changed=true" >> "$GITHUB_OUTPUT"
             fi
           fi
 
       - name: Commit and push CSV changes
-        # Only commit if changes were actually detected
-        if: steps.check_csv_changes.outputs.csv_changed == 'true'
+        if: steps.gate.outputs.should_run == 'true' && steps.check_csv_changes.outputs.csv_changed == 'true'
         run: |
-          echo "Committing and pushing classes.csv changes..."
           git config user.name "Taha Parker via GitHub Actions"
           git config user.email "98612931+tahayparker@users.noreply.github.com"
-          # File should already be staged from comparison step
           git commit -m "Update timetable CSV data [skip deploy]"
           git push
 
       - name: Update Rooms Table in DB
-        id: update_rooms
-        run: |
-          echo "Running rooms update script..."
-          python scripts/update_rooms.py
-          exit_code=$?
-          echo "Room update script finished with exit code $exit_code."
-          if [ $exit_code -ne 0 ]; then
-            echo "::error::Room update script failed with exit code $exit_code!"
-            exit $exit_code
-          fi
+        if: steps.gate.outputs.should_run == 'true'
+        run: python scripts/update_rooms.py
 
       - name: Upload Timetable to DB
-        id: upload
-        # This step runs regardless of CSV changes now
+        if: steps.gate.outputs.should_run == 'true'
         run: |
-          echo "Running timetable upload script..."
           python scripts/upload_timetable.py
-          exit_code=$?
-          echo "Upload script finished with exit code $exit_code."
-          # Fail the job only if exit code is non-zero AND not 1
-          if [ $exit_code -ne 0 ] && [ $exit_code -ne 1 ]; then
-            echo "::error::Upload script failed with critical exit code $exit_code!"
-            exit $exit_code
+          ec=$?
+          if [ $ec -ne 0 ] && [ $ec -ne 1 ]; then
+            echo "::error::Upload script failed with $ec"
+            exit $ec
           fi
 
       - name: Generate Schedule JSON
-        id: generate_json
-        # This step runs regardless of CSV changes now
+        if: steps.gate.outputs.should_run == 'true'
         run: |
-          echo "Running schedule generation script..."
           python scripts/generate_schedule.py
-          exit_code=$?
-          echo "Schedule generation finished with exit code $exit_code."
-          # Fail the job only if exit code is non-zero AND not 1
-          if [ $exit_code -ne 0 ] && [ $exit_code -ne 1 ]; then
-            echo "::error::Schedule generation failed with critical exit code $exit_code!"
-            exit $exit_code
+          ec=$?
+          if [ $ec -ne 0 ] && [ $ec -ne 1 ]; then
+            echo "::error::Schedule generation failed with $ec"
+            exit $ec
           fi
-          # Always assume we might need to commit the JSON after generation
-          echo "should_check_commit_json=true" >> $GITHUB_OUTPUT
 
       - name: Format scheduleData.json with Prettier
+        if: steps.gate.outputs.should_run == 'true'
         run: |
-          echo "Formatting scheduleData.json with Prettier..."
           npm install --no-save prettier
           npx prettier public/scheduleData.json --write
 
       - name: Commit and push JSON changes
-        # Check if the previous step indicated we should check for commits
-        if: steps.generate_json.outputs.should_check_commit_json == 'true'
+        if: steps.gate.outputs.should_run == 'true'
         run: |
-          echo "Checking for scheduleData.json changes..."
-          # Stage the potentially new/modified JSON file
           git add public/scheduleData.json
-          # Check if there are staged changes to commit before committing
           if ! git diff --staged --quiet; then
-            echo "Changes detected in scheduleData.json. Committing..."
             git config user.name "Taha Parker via GitHub Actions"
             git config user.email "98612931+tahayparker@users.noreply.github.com"
             git commit -m "Update timetable JSON data [skip deploy]"
             git push
           else
-            echo "No JSON changes to commit (file might be identical or generation failed before check)."
+            echo "No JSON changes"
           fi
-
-      - name: Cleanup # Optional: Add any other cleanup if needed
-        run: |
-          echo "Workflow finished."
-          # rm -f some_other_temp_file.log # Example
