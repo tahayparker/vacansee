@@ -72,11 +72,31 @@ export function sanitizeString(input: string): string {
     return "";
   }
 
-  return input
-    .replace(/[<>]/g, "") // Remove angle brackets
-    .replace(/javascript:/gi, "") // Remove javascript: protocol
-    .replace(/on\w+\s*=/gi, "") // Remove event handlers
-    .trim();
+  // Dangerous URL schemes that can execute code / leak data.
+  // Matched permissively (whitespace / control chars between chars) because
+  // parsers in browsers strip those when resolving URLs.
+  const dangerousSchemes = [
+    /j[\s\u0000-\u001F]*a[\s\u0000-\u001F]*v[\s\u0000-\u001F]*a[\s\u0000-\u001F]*s[\s\u0000-\u001F]*c[\s\u0000-\u001F]*r[\s\u0000-\u001F]*i[\s\u0000-\u001F]*p[\s\u0000-\u001F]*t[\s\u0000-\u001F]*:/gi,
+    /v[\s\u0000-\u001F]*b[\s\u0000-\u001F]*s[\s\u0000-\u001F]*c[\s\u0000-\u001F]*r[\s\u0000-\u001F]*i[\s\u0000-\u001F]*p[\s\u0000-\u001F]*t[\s\u0000-\u001F]*:/gi,
+    /d[\s\u0000-\u001F]*a[\s\u0000-\u001F]*t[\s\u0000-\u001F]*a[\s\u0000-\u001F]*:/gi,
+    /f[\s\u0000-\u001F]*i[\s\u0000-\u001F]*l[\s\u0000-\u001F]*e[\s\u0000-\u001F]*:/gi,
+  ];
+
+  // Loop until the output stabilises — single-pass replace can be bypassed
+  // by nested payloads like `jajavascript:vascript:` which collapse back
+  // into `javascript:` after one removal.
+  let out = input;
+  let prev: string;
+  do {
+    prev = out;
+    out = out.replace(/[<>]/g, ""); // Remove angle brackets
+    for (const pat of dangerousSchemes) {
+      out = out.replace(pat, "");
+    }
+    out = out.replace(/on\w+\s*=/gi, ""); // Remove event handlers
+  } while (out !== prev);
+
+  return out.trim();
 }
 
 /**

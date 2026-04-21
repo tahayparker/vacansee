@@ -89,13 +89,18 @@ export default function LoginPage() {
     }
   }, [router.isReady, router.query.error, router]);
 
-  const getRedirectPathFromQuery = (): string => {
-    const nextPath = router.query.next;
-    if (typeof nextPath === "string" && nextPath.startsWith("/")) {
-      return nextPath;
-    }
-    return "/";
+  // Only allow same-origin relative paths; reject protocol-relative (`//...`),
+  // backslash-prefixed (`/\evil.com`), absolute URLs, and `javascript:` etc.
+  // Prevents open-redirect via the `?next=` query param or persisted cookie.
+  const safeRedirectPath = (raw: unknown): string => {
+    if (typeof raw !== "string" || raw.length === 0) return "/";
+    if (!raw.startsWith("/")) return "/";
+    if (raw.startsWith("//") || raw.startsWith("/\\")) return "/";
+    return raw;
   };
+
+  const getRedirectPathFromQuery = (): string =>
+    safeRedirectPath(router.query.next);
 
   const handleOAuthLogin = async (provider: Provider) => {
     setIsLoading(true);
@@ -136,8 +141,9 @@ export default function LoginPage() {
         data: { session },
       } = await supabase.auth.getSession();
       if (session) {
-        const cookieRedirectPath = Cookies.get("supabase-redirect-path");
-        const finalRedirectUrl = cookieRedirectPath || "/";
+        const finalRedirectUrl = safeRedirectPath(
+          Cookies.get("supabase-redirect-path"),
+        );
         Cookies.remove("supabase-redirect-path", { path: "/" });
         console.log(
           "User already logged in (useEffect check), redirecting to:",
@@ -150,8 +156,9 @@ export default function LoginPage() {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event: string, session: Session | null) => {
         if (event === "SIGNED_IN" && session) {
-          const cookieRedirectPath = Cookies.get("supabase-redirect-path");
-          const finalRedirectUrl = cookieRedirectPath || "/";
+          const finalRedirectUrl = safeRedirectPath(
+            Cookies.get("supabase-redirect-path"),
+          );
           Cookies.remove("supabase-redirect-path", { path: "/" });
           console.log(
             "Auth state changed to SIGNED_IN (listener), redirecting to:",

@@ -11,6 +11,12 @@ on:
     - cron: "0 4 * * *"
   workflow_dispatch:
 
+permissions:
+  # Minimum required — job pushes CSV/JSON commits back to main and uploads
+  # debug artifacts on failure.
+  contents: write
+  actions: read
+
 jobs:
   update-timetable:
     runs-on: ubuntu-latest
