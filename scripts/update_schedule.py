@@ -131,7 +131,7 @@ def parse_semesters(html: str) -> List[Dict]:
         if href.startswith("#"):
             labels[href[1:]] = _strip(a.text)
 
-    semesters: List[Dict] = []
+    parsed: List[Dict] = []
     for panel_id, label in labels.items():
         panel = soup.select_one(f"#{panel_id}")
         if not panel:
@@ -153,17 +153,40 @@ def parse_semesters(html: str) -> List[Dict]:
             if final_start is None and FINAL_EXAM_RE.search(activity):
                 final_start = parse_first_date(date_txt)
         if enrol_start and enrol_last:
-            peak_start = enrol_start - datetime.timedelta(days=PEAK_LEAD_DAYS)
-            semesters.append({
+            parsed.append({
                 "name": label,
-                "enrolment_start":  enrol_start.isoformat(),
-                "enrolment_last":   enrol_last.isoformat(),
-                "final_exam_start": final_start.isoformat() if final_start else None,
-                "peak_start":       peak_start.isoformat(),
-                "peak_end":         enrol_last.isoformat(),
+                "enrolment_start":  enrol_start,
+                "enrolment_last":   enrol_last,
+                "final_exam_start": final_start,
+                "peak_start_raw":   enrol_start - datetime.timedelta(days=PEAK_LEAD_DAYS),
             })
         else:
             log("PARSE", f"{label}: missing dates (start={enrol_start}, last={enrol_last})", ok=False)
+
+    # Sort chronologically by enrolment_start so "previous" is well-defined.
+    parsed.sort(key=lambda s: s["enrolment_start"])
+
+    # Clamp peak_start to not begin before the previous semester's first
+    # final exam. Before that date the previous semester is still the
+    # active one on vacansee, so scraping its (stable) data every 15 min
+    # would be pointless — and scraping the new semester early risks
+    # overwriting current data.
+    semesters: List[Dict] = []
+    prev_final: Optional[datetime.date] = None
+    for s in parsed:
+        peak_start = s["peak_start_raw"]
+        if prev_final and peak_start < prev_final:
+            peak_start = prev_final
+        semesters.append({
+            "name":             s["name"],
+            "enrolment_start":  s["enrolment_start"].isoformat(),
+            "enrolment_last":   s["enrolment_last"].isoformat(),
+            "final_exam_start": s["final_exam_start"].isoformat() if s["final_exam_start"] else None,
+            "peak_start":       peak_start.isoformat(),
+            "peak_end":         s["enrolment_last"].isoformat(),
+        })
+        if s["final_exam_start"]:
+            prev_final = s["final_exam_start"]
     return semesters
 
 
