@@ -1,0 +1,94 @@
+name: Backup Database
+
+on:
+  schedule:
+    # Daily at 02:00 UTC (06:00 GST). Runs after the daily timetable
+    # refresh (04:00 UTC = 08:00 GST) so the snapshot captures the
+    # freshest data.
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: backup-database
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout backups repo
+        uses: actions/checkout@v4
+        with:
+          repository: tahayparker/vacansee-db-backups
+          token: ${{ secrets.BACKUP_REPO_TOKEN }}
+          path: backups-repo
+          fetch-depth: 0
+
+      - name: Install PostgreSQL client (v16)
+        run: |
+          # Supabase currently runs PG15/16; client must be >= server.
+          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-16
+
+      - name: Dump public schema
+        env:
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+        run: |
+          set -euo pipefail
+          cd backups-repo
+          mkdir -p backups
+
+          TS_UTC=$(date -u +%Y-%m-%d)
+          OUT="backups/${TS_UTC}.sql.gz"
+          LATEST="backups/latest.sql.gz"
+
+          echo "Dumping public schema -> ${OUT}"
+          pg_dump \
+            --schema=public \
+            --no-owner \
+            --no-privileges \
+            --format=plain \
+            --clean \
+            --if-exists \
+            --quote-all-identifiers \
+            "$DIRECT_URL" \
+            | gzip -9 > "${OUT}"
+
+          cp "${OUT}" "${LATEST}"
+
+          # Sanity: the archive must contain at least the CREATE TABLE
+          # line for a core model; bail rather than commit a truncated dump.
+          if ! gunzip -c "${OUT}" | grep -q 'CREATE TABLE .*"Timings"'; then
+            echo "::error::Dump appears incomplete — no Timings table found"
+            exit 1
+          fi
+
+          ls -la backups | head -n 20
+          echo "dump_size_bytes=$(stat -c%s "${OUT}")" >> "$GITHUB_OUTPUT"
+
+      - name: Prune backups older than 90 days
+        run: |
+          set -euo pipefail
+          cd backups-repo/backups
+          # Never prune the `latest` pointer.
+          find . -maxdepth 1 -name "*.sql.gz" ! -name "latest.sql.gz" -type f -mtime +90 -print -delete || true
+
+      - name: Commit and push
+        run: |
+          set -euo pipefail
+          cd backups-repo
+          git config user.name "vacansee-backup-bot"
+          git config user.email "backup-bot@vacansee.local"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes (schema + data unchanged since last backup)."
+            exit 0
+          fi
+          git commit -m "backup: $(date -u +%Y-%m-%d)"
+          git push

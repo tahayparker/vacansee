@@ -73,6 +73,7 @@ filterable by weekday, room subset, and session blocks.
 │  ├─ update_rooms.py          Sync Rooms table with timetable
 │  ├─ generate_schedule.py     Rebuild scheduleData.json
 │  ├─ db_connection.py         Shared Supabase client
+│  ├─ restore_db.sh            Interactive restore from a backup dump
 │  └─ requirements.txt
 ├─ src/
 │  ├─ pages/                   Next.js Pages Router
@@ -84,7 +85,8 @@ filterable by weekday, room subset, and session blocks.
 │  └─ middleware.ts            Session + maintenance mode
 └─ .github/workflows/
    ├─ update-timetable.yml     Scrape + upload + regen (peak vs daily)
-   └─ ping-supabase.yml        Keep-alive ping for free-tier DB
+   ├─ ping-supabase.yml        Keep-alive ping for free-tier DB
+   └─ backup-database.yml      Daily pg_dump -> vacansee-db-backups
 ```
 
 ## Getting started
@@ -247,6 +249,33 @@ resolved against each other at scrape time.
 
 All `/api/*` except `/api/auth/callback` require an authenticated
 session (enforced by `src/middleware.ts`).
+
+## Database backups
+
+[`.github/workflows/backup-database.yml`](.github/workflows/backup-database.yml)
+runs daily at 02:00 UTC and snapshots the `public` schema via
+`pg_dump` into
+[tahayparker/vacansee-db-backups](https://github.com/tahayparker/vacansee-db-backups)
+as `backups/YYYY-MM-DD.sql.gz` (+ a `latest.sql.gz` pointer). Retention
+is 90 days — older files are pruned before each commit.
+
+Restore a dump with [`scripts/restore_db.sh`](scripts/restore_db.sh):
+
+```bash
+export DIRECT_URL="postgresql://postgres.XXXX:[PASSWORD]@aws-0-....pooler.supabase.com:5432/postgres"
+bash scripts/restore_db.sh /path/to/backup.sql.gz
+```
+
+The script prints the dump header + object summary, prompts for
+explicit `restore` confirmation, and applies the dump in a single
+transaction with `ON_ERROR_STOP=on` so partial failures roll back.
+
+Secrets required on the `vacansee` repo:
+
+- `DIRECT_URL` — unpooled Supabase connection string (already used by
+  Prisma migrations). The workflow uses this directly with `pg_dump`.
+- `BACKUP_REPO_TOKEN` — fine-grained PAT scoped to
+  `tahayparker/vacansee-db-backups` with `Contents: Read and write`.
 
 ## Deployment
 
