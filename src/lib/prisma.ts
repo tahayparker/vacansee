@@ -12,6 +12,9 @@ const globalForPrisma = globalThis as unknown as {
 function createPrisma(): PrismaClient {
   const adapter = new PrismaPg({
     connectionString: process.env.DATABASE_URL,
+    // Supabase Postgres rejects non-SSL connections. The pooler cert
+    // chains from AWS, so the default verification is fine.
+    ssl: { rejectUnauthorized: true },
   });
   return new PrismaClient({
     adapter,

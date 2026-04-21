@@ -44,21 +44,21 @@ export default async function handler(
     // Authentication check
     const supabase = createSupabaseRouteHandlerClient(req, res);
     const {
-      data: { session },
-    } = await supabase.auth.getSession();
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    if (!session) {
+    if (!user) {
       return res.status(401).json({ error: "Authentication required" });
     }
 
     logger.info("Fetching rooms list", {
       requestId,
-      userId: session.user.id,
+      userId: user.id,
     });
 
     // Cache the rooms list since it doesn't change frequently
     const rooms = await cacheGetOrSet(
-      `rooms-list-${session.user.id}`,
+      `rooms-list-${user.id}`,
       async () => {
         // Fetch all rooms from database
         const roomsData = await prisma.rooms.findMany({

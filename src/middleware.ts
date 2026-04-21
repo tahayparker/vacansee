@@ -118,13 +118,17 @@ export async function middleware(req: NextRequest) {
         },
       },
     );
+    // getUser() contacts Supabase to validate the cookie-stored token,
+    // unlike getSession() which returns cookie contents verbatim and
+    // emits an "insecure" warning when the caller touches .user server
+    // side.
     const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    const userId = session?.user?.id ?? "None";
+      data: { user },
+    } = await supabase.auth.getUser();
+    const userId = user?.id ?? "None";
     console.log(`[Middleware] User: ${userId}`);
 
-    if (!session) {
+    if (!user) {
       console.log(`[Middleware] -> Auth REQUIRED but no session found.`);
       if (pathname.startsWith("/api/")) {
         console.log(`[Middleware] -> API route access denied (401).`);

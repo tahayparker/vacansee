@@ -46,16 +46,16 @@ export default async function handler(
     // Authentication check
     const supabase = createSupabaseRouteHandlerClient(req, res);
     const {
-      data: { session },
-    } = await supabase.auth.getSession();
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    if (!session) {
+    if (!user) {
       return res.status(401).json({ error: "Authentication required" });
     }
 
     logger.info("Fetching schedule data", {
       requestId,
-      userId: session.user.id,
+      userId: user.id,
     });
 
     // Fetch schedule with caching (stale-while-revalidate)

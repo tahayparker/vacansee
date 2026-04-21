@@ -48,10 +48,10 @@ export default async function handler(
     // Authentication check
     const supabase = createSupabaseRouteHandlerClient(req, res);
     const {
-      data: { session },
-    } = await supabase.auth.getSession();
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    if (!session) {
+    if (!user) {
       return res.status(401).json({ error: "Authentication required" });
     }
 
@@ -71,7 +71,7 @@ export default async function handler(
       day,
       startTime,
       endTime,
-      userId: session.user.id,
+      userId: user.id,
     });
 
     // Extract short code and expand to related rooms
