@@ -4,10 +4,8 @@ supabase
 postgrest
 pyotp
 
-# Legacy non-auth scraper (scrape_timetable.py)
+# Academic calendar parsing (update_schedule.py)
 beautifulsoup4
-cloudscraper
-httpx
 
 # Authenticated scraper (scrape_timetable_auth.py)
 # Primary stealth stack: Camoufox (Firefox + C++ fingerprint spoof)
