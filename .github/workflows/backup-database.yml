@@ -45,10 +45,25 @@ jobs:
           mkdir -p backups
 
           TS_UTC=$(date -u +%Y-%m-%d)
+          TMP_SQL="/tmp/${TS_UTC}.sql"
           OUT="backups/${TS_UTC}.sql.gz"
           LATEST="backups/latest.sql.gz"
 
-          echo "Dumping public schema -> ${OUT}"
+          # Force SSL. Supabase rejects plaintext; pg_dump does not add
+          # sslmode=require by default when it is missing from the URL.
+          CONN="$DIRECT_URL"
+          if [[ "$CONN" != *"sslmode="* ]]; then
+            if [[ "$CONN" == *"?"* ]]; then
+              CONN="${CONN}&sslmode=require"
+            else
+              CONN="${CONN}?sslmode=require"
+            fi
+          fi
+
+          echo "Running pg_dump (public schema) -> ${TMP_SQL}"
+          # Dump to a plain file, not a pipeline, so a pg_dump failure
+          # surfaces with a real exit code instead of masquerading as a
+          # broken pipe from the downstream gzip.
           pg_dump \
             --schema=public \
             --no-owner \
@@ -57,17 +72,30 @@ jobs:
             --clean \
             --if-exists \
             --quote-all-identifiers \
-            "$DIRECT_URL" \
-            | gzip -9 > "${OUT}"
+            --no-sync \
+            --file="${TMP_SQL}" \
+            "$CONN"
 
-          cp "${OUT}" "${LATEST}"
-
-          # Sanity: the archive must contain at least the CREATE TABLE
-          # line for a core model; bail rather than commit a truncated dump.
-          if ! gunzip -c "${OUT}" | grep -q 'CREATE TABLE .*"Timings"'; then
-            echo "::error::Dump appears incomplete — no Timings table found"
+          # Verify the dump before trusting it.
+          if [[ ! -s "${TMP_SQL}" ]]; then
+            echo "::error::pg_dump produced an empty file"
             exit 1
           fi
+
+          BYTES=$(stat -c%s "${TMP_SQL}")
+          echo "Dump size: ${BYTES} bytes"
+
+          if ! grep -q 'CREATE TABLE.*"Timings"' "${TMP_SQL}"; then
+            echo "::error::Dump missing Timings table — showing first 80 lines"
+            head -n 80 "${TMP_SQL}" >&2 || true
+            echo "::error::...last 40 lines"
+            tail -n 40 "${TMP_SQL}" >&2 || true
+            exit 1
+          fi
+
+          gzip -9 < "${TMP_SQL}" > "${OUT}"
+          cp "${OUT}" "${LATEST}"
+          rm -f "${TMP_SQL}"
 
           ls -la backups | head -n 20
           echo "dump_size_bytes=$(stat -c%s "${OUT}")" >> "$GITHUB_OUTPUT"
