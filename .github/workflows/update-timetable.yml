@@ -199,3 +199,32 @@ jobs:
           else
             echo "No JSON changes"
           fi
+
+      - name: Trigger vaila refresh
+        if: steps.gate.outputs.should_run == 'true'
+        env:
+          VAILA_DISPATCH_TOKEN: ${{ secrets.VAILA_DISPATCH_TOKEN }}
+        run: |
+          # Fire a repository_dispatch at tahayparker/vaila so its
+          # refresh.yml rebuilds the professor-oriented scheduleData.json
+          # off the same Supabase DB we just populated.
+          #
+          # VAILA_DISPATCH_TOKEN is a fine-grained PAT scoped to the
+          # vaila repo with `Contents: Read` and `Actions: Write` (the
+          # latter is what `repository_dispatch` needs).
+          if [ -z "$VAILA_DISPATCH_TOKEN" ]; then
+            echo "::warning::VAILA_DISPATCH_TOKEN not set — skipping vaila dispatch."
+            exit 0
+          fi
+          HTTP_CODE=$(curl -sS -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $VAILA_DISPATCH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/tahayparker/vaila/dispatches \
+            -d '{"event_type":"vacansee-data-updated"}' \
+            -o /tmp/dispatch-resp.txt -w "%{http_code}") || true
+          echo "HTTP ${HTTP_CODE}"
+          if [ "${HTTP_CODE}" != "204" ]; then
+            echo "::warning::vaila dispatch returned ${HTTP_CODE}"
+            cat /tmp/dispatch-resp.txt || true
+          fi
