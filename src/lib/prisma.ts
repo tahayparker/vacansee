@@ -1,15 +1,26 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-// Prevent multiple instances of Prisma Client in development
+// Prisma 7 requires a driver adapter (or Accelerate). For Supabase
+// Postgres we use @prisma/adapter-pg with the pooled DATABASE_URL.
+// Migrations use DIRECT_URL via prisma.config.ts.
+
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+function createPrisma(): PrismaClient {
+  const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL,
   });
+  return new PrismaClient({
+    adapter,
+    log:
+      process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+  });
+}
+
+const prisma = globalForPrisma.prisma ?? createPrisma();
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 

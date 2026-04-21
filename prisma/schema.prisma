@@ -4,9 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  // Connection URLs live in prisma.config.ts (migrations) and
+  // src/lib/prisma.ts (runtime via driver adapter) as of Prisma 7.
 }
 
 model Rooms {

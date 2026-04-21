@@ -4,19 +4,19 @@ Real-time room availability for the University of Wollongong in Dubai.
 Scrapes the official timetable viewer, normalises it into a queryable
 schedule, and exposes search / browse / visualisation over the result.
 
-Live: [vacan.see](https://vacan.see)
+Live: [vacansee](https://vacansee.vercel.app)
 
 ## What it does
 
-- **Now / Soon** — shows rooms currently free and rooms that free up in
-  the next hour, filtered to the current day + session block.
-- **Check** — ad-hoc availability query: pick a room + time window, get
-  back whether it is free and what sits on either side.
-- **Rooms** — directory of every timetabled space with capacity + code.
-- **Graph** / **Custom graph** — weekly occupancy heatmap per room,
-  filterable by weekday, room subset, and session blocks.
-- **Profile** — Microsoft Entra SSO via Supabase; maintains
-  `time_format` preference (12h / 24h) and dismissed-onboarding flags.
+- **Now / Soon** - shows rooms currently free and rooms that free up in
+the next hour, filtered to the current day + session block.
+- **Check** - ad-hoc availability query: pick a room + time window, get
+back whether it is free and what sits on either side.
+- **Rooms** - directory of every timetabled space with capacity + code.
+- **Graph** / **Custom graph** - weekly occupancy heatmap per room,
+filterable by weekday, room subset, and session blocks.
+- **Profile** - Microsoft Entra SSO via Supabase; maintains
+`time_format` preference (12h / 24h) and dismissed-onboarding flags.
 
 ## Architecture
 
@@ -44,20 +44,21 @@ Live: [vacan.see](https://vacan.see)
 
 ## Tech stack
 
-| Layer | Choice |
-|---|---|
-| Frontend | Next.js 15 (Pages Router), React 19, TypeScript, Tailwind, Framer Motion |
-| Auth | Supabase (`@supabase/ssr`) on Microsoft Entra SSO |
-| DB ORM | Prisma 6 -> Supabase Postgres |
-| Middleware | Edge middleware for session refresh + maintenance mode |
-| Scraper | Python + Camoufox (Firefox fingerprint spoof) + Patchright fallback |
-| CI | GitHub Actions (cron + workflow_dispatch) |
-| Hosting | Vercel |
+
+| Layer      | Choice                                                                   |
+| ---------- | ------------------------------------------------------------------------ |
+| Frontend   | Next.js 15 (Pages Router), React 19, TypeScript, Tailwind, Framer Motion |
+| Auth       | Supabase (`@supabase/ssr`) on Microsoft Entra SSO                        |
+| DB ORM     | Prisma 7 (+ `@prisma/adapter-pg`) -> Supabase Postgres                   |
+| Middleware | Edge middleware for session refresh + maintenance mode                   |
+| Scraper    | Python + Camoufox (Firefox fingerprint spoof) + Patchright fallback      |
+| CI         | GitHub Actions (cron + workflow_dispatch)                                |
+| Hosting    | Vercel                                                                   |
+
 
 ## Repository layout
 
 ```
-.
 ├─ prisma/
 │  └─ schema.prisma            Rooms / Teacher / Timings
 ├─ public/
@@ -108,7 +109,7 @@ SUPABASE_URL=
 SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 
-# Scraper only — not read by the web app
+# Scraper only - not read by the web app
 UOWD_EMAIL=
 UOWD_PASSWORD=
 UOWD_TOTP_SECRET=        # base32 shared secret (not an OTP)
@@ -137,11 +138,11 @@ python scripts/scrape_timetable_auth.py --output public/classes.csv
 
 Flags:
 
-- `--headed` — run browser visibly (default is headless for CI).
-- `--backend camoufox|patchright|auto` — force a specific stealth
-  backend. Default `auto` tries both in order.
-- `--force-login` — ignore the cached `.storage_state.json` and
-  re-authenticate through MS OAuth from scratch.
+- `--headed` - run browser visibly (default is headless for CI).
+- `--backend camoufox|patchright|auto` - force a specific stealth
+backend. Default `auto` tries both in order.
+- `--force-login` - ignore the cached `.storage_state.json` and
+re-authenticate through MS OAuth from scratch.
 
 The scraper persists a `.storage_state.json` after a successful login;
 subsequent runs reuse that session so they skip the MS OAuth round-trip
@@ -149,14 +150,16 @@ until the cookies expire.
 
 ## Automated data refresh
 
-[`.github/workflows/update-timetable.yml`](.github/workflows/update-timetable.yml)
+`[.github/workflows/update-timetable.yml](.github/workflows/update-timetable.yml)`
 drives the CI pipeline. Two schedules:
 
-| Trigger | Cron | Behaviour |
-|---|---|---|
-| Peak 15-min | `*/15 * * * *` | Runs only if today is inside an active peak window (see below). Gated via `scripts/check_schedule.py`. |
-| Daily | `0 4 * * *` (08:00 GST) | Always runs, also refreshes `public/academic_schedule.json`. |
-| Manual | `workflow_dispatch` | Always runs. |
+
+| Trigger     | Cron                    | Behaviour                                                                                              |
+| ----------- | ----------------------- | ------------------------------------------------------------------------------------------------------ |
+| Peak 15-min | `*/15 * * * *`          | Runs only if today is inside an active peak window (see below). Gated via `scripts/check_schedule.py`. |
+| Daily       | `0 4 * * *` (08:00 GST) | Always runs, also refreshes `public/academic_schedule.json`.                                           |
+| Manual      | `workflow_dispatch`     | Always runs.                                                                                           |
+
 
 Peak window per semester:
 
@@ -182,13 +185,13 @@ screenshots (`scripts/debug/`) are uploaded as an artifact on failure.
 ## Safety rails in the scraper
 
 - Refuses to overwrite `public/classes.csv` with zero rows (an empty
-  viewer response, a failed auth, or a DOM drift no longer wipes the
-  current dataset).
+viewer response, a failed auth, or a DOM drift no longer wipes the
+current dataset).
 - Refuses to fall back to a different semester's radio when the
-  expected one is missing — avoids overwriting current data with
-  upcoming data during the transition gap.
+expected one is missing - avoids overwriting current data with
+upcoming data during the transition gap.
 - CSV write is atomic via tmp-file + rename.
-- URL values never logged — post-OAuth URLs carry one-shot auth codes.
+- URL values never logged - post-OAuth URLs carry one-shot auth codes.
 
 ## Database schema
 
@@ -231,14 +234,16 @@ resolved against each other at scrape time.
 
 ## API routes
 
-| Method | Route | Purpose |
-|---|---|---|
-| `GET` | `/api/rooms` | List rooms with capacity + short code |
-| `GET` | `/api/available-now` | Rooms free at the current minute |
-| `GET` | `/api/available-soon` | Rooms freeing up within the next hour |
-| `GET` | `/api/check-availability` | Point-in-time availability for a room + window |
-| `GET` | `/api/schedule` | Static pre-aggregated weekly heatmap |
-| `GET` | `/api/auth/callback` | Supabase OAuth callback handler |
+
+| Method | Route                     | Purpose                                        |
+| ------ | ------------------------- | ---------------------------------------------- |
+| `GET`  | `/api/rooms`              | List rooms with capacity + short code          |
+| `GET`  | `/api/available-now`      | Rooms free at the current minute               |
+| `GET`  | `/api/available-soon`     | Rooms freeing up within the next hour          |
+| `GET`  | `/api/check-availability` | Point-in-time availability for a room + window |
+| `GET`  | `/api/schedule`           | Static pre-aggregated weekly heatmap           |
+| `GET`  | `/api/auth/callback`      | Supabase OAuth callback handler                |
+
 
 All `/api/*` except `/api/auth/callback` require an authenticated
 session (enforced by `src/middleware.ts`).
@@ -252,6 +257,6 @@ running build at request time.
 
 ## Contributing
 
-Fork, branch, submit a PR. Keep PRs focused — one concern per branch.
+Fork, branch, submit a PR. Keep PRs focused - one concern per branch.
 Run `npm run lint` and `npm run build` before submitting. Conventional
 Commits preferred for subject lines.
