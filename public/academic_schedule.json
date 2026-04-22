@@ -1,20 +1,12 @@
 {
-  "generated_at": "2026-04-21T06:21:09.126381+00:00",
+  "generated_at": "2026-04-22T05:54:55.002044+00:00",
   "semesters": [
-    {
-      "name": "Winter 2026",
-      "enrolment_start": "2025-12-18",
-      "enrolment_last": "2026-01-16",
-      "final_exam_start": "2026-03-23",
-      "peak_start": "2025-12-04",
-      "peak_end": "2026-01-16"
-    },
     {
       "name": "Spring 2026",
       "enrolment_start": "2026-04-01",
       "enrolment_last": "2026-04-24",
       "final_exam_start": "2026-07-06",
-      "peak_start": "2026-03-23",
+      "peak_start": "2026-03-18",
       "peak_end": "2026-04-24"
     },
     {
