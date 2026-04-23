@@ -556,7 +556,7 @@ ENGG462,Lecture,Monday,18:00,20:00,Online,Stephen Wilkinson
 ENGG462,Tutorial,Tuesday,18:30,21:30,Online,Stephen Wilkinson
 ENGG940,Lecture,Monday,18:00,22:00,3.45-Classroom B,Mama Chacha
 ENGG954,Lecture,Thursday,18:00,22:00,3.44-Classroom B,Hazem Gouda
-ENGG956,Lecture,Friday,18:00,22:00,6.38-Classroom B,Abraham Mansouri
+ENGG956,Lecture,Friday,18:00,22:00,6.38-Classroom B,Karim Bourouni
 ENGG957,Lecture,Tuesday,18:00,22:00,6.30-Multipurpose - Teaching & Research,Hazem Gouda
 ENGG964,Lecture,Monday,18:00,20:00,Online,Stephen Wilkinson
 ENGG964,Tutorial,Tuesday,18:30,21:30,Online,Stephen Wilkinson
@@ -741,10 +741,10 @@ MACS901,Lecture,Monday,18:00,22:00,6.40-Computer Lab,Mouhannad Alattar
 MACS902,Lecture,Thursday,18:00,22:00,6.40-Computer Lab,Manoj Kumar
 MACS905,Lecture,Tuesday,18:00,22:00,6.38-Classroom B,Nkqubela Ruxwana
 MACS906,Lecture,Monday,18:00,22:00,4.45-Classroom B,Yihao Lim
-MACS999,Lecture A,Saturday,10:00,16:00,3.45-Classroom B,George Tsaramirsis
-MACS999,Lecture A,Saturday,10:00,16:00,3.48-Classroom B,Mai ElBarachi
-MACS999,Lecture B,Sunday,10:00,16:00,3.45-Classroom B,George Tsaramirsis
-MACS999,Lecture B,Sunday,10:00,16:00,3.48-Classroom B,Mai ElBarachi
+MACS999,Lecture A,Saturday,10:00,16:00,3.45-Classroom B,Mai ElBarachi
+MACS999,Lecture A,Saturday,10:00,16:00,4.45-Classroom B,George Tsaramirsis
+MACS999,Lecture B,Sunday,10:00,16:00,3.45-Classroom B,Mai ElBarachi
+MACS999,Lecture B,Sunday,10:00,16:00,4.45-Classroom B,George Tsaramirsis
 MARK230,Lecture,Wednesday,08:30,10:30,5.11-Classroom B,Dina Elnidani
 MARK230,Tutorial,Thursday,08:30,10:30,6.38-Classroom B,Dina Elnidani
 MARK230,Tutorial,Thursday,12:30,14:30,6.38-Classroom B,Dina Elnidani
@@ -835,16 +835,14 @@ MBAS926,Lecture B,Sunday,09:00,16:00,6.40-Computer Lab,Prithvi Bhattacharya
 MBAS926,Lecture B,Sunday,09:00,16:00,6.345-Classroom A 6.34 & 6.35,Prithvi Bhattacharya
 MDT905,Lecture A,Saturday,10:00,16:00,4.44-Classroom B,Mai ElBarachi
 MDT905,Lecture B,Sunday,10:00,16:00,4.44-Classroom B,Mai ElBarachi
-MDT912,Lecture A,Saturday,10:00,16:00,5.11-Classroom B,Obada Al Khatib
-MDT912,Lecture B,Sunday,10:00,16:00,5.11-Classroom B,Obada Al Khatib
 MDT917,Lecture A,Saturday,10:00,16:00,3.44-Classroom B,Mouhannad Alattar
 MDT917,Lecture B,Sunday,10:00,16:00,3.44-Classroom B,Mouhannad Alattar
 MDT919,Lecture A,Saturday,10:00,16:00,6.32-Classroom B,Patrick Mukala
 MDT919,Lecture B,Sunday,10:00,16:00,6.32-Classroom B,Patrick Mukala
-MDT999,Lecture A,Saturday,10:00,16:00,3.45-Classroom B,George Tsaramirsis
-MDT999,Lecture A,Saturday,10:00,16:00,3.48-Classroom B,Mai ElBarachi
-MDT999,Lecture B,Sunday,10:00,16:00,3.45-Classroom B,George Tsaramirsis
-MDT999,Lecture B,Sunday,10:00,16:00,3.48-Classroom B,Mai ElBarachi
+MDT999,Lecture A,Saturday,10:00,16:00,3.45-Classroom B,Mai ElBarachi
+MDT999,Lecture A,Saturday,10:00,16:00,3.48-Classroom B,George Tsaramirsis
+MDT999,Lecture B,Sunday,10:00,16:00,3.45-Classroom B,Mai ElBarachi
+MDT999,Lecture B,Sunday,10:00,16:00,3.48-Classroom B,George Tsaramirsis
 MECH201,Computer Lab,Thursday,14:30,16:30,3.52-Computer Lab (Network),Ayman Ahdy
 MECH201,Computer Lab,Friday,14:00,16:00,3.47-Game Dev Lab Dual Screens,Ayman Ahdy
 MECH201,Lecture,Tuesday,08:30,11:30,3.46-Classroom A,Assane Lo
