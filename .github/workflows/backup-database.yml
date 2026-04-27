@@ -111,8 +111,8 @@ jobs:
         run: |
           set -euo pipefail
           cd backups-repo
-          git config user.name "vacansee-backup-bot"
-          git config user.email "backup-bot@vacansee.local"
+          git config user.name "Taha Parker"
+          git config user.email "98612931+tahayparker@users.noreply.github.com"
           git add -A
           if git diff --staged --quiet; then
             echo "No changes (schema + data unchanged since last backup)."
