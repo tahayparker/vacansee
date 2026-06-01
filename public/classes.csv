@@ -65,7 +65,7 @@ BCM212,Tutorial,Tuesday,14:30,16:30,2.71-Block 19,Andjela Bisevac
 BCM212,Tutorial,Wednesday,12:30,14:30,4.50-Classroom B,Negin Chabook
 BCM212,Tutorial,Thursday,10:30,12:30,5.11-Classroom B,Negin Chabook
 BCM212,Tutorial,Thursday,14:30,16:30,4.45-Classroom B,Negin Chabook
-BCM212,Tutorial,Tuesday,10:30,12:30,2.68-Block 19,Negin Chabook
+BCM212,Tutorial,Tuesday,10:30,12:30,6.28-Seminar/Tutorial,Negin Chabook
 BCM214,Lecture,Tuesday,08:30,10:30,5.134-Classroom A 5.13 & 5.14,Ludmil Trenkov
 BCM214,Tutorial,Wednesday,10:30,12:30,5.18-Classroom A,Mohammad Alkayyali
 BCM214,Tutorial,Wednesday,12:30,14:30,5.18-Classroom A,Mohammad Alkayyali
@@ -90,24 +90,24 @@ BCM312,Tutorial,Tuesday,14:30,16:30,3.48-Classroom B,Elizaveta Vartanian
 BCM320,Lecture,Tuesday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Deborah Hardt
 BCM320,Tutorial,Thursday,10:30,12:30,5.15-MAC Lab,Andrew Smith
 BCM320,Tutorial,Friday,14:00,16:00,5.15-MAC Lab,Andrew Smith
-BUS030,Lecture,Wednesday,08:30,10:30,3.44-Classroom B,Monika Yadav
-BUS030,Lecture,Wednesday,08:30,10:30,3.44-Classroom B,Nikita Kirplani
 BUS030,Lecture,Wednesday,08:30,10:30,3.44-Classroom B,Shehnaz Al-Helo
-BUS030,Lecture,Wednesday,08:30,10:30,6.32-Classroom B,Monika Yadav
-BUS030,Lecture,Wednesday,08:30,10:30,6.32-Classroom B,Nikita Kirplani
+BUS030,Lecture,Wednesday,08:30,10:30,3.44-Classroom B,Nikita Kirplani
+BUS030,Lecture,Wednesday,08:30,10:30,3.44-Classroom B,Monika Yadav
 BUS030,Lecture,Wednesday,08:30,10:30,6.32-Classroom B,Shehnaz Al-Helo
-BUS030,Tutorial,Wednesday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Monika Yadav
-BUS030,Tutorial,Wednesday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Sameera Siddiqui
+BUS030,Lecture,Wednesday,08:30,10:30,6.32-Classroom B,Nikita Kirplani
+BUS030,Lecture,Wednesday,08:30,10:30,6.32-Classroom B,Monika Yadav
 BUS030,Tutorial,Wednesday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Sina Aneesh
-BUS030,Tutorial,Friday,10:00,12:00,3.48-Classroom B,Monika Yadav
-BUS030,Tutorial,Friday,10:00,12:00,3.48-Classroom B,Sameera Siddiqui
+BUS030,Tutorial,Wednesday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Sameera Siddiqui
+BUS030,Tutorial,Wednesday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Monika Yadav
 BUS030,Tutorial,Friday,10:00,12:00,3.48-Classroom B,Sina Aneesh
-BUS030,Tutorial,Wednesday,10:30,12:30,3.46-Classroom A,Monika Yadav
-BUS030,Tutorial,Wednesday,10:30,12:30,3.46-Classroom A,Sameera Siddiqui
+BUS030,Tutorial,Friday,10:00,12:00,3.48-Classroom B,Sameera Siddiqui
+BUS030,Tutorial,Friday,10:00,12:00,3.48-Classroom B,Monika Yadav
 BUS030,Tutorial,Wednesday,10:30,12:30,3.46-Classroom A,Sina Aneesh
-BUS030,Tutorial,Friday,10:00,12:00,4.50-Classroom B,Monika Yadav
-BUS030,Tutorial,Friday,10:00,12:00,4.50-Classroom B,Sameera Siddiqui
+BUS030,Tutorial,Wednesday,10:30,12:30,3.46-Classroom A,Sameera Siddiqui
+BUS030,Tutorial,Wednesday,10:30,12:30,3.46-Classroom A,Monika Yadav
 BUS030,Tutorial,Friday,10:00,12:00,4.50-Classroom B,Sina Aneesh
+BUS030,Tutorial,Friday,10:00,12:00,4.50-Classroom B,Sameera Siddiqui
+BUS030,Tutorial,Friday,10:00,12:00,4.50-Classroom B,Monika Yadav
 BUS121,Lecture,Monday,12:30,14:30,0.17-Lecture Theatre,Noor Rizvi
 BUS121,Lecture,Tuesday,12:30,14:30,0.17-Lecture Theatre,Noor Rizvi
 BUS121,Lecture,Wednesday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Sabreen Wahbeh
