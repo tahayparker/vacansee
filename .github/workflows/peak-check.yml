@@ -1,0 +1,45 @@
+name: Peak Window Check
+
+run-name: peak-check
+
+on:
+  schedule:
+    # Lightweight gate — triggers the full scrape workflow only inside peak.
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Schedule gate (peak vs off-peak)
+        id: gate
+        env:
+          GITHUB_EVENT_NAME: schedule
+          GITHUB_SCHEDULE: "*/15 * * * *"
+        run: |
+          python scripts/check_schedule.py || true
+
+      - name: Off-peak — no scrape
+        if: steps.gate.outputs.should_run != 'true'
+        run: |
+          echo "::notice::Off-peak 15-minute tick — skipping scraper run."
+          echo "Current semester: ${{ steps.gate.outputs.current_semester }}"
+          echo "is_peak: ${{ steps.gate.outputs.is_peak }}"
+
+      - name: Trigger timetable scrape
+        if: steps.gate.outputs.should_run == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "::notice::Peak window active (${{ steps.gate.outputs.current_semester }}) — starting scrape workflow."
+          gh workflow run update-timetable.yml --ref "${{ github.ref_name }}" -f trigger=peak

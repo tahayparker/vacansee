@@ -1,15 +1,28 @@
 name: Update Timetable Data
 
+run-name: scrape (${{ github.event_name == 'workflow_dispatch' && inputs.trigger || 'daily' }})
+
 on:
   schedule:
-    # Peak window: every 15 minutes — gated; runs the scraper only when
-    # `public/academic_schedule.json` says we're inside a semester's
-    # peak period (tutorial-enrolment start - 14 days .. last date to enrol).
-    - cron: "*/15 * * * *"
     # Off-peak: once a day at 04:00 UTC (= 08:00 GMT+4). Also refreshes the
     # academic calendar cache on every daily tick.
     - cron: "0 4 * * *"
   workflow_dispatch:
+    inputs:
+      trigger:
+        description: Why this scrape was started
+        required: false
+        default: manual
+        type: choice
+        options:
+          - manual
+          - peak
+  workflow_call:
+    inputs:
+      trigger:
+        required: false
+        type: string
+        default: manual
 
 permissions:
   # Minimum required — job pushes CSV/JSON commits back to main and uploads
@@ -31,6 +44,17 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Classify trigger
+        id: trigger
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "value=${{ inputs.trigger || 'manual' }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "workflow_call" ]; then
+            echo "value=${{ inputs.trigger || 'manual' }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=daily" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -41,23 +65,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r scripts/requirements.txt
 
-      - name: Schedule gate (peak vs off-peak)
-        id: gate
-        env:
-          GITHUB_EVENT_NAME: ${{ github.event_name }}
-          GITHUB_SCHEDULE: ${{ github.event.schedule }}
-        run: |
-          python scripts/check_schedule.py || true
-
-      - name: Exit early if gate says skip
-        if: steps.gate.outputs.should_run != 'true'
-        run: |
-          echo "::notice::Off-peak 15-minute tick — skipping scraper run."
-          echo "Current semester: ${{ steps.gate.outputs.current_semester }}"
-          echo "Trigger: ${{ steps.gate.outputs.trigger }}"
-
       - name: Install system dependencies for Camoufox + Patchright
-        if: steps.gate.outputs.should_run == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -67,15 +75,12 @@ jobs:
             libcairo2 libgbm1 fonts-liberation
 
       - name: Fetch Camoufox browser
-        if: steps.gate.outputs.should_run == 'true'
         run: python -m camoufox fetch
 
       - name: Install Patchright Chromium (fallback backend)
-        if: steps.gate.outputs.should_run == 'true'
         run: python -m patchright install chromium --with-deps
 
       - name: Restore session cache
-        if: steps.gate.outputs.should_run == 'true'
         uses: actions/cache/restore@v4
         with:
           path: .storage_state.json
@@ -84,7 +89,6 @@ jobs:
             uowd-session-
 
       - name: Set up environment variables
-        if: steps.gate.outputs.should_run == 'true'
         env:
           SUPABASE_URL_SECRET: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY_SECRET: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -104,18 +108,17 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Refresh academic calendar (daily / manual)
-        if: steps.gate.outputs.should_run == 'true' && (steps.gate.outputs.trigger == 'daily' || steps.gate.outputs.trigger == 'manual')
+        if: steps.trigger.outputs.value == 'daily' || steps.trigger.outputs.value == 'manual'
         run: python scripts/update_schedule.py
 
       - name: Generate new timetable CSV data
         id: scrape
-        if: steps.gate.outputs.should_run == 'true'
         run: |
           echo "Running authenticated timetable scraper…"
           python scripts/scrape_timetable_auth.py --output public/classes.csv
 
       - name: Save session cache
-        if: steps.gate.outputs.should_run == 'true' && always() && hashFiles('.storage_state.json') != ''
+        if: always() && hashFiles('.storage_state.json') != ''
         uses: actions/cache/save@v4
         with:
           path: .storage_state.json
@@ -132,7 +135,6 @@ jobs:
 
       - name: Compare Generated CSV with Repository CSV
         id: check_csv_changes
-        if: steps.gate.outputs.should_run == 'true'
         run: |
           if [ ! -f public/classes.csv ]; then
             echo "::warning::Generated public/classes.csv not found."
@@ -150,7 +152,7 @@ jobs:
           fi
 
       - name: Commit and push CSV changes
-        if: steps.gate.outputs.should_run == 'true' && steps.check_csv_changes.outputs.csv_changed == 'true'
+        if: steps.check_csv_changes.outputs.csv_changed == 'true'
         run: |
           git config user.name "Taha Parker via GitHub Actions"
           git config user.email "98612931+tahayparker@users.noreply.github.com"
@@ -158,11 +160,9 @@ jobs:
           git push
 
       - name: Update Rooms Table in DB
-        if: steps.gate.outputs.should_run == 'true'
         run: python scripts/update_rooms.py
 
       - name: Upload Timetable to DB
-        if: steps.gate.outputs.should_run == 'true'
         run: |
           python scripts/upload_timetable.py
           ec=$?
@@ -172,7 +172,6 @@ jobs:
           fi
 
       - name: Generate Schedule JSON
-        if: steps.gate.outputs.should_run == 'true'
         run: |
           python scripts/generate_schedule.py
           ec=$?
@@ -182,13 +181,11 @@ jobs:
           fi
 
       - name: Format scheduleData.json with Prettier
-        if: steps.gate.outputs.should_run == 'true'
         run: |
           npm install --no-save prettier
           npx prettier public/scheduleData.json --write
 
       - name: Commit and push JSON changes
-        if: steps.gate.outputs.should_run == 'true'
         run: |
           git add public/scheduleData.json
           if ! git diff --staged --quiet; then
@@ -201,7 +198,6 @@ jobs:
           fi
 
       - name: Trigger vaila refresh
-        if: steps.gate.outputs.should_run == 'true'
         env:
           VAILA_DISPATCH_TOKEN: ${{ secrets.VAILA_DISPATCH_TOKEN }}
         run: |
