@@ -10,6 +10,9 @@ beautifulsoup4
 # Authenticated scraper (scrape_timetable_auth.py)
 # Primary stealth stack: Camoufox (Firefox + C++ fingerprint spoof)
 # Secondary: Patchright (patched Chromium Playwright)
-playwright
+#
+# Pin Playwright ≤1.58 — Camoufox's Juggler protocol rejects the
+# viewport.isMobile field added in Playwright 1.59+.
+playwright==1.58.0
 camoufox[geoip]
-patchright
+patchright==1.58.0

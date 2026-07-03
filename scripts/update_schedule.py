@@ -23,6 +23,7 @@ from bs4 import BeautifulSoup
 from camoufox.sync_api import Camoufox
 
 CALENDAR_URL = "https://www.uowdubai.ac.ae/students/academic-calendar"
+FETCH_BACKENDS = ["camoufox", "patchright"]
 OUTPUT_PATH  = Path("public/academic_schedule.json")
 PEAK_LEAD_DAYS = 14
 
@@ -43,25 +44,64 @@ def log(tag: str, msg: str, ok: bool = True) -> None:
     print(f"[{tag}] {icon} {msg}", flush=True)
 
 
-def fetch_calendar_html() -> str:
-    log("FETCH", f"GET {CALENDAR_URL}")
+def _load_calendar_page(page) -> str:
+    page.goto(CALENDAR_URL, wait_until="domcontentloaded")
+    for _ in range(10):
+        t = (page.title() or "").lower()
+        if "just a moment" not in t and "challenge" not in t:
+            break
+        time.sleep(2)
+    # Let table render fully
+    try:
+        page.wait_for_selector("ul.tab-container", timeout=30_000)
+    except Exception:
+        pass
+    time.sleep(2)
+    return page.content()
+
+
+def _fetch_with_camoufox() -> str:
+    log("FETCH", "backend=camoufox")
     with Camoufox(headless=True, humanize=True, geoip=True, i_know_what_im_doing=True) as br:
         ctx = br.new_context(locale="en-US")
         ctx.set_default_navigation_timeout(60_000)
-        p = ctx.new_page()
-        p.goto(CALENDAR_URL, wait_until="domcontentloaded")
-        for _ in range(10):
-            t = (p.title() or "").lower()
-            if "just a moment" not in t and "challenge" not in t:
-                break
-            time.sleep(2)
-        # Let table render fully
+        return _load_calendar_page(ctx.new_page())
+
+
+def _fetch_with_patchright() -> str:
+    from patchright.sync_api import sync_playwright
+
+    log("FETCH", "backend=patchright")
+    with sync_playwright() as p:
+        browser = p.chromium.launch(
+            headless=True,
+            channel="chrome",
+            args=["--disable-blink-features=AutomationControlled"],
+        )
+        ctx = browser.new_context(
+            locale="en-US",
+            viewport={"width": 1366, "height": 768},
+        )
+        ctx.set_default_navigation_timeout(60_000)
         try:
-            p.wait_for_selector("ul.tab-container", timeout=30_000)
-        except Exception:
-            pass
-        time.sleep(2)
-        return p.content()
+            return _load_calendar_page(ctx.new_page())
+        finally:
+            browser.close()
+
+
+def fetch_calendar_html() -> str:
+    log("FETCH", f"GET {CALENDAR_URL}")
+    last_err: Optional[Exception] = None
+    for backend in FETCH_BACKENDS:
+        try:
+            if backend == "camoufox":
+                return _fetch_with_camoufox()
+            if backend == "patchright":
+                return _fetch_with_patchright()
+        except Exception as exc:
+            log("FETCH", f"{backend} failed: {exc}", ok=False)
+            last_err = exc
+    raise last_err or RuntimeError("no fetch backends configured")
 
 
 def _strip(s: str) -> str:
