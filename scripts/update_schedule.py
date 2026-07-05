@@ -1,6 +1,9 @@
 """
 Scrape UOWD academic calendar → write `public/academic_schedule.json`.
 
+Refresh timestamp is stored separately in `scripts/cache/academic_schedule.meta.json`
+(gitignored) so daily rescrapes do not commit when semester dates are unchanged.
+
 Produces peak windows used by the timetable scraper to decide when to run
 on the 15-minute cron vs. the daily cron.
 
@@ -25,6 +28,7 @@ from camoufox.sync_api import Camoufox
 CALENDAR_URL = "https://www.uowdubai.ac.ae/students/academic-calendar"
 FETCH_BACKENDS = ["camoufox", "patchright"]
 OUTPUT_PATH  = Path("public/academic_schedule.json")
+META_PATH    = Path("scripts/cache/academic_schedule.meta.json")
 PEAK_LEAD_DAYS = 14
 
 MONTHS = {
@@ -242,15 +246,22 @@ def main() -> int:
         log("PARSE", "no semesters parsed", ok=False)
         return 1
 
-    payload = {
-        "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        "semesters": semesters,
-    }
+    payload = {"semesters": semesters}
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+    META_PATH.parent.mkdir(parents=True, exist_ok=True)
+    META_PATH.write_text(
+        json.dumps(
+            {"generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat()},
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
     for s in semesters:
         log("SEM", f"{s['name']}: peak {s['peak_start']} → {s['peak_end']}")
-    log("OUT", f"wrote {OUTPUT_PATH}")
+    log("OUT", f"wrote {OUTPUT_PATH} (meta → {META_PATH})")
     return 0
 
 
