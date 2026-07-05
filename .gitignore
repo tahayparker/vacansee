@@ -53,5 +53,4 @@ __pycache__/
 # scraper runtime
 .storage_state.json
 scripts/debug/
-scripts/cache/
 downloaded_files/
