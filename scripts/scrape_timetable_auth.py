@@ -38,7 +38,6 @@ import os
 import re
 import sys
 import time
-import traceback
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Dict, Iterator, List, Optional, Tuple
@@ -75,6 +74,18 @@ CF_SETTLE_SEC      = 6
 def log(tag: str, msg: str, ok: bool = True) -> None:
     icon = "✓" if ok else "✗"
     print(f"[{tag}] {icon} {msg}", flush=True)
+
+
+def _require_env(name: str) -> str:
+    value = os.getenv(name)
+    if not value:
+        log("CONFIG", f"missing env: {name}", ok=False)
+        sys.exit(1)
+    return value
+
+
+def _exc_label(exc: BaseException) -> str:
+    return type(exc).__name__
 
 
 def normalize_whitespace(text: Optional[str]) -> str:
@@ -318,8 +329,7 @@ class LoginFlow:
             try:
                 handler()
             except Exception as exc:
-                log("LOGIN", f"handler {state!r} raised: {exc}", ok=False)
-                traceback.print_exc()
+                log("LOGIN", f"handler {state!r} raised: {_exc_label(exc)}", ok=False)
                 shot(self.page, f"err_{state.lower()}")
                 return False
 
@@ -684,8 +694,7 @@ class Scraper:
                         return True
             except Exception as exc:
                 last_err = f"{backend}: {exc}"
-                log("RUN", f"{backend} failed: {exc}", ok=False)
-                traceback.print_exc()
+                log("RUN", f"{backend} failed: {_exc_label(exc)}", ok=False)
                 continue
         log("RUN", f"All backends failed. last={last_err}", ok=False)
         return False
@@ -928,13 +937,9 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    email  = os.getenv("UOWD_EMAIL")
-    passwd = os.getenv("UOWD_PASSWORD")
-    totp   = os.getenv("UOWD_TOTP_SECRET")
-    missing = [k for k, v in (("UOWD_EMAIL", email), ("UOWD_PASSWORD", passwd), ("UOWD_TOTP_SECRET", totp)) if not v]
-    if missing:
-        log("CONFIG", f"missing env: {', '.join(missing)}", ok=False)
-        sys.exit(1)
+    email = _require_env("UOWD_EMAIL")
+    passwd = _require_env("UOWD_PASSWORD")
+    totp = _require_env("UOWD_TOTP_SECRET")
 
     backends = BACKENDS if args.backend == "auto" else [args.backend]
     log("CONFIG", f"headless={not args.headed}  backends={backends}  force_login={args.force_login}")
