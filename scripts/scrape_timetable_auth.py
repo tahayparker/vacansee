@@ -24,6 +24,14 @@ Env vars required:
 
 Usage:
     python scripts/scrape_timetable_auth.py --output public/classes.csv
+    python scripts/scrape_timetable_auth.py --output public/classes.csv \
+        --raw-output public/raw_classes.csv
+
+    # Discovery mode: dumps the unmodified timetableData JSON to
+    # scripts/debug/timetable_raw.json so you can enumerate every field
+    # the portal returns (used to identify AND/OR / group / section text).
+    python scripts/scrape_timetable_auth.py --output public/classes.csv \
+        --debug-dump-raw
 """
 
 # pylint: disable=broad-except,too-many-branches,too-many-statements,too-many-locals
@@ -666,6 +674,8 @@ class Scraper:
         headless: bool,
         backends: List[str],
         force_login: bool,
+        raw_output: Optional[Path] = None,
+        debug_dump_raw: bool = False,
     ):
         self.email = email
         self.password = password
@@ -673,6 +683,12 @@ class Scraper:
         self.headless = headless
         self.backends = backends
         self.force_login = force_login
+        # Optional secondary outputs for the vordo data pipeline.
+        # raw_output: preserved-structure CSV alongside classes.csv.
+        # debug_dump_raw: unmodified timetableData JSON, for discovering
+        # which portal fields carry AND/OR / group / section text.
+        self.raw_output = raw_output
+        self.debug_dump_raw = debug_dump_raw
         self.supabase = init_supabase()
         self.room_map = fetch_room_mapping(self.supabase)
 
@@ -751,8 +767,21 @@ class Scraper:
             log("SCRAPE", "no timetable data", ok=False)
             return False
 
+        # Optional discovery dump — bypasses CSV writes when used standalone.
+        if self.debug_dump_raw:
+            dump_path = DEBUG_DIR / "timetable_raw.json"
+            n = self._write_debug_dump(data, dump_path)
+            log("DEBUG", f"dumped {n} raw entries → {dump_path}")
+
         rows = self._write_csv(data, output_path)
         log("SCRAPE", f"wrote {rows} rows → {output_path}")
+
+        # Vordo's raw-preserving CSV (no ; splitting, no section trimming,
+        # extra columns for AND/OR + group). Skipped if --raw-output absent.
+        if self.raw_output is not None:
+            raw_rows = self._write_raw_csv(data, self.raw_output)
+            log("RAW", f"wrote {raw_rows} raw rows → {self.raw_output}")
+
         return rows > 0
 
     # ── helpers ──
@@ -917,12 +946,114 @@ class Scraper:
         tmp.replace(path)
         return len(rows)
 
+    # ── Vordo: raw-preserving CSV + discovery dump ──
+
+    # Schema for raw_classes.csv. Column names match the RawTimings Prisma
+    # model 1:1. Field mapping confirmed from the discovery dump:
+    #
+    #   subject_code             → SubCode  (cleaned: spaces removed)
+    #   subject_name             → SubName
+    #   type                     → Type      ("Lecture" / "Tutorial" / ...)
+    #   type_with_section        → TypeWithSection  ("Tutorial A" / "Lecture ")
+    #   type_full                → TypeFull  ("SUMM-ACCY121-DB-T/01" — section# embedded)
+    #   subject_selection_option → SelectionOption  ("" / "OR" / "AND")
+    #   week_day                 → Day
+    #   start_time, end_time     → StartTime, EndTime
+    #   location                 → Location  (preserves ';' separators)
+    #   lecturer                 → Lecturer  (preserves ';' separators)
+    #   semester_id              → SemesterId
+    #
+    # SelectionOption is the authoritative AND/OR field that drives the
+    # vordo planner: rows within the same SubCode chained by "OR" are
+    # alternatives within a component; "AND" starts a new required
+    # component; "" (blank) marks the first row of the first component.
+    RAW_CSV_FIELDS = [
+        "SubCode",
+        "SubName",
+        "Type",
+        "TypeWithSection",
+        "TypeFull",
+        "SelectionOption",
+        "Day",
+        "StartTime",
+        "EndTime",
+        "Location",
+        "Lecturer",
+        "SemesterId",
+    ]
+
+    def _write_raw_csv(self, data: List[Dict[str, Any]], path: Path) -> int:
+        rows: List[Dict[str, str]] = []
+        for entry in data:
+            if not (entry.get("subject_code") and entry.get("week_day")):
+                continue
+            sub_code_raw = entry.get("subject_code", "") or ""
+            # Portal sometimes returns "ARA 101" — collapse internal
+            # spaces so the code matches what students type.
+            sub_code = normalize_whitespace(sub_code_raw).replace(" ", "")
+
+            sem_id = entry.get("semester_id")
+            sem_id_str = str(sem_id) if sem_id is not None else ""
+
+            rows.append({
+                "SubCode":         sub_code,
+                "SubName":         normalize_whitespace(entry.get("subject_name", "") or ""),
+                "Type":            normalize_whitespace(entry.get("type", "") or ""),
+                "TypeWithSection": normalize_whitespace(entry.get("type_with_section", "") or ""),
+                "TypeFull":        normalize_whitespace(entry.get("type_full", "") or ""),
+                "SelectionOption": normalize_whitespace(entry.get("subject_selection_option", "") or ""),
+                "Day":             normalize_whitespace(entry.get("week_day", "") or ""),
+                "StartTime":       format_time_hhmm(entry.get("start_time")),
+                "EndTime":         format_time_hhmm(entry.get("end_time")),
+                "Location":        normalize_whitespace(entry.get("location", "") or ""),
+                "Lecturer":        normalize_whitespace(entry.get("lecturer", "") or ""),
+                "SemesterId":      sem_id_str,
+            })
+
+        if not rows:
+            log("RAW", "0 rows — refusing to overwrite existing raw CSV", ok=False)
+            return 0
+
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_suffix(path.suffix + ".tmp")
+        with tmp.open("w", newline="", encoding="utf-8") as fh:
+            writer = csv.DictWriter(
+                fh,
+                fieldnames=self.RAW_CSV_FIELDS,
+                quoting=csv.QUOTE_MINIMAL,
+            )
+            writer.writeheader()
+            writer.writerows(rows)
+        tmp.replace(path)
+        return len(rows)
+
+    def _write_debug_dump(self, data: List[Dict[str, Any]], path: Path) -> int:
+        # No filtering, no normalization. Used to enumerate every key
+        # the portal returns so we can identify AND/OR / group columns.
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(data, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        return len(data)
+
 
 # ── Entry point ──────────────────────────────────────────────────────────────
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Scrape UOWD timetable")
     parser.add_argument("--output", required=True, type=Path, help="Output CSV path")
+    parser.add_argument(
+        "--raw-output", type=Path, default=None,
+        help="Optional: write preserved-structure CSV (extra cols: SubName, "
+             "TypeWithSection, full Location/Lecturer, GroupTag, AndOrText). "
+             "Used by vordo's RawTimings table.",
+    )
+    parser.add_argument(
+        "--debug-dump-raw", action="store_true",
+        help="Dump the unmodified timetableData JSON to "
+             "scripts/debug/timetable_raw.json (for field discovery).",
+    )
     parser.add_argument(
         "--headed", action="store_true",
         help="Run browser headed (default: headless)",
@@ -947,6 +1078,8 @@ def main() -> None:
     scraper = Scraper(
         email=email, password=passwd, totp_secret=totp,
         headless=not args.headed, backends=backends, force_login=args.force_login,
+        raw_output=args.raw_output.resolve() if args.raw_output else None,
+        debug_dump_raw=args.debug_dump_raw,
     )
     ok = scraper.run(args.output.resolve())
     sys.exit(0 if ok else 1)

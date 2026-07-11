@@ -45,3 +45,29 @@ model Timings {
   // Used for filtering by day
   @@index([Day])
 }
+
+// Vordo: preserved-structure timings — keeps Lecturer/Location ';' separators
+// intact, retains the full TypeWithSection (no section stripping), and stores
+// the SelectionOption (OR/AND/blank) field that drives vordo's component
+// grouping. Populated by upload_raw_timings.py from public/raw_classes.csv.
+model RawTimings {
+  id              Int    @id @default(autoincrement())
+  SubCode         String
+  SubName         String
+  Type            String
+  TypeWithSection String
+  TypeFull        String
+  // "" (blank) / "OR" / "AND". First row of first component is "".
+  // "OR" = alternative within the same component.
+  // "AND" = start of a new required component.
+  SelectionOption String
+  Day             String
+  StartTime       String
+  EndTime         String
+  Location        String
+  Lecturer        String
+  SemesterId      String
+
+  @@index([SubCode])
+  @@index([Day])
+}

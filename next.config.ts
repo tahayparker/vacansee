@@ -177,6 +177,7 @@ const nextConfig: NextConfig = {
         destination: "/custom-graph",
         permanent: true,
       },
+      { source: "/about", destination: "/docs", permanent: true },
     ];
   },
 
