@@ -14,11 +14,13 @@ export default function SSO() {
     // Parse hash manually if present
     let accessToken: string | null = null;
     let refreshToken: string | null = null;
+    let nextUrl: string | null = null;
     
     if (hash) {
       const params = new URLSearchParams(hash.substring(1));
       accessToken = params.get("access_token");
       refreshToken = params.get("refresh_token");
+      nextUrl = params.get("next");
     }
 
     if (accessToken && refreshToken) {
@@ -30,7 +32,7 @@ export default function SSO() {
           setError(error.message);
         } else {
           // Navigate to home after setting session
-          router.replace("/");
+          router.replace(nextUrl || "/");
         }
       });
     } else {
@@ -46,13 +48,13 @@ export default function SSO() {
   }, [router, supabase]);
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-4 bg-background z-50 fixed inset-0">
+    <div className="flex h-screen w-full flex-col items-center justify-center gap-4 bg-black z-50 fixed inset-0">
       {error ? (
         <div className="text-red-500 max-w-md text-center p-4 bg-red-500/10 rounded-lg border border-red-500/20">{error}</div>
       ) : (
         <div className="text-white flex flex-col items-center gap-4">
           <div className="h-10 w-10 animate-spin rounded-full border-b-2 border-t-2 border-purple-500"></div>
-          <p className="text-white/60">Authenticating session...</p>
+          <p className="text-white/80 font-medium">Authenticating session...</p>
         </div>
       )}
     </div>
