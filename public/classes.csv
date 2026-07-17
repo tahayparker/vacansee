@@ -1,4 +1,9 @@
 SubCode,Class,Day,StartTime,EndTime,Room,Teacher
+IELT200,Tutorial A,Monday,18:00,21:00,5.10-Classroom B,Ferzana Aslam
+IELT200,Tutorial B,Tuesday,18:00,21:00,5.10-Classroom B,Ferzana Aslam
+IELT200,Tutorial C,Wednesday,18:00,21:00,5.10-Classroom B,Ferzana Aslam
+IELT200,Tutorial D,Thursday,18:00,21:00,5.10-Classroom B,Ferzana Aslam
+IELT200,Tutorial E,Friday,18:00,21:00,5.10-Classroom B,Ferzana Aslam
 PUBH115,Lecture A,Monday,10:30,13:30,4.44-Classroom B,Amina Khan
 PUBH115,Lecture B,Wednesday,10:30,12:30,4.44-Classroom B,Amina Khan
 PUBH115,Tutorial A,Monday,14:00,16:30,4.44-Classroom B,Amina Khan
