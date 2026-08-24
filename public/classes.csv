@@ -35,6 +35,7 @@ ACCY312,Tutorial,Monday,14:30,16:30,1.84-Block 19,Namrata Gupta
 ACCY312,Tutorial,Wednesday,12:30,14:30,4.50-Classroom B,Namrata Gupta
 ACCY312,Tutorial,Monday,08:30,10:30,4.50-Classroom B,Marryam Yasir
 ACCY801,Lecture,Tuesday,18:00,22:00,3.46-Classroom A,Namrata Gupta
+ACCY801,Lecture,Thursday,18:00,22:00,5.19-Classroom A,Muhabie Mengistu
 ARA101,Tutorial A,Wednesday,08:30,10:30,3.46-Classroom A,Katia Freywat
 ARA101,Tutorial B,Friday,08:00,10:00,3.46-Classroom A,Katia Freywat
 BCM110,Lecture,Wednesday,08:30,10:30,2.66/67-Combined-Block 19,Andjela Bisevac
@@ -272,14 +273,14 @@ CSCI368,Computer Lab,Thursday,14:30,16:30,3.52-Computer Lab (Network),Suzan Sall
 CSCI368,Computer Lab,Thursday,12:30,14:30,3.52-Computer Lab (Network),Mouhannad Alattar
 CSCI368,Computer Lab,Wednesday,16:30,18:30,6.33-Computer Lab,Asmath Famnaz
 CSCI368,Computer Lab,Monday,12:30,14:30,3.52-Computer Lab (Network),Tina Thomas
-CSCI368,Computer Lab,Monday,14:30,16:30,6.39-Computer Lab,Tina Thomas
+CSCI368,Computer Lab,Monday,14:30,16:30,6.39-Computer Lab,Salih Ismail
 CSCI368,Computer Lab,Wednesday,10:30,12:30,3.52-Computer Lab (Network),Mouhannad Alattar
 CSCI368,Computer Lab,Tuesday,10:30,12:30,3.52-Computer Lab (Network),Asmath Famnaz
 CSCI368,Lecture,Thursday,08:30,10:30,5.11-Classroom B,Mouhannad Alattar
 CSCI368,Lecture,Wednesday,08:30,10:30,5.11-Classroom B,Mouhannad Alattar
 CSCI368,Tutorial,Thursday,10:30,11:30,6.32-Classroom B,Suzan Sallam
-CSCI368,Tutorial,Wednesday,12:30,13:30,6.28-Seminar/Tutorial,Asmath Famnaz
-CSCI368,Tutorial,Wednesday,11:30,12:30,6.40-Computer Lab,Asmath Famnaz
+CSCI368,Tutorial,Wednesday,12:30,13:30,6.28-Seminar/Tutorial,Salih Ismail
+CSCI368,Tutorial,Wednesday,11:30,12:30,6.40-Computer Lab,Salih Ismail
 CSCI368,Tutorial,Wednesday,10:30,11:30,6.40-Computer Lab,Asmath Famnaz
 CSCI368,Tutorial,Thursday,13:30,14:30,1.72-Block 19,Tina Thomas
 CSCI368,Tutorial,Thursday,11:30,12:30,5.11-Classroom B,Tina Thomas
@@ -296,11 +297,11 @@ CSIT040,Lecture,Friday,14:00,18:00,4.467-Classroom A 4.46 & 4.47,Deepa Keshavamu
 CSIT040,Lecture,Friday,14:00,18:00,4.467-Classroom A 4.46 & 4.47,Suzan Sallam
 CSIT040,Lecture,Friday,14:00,18:00,4.467-Classroom A 4.46 & 4.47,Tina Thomas
 CSIT110,Computer Lab,Monday,14:30,16:30,4.45-Classroom B,Obaid Ullah
-CSIT110,Computer Lab,Thursday,14:30,16:30,6.36-Computer Lab (Single Screen),Obaid Ullah
+CSIT110,Computer Lab,Thursday,14:30,16:30,6.36-Computer Lab (Single Screen),Parsa Hosseini
 CSIT110,Computer Lab,Tuesday,14:30,16:30,5.12-Informal Classroom,Obaid Ullah
 CSIT110,Computer Lab,Wednesday,12:30,14:30,4.45-Classroom B,Sonia Hajri
 CSIT110,Computer Lab,Wednesday,15:30,17:30,4.42-Computer Lab (Single Screen),Sonia Hajri
-CSIT110,Computer Lab,Thursday,12:30,14:30,4.45-Classroom B,Sonia Hajri
+CSIT110,Computer Lab,Thursday,12:30,14:30,4.45-Classroom B,Parsa Hosseini
 CSIT110,Computer Lab,Thursday,08:30,10:30,5.12-Informal Classroom,Sonia Hajri
 CSIT110,Computer Lab,Thursday,14:30,16:30,4.42-Computer Lab (Single Screen),Sonia Hajri
 CSIT110,Computer Lab,Friday,10:00,12:00,4.45-Classroom B,Asma Damankesh
@@ -308,13 +309,13 @@ CSIT110,Computer Lab,Thursday,10:30,12:30,5.12-Informal Classroom,Asma Damankesh
 CSIT110,Computer Lab,Monday,14:30,16:30,6.40-Computer Lab,Bushra Siddiqui
 CSIT110,Computer Lab,Wednesday,12:30,14:30,5.12-Informal Classroom,Asma Damankesh
 CSIT110,Computer Lab,Tuesday,12:30,14:30,6.33-Computer Lab,Deepa Keshavamurthy
-CSIT110,Computer Lab,Wednesday,14:30,16:30,3.45-Classroom B,Deepa Keshavamurthy
+CSIT110,Computer Lab,Wednesday,14:30,16:30,3.45-Classroom B,Parsa Hosseini
 CSIT110,Computer Lab,Thursday,14:30,16:30,2.50-Computer Lab Single,Syama Kurungodathil
 CSIT110,Computer Lab,Wednesday,14:30,16:30,5.12-Informal Classroom,Syama Kurungodathil
 CSIT110,Computer Lab,Wednesday,10:30,12:30,5.12-Informal Classroom,Syama Kurungodathil
 CSIT110,Computer Lab,Wednesday,08:30,10:30,3.45-Classroom B,Hoda Elhamy
 CSIT110,Computer Lab,Tuesday,14:30,16:30,6.40-Computer Lab,Hoda Elhamy
-CSIT110,Computer Lab,Wednesday,12:30,14:30,4.52-AI Lab,Hoda Elhamy
+CSIT110,Computer Lab,Wednesday,12:30,14:30,4.52-AI Lab,Parsa Hosseini
 CSIT110,Lecture,Monday,11:30,14:30,2.66/67-Combined-Block 19,George Tsaramirsis
 CSIT110,Lecture,Tuesday,11:30,14:30,2.66/67-Combined-Block 19,George Tsaramirsis
 CSIT110,Lecture,Monday,08:30,11:30,2.66/67-Combined-Block 19,Soly Mathew Biju
@@ -836,7 +837,7 @@ MACS803,Lecture,Thursday,18:00,22:00,5.134-Classroom A 5.13 & 5.14,George Tsaram
 MACS901,Lecture,Thursday,18:00,22:00,2.50-Computer Lab Single,Mouhannad Alattar
 MACS902,Lecture,Tuesday,18:00,22:00,2.50-Computer Lab Single,Manoj Kumar
 MACS903,Lecture,Friday,18:00,22:00,2.50-Computer Lab Single,Manoj Kumar
-MACS904,Lecture,Wednesday,18:00,22:00,2.50-Computer Lab Single,Mouhannad Alattar
+MACS904,Lecture,Wednesday,18:00,22:00,2.50-Computer Lab Single,Salih Ismail
 MACS906,Lecture,Monday,18:00,22:00,6.40-Computer Lab,Nkqubela Ruxwana
 MACS999,Lecture A,Saturday,10:00,16:00,3.48-Classroom B,Pallavi Ranjan
 MACS999,Lecture A,Saturday,10:00,16:00,4.48-Classroom B,Milan Dordevic
