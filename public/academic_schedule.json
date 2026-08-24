@@ -1,19 +1,11 @@
 {
   "semesters": [
     {
-      "name": "Spring 2026",
-      "enrolment_start": "2026-04-01",
-      "enrolment_last": "2026-04-24",
-      "final_exam_start": "2026-07-06",
-      "peak_start": "2026-03-18",
-      "peak_end": "2026-04-24"
-    },
-    {
       "name": "Summer 2026",
       "enrolment_start": "2026-06-15",
       "enrolment_last": "2026-07-23",
       "final_exam_start": "2026-08-17",
-      "peak_start": "2026-07-06",
+      "peak_start": "2026-06-01",
       "peak_end": "2026-07-23"
     },
     {
