@@ -653,9 +653,9 @@ FIN241,Tutorial,Tuesday,12:30,14:30,1.76-Block 19,Nada Tchantchane
 FIN241,Tutorial,Monday,14:30,16:30,2.71-Block 19,Nada Tchantchane
 FIN241,Tutorial,Thursday,08:30,10:30,6.38-Classroom B,Nada Tchantchane
 FIN923,Lecture,Monday,18:00,22:00,6.38-Classroom B,Burcu Kapar
-FIN947,Lecture,Thursday,18:00,22:00,4.48-Classroom B,Gunsel Topbas
+FIN947,Lecture,Thursday,18:00,22:00,3.46-Classroom A,Gunsel Topbas
 FIN950,Lecture,Monday,18:00,22:00,4.50-Classroom B,Vikash Ramiah
-FIN957,Lecture,Wednesday,18:00,22:00,4.48-Classroom B,Gunsel Topbas
+FIN957,Lecture,Wednesday,18:00,22:00,5.19-Classroom A,Gunsel Topbas
 FIN958,Lecture,Tuesday,18:00,22:00,4.50-Classroom B,Noor Rizvi
 GESF000,Tutorial A,Monday,08:30,12:30,4.53-Seminar/Tutorial,Unknown
 GESF000,Tutorial B,Tuesday,08:30,12:30,4.53-Seminar/Tutorial,Unknown
@@ -956,8 +956,10 @@ MBAS900,Computer Lab,Wednesday,20:00,22:00,6.40-Computer Lab,Khaled Eid
 MBAS900,Computer Lab,Tuesday,20:00,22:00,6.40-Computer Lab,Khaled Eid
 MBAS900,Lecture,Wednesday,18:00,20:00,6.32-Classroom B,Yiyang Bian
 MBAS900,Lecture,Tuesday,18:00,20:00,6.32-Classroom B,Yiyang Bian
-MBAS921,Lecture A,Saturday,09:00,16:00,5.11-Classroom B,Yiyang Bian
-MBAS921,Lecture B,Sunday,09:00,16:00,5.11-Classroom B,Yiyang Bian
+MBAS921,Lecture A,Saturday,09:00,16:00,6.32-Classroom B,Yiyang Bian
+MBAS921,Lecture A,Saturday,09:00,16:00,6.40-Computer Lab,Yiyang Bian
+MBAS921,Lecture B,Sunday,09:00,16:00,6.32-Classroom B,Yiyang Bian
+MBAS921,Lecture B,Sunday,09:00,16:00,6.40-Computer Lab,Yiyang Bian
 MBAS922,Lecture A,Saturday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya
 MBAS922,Lecture B,Sunday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya
 MBAS923,Lecture A,Saturday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya
@@ -1021,11 +1023,11 @@ MGNT205,Tutorial,Tuesday,14:30,16:30,5.18-Classroom A,Sadaf Khurshid
 MGNT311,Lecture,Thursday,08:30,10:30,5.134-Classroom A 5.13 & 5.14,Mohan Guruswamy
 MGNT311,Lecture,Tuesday,08:30,10:30,5.11-Classroom B,Mohan Guruswamy
 MGNT311,Tutorial,Thursday,12:30,14:30,1.74-Block 19,Mohan Guruswamy
-MGNT311,Tutorial,Tuesday,12:30,14:30,1.79-Block 19,Agata Jach
-MGNT311,Tutorial,Thursday,10:30,12:30,5.19-Classroom A,Agata Jach
-MGNT311,Tutorial,Thursday,14:30,16:30,1.74-Block 19,Agata Jach
-MGNT311,Tutorial,Tuesday,14:30,16:30,1.79-Block 19,Agata Jach
-MGNT311,Tutorial,Wednesday,10:30,12:30,1.74-Block 19,Agata Jach
+MGNT311,Tutorial,Tuesday,12:30,14:30,1.79-Block 19,Adjunct Mgmt C
+MGNT311,Tutorial,Thursday,10:30,12:30,5.19-Classroom A,Adjunct Mgmt C
+MGNT311,Tutorial,Thursday,14:30,16:30,1.74-Block 19,Adjunct Mgmt C
+MGNT311,Tutorial,Tuesday,14:30,16:30,1.79-Block 19,Adjunct Mgmt C
+MGNT311,Tutorial,Wednesday,10:30,12:30,1.74-Block 19,Adjunct Mgmt C
 MGNT321,Lecture,Wednesday,14:30,16:30,5.19-Classroom A,Sabiha Mumtaz
 MGNT321,Tutorial,Monday,08:30,10:30,2.64-Block 19,Sawsan Al Khayyat
 MGNT321,Tutorial,Monday,10:30,12:30,2.64-Block 19,Sawsan Al Khayyat
@@ -1034,9 +1036,9 @@ MGNT351,Tutorial,Tuesday,10:30,12:30,3.46-Classroom A,Donia AlRawashdeh
 MGNT351,Tutorial,Monday,14:30,16:30,3.46-Classroom A,Donia AlRawashdeh
 MGNT351,Tutorial,Wednesday,10:30,12:30,6.38-Classroom B,Donia AlRawashdeh
 MGNT803,Lecture,Monday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Sabiha Mumtaz
-MGNT908,Lecture,Wednesday,18:00,22:00,6.38-Classroom B,Greig Taylor
+MGNT908,Lecture,Wednesday,18:00,22:00,3.46-Classroom A,Greig Taylor
 MGNT915,Lecture,Tuesday,18:00,22:00,5.134-Classroom A 5.13 & 5.14,Jaeyoung Cho
-MGNT963,Lecture,Thursday,18:00,22:00,4.50-Classroom B,Sabiha Mumtaz
+MGNT963,Lecture,Thursday,18:00,22:00,2.71-Block 19,Sabiha Mumtaz
 MMD904,Lecture,Thursday,18:00,22:00,5.15-MAC Lab,Hala Georges
 MMD904,Lecture,Thursday,18:00,22:00,5.17-Classroom VC,Hala Georges
 MMD905,Lecture,Wednesday,18:00,22:00,5.15-MAC Lab,Aaron Anderson
@@ -1081,8 +1083,8 @@ MMMB382,Lab\Workshop,Thursday,16:30,18:30,1.49-Manufacturing & Workshop Lab,Adju
 MMMB382,Lecture,Wednesday,08:30,10:30,6.32-Classroom B,Umar Asghar
 OPS270,Lecture,Friday,08:00,10:00,2.61-Block 19,Sabreen Wahbeh
 OPS270,Lecture,Thursday,12:30,14:30,4.467-Classroom A 4.46 & 4.47,Sabreen Wahbeh
-OPS270,Tutorial,Wednesday,08:30,10:30,5.17-Classroom VC,Sabreen Wahbeh
-OPS270,Tutorial,Wednesday,10:30,12:30,5.17-Classroom VC,Sabreen Wahbeh
+OPS270,Tutorial,Wednesday,08:30,10:30,5.17-Classroom VC,Adjunct Mgmt B
+OPS270,Tutorial,Wednesday,10:30,12:30,5.17-Classroom VC,Adjunct Mgmt B
 OPS270,Tutorial,Thursday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Sabreen Wahbeh
 OPS270,Tutorial,Friday,10:00,12:00,1.84-Block 19,Sabreen Wahbeh
 OPS270,Tutorial,Monday,12:30,14:30,5.10-Classroom B,Everyl Angel Colaco
