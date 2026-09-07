@@ -93,7 +93,7 @@ BUS030,Lecture,Wednesday,14:30,16:30,4.44-Classroom B,Vidhi Sharma
 BUS030,Lecture,Wednesday,16:30,18:30,6.345-Classroom A 6.34 & 6.35,Vidhi Sharma
 BUS030,Lecture,Wednesday,16:30,18:30,6.345-Classroom A 6.34 & 6.35,Nikita Kirplani
 BUS030,Lecture,Wednesday,16:30,18:30,6.345-Classroom A 6.34 & 6.35,Monika Yadav
-BUS030,Tutorial,Thursday,10:30,12:30,6.40-Computer Lab,Monika Yadav
+BUS030,Tutorial,Thursday,10:30,12:30,5.11-Classroom B,Monika Yadav
 BUS030,Tutorial,Thursday,14:30,16:30,1.84-Block 19,Monika Yadav
 BUS030,Tutorial,Friday,08:00,10:00,1.75-Block 19,Monika Yadav
 BUS030,Tutorial,Friday,10:00,12:00,1.75-Block 19,Monika Yadav
@@ -283,8 +283,8 @@ CSCI368,Tutorial,Wednesday,12:30,13:30,6.28-Seminar/Tutorial,Salih Ismail
 CSCI368,Tutorial,Wednesday,11:30,12:30,6.40-Computer Lab,Salih Ismail
 CSCI368,Tutorial,Wednesday,10:30,11:30,6.40-Computer Lab,Asmath Famnaz
 CSCI368,Tutorial,Thursday,13:30,14:30,1.72-Block 19,Tina Thomas
-CSCI368,Tutorial,Thursday,11:30,12:30,5.11-Classroom B,Tina Thomas
-CSCI368,Tutorial,Thursday,10:30,11:30,5.11-Classroom B,Tina Thomas
+CSCI368,Tutorial,Thursday,11:30,12:30,4.44-Classroom B,Tina Thomas
+CSCI368,Tutorial,Thursday,10:30,11:30,5.134-Classroom A 5.13 & 5.14,Tina Thomas
 CSCI388,Computer Lab,Thursday,14:30,16:30,4.52-AI Lab,Sharul Sah
 CSCI388,Computer Lab,Wednesday,14:30,16:30,4.52-AI Lab,Sharul Sah
 CSCI388,Lecture,Wednesday,10:30,12:30,6.32-Classroom B,George Tsaramirsis
@@ -635,6 +635,7 @@ FIN222,Computer Lab,Thursday,12:30,14:30,6.36-Computer Lab (Single Screen),Katia
 FIN222,Computer Lab,Tuesday,16:30,18:30,4.42-Computer Lab (Single Screen),Nikita Kirplani
 FIN222,Computer Lab,Wednesday,08:30,10:30,6.36-Computer Lab (Single Screen),Sherwin Fernandes
 FIN222,Computer Lab,Tuesday,14:30,16:30,1.52-Computer Lab Single,Katia Lopez Ramirez
+FIN222,Computer Lab,Thursday,10:30,12:30,6.40-Computer Lab,Sherwin Fernandes
 FIN222,Lecture,Friday,10:00,12:00,2.61-Block 19,Burcu Kapar
 FIN222,Lecture,Tuesday,12:30,14:30,6.32-Classroom B,Burcu Kapar
 FIN223,Lecture,Tuesday,10:30,12:30,2.61-Block 19,Vikash Ramiah
@@ -648,6 +649,7 @@ FIN223,Tutorial,Wednesday,10:30,12:30,4.48-Classroom B,Raghida Araji
 FIN223,Tutorial,Wednesday,12:30,14:30,4.51-Tutorial Room,Raghida Araji
 FIN223,Tutorial,Friday,08:00,10:00,6.38-Classroom B,Raghida Araji
 FIN223,Tutorial,Friday,10:00,12:00,6.38-Classroom B,Raghida Araji
+FIN223,Tutorial,Friday,14:00,16:00,3.42-Classroom B,Raghida Araji
 FIN241,Lecture,Thursday,14:30,16:30,2.61-Block 19,Faisal Rana
 FIN241,Lecture,Wednesday,10:30,12:30,2.61-Block 19,Faisal Rana
 FIN241,Lecture,Tuesday,10:30,12:30,6.32-Classroom B,Avneet Kaur
@@ -666,6 +668,7 @@ FIN241,Tutorial,Monday,14:30,16:30,1.72-Block 19,Adjunct FIN A
 FIN241,Tutorial,Tuesday,12:30,14:30,1.76-Block 19,Nada Tchantchane
 FIN241,Tutorial,Monday,14:30,16:30,2.71-Block 19,Nada Tchantchane
 FIN241,Tutorial,Thursday,08:30,10:30,6.38-Classroom B,Nada Tchantchane
+FIN241,Tutorial,Wednesday,14:30,16:30,2.64-Block 19,Katia Lopez Ramirez
 FIN923,Lecture,Monday,18:00,22:00,3.46-Classroom A,Burcu Kapar
 FIN947,Lecture,Thursday,18:00,22:00,3.46-Classroom A,Gunsel Topbas
 FIN950,Lecture,Monday,18:00,22:00,2.71-Block 19,Vikash Ramiah
@@ -1004,8 +1007,8 @@ MECH321,Computer Lab,Wednesday,12:30,14:30,1.48-Thermal Lab,Adjunct ENGG 9999
 MECH321,Lecture,Monday,11:30,14:30,3.48-Classroom B,Ciara ODriscoll
 MECH321,Tutorial,Monday,14:30,16:30,2.64-Block 19,Adjunct ENGG 9999
 MECH321,Tutorial,Wednesday,10:30,12:30,2.65-Block 19,Adjunct MECH 2
-MECH346,Computer Lab,Tuesday,14:30,16:30,1.48-Thermal Lab,Adjunct MECH 2
-MECH346,Computer Lab,Thursday,14:30,16:30,1.48-Thermal Lab,Adjunct MECH 2
+MECH346,Computer Lab,Tuesday,14:30,16:30,1.47-Fluids Lab,Adjunct MECH 2
+MECH346,Computer Lab,Thursday,14:30,16:30,1.47-Fluids Lab,Adjunct MECH 2
 MECH346,Lecture,Tuesday,08:30,11:30,1.83-Block 19,Mama Chacha
 MECH346,Tutorial,Thursday,10:30,12:30,4.48-Classroom B,Abdulqader Hasan
 MECH346,Tutorial,Tuesday,12:30,14:30,5.17-Classroom VC,Abdulqader Hasan
