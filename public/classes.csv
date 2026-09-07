@@ -99,7 +99,7 @@ BUS030,Tutorial,Friday,08:00,10:00,1.75-Block 19,Monika Yadav
 BUS030,Tutorial,Friday,10:00,12:00,1.75-Block 19,Monika Yadav
 BUS030,Tutorial,Friday,08:00,10:00,1.78-Block 19,Sina Aneesh
 BUS030,Tutorial,Friday,10:00,12:00,1.78-Block 19,Sina Aneesh
-BUS030,Tutorial,Thursday,14:30,16:30,4.50-Classroom B,Sina Aneesh
+BUS030,Tutorial,Thursday,14:30,16:30,1.79-Block 19,Sina Aneesh
 BUS030,Tutorial,Thursday,10:30,12:30,1.73-Block 19,Sina Aneesh
 BUS030,Tutorial,Friday,08:00,10:00,1.76-Block 19,Sameera Siddiqui
 BUS030,Tutorial,Thursday,10:30,12:30,1.76-Block 19,Sameera Siddiqui
@@ -190,6 +190,7 @@ BUS922,Lecture,Wednesday,18:00,22:00,4.50-Classroom B,Munyar Nyadzayo
 BUS922,Lecture,Thursday,18:00,22:00,0.17-Lecture Theatre,Prithvi Bhattacharya
 BUS922,Lecture,Friday,18:00,22:00,6.38-Classroom B,Kashif Saleem
 BUS922,Lecture,Tuesday,18:00,22:00,4.48-Classroom B,Balan Sundarakani
+BUS922,Lecture,Monday,18:00,22:00,4.50-Classroom B,Marouane Khallouk
 BUS997,Lecture,Thursday,18:00,22:00,4.53-Seminar/Tutorial,Ruwan Bandara
 CHEM103,Computer Lab,Friday,09:00,12:00,1.53-Chemistry & Materials Science Lab,Adjunct 3
 CHEM103,Computer Lab,Friday,14:30,17:30,1.53-Chemistry & Materials Science Lab,Adjunct 3
@@ -748,7 +749,7 @@ IFRC002,Tutorial A,Tuesday,14:30,16:30,1.81-Block 19,Ajrina Hysaj
 IFRC002,Tutorial A,Tuesday,14:30,16:30,5.08-Seminar / Tutorial,Ferzana Aslam
 IFRC002,Tutorial A,Wednesday,10:30,12:30,3.46-Classroom A,Ferzana Aslam
 IFRC002,Tutorial A,Wednesday,08:30,10:30,5.18-Classroom A,Ferzana Aslam
-IFRC002,Tutorial B,Wednesday,16:30,18:30,6.29-Multipurpose - Teaching & Research,Ajrina Hysaj
+IFRC002,Tutorial B,Wednesday,16:30,18:30,4.51-Tutorial Room,Ajrina Hysaj
 IFRC002,Tutorial B,Friday,10:00,12:00,3.42-Classroom B,Ferzana Aslam
 IFRC002,Tutorial B,Thursday,10:30,12:30,5.18-Classroom A,Ferzana Aslam
 IFRC002,Tutorial B,Thursday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Ferzana Aslam
@@ -765,7 +766,7 @@ INE301,Tutorial,Monday,12:30,14:30,5.17-Classroom VC,Shehnaz Al-Helo
 IRAE135,Lecture,Tuesday,12:30,14:30,5.11-Classroom B,Noor Suwwan
 IRAE135,Lecture,Thursday,12:30,14:30,0.17-Lecture Theatre,Noor Suwwan
 IRAE135,Lecture,Wednesday,16:30,18:30,2.61-Block 19,Noor Suwwan
-IRAE135,Tutorial,Thursday,14:30,16:30,3.44-Classroom B,Noor Suwwan
+IRAE135,Tutorial,Thursday,14:30,16:30,4.50-Classroom B,Noor Suwwan
 IRAE135,Tutorial,Wednesday,14:30,16:30,2.65-Block 19,Noor Suwwan
 IRAE135,Tutorial,Tuesday,14:30,16:30,5.10-Classroom B,Noor Suwwan
 IRAE135,Tutorial,Tuesday,16:30,18:30,5.10-Classroom B,Noor Suwwan
@@ -907,7 +908,7 @@ MARK250,Tutorial,Tuesday,12:30,14:30,2.70-Block 19,Basila
 MARK250,Tutorial,Thursday,08:30,10:30,1.75-Block 19,Basila
 MARK250,Tutorial,Wednesday,14:30,16:30,3.48-Classroom B,Odelia Mathews
 MARK301,Lecture,Monday,14:30,16:30,2.66/67-Combined-Block 19,Vidhi Sharma
-MARK301,Lecture,Friday,14:00,16:00,0.17-Lecture Theatre,Vidhi Sharma
+MARK301,Lecture,Friday,14:00,16:00,5.134-Classroom A 5.13 & 5.14,Vidhi Sharma
 MARK301,Tutorial,Tuesday,10:30,12:30,5.17-Classroom VC,Umme Kalsoom
 MARK301,Tutorial,Tuesday,08:30,10:30,5.17-Classroom VC,Umme Kalsoom
 MARK301,Tutorial,Thursday,10:30,12:30,1.75-Block 19,Umme Kalsoom
@@ -1059,7 +1060,7 @@ MGNT311,Tutorial,Tuesday,12:30,14:30,4.50-Classroom B,Mohan Guruswamy
 MGNT321,Lecture,Wednesday,14:30,16:30,5.19-Classroom A,Sabiha Mumtaz
 MGNT321,Tutorial,Monday,08:30,10:30,2.64-Block 19,Sawsan Al Khayyat
 MGNT321,Tutorial,Monday,10:30,12:30,2.64-Block 19,Sawsan Al Khayyat
-MGNT351,Lecture,Friday,14:00,16:00,6.32-Classroom B,Mohan Guruswamy
+MGNT351,Lecture,Friday,14:00,16:00,0.17-Lecture Theatre,Mohan Guruswamy
 MGNT351,Tutorial,Tuesday,10:30,12:30,3.46-Classroom A,Donia AlRawashdeh
 MGNT351,Tutorial,Monday,14:30,16:30,3.42-Classroom B,Donia AlRawashdeh
 MGNT351,Tutorial,Wednesday,10:30,12:30,6.38-Classroom B,Donia AlRawashdeh
