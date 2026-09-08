@@ -129,6 +129,8 @@ BUS101,Tutorial,Friday,14:00,16:00,1.72-Block 19,Adjunct BUS A
 BUS101,Tutorial,Friday,10:00,12:00,1.81-Block 19,Adjunct BUS A
 BUS101,Tutorial,Monday,14:30,16:30,1.76-Block 19,Adjunct BUS A
 BUS101,Tutorial,Thursday,14:30,16:30,3.46-Classroom A,Adjunct BUS E
+BUS101,Tutorial,Wednesday,10:30,12:30,5.17-Classroom VC,Ghada Abuashour
+BUS101,Tutorial,Tuesday,16:30,18:30,4.50-Classroom B,Kerolos Abdelmalk
 BUS121,Lecture,Thursday,12:30,14:30,2.61-Block 19,Kashif Saleem
 BUS121,Lecture,Tuesday,14:30,16:30,2.66/67-Combined-Block 19,Kashif Saleem
 BUS121,Lecture,Thursday,12:30,14:30,3.44-Classroom B,Noor Rizvi
@@ -461,7 +463,7 @@ ECON100,Tutorial,Monday,10:30,12:30,1.84-Block 19,Adjunct Econ A
 ECON960,Lecture,Friday,18:00,22:00,5.11-Classroom B,Faisal Rana
 ECTE203,Computer Lab,Thursday,13:30,16:30,3.47-Game Dev Lab Dual Screens,Nayab Nadeem
 ECTE203,Computer Lab,Tuesday,14:30,17:30,6.36-Computer Lab (Single Screen),Nayab Nadeem
-ECTE203,Computer Lab,Wednesday,13:30,16:30,6.36-Computer Lab (Single Screen),Nayab Nadeem
+ECTE203,Computer Lab,Wednesday,13:30,16:30,3.47-Game Dev Lab Dual Screens,Nayab Nadeem
 ECTE203,Computer Lab,Wednesday,10:30,13:30,3.47-Game Dev Lab Dual Screens,Nayab Nadeem
 ECTE203,Lecture,Monday,12:30,14:30,5.19-Classroom A,Abeer ElKhouly
 ECTE203,Tutorial,Monday,14:30,16:30,5.19-Classroom A,Abeer ElKhouly
@@ -619,9 +621,11 @@ ENGG251,Tutorial,Thursday,10:30,12:30,1.71-Block 19,Thahsin Saidarakath
 ENGG452,Lecture,Thursday,14:30,16:30,Online,Karol Sikora
 ENGG461,Computer Lab,Tuesday,16:30,18:30,6.40-Computer Lab,Hazem Gouda
 ENGG461,Computer Lab,Tuesday,12:30,14:30,3.45-Classroom B,Hazem Gouda
+ENGG461,Computer Lab,Wednesday,14:30,16:30,6.36-Computer Lab (Single Screen),Hazem Gouda
 ENGG461,Lecture,Monday,12:30,15:30,3.46-Classroom A,Hazem Gouda
 ENGG461,Tutorial,Monday,15:30,17:30,3.46-Classroom A,Hazem Gouda
 ENGG461,Tutorial,Tuesday,10:30,12:30,4.50-Classroom B,Hazem Gouda
+ENGG461,Tutorial,Wednesday,12:30,14:30,6.36-Computer Lab (Single Screen),Hazem Gouda
 ENGG940,Lecture,Thursday,18:00,22:00,5.18-Classroom A,Mama Chacha
 ENGG941,Lecture,Tuesday,18:00,22:00,3.48-Classroom B,Haile-Selassie Rajamani
 ENGG951,Lecture,Monday,18:00,22:00,3.48-Classroom B,Kamal Jaafar
@@ -1103,17 +1107,20 @@ MMMB201,Workshop,Thursday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Adjunct 
 MMMB201,Workshop,Thursday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Tron 1
 MMMB201,Workshop,Thursday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 2
 MMMB201,Workshop,Thursday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Tron 1
-MMMB382,Lab\Workshop,Monday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
-MMMB382,Lab\Workshop,Monday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
-MMMB382,Lab\Workshop,Thursday,14:30,16:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
-MMMB382,Lab\Workshop,Thursday,14:30,16:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
-MMMB382,Lab\Workshop,Thursday,16:30,18:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
-MMMB382,Lab\Workshop,Thursday,16:30,18:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
+MMMB382,Computer Lab,Monday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
+MMMB382,Computer Lab,Monday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
+MMMB382,Computer Lab,Thursday,14:30,16:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
+MMMB382,Computer Lab,Thursday,14:30,16:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
+MMMB382,Computer Lab,Thursday,16:30,18:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
+MMMB382,Computer Lab,Thursday,16:30,18:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
 MMMB382,Lecture,Wednesday,08:30,10:30,6.32-Classroom B,Umar Asghar
+MMMB382,Workshop,Monday,08:30,10:30,1.84-Block 19,Adjunct MECH 8
+MMMB382,Workshop,Thursday,14:30,16:30,2.70-Block 19,Adjunct MECH 8
+MMMB382,Workshop,Thursday,16:30,18:30,2.65-Block 19,Adjunct MECH 8
 OPS270,Lecture,Friday,08:00,10:00,2.61-Block 19,Sabreen Wahbeh
 OPS270,Lecture,Thursday,12:30,14:30,4.467-Classroom A 4.46 & 4.47,Sabreen Wahbeh
-OPS270,Tutorial,Wednesday,08:30,10:30,5.17-Classroom VC,Adjunct Mgmt B
-OPS270,Tutorial,Wednesday,10:30,12:30,5.17-Classroom VC,Adjunct Mgmt B
+OPS270,Tutorial,Wednesday,08:30,10:30,2.65-Block 19,Adjunct Mgmt B
+OPS270,Tutorial,Wednesday,10:30,12:30,2.64-Block 19,Adjunct Mgmt B
 OPS270,Tutorial,Thursday,10:30,12:30,4.467-Classroom A 4.46 & 4.47,Sabreen Wahbeh
 OPS270,Tutorial,Friday,10:00,12:00,1.84-Block 19,Sabreen Wahbeh
 OPS270,Tutorial,Monday,12:30,14:30,5.10-Classroom B,Everyl Angel Colaco
