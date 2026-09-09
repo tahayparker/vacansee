@@ -131,6 +131,7 @@ BUS101,Tutorial,Monday,14:30,16:30,1.76-Block 19,Adjunct BUS A
 BUS101,Tutorial,Thursday,14:30,16:30,3.46-Classroom A,Adjunct BUS E
 BUS101,Tutorial,Wednesday,10:30,12:30,5.17-Classroom VC,Ghada Abuashour
 BUS101,Tutorial,Tuesday,16:30,18:30,4.50-Classroom B,Kerolos Abdelmalk
+BUS101,Tutorial,Monday,14:30,16:30,1.75-Block 19,Flevy Lasrado
 BUS121,Lecture,Thursday,12:30,14:30,2.61-Block 19,Kashif Saleem
 BUS121,Lecture,Tuesday,14:30,16:30,2.66/67-Combined-Block 19,Kashif Saleem
 BUS121,Lecture,Thursday,12:30,14:30,3.44-Classroom B,Noor Rizvi
@@ -710,7 +711,7 @@ GESF500,Tutorial B,Tuesday,08:30,12:30,4.51-Tutorial Room,Curtis Cox Cox
 GESF500,Tutorial C,Wednesday,08:30,12:30,4.51-Tutorial Room,Curtis Cox Cox
 GESF500,Tutorial D,Thursday,08:30,12:30,4.51-Tutorial Room,Curtis Cox Cox
 GESF500,Tutorial E,Friday,08:00,12:00,4.51-Tutorial Room,Curtis Cox Cox
-HUM040,Lecture,Wednesday,16:30,18:30,4.467-Classroom A 4.46 & 4.47,Rania Diab
+HUM040,Lecture,Wednesday,16:30,18:30,Online,Rania Diab
 HUM040,Lecture,Friday,08:00,10:00,2.66/67-Combined-Block 19,Rania Diab
 HUM040,Lecture,Tuesday,08:30,10:30,6.32-Classroom B,Rania Diab
 HUM040,Tutorial,Thursday,10:30,12:30,2.65-Block 19,"TBA, 10"
@@ -818,7 +819,7 @@ LANG030,Tutorial B,Thursday,13:30,16:30,1.78-Block 19,Ferzana Aslam
 LANG030,Tutorial B,Friday,14:00,17:00,5.17-Classroom VC,Nicola Sabry
 LANG030,Tutorial B,Friday,09:00,12:00,2.71-Block 19,Sabina Ashraf
 LANG030,Tutorial B,Friday,09:00,12:00,5.10-Classroom B,Nicola Sabry
-LANG030,Tutorial B,Monday,14:30,17:30,1.75-Block 19,Ajrina Hysaj
+LANG030,Tutorial B,Monday,14:30,17:30,3.47-Game Dev Lab Dual Screens,Ajrina Hysaj
 LANG030,Tutorial B,Tuesday,08:30,11:30,1.73-Block 19,Sonia Adams
 LANG030,Tutorial B,Friday,14:00,17:00,6.28-Seminar/Tutorial,Sabina Ashraf
 LANG030,Tutorial B,Monday,12:30,15:30,4.51-Tutorial Room,Sonia Adams
@@ -1114,9 +1115,9 @@ MMMB382,Computer Lab,Thursday,14:30,16:30,1.49-Manufacturing & Workshop Lab,Adju
 MMMB382,Computer Lab,Thursday,16:30,18:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
 MMMB382,Computer Lab,Thursday,16:30,18:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
 MMMB382,Lecture,Wednesday,08:30,10:30,6.32-Classroom B,Umar Asghar
-MMMB382,Workshop,Monday,08:30,10:30,1.84-Block 19,Adjunct MECH 8
-MMMB382,Workshop,Thursday,14:30,16:30,2.70-Block 19,Adjunct MECH 8
-MMMB382,Workshop,Thursday,16:30,18:30,2.65-Block 19,Adjunct MECH 8
+MMMB382,Tutorial,Monday,08:30,10:30,1.84-Block 19,Adjunct MECH 8
+MMMB382,Tutorial,Thursday,14:30,16:30,2.70-Block 19,Adjunct MECH 8
+MMMB382,Tutorial,Thursday,16:30,18:30,2.65-Block 19,Adjunct MECH 8
 OPS270,Lecture,Friday,08:00,10:00,2.61-Block 19,Sabreen Wahbeh
 OPS270,Lecture,Thursday,12:30,14:30,4.467-Classroom A 4.46 & 4.47,Sabreen Wahbeh
 OPS270,Tutorial,Wednesday,08:30,10:30,2.65-Block 19,Adjunct Mgmt B
@@ -1130,7 +1131,7 @@ OPS270,Tutorial,Thursday,08:30,10:30,1.80-Block 19,Adjunct Mgmt B
 OPS270,Tutorial,Thursday,10:30,12:30,1.80-Block 19,Adjunct Mgmt B
 OPS270,Tutorial,Wednesday,16:30,18:30,6.38-Classroom B,Kerolos Abdelmalk
 OPS802,Lecture,Tuesday,18:00,22:00,5.19-Classroom A,Sabreen Wahbeh
-OPS802,Lecture,Wednesday,18:00,22:00,2.70-Block 19,Sabreen Wahbeh
+OPS802,Lecture,Wednesday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Sabreen Wahbeh
 OPS910,Lecture,Thursday,18:00,22:00,6.32-Classroom B,Yiyang Bian
 OPS910,Lecture,Thursday,18:00,22:00,6.40-Computer Lab,Yiyang Bian
 OPS910,Lecture,Monday,18:00,22:00,5.19-Classroom A,Yiyang Bian
