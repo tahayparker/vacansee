@@ -644,8 +644,8 @@ FIN222,Computer Lab,Tuesday,14:30,16:30,1.52-Computer Lab Single,Katia Lopez Ram
 FIN222,Computer Lab,Thursday,10:30,12:30,6.40-Computer Lab,Sherwin Fernandes
 FIN222,Lecture,Friday,10:00,12:00,2.61-Block 19,Burcu Kapar
 FIN222,Lecture,Tuesday,12:30,14:30,6.32-Classroom B,Burcu Kapar
-FIN223,Lecture,Tuesday,10:30,12:30,2.61-Block 19,Vikash Ramiah
-FIN223,Lecture,Tuesday,14:30,16:30,4.467-Classroom A 4.46 & 4.47,Vikash Ramiah
+FIN223,Lecture,Tuesday,10:30,12:30,2.61-Block 19,Raghida Araji
+FIN223,Lecture,Tuesday,14:30,16:30,4.467-Classroom A 4.46 & 4.47,Raghida Araji
 FIN223,Tutorial,Wednesday,12:30,14:30,1.75-Block 19,Sherwin Fernandes
 FIN223,Tutorial,Friday,08:00,10:00,2.70-Block 19,Sherwin Fernandes
 FIN223,Tutorial,Wednesday,14:30,16:30,1.75-Block 19,Sherwin Fernandes
@@ -678,6 +678,7 @@ FIN241,Tutorial,Wednesday,14:30,16:30,2.64-Block 19,Katia Lopez Ramirez
 FIN923,Lecture,Monday,18:00,22:00,3.46-Classroom A,Burcu Kapar
 FIN947,Lecture,Thursday,18:00,22:00,3.46-Classroom A,Gunsel Topbas
 FIN950,Lecture,Monday,18:00,22:00,2.71-Block 19,Vikash Ramiah
+FIN950,Lecture,Wednesday,18:00,22:00,2.70-Block 19,Vikash Ramiah
 FIN957,Lecture,Wednesday,18:00,22:00,5.19-Classroom A,Gunsel Topbas
 FIN958,Lecture,Tuesday,18:00,22:00,2.71-Block 19,Noor Rizvi
 FIN958,Lecture,Thursday,18:00,22:00,2.70-Block 19,Noor Rizvi
@@ -1138,7 +1139,7 @@ OPS910,Lecture,Monday,18:00,22:00,5.19-Classroom A,Yiyang Bian
 OPS911,Lecture,Monday,18:00,22:00,6.32-Classroom B,Balan Sundarakani
 OPS920,Lecture,Tuesday,18:00,22:00,3.44-Classroom B,Lina Gharaibeh
 OPS920,Lecture,Wednesday,18:00,22:00,3.44-Classroom B,Lina Gharaibeh
-OPS920,Lecture,Thursday,18:00,22:00,3.44-Classroom B,"TBA, 1"
+OPS920,Lecture,Thursday,18:00,22:00,3.44-Classroom B,Lina Gharaibeh
 PHY040,Computer Lab,Thursday,14:30,16:30,3.53-Physics/Robotics Lab,Adjunct PHY 1
 PHY040,Computer Lab,Friday,08:00,10:00,3.53-Physics/Robotics Lab,Roy Duncan Forrest
 PHY040,Computer Lab,Thursday,08:30,10:30,3.53-Physics/Robotics Lab,Adjunct 4
