@@ -378,6 +378,11 @@ class LoginFlow:
             if (self._present("input[value='Yes']")
                     or self._text_on_page("Stay signed in")):
                 return "STAYLOGGEDIN"
+            if (self._present("#skipMfaRegistrationLink")
+                    or self._text_on_page("keep your account secure")
+                    or self._present("a:has-text('Not now')")
+                    or self._present("button:has-text('Not now')")):
+                return "SKIPMFA"
             return "MS_TRANSITION"
 
         if UOWD_HOST in url:
@@ -560,8 +565,53 @@ class LoginFlow:
                 continue
         shot(self.page, "ms_stay_stuck")
 
+    def _h_skipmfa(self) -> None:
+        log("LOGIN", "MFA registration nudge → clicking 'Not now'")
+        shot(self.page, "ms_skip_mfa_before")
+        try:
+            self.page.wait_for_selector(
+                "#skipMfaRegistrationLink, a:has-text('Not now'), button:has-text('Not now')",
+                state="visible",
+                timeout=10_000,
+            )
+        except Exception:
+            pass
+        time.sleep(1)
+
+        selectors = ["#skipMfaRegistrationLink", "a:has-text('Not now')", "button:has-text('Not now')"]
+        for attempt in range(1, 4):
+            clicked = False
+            for sel in selectors:
+                try:
+                    loc = self.page.locator(sel).first
+                    if loc.count() and loc.is_visible():
+                        loc.scroll_into_view_if_needed(timeout=3000)
+                        loc.click(timeout=5000)
+                        clicked = True
+                        log("LOGIN", f"skip-MFA clicked via {sel!r} (attempt {attempt})")
+                        break
+                except Exception as exc:
+                    log("LOGIN", f"skip-MFA {sel!r} attempt {attempt} err: {exc}", ok=False)
+                    continue
+            if not clicked:
+                try:
+                    loc = self.page.get_by_text("Not now", exact=False).first
+                    if loc.count() and loc.is_visible():
+                        loc.click(timeout=5000)
+                        clicked = True
+                        log("LOGIN", f"skip-MFA clicked via get_by_text (attempt {attempt})")
+                except Exception:
+                    pass
+            if clicked:
+                time.sleep(3)
+                shot(self.page, "ms_skip_mfa_after")
+                return
+            time.sleep(1)
+        shot(self.page, "ms_skip_mfa_stuck")
+
     def _h_ms_transition(self) -> None:
         log("LOGIN", "MS transitional — waiting…")
+        shot(self.page, "ms_transition")
         time.sleep(2)
 
     def _h_uowd_transition(self) -> None:
