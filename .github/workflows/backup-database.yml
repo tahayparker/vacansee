@@ -30,11 +30,26 @@ jobs:
 
       - name: Install PostgreSQL client (v16)
         run: |
-          # Supabase currently runs PG15/16; client must be >= server.
-          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-          wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+          set -euo pipefail
+          # Supabase runs PG15/16; client must be >= server.
+          # If a suitable client (v16+) is already available on the runner, use it.
+          if command -v pg_dump >/dev/null 2>&1; then
+            INSTALLED_VER=$(pg_dump --version | grep -oE '[0-9]+' | head -n 1)
+            if [ "${INSTALLED_VER:-0}" -ge 16 ]; then
+              echo "pg_dump version ${INSTALLED_VER} is already installed."
+              pg_dump --version
+              exit 0
+            fi
+          fi
+
+          echo "Installing PostgreSQL client (v16) via official PGDG repository..."
+          sudo install -d -m 0755 /etc/apt/keyrings
+          curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor --yes -o /etc/apt/keyrings/postgresql.gpg
+          sudo chmod 0644 /etc/apt/keyrings/postgresql.gpg
+          echo "deb [signed-by=/etc/apt/keyrings/postgresql.gpg] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
           sudo apt-get update
           sudo apt-get install -y postgresql-client-16
+          pg_dump --version
 
       - name: Dump public schema
         env:
@@ -48,6 +63,9 @@ jobs:
           TMP_SQL="/tmp/${TS_UTC}.sql"
           OUT="backups/${TS_UTC}.sql.gz"
           LATEST="backups/latest.sql.gz"
+
+          # Guarantee temp file cleanup on exit
+          trap 'rm -f "${TMP_SQL}"' EXIT
 
           # Force SSL. Supabase rejects plaintext; pg_dump does not add
           # sslmode=require by default when it is missing from the URL.
@@ -76,15 +94,23 @@ jobs:
             --file="${TMP_SQL}" \
             "$CONN"
 
-          # Verify the dump before trusting it.
+          # Verify the dump exists and is non-empty
           if [[ ! -s "${TMP_SQL}" ]]; then
             echo "::error::pg_dump produced an empty file"
             exit 1
           fi
 
           BYTES=$(stat -c%s "${TMP_SQL}")
-          echo "Dump size: ${BYTES} bytes"
+          echo "Dump uncompressed size: ${BYTES} bytes"
 
+          # Sanity check: must be at least 100KB for a populated database
+          if (( BYTES < 100000 )); then
+            echo "::error::Dump file is suspiciously small (${BYTES} bytes) — showing content"
+            cat "${TMP_SQL}" >&2 || true
+            exit 1
+          fi
+
+          # Sanity check: verify essential tables are present
           if ! grep -q 'CREATE TABLE.*"Timings"' "${TMP_SQL}"; then
             echo "::error::Dump missing Timings table — showing first 80 lines"
             head -n 80 "${TMP_SQL}" >&2 || true
@@ -93,19 +119,59 @@ jobs:
             exit 1
           fi
 
-          gzip -9 < "${TMP_SQL}" > "${OUT}"
-          cp "${OUT}" "${LATEST}"
-          rm -f "${TMP_SQL}"
+          # Sanity check: verify pg_dump reached its completion footer
+          if ! tail -n 20 "${TMP_SQL}" | grep -q 'PostgreSQL database dump complete'; then
+            echo "::error::pg_dump did not finish cleanly (missing completion marker) — showing last 30 lines"
+            tail -n 30 "${TMP_SQL}" >&2 || true
+            exit 1
+          fi
 
-          ls -la backups | head -n 20
-          echo "dump_size_bytes=$(stat -c%s "${OUT}")" >> "$GITHUB_OUTPUT"
+          # Compress with maximum compression and test archive integrity
+          gzip -9 < "${TMP_SQL}" > "${OUT}"
+          gzip -t "${OUT}"
+          cp -f "${OUT}" "${LATEST}"
+
+          GZ_BYTES=$(stat -c%s "${OUT}")
+          echo "Compressed size: ${GZ_BYTES} bytes"
+
+          # Safe listing without broken pipe risk under pipefail
+          echo "Recent backups:"
+          ls -lh backups
+
+          # Write Markdown summary for GitHub Actions run view
+          cat <<EOF >> "$GITHUB_STEP_SUMMARY"
+          ### 📦 Database Backup Report
+          - **Timestamp (UTC):** \`${TS_UTC}\`
+          - **File:** \`${OUT}\`
+          - **Uncompressed Size:** $(numfmt --to=iec-i --suffix=B "${BYTES}" 2>/dev/null || echo "${BYTES} bytes") (\`${BYTES}\` bytes)
+          - **Compressed Size:** $(numfmt --to=iec-i --suffix=B "${GZ_BYTES}" 2>/dev/null || echo "${GZ_BYTES} bytes") (\`${GZ_BYTES}\` bytes)
+          - **Integrity Check:** \`gzip -t\` Passed ✅
+          - **Tables Verified:** \`public."Timings"\` Present ✅
+          - **Dump Completion:** Verified ✅
+          EOF
 
       - name: Prune backups older than 90 days
         run: |
           set -euo pipefail
           cd backups-repo/backups
-          # Never prune the `latest` pointer.
-          find . -maxdepth 1 -name "*.sql.gz" ! -name "latest.sql.gz" -type f -mtime +90 -print -delete || true
+
+          # Date-based pruning (git checkout resets filesystem mtime to current timestamp,
+          # so find -mtime +90 fails to match existing repo backups).
+          CUTOFF=$(date -u -d "90 days ago" +%Y-%m-%d)
+          echo "Pruning backups older than 90 days (created before ${CUTOFF})..."
+
+          PRUNED=0
+          for f in [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].sql.gz; do
+            [ -f "$f" ] || continue
+            fdate="${f%.sql.gz}"
+            if [[ "$fdate" < "$CUTOFF" ]]; then
+              echo "Pruning: $f (date $fdate < cutoff $CUTOFF)"
+              rm -f "$f"
+              PRUNED=$((PRUNED + 1))
+            fi
+          done
+
+          echo "Pruned ${PRUNED} backup(s)."
 
       - name: Commit and push
         run: |
@@ -114,9 +180,24 @@ jobs:
           git config user.name "Taha Parker"
           git config user.email "98612931+tahayparker@users.noreply.github.com"
           git add -A
+
           if git diff --staged --quiet; then
             echo "No changes (schema + data unchanged since last backup)."
             exit 0
           fi
+
           git commit -m "backup: $(date -u +%Y-%m-%d)"
-          git push
+
+          # Push with retry logic in case of network blips or concurrent updates
+          for attempt in 1 2 3; do
+            if git push origin main; then
+              echo "Successfully pushed backup to GitHub."
+              exit 0
+            fi
+            echo "Push attempt $attempt failed. Rebasing against origin/main..."
+            git pull --rebase origin main || true
+            sleep 3
+          done
+
+          echo "::error::Failed to push backup after 3 attempts."
+          exit 1
