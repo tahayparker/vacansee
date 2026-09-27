@@ -15,7 +15,6 @@ model Rooms {
   ShortCode String
   Capacity  Int?
 
-  // Indexes for faster queries
   @@index([ShortCode])
   @@index([Name])
 }
@@ -37,37 +36,78 @@ model Timings {
   Room      String
   Teacher   String
 
-  // Composite indexes for common query patterns
-  // Used for availability checks by day and time
   @@index([Day, StartTime, EndTime])
-  // Used for filtering by specific rooms
   @@index([Room])
-  // Used for filtering by day
   @@index([Day])
 }
 
-// Vordo: preserved-structure timings — keeps Lecturer/Location ';' separators
-// intact, retains the full TypeWithSection (no section stripping), and stores
-// the SelectionOption (OR/AND/blank) field that drives vordo's component
-// grouping. Populated by upload_raw_timings.py from public/raw_classes.csv.
 model RawTimings {
   id              Int    @id @default(autoincrement())
   SubCode         String
   SubName         String
-  Type            String
   TypeWithSection String
-  TypeFull        String
-  // "" (blank) / "OR" / "AND". First row of first component is "".
-  // "OR" = alternative within the same component.
-  // "AND" = start of a new required component.
-  SelectionOption String
   Day             String
   StartTime       String
   EndTime         String
   Location        String
   Lecturer        String
+  Type            String
+  TypeFull        String
+  SelectionOption String
   SemesterId      String
 
   @@index([SubCode])
   @@index([Day])
 }
+
+model AU_Rooms {
+  id              Int     @id @default(autoincrement())
+  Name            String
+  Building        String
+  RoomNumber      String  @default("")
+  Campus          String?
+  Capacity        Int?
+  RoomType        String?
+  EquipmentTier   String?
+  SpecialFeatures String?
+  SimilarVenues   String?
+  FrontImage      String?
+  RearImage       String?
+
+  @@index([Building])
+  @@index([Campus])
+  @@index([Name])
+  @@map("AU-Rooms")
+}
+
+model AU_Timings {
+  id          Int    @id @default(autoincrement())
+  SubCode     String
+  Class       String
+  Day         String
+  StartTime   String
+  EndTime     String
+  Room        String
+  Campus      String @default("")
+  Date        String @default("")
+  Description String @default("")
+
+  @@index([Day, StartTime, EndTime])
+  @@index([Date, StartTime, EndTime])
+  @@index([Room])
+  @@index([Date, Room])
+  @@index([Day])
+  @@index([Campus])
+  @@map("AU-Timings")
+}
+
+model AU_Teacher {
+  id    Int    @id @default(autoincrement())
+  Name  String
+  Email String
+  Phone String
+
+  @@index([Name])
+  @@map("AU-Teacher")
+}
+
