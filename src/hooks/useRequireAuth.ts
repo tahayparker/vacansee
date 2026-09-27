@@ -1,6 +1,6 @@
 // src/hooks/useRequireAuth.ts
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
 
@@ -31,7 +31,7 @@ export function useRequireAuth() {
         if (!session) {
           // No session - redirect to login with return URL
           console.log("[useRequireAuth] No session found, redirecting to login");
-          const returnUrl = router.asPath;
+          const returnUrl = typeof window !== "undefined" ? window.location.pathname + window.location.search : "/";
           router.replace(`/auth/login?next=${encodeURIComponent(returnUrl)}`);
           setIsAuthenticated(false);
         } else {
