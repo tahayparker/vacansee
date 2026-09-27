@@ -23,6 +23,7 @@ Env vars required:
     SUPABASE_SERVICE_ROLE_KEY
 
 Usage:
+    python scripts/scrape_timetable_auth.py --both
     python scripts/scrape_timetable_auth.py --output public/classes.csv
     python scripts/scrape_timetable_auth.py --output public/classes.csv \
         --raw-output public/raw_classes.csv
@@ -1047,7 +1048,7 @@ class Scraper:
 
             rows.append({
                 "SubCode":         sub_code,
-                "SubName":         normalize_whitespace(entry.get("subject_name", "") or ""),
+                "SubName":         normalize_whitespace(entry.get("subject_name_full", "") or entry.get("subject_name", "") or ""),
                 "Type":            normalize_whitespace(entry.get("type", "") or ""),
                 "TypeWithSection": normalize_whitespace(entry.get("type_with_section", "") or ""),
                 "TypeFull":        normalize_whitespace(entry.get("type_full", "") or ""),
@@ -1092,12 +1093,20 @@ class Scraper:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Scrape UOWD timetable")
-    parser.add_argument("--output", required=True, type=Path, help="Output CSV path")
+    parser.add_argument(
+        "--output", type=Path, default=None,
+        help="Output CSV path for normalized timetable (default: public/classes.csv when --both is specified)",
+    )
     parser.add_argument(
         "--raw-output", type=Path, default=None,
         help="Optional: write preserved-structure CSV (extra cols: SubName, "
              "TypeWithSection, full Location/Lecturer, GroupTag, AndOrText). "
              "Used by vordo's RawTimings table.",
+    )
+    parser.add_argument(
+        "--both", action="store_true",
+        help="Scrape both normal timetable (classes.csv) and raw timetable (raw_classes.csv) "
+             "in a single pass without reloading the browser page.",
     )
     parser.add_argument(
         "--debug-dump-raw", action="store_true",
@@ -1117,6 +1126,16 @@ def main() -> None:
         help="Ignore cached session and re-authenticate",
     )
     args = parser.parse_args()
+
+    if not args.output and not args.both:
+        parser.error("--output is required unless --both is specified.")
+
+    if args.both:
+        if args.output is None:
+            args.output = Path("public/classes.csv")
+        if args.raw_output is None:
+            raw_filename = f"raw_{args.output.name}" if not args.output.name.startswith("raw_") else args.output.name
+            args.raw_output = args.output.parent / (raw_filename if raw_filename != args.output.name else "raw_classes.csv")
 
     email = _require_env("UOWD_EMAIL")
     passwd = _require_env("UOWD_PASSWORD")
