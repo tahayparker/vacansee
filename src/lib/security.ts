@@ -279,6 +279,20 @@ export function getClientIP(req: {
 }
 
 /**
+ * Get client IP from a Web `Headers` object (App Router Route Handlers).
+ *
+ * @param headers - Request headers
+ * @returns IP address or 'unknown'
+ */
+export function getClientIpFromHeaders(headers: Headers): string {
+  const forwardedFor = headers.get("x-forwarded-for");
+  if (forwardedFor) return forwardedFor.split(",")[0].trim();
+  return (
+    headers.get("x-real-ip") ?? headers.get("cf-connecting-ip") ?? "unknown"
+  );
+}
+
+/**
  * Check if request is from a bot based on user agent
  *
  * @param userAgent - User agent string
