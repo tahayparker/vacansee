@@ -47,13 +47,19 @@ if (( SIZE < 1024 )); then
   exit 1
 fi
 
+echo "Verifying archive integrity..."
+if ! gzip -t "${BACKUP}"; then
+  echo "Backup file is corrupted (gzip integrity check failed). Aborting." >&2
+  exit 1
+fi
+
 echo "=========================================================="
 echo "Backup : ${BACKUP}"
 echo "Size   : ${SIZE} bytes"
 echo "Target : ${CONN%%@*}@[redacted]"
 echo "=========================================================="
 echo "Dump header (first 20 lines):"
-gunzip -c "${BACKUP}" | head -n 20
+gunzip -c "${BACKUP}" | head -n 20 || true
 echo "----------------------------------------------------------"
 echo "Object summary:"
 gunzip -c "${BACKUP}" | grep -E '^(CREATE TABLE|CREATE INDEX|CREATE SEQUENCE|COPY )' | sort | uniq -c | sort -rn | head -n 30 || true
