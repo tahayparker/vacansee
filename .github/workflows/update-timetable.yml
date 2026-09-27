@@ -114,8 +114,8 @@ jobs:
       - name: Generate new timetable CSV data
         id: scrape
         run: |
-          echo "Running authenticated timetable scraper…"
-          python scripts/scrape_timetable_auth.py --output public/classes.csv
+          echo "Running authenticated timetable scraper (normal + raw)…"
+          python scripts/scrape_timetable_auth.py --both
 
       - name: Save session cache
         if: always() && hashFiles('.storage_state.json') != ''
@@ -140,11 +140,15 @@ jobs:
             echo "::warning::Generated public/classes.csv not found."
             echo "csv_changed=false" >> "$GITHUB_OUTPUT"
           else
-            git add public/classes.csv public/academic_schedule.json
-            if git diff --quiet HEAD -- public/classes.csv public/academic_schedule.json; then
+            FILES_TO_CHECK="public/classes.csv public/academic_schedule.json"
+            if [ -f public/raw_classes.csv ]; then
+              FILES_TO_CHECK="$FILES_TO_CHECK public/raw_classes.csv"
+            fi
+            git add $FILES_TO_CHECK
+            if git diff --quiet HEAD -- $FILES_TO_CHECK; then
               echo "No data changes"
               echo "csv_changed=false" >> "$GITHUB_OUTPUT"
-              git reset public/classes.csv public/academic_schedule.json
+              git reset $FILES_TO_CHECK
             else
               echo "Data changed"
               echo "csv_changed=true" >> "$GITHUB_OUTPUT"
@@ -169,6 +173,10 @@ jobs:
           if [ $ec -ne 0 ] && [ $ec -ne 1 ]; then
             echo "::error::Upload script failed with $ec"
             exit $ec
+          fi
+          if [ -f scripts/upload_raw_timings.py ] && [ -f public/raw_classes.csv ]; then
+            echo "Uploading raw timetable to RawTimings table…"
+            python scripts/upload_raw_timings.py || true
           fi
 
       - name: Generate Schedule JSON
