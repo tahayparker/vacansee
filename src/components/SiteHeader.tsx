@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -166,7 +166,7 @@ export default function SiteHeader({
   const [isAuthHovered, setIsAuthHovered] = useState(false);
   const [isVailaLinkHovered, setIsVailaLinkHovered] = useState(false);
   const router = useRouter();
-  const currentPath = router.pathname;
+  const currentPath = usePathname();
 
   // --- Supabase Auth State ---
   const [user, setUser] = useState<User | null>(null);
@@ -296,13 +296,13 @@ export default function SiteHeader({
             href="/"
             className="flex items-center gap-2 text-white font-semibold transition-opacity hover:opacity-80"
             onClick={(e) => {
-              if (maintenanceMode && router.pathname !== "/maintenance") {
+              if (maintenanceMode && currentPath !== "/maintenance") {
                 e.preventDefault();
                 router.push("/maintenance");
               }
             }}
           >
-            <DoorOpen className="h-6 w-6 text-purple-500" />
+            <DoorOpen className="h-7 w-7 text-purple-500 shrink-0" />
             <span className={`sm:inline text-xl mt-1 ${qurovaFont.className}`}>
               vacansee
             </span>
@@ -639,12 +639,12 @@ export default function SiteHeader({
                                 user.user_metadata?.picture
                               }
                               alt={userDisplayName}
-                              width={32}
-                              height={32}
-                              className="rounded-full flex-shrink-0 object-cover"
+                              width={20}
+                              height={20}
+                              className="w-5 h-5 rounded-full flex-shrink-0 object-cover"
                             />
                           ) : (
-                            <UserRound className="h-8 w-8 flex-shrink-0" />
+                            <UserRound className="h-5 w-5 flex-shrink-0" />
                           )}
                           <span className="flex-grow text-base font-medium">
                             Profile
