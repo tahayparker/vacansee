@@ -257,8 +257,8 @@ CSCI251,Computer Lab,Thursday,10:30,12:30,4.45-Classroom B,Hoda Elhamy
 CSCI251,Lecture A,Wednesday,08:30,10:30,4.44-Classroom B,Muath Alrammal
 CSCI251,Lecture B,Thursday,08:30,10:30,6.345-Classroom A 6.34 & 6.35,Muath Alrammal
 CSCI291,Computer Lab,Friday,10:00,12:00,3.52-Computer Lab (Network),Yasmine Abualroos
-CSCI291,Computer Lab,Wednesday,16:30,18:30,4.45-Classroom B,Yasmine Abualroos
-CSCI291,Computer Lab,Wednesday,12:30,14:30,3.52-Computer Lab (Network),Yasmine Abualroos
+CSCI291,Computer Lab,Wednesday,16:30,18:30,4.45-Classroom B,Zeeshan Swaveel
+CSCI291,Computer Lab,Wednesday,12:30,14:30,3.52-Computer Lab (Network),Zeeshan Swaveel
 CSCI291,Computer Lab,Thursday,12:30,14:30,1.52-Computer Lab Single,Hamze Hammami
 CSCI291,Computer Lab,Wednesday,16:30,18:30,1.52-Computer Lab Single,Hamze Hammami
 CSCI291,Computer Lab,Wednesday,12:30,14:30,1.52-Computer Lab Single,Hamze Hammami
@@ -494,10 +494,10 @@ ECTE324,Computer Lab,Tuesday,08:30,11:30,1.51-Power Lab,Razveen Kashif
 ECTE324,Computer Lab,Tuesday,08:30,11:30,1.51-Power Lab,Razveen Kashif
 ECTE324,Computer Lab,Thursday,08:30,11:30,1.51-Power Lab,Razveen Kashif
 ECTE324,Computer Lab,Thursday,08:30,11:30,1.51-Power Lab,Razveen Kashif
-ECTE324,Computer Lab,Tuesday,14:30,17:30,1.51-Power Lab,Habiba Ahmed
-ECTE324,Computer Lab,Tuesday,14:30,17:30,1.51-Power Lab,Habiba Ahmed
-ECTE324,Computer Lab,Wednesday,09:30,12:30,1.51-Power Lab,Adjunct ECTE 5
-ECTE324,Computer Lab,Wednesday,09:30,12:30,1.51-Power Lab,Adjunct ECTE 5
+ECTE324,Computer Lab,Tuesday,14:30,17:30,1.51-Power Lab,Obai Alashram
+ECTE324,Computer Lab,Tuesday,14:30,17:30,1.51-Power Lab,Obai Alashram
+ECTE324,Computer Lab,Wednesday,09:30,12:30,1.51-Power Lab,Obai Alashram
+ECTE324,Computer Lab,Wednesday,09:30,12:30,1.51-Power Lab,Obai Alashram
 ECTE324,Lecture,Monday,13:30,15:30,5.18-Classroom A,Mohamad Nassereddine
 ECTE324,Lecture,Tuesday,10:30,12:30,1.72-Block 19,Mohamad Nassereddine
 ECTE324,Tutorial,Monday,15:30,17:30,5.18-Classroom A,Habiba Ahmed
@@ -536,7 +536,10 @@ ECTE423,Tutorial,Monday,10:30,12:30,4.48-Classroom B,Mohamad Nassereddine
 ECTE477,Computer Lab,Thursday,08:30,11:30,2.51-Project Lab,Hiba Anwar
 ECTE477,Computer Lab,Friday,14:00,17:00,2.51-Project Lab,Razveen Kashif
 ECTE477,Computer Lab,Friday,08:00,11:00,2.51-Project Lab,Razveen Kashif
-ECTE477,Computer Lab,Thursday,12:30,15:30,2.51-Project Lab,Hiba Anwar
+ECTE477,Computer Lab,Thursday,12:00,15:00,2.51-Project Lab,Hiba Anwar
+ECTE477,Computer Lab,Wednesday,08:30,11:30,2.51-Project Lab,Hiba Anwar
+ECTE477,Computer Lab,Tuesday,14:30,17:30,2.51-Project Lab,Hiba Anwar
+ECTE477,Computer Lab,Thursday,15:30,18:30,2.51-Project Lab,Hiba Anwar
 ECTE477,Lecture,Wednesday,11:30,14:30,3.44-Classroom B,Abdsamad Benkrid
 ECTE477,Tutorial,Wednesday,14:30,15:30,3.52-Computer Lab (Network),Abdsamad Benkrid
 ECTE477,Tutorial,Wednesday,16:30,17:30,3.52-Computer Lab (Network),Abdsamad Benkrid
@@ -550,16 +553,12 @@ EDGZ921,Lecture,Thursday,17:00,17:30,4.51-Tutorial Room,"TBA, 10"
 ENG900,Lecture,Friday,18:00,20:00,4.53-Seminar/Tutorial,Sabina Ashraf
 ENGG102,Computer Lab,Wednesday,08:30,10:30,3.53-Physics/Robotics Lab,Deva Prasad
 ENGG102,Computer Lab,Wednesday,14:30,16:30,3.53-Physics/Robotics Lab,Deva Prasad
-ENGG102,Computer Lab,Wednesday,10:30,12:30,3.53-Physics/Robotics Lab,Deva Prasad
 ENGG102,Computer Lab,Thursday,12:30,14:30,3.53-Physics/Robotics Lab,Deva Prasad
-ENGG102,Computer Lab,Thursday,10:30,12:30,3.53-Physics/Robotics Lab,Deva Prasad
-ENGG102,Computer Lab,Tuesday,10:30,12:30,3.53-Physics/Robotics Lab,Menna Abdelaal
 ENGG102,Computer Lab,Tuesday,08:30,10:30,3.53-Physics/Robotics Lab,Akshit Saini
 ENGG102,Computer Lab,Friday,16:00,18:00,3.53-Physics/Robotics Lab,Menna Abdelaal
 ENGG102,Computer Lab,Friday,10:00,12:00,3.53-Physics/Robotics Lab,Menna Abdelaal
 ENGG102,Computer Lab,Wednesday,12:30,14:30,3.53-Physics/Robotics Lab,Menna Abdelaal
 ENGG102,Computer Lab,Tuesday,12:30,14:30,3.53-Physics/Robotics Lab,Menna Abdelaal
-ENGG102,Computer Lab,Tuesday,14:30,16:30,3.53-Physics/Robotics Lab,Menna Abdelaal
 ENGG102,Computer Lab,Monday,12:30,14:30,3.53-Physics/Robotics Lab,Menna Abdelaal
 ENGG102,Workshop,Wednesday,14:30,17:30,6.32-Classroom B,Yahya Salah
 ENGG102,Workshop,Wednesday,14:30,17:30,6.32-Classroom B,Abdulqader Hasan
@@ -571,19 +570,14 @@ ENGG102,Workshop,Monday,14:30,17:30,6.32-Classroom B,Abdulqader Hasan
 ENGG102,Workshop,Monday,14:30,17:30,6.32-Classroom B,Ayman Ahdy
 ENGG102,Workshop,Monday,14:30,17:30,6.32-Classroom B,Sana Amir
 ENGG102,Workshop,Monday,14:30,17:30,6.32-Classroom B,Umar Asghar
-ENGG102,Workshop,Monday,08:30,11:30,6.32-Classroom B,Yahya Salah
-ENGG102,Workshop,Monday,08:30,11:30,6.32-Classroom B,Abdulqader Hasan
-ENGG102,Workshop,Monday,08:30,11:30,6.32-Classroom B,Ayman Ahdy
-ENGG102,Workshop,Monday,08:30,11:30,6.32-Classroom B,Sana Amir
-ENGG102,Workshop,Monday,08:30,11:30,6.32-Classroom B,Umar Asghar
 ENGG105,Computer Lab,Thursday,14:30,16:30,1.52-Computer Lab Single,Adjunct 1
-ENGG105,Computer Lab,Thursday,11:30,13:30,3.45-Classroom B,Nayab Nadeem
+ENGG105,Computer Lab,Thursday,11:30,13:30,3.45-Classroom B,Abdullah Khalid
 ENGG105,Computer Lab,Friday,10:00,12:00,1.52-Computer Lab Single,Adjunct 1
 ENGG105,Computer Lab,Wednesday,14:30,16:30,1.52-Computer Lab Single,Adjunct 1
 ENGG105,Computer Lab,Tuesday,16:30,18:30,1.52-Computer Lab Single,Adjunct 1
 ENGG105,Computer Lab,Tuesday,16:30,18:30,1.52-Computer Lab Single,Adjunct 1
 ENGG105,Computer Lab,Friday,16:00,18:00,1.52-Computer Lab Single,Adjunct 1
-ENGG105,Computer Lab,Thursday,08:30,10:30,4.42-Computer Lab (Single Screen),Nayab Nadeem
+ENGG105,Computer Lab,Thursday,08:30,10:30,4.42-Computer Lab (Single Screen),Abdullah Khalid
 ENGG105,Computer Lab,Thursday,12:30,14:30,5.12-Informal Classroom,Adjunct 1
 ENGG105,Computer Lab,Thursday,12:30,14:30,5.12-Informal Classroom,Adjunct 1
 ENGG105,Lecture,Monday,10:30,12:30,4.44-Classroom B,Karol Sikora
@@ -605,19 +599,19 @@ ENGG251,Computer Lab,Wednesday,10:30,12:30,1.53-Chemistry & Materials Science La
 ENGG251,Computer Lab,Wednesday,12:30,14:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo
 ENGG251,Computer Lab,Monday,10:30,12:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo
 ENGG251,Computer Lab,Monday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo
-ENGG251,Computer Lab,Wednesday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Hooman Aminipour
-ENGG251,Computer Lab,Wednesday,14:30,16:30,1.53-Chemistry & Materials Science Lab,Hooman Aminipour
-ENGG251,Computer Lab,Tuesday,14:30,16:30,1.53-Chemistry & Materials Science Lab,Hooman Aminipour
-ENGG251,Computer Lab,Monday,12:30,14:30,1.53-Chemistry & Materials Science Lab,Hooman Aminipour
+ENGG251,Computer Lab,Wednesday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Ayman Ahdy
+ENGG251,Computer Lab,Wednesday,14:30,16:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo
+ENGG251,Computer Lab,Tuesday,14:30,16:30,1.53-Chemistry & Materials Science Lab,Ayman Ahdy
+ENGG251,Computer Lab,Monday,12:30,14:30,1.53-Chemistry & Materials Science Lab,Maryam Shourideh
 ENGG251,Computer Lab,Thursday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Maryam Shourideh
 ENGG251,Computer Lab,Tuesday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Maryam Shourideh
-ENGG251,Computer Lab,Tuesday,10:30,12:30,1.53-Chemistry & Materials Science Lab,Hooman Aminipour
+ENGG251,Computer Lab,Tuesday,10:30,12:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo
 ENGG251,Lecture,Wednesday,12:30,14:30,6.32-Classroom B,Mohammad Yousuf
 ENGG251,Lecture,Tuesday,14:30,16:30,5.134-Classroom A 5.13 & 5.14,Mohammad Yousuf
 ENGG251,Tutorial,Thursday,14:30,16:30,6.28-Seminar/Tutorial,Mohammad Yousuf
-ENGG251,Tutorial,Friday,08:00,10:00,1.73-Block 19,Adjunct CIVL2
-ENGG251,Tutorial,Thursday,14:30,16:30,1.83-Block 19,Adjunct CIVL2
-ENGG251,Tutorial,Friday,10:00,12:00,1.73-Block 19,Adjunct CIVL2
+ENGG251,Tutorial,Friday,08:00,10:00,1.73-Block 19,Maryam Shourideh
+ENGG251,Tutorial,Thursday,14:30,16:30,1.83-Block 19,Maryam Shourideh
+ENGG251,Tutorial,Friday,10:00,12:00,1.73-Block 19,Maryam Shourideh
 ENGG251,Tutorial,Wednesday,14:30,16:30,1.76-Block 19,Thahsin Saidarakath
 ENGG251,Tutorial,Wednesday,16:30,18:30,1.76-Block 19,Thahsin Saidarakath
 ENGG251,Tutorial,Thursday,10:30,12:30,1.71-Block 19,Thahsin Saidarakath
@@ -681,7 +675,7 @@ FIN241,Tutorial,Wednesday,14:30,16:30,2.64-Block 19,Katia Lopez Ramirez
 FIN923,Lecture,Monday,18:00,22:00,3.46-Classroom A,Burcu Kapar
 FIN947,Lecture,Thursday,18:00,22:00,3.46-Classroom A,Gunsel Topbas
 FIN950,Lecture,Monday,18:30,22:30,5.18-Classroom A,Vikash Ramiah
-FIN950,Lecture,Wednesday,18:00,22:00,2.70-Block 19,Vikash Ramiah
+FIN950,Lecture,Wednesday,18:30,22:30,5.10-Classroom B,Vikash Ramiah
 FIN957,Lecture,Wednesday,18:00,22:00,5.19-Classroom A,Gunsel Topbas
 FIN958,Lecture,Tuesday,18:30,22:30,6.345-Classroom A 6.34 & 6.35,Noor Rizvi
 FIN958,Lecture,Thursday,18:00,22:00,2.70-Block 19,Noor Rizvi
@@ -930,36 +924,37 @@ MARK901,Lecture,Wednesday,18:00,22:00,4.44-Classroom B,Rumaila Abbas
 MARK901,Lecture,Thursday,18:00,22:00,5.11-Classroom B,Rumaila Abbas
 MARK916,Lecture,Tuesday,18:00,22:00,5.11-Classroom B,Sourjo Mukherjee
 MARK935,Lecture,Monday,18:00,22:00,3.44-Classroom B,Sourjo Mukherjee
-MARK935,Lecture,Wednesday,18:00,22:00,2.71-Block 19,Sourjo Mukherjee
+MARK935,Lecture,Wednesday,18:30,22:30,6.345-Classroom A 6.34 & 6.35,Sourjo Mukherjee
 MARK940,Lecture,Thursday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Prakash Vel
 MARK940,Lecture,Monday,18:00,22:00,5.134-Classroom A 5.13 & 5.14,Frederick Thomas Wehrle
 MATH042,Lecture,Tuesday,10:30,12:30,4.44-Classroom B,Ziad Choucair
+MATH042,Lecture,Tuesday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Ziad Choucair
 MATH042,Workshop A,Wednesday,10:30,12:30,3.42-Classroom B,Ziad Choucair
 MATH042,Workshop A,Wednesday,10:30,12:30,1.81-Block 19,Abdullah Harb
 MATH042,Workshop A,Wednesday,10:30,12:30,2.70-Block 19,Daliya Ashok
 MATH042,Workshop A,Wednesday,08:30,10:30,2.70-Block 19,Daliya Ashok
+MATH042,Workshop A,Wednesday,08:30,10:30,1.74-Block 19,Abdullah Harb
+MATH042,Workshop A,Wednesday,16:30,18:30,1.74-Block 19,Daliya Ashok
 MATH042,Workshop B,Thursday,10:30,12:30,3.42-Classroom B,Ziad Choucair
 MATH042,Workshop B,Thursday,10:30,12:30,6.38-Classroom B,Abdullah Harb
 MATH042,Workshop B,Thursday,10:30,12:30,2.64-Block 19,Daliya Ashok
 MATH042,Workshop B,Thursday,08:30,10:30,2.64-Block 19,Daliya Ashok
+MATH042,Workshop B,Wednesday,14:30,16:30,1.72-Block 19,Daliya Ashok
+MATH042,Workshop B,Friday,10:00,12:00,5.19-Classroom A,Daliya Ashok
 MATH043,Lecture,Monday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Sara Abdelaziz
 MATH043,Workshop,Monday,12:30,14:30,4.48-Classroom B,Dania Dallah
 MATH043,Workshop,Tuesday,08:30,10:30,6.38-Classroom B,Dania Dallah
 MATH043,Workshop,Tuesday,14:30,16:30,3.46-Classroom A,Dania Dallah
 MATH141,Lecture A,Wednesday,08:30,10:30,6.345-Classroom A 6.34 & 6.35,Assane Lo
-MATH141,Lecture A,Monday,08:30,10:30,4.44-Classroom B,Assane Lo
 MATH141,Lecture A,Tuesday,12:30,14:30,5.19-Classroom A,Assane Lo
 MATH141,Lecture B,Friday,14:00,16:00,5.11-Classroom B,Assane Lo
-MATH141,Lecture B,Tuesday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Assane Lo
 MATH141,Lecture B,Wednesday,10:30,12:30,5.19-Classroom A,Assane Lo
 MATH141,Tutorial,Thursday,14:30,16:30,5.18-Classroom A,Ziad Choucair
 MATH141,Tutorial,Tuesday,14:30,16:30,6.28-Seminar/Tutorial,Ziad Choucair
-MATH141,Tutorial,Wednesday,14:30,16:30,1.72-Block 19,Bakhtawar Baluch
 MATH141,Tutorial,Tuesday,14:30,16:30,2.65-Block 19,Bakhtawar Baluch
 MATH141,Tutorial,Wednesday,12:30,14:30,1.72-Block 19,Bakhtawar Baluch
 MATH141,Tutorial,Thursday,10:30,12:30,2.71-Block 19,Bakhtawar Baluch
 MATH141,Tutorial,Thursday,11:30,13:30,5.10-Classroom B,Amritha Chidambram
-MATH141,Tutorial,Wednesday,16:30,18:30,1.74-Block 19,Amritha Chidambram
 MATH141,Tutorial,Tuesday,10:30,12:30,2.65-Block 19,Amritha Chidambram
 MATH291,Lecture,Monday,13:30,15:30,4.467-Classroom A 4.46 & 4.47,Ziad Choucair
 MATH291,Lecture,Friday,14:00,16:00,4.44-Classroom B,Ziad Choucair
@@ -991,10 +986,14 @@ MBAS921,Lecture A,Saturday,09:00,16:00,6.40-Computer Lab,Yiyang Bian
 MBAS921,Lecture A,Saturday,09:00,16:00,6.32-Classroom B,Yiyang Bian
 MBAS921,Lecture B,Sunday,09:00,16:00,6.40-Computer Lab,Yiyang Bian
 MBAS921,Lecture B,Sunday,09:00,16:00,6.32-Classroom B,Yiyang Bian
+MBAS922,Lecture A,Saturday,09:00,16:00,2.50-Computer Lab Single,Prithvi Bhattacharya
 MBAS922,Lecture A,Saturday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya
 MBAS922,Lecture B,Sunday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya
+MBAS922,Lecture B,Sunday,09:00,16:00,2.50-Computer Lab Single,Prithvi Bhattacharya
+MBAS923,Lecture A,Saturday,09:00,16:00,2.50-Computer Lab Single,Prithvi Bhattacharya
 MBAS923,Lecture A,Saturday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya
 MBAS923,Lecture B,Sunday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya
+MBAS923,Lecture B,Sunday,09:00,16:00,2.50-Computer Lab Single,Prithvi Bhattacharya
 MBAS925,Lecture A,Saturday,09:00,16:00,5.11-Classroom B,Ziang Wang
 MBAS925,Lecture B,Sunday,09:00,16:00,5.11-Classroom B,Ziang Wang
 MDT901,Lecture A,Saturday,10:00,16:00,5.134-Classroom A 5.13 & 5.14,Nkqubela Ruxwana
@@ -1099,15 +1098,15 @@ MMMB201,Workshop,Tuesday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Masa Albi
 MMMB201,Workshop,Tuesday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Reem Khoury
 MMMB201,Workshop,Tuesday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Akshit Saini
 MMMB201,Workshop,Tuesday,14:30,17:30,1.49-Manufacturing & Workshop Lab,Masa Albitar
-MMMB201,Workshop,Tuesday,14:30,17:30,1.49-Manufacturing & Workshop Lab,Akshit Saini
+MMMB201,Workshop,Tuesday,14:30,17:30,1.49-Manufacturing & Workshop Lab,Muhammad Aghead Al Arnaout
 MMMB201,Workshop,Wednesday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Reem Khoury
 MMMB201,Workshop,Wednesday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Akshit Saini
 MMMB201,Workshop,Wednesday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Reem Khoury
 MMMB201,Workshop,Wednesday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Asarudheen Abdudeen
 MMMB201,Workshop,Wednesday,14:30,17:30,1.49-Manufacturing & Workshop Lab,Akshit Saini
 MMMB201,Workshop,Wednesday,14:30,17:30,1.49-Manufacturing & Workshop Lab,Asarudheen Abdudeen
-MMMB201,Workshop,Thursday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Omar Shendy
 MMMB201,Workshop,Thursday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Masa Albitar
+MMMB201,Workshop,Thursday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Akshit Saini
 MMMB201,Workshop,Thursday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Omar Shendy
 MMMB201,Workshop,Thursday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Muhammad Aghead Al Arnaout
 MMMB382,Computer Lab,Monday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7
@@ -1137,6 +1136,7 @@ OPS802,Lecture,Wednesday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Sabreen Wahbe
 OPS910,Lecture,Thursday,18:00,22:00,6.40-Computer Lab,Yiyang Bian
 OPS910,Lecture,Thursday,18:00,22:00,6.32-Classroom B,Yiyang Bian
 OPS910,Lecture,Monday,18:00,22:00,5.19-Classroom A,Yiyang Bian
+OPS910,Lecture,Monday,18:00,22:00,6.36-Computer Lab (Single Screen),Yiyang Bian
 OPS911,Lecture,Monday,18:00,22:00,6.32-Classroom B,Balan Sundarakani
 OPS920,Lecture,Tuesday,18:00,22:00,3.44-Classroom B,Lina Gharaibeh
 OPS920,Lecture,Wednesday,18:00,22:00,3.44-Classroom B,Lina Gharaibeh
@@ -1146,10 +1146,18 @@ PHY040,Computer Lab,Friday,08:00,10:00,3.53-Physics/Robotics Lab,Roy Duncan Forr
 PHY040,Computer Lab,Thursday,08:30,10:30,3.53-Physics/Robotics Lab,Abdullah Harb
 PHY040,Computer Lab,Friday,14:00,16:00,3.53-Physics/Robotics Lab,Abdullah Harb
 PHY040,Computer Lab,Wednesday,16:30,18:30,3.53-Physics/Robotics Lab,Roy Duncan Forrest
+PHY040,Computer Lab,Tuesday,14:30,16:30,3.53-Physics/Robotics Lab,Abdullah Harb
+PHY040,Computer Lab,Tuesday,10:30,12:30,3.53-Physics/Robotics Lab,Roy Duncan Forrest
+PHY040,Computer Lab,Wednesday,10:30,12:30,3.53-Physics/Robotics Lab,Roy Duncan Forrest
+PHY040,Computer Lab,Thursday,10:30,12:30,3.53-Physics/Robotics Lab,Baharak Tajalli
 PHY040,Lecture,Tuesday,14:30,16:30,3.44-Classroom B,Roy Duncan Forrest
+PHY040,Lecture,Monday,08:30,10:30,6.32-Classroom B,Roy Duncan Forrest
 PHY040,Workshop,Wednesday,14:30,16:30,6.345-Classroom A 6.34 & 6.35,Baharak Tajalli
 PHY040,Workshop,Wednesday,14:30,16:30,6.345-Classroom A 6.34 & 6.35,Abdullah Harb
 PHY040,Workshop,Wednesday,14:30,16:30,6.345-Classroom A 6.34 & 6.35,Roy Duncan Forrest
+PHY040,Workshop,Thursday,16:30,18:30,5.19-Classroom A,Abdullah Harb
+PHY040,Workshop,Thursday,16:30,18:30,5.19-Classroom A,Baharak Tajalli
+PHY040,Workshop,Thursday,16:30,18:30,5.19-Classroom A,Roy Duncan Forrest
 PSYC120,Lecture,Monday,10:30,12:30,2.61-Block 19,Melanie Haughton
 PSYC120,Tutorial,Monday,14:30,16:30,5.17-Classroom VC,Stephanie Lorraine Hill
 PSYC120,Tutorial,Tuesday,10:30,12:30,3.42-Classroom B,Stephanie Lorraine Hill
@@ -1167,15 +1175,14 @@ PSYC231,Tutorial,Tuesday,12:30,14:30,5.10-Classroom B,Melanie Haughton
 PSYC231,Tutorial,Wednesday,12:30,14:30,4.48-Classroom B,Melanie Haughton
 PSYC231,Tutorial,Thursday,12:30,14:30,1.79-Block 19,Stephanie Zakhour
 PSYC231,Tutorial,Thursday,10:30,12:30,1.79-Block 19,Stephanie Zakhour
-PSYC231,Tutorial,Wednesday,10:30,12:30,1.73-Block 19,Stephanie Zakhour
 PSYC234,Lecture,Wednesday,10:30,12:30,5.134-Classroom A 5.13 & 5.14,Oliver Charles Bones
 PSYC234,Tutorial,Wednesday,14:30,16:30,4.48-Classroom B,Rochelle Martins
 PSYC234,Tutorial,Thursday,12:30,14:30,3.48-Classroom B,Oliver Charles Bones
 PSYC234,Tutorial,Thursday,14:30,16:30,3.48-Classroom B,Rochelle Martins
 PSYC234,Tutorial,Friday,10:00,12:00,1.83-Block 19,Rochelle Martins
 PSYC234,Tutorial,Thursday,12:30,14:30,1.73-Block 19,Rochelle Martins
-PSYC324,Lecture,Monday,08:30,10:30,2.71-Block 19,Stephanie Zakhour
-PSYC324,Tutorial,Monday,10:30,12:30,2.71-Block 19,Stephanie Zakhour
+PSYC324,Lecture,Monday,08:30,10:30,2.71-Block 19,Oliver Charles Bones
+PSYC324,Tutorial,Monday,10:30,12:30,2.71-Block 19,Oliver Charles Bones
 PSYC330,Lecture,Tuesday,10:30,12:30,1.80-Block 19,Betul Zeyrek
 PSYC330,Tutorial,Tuesday,14:30,16:30,1.74-Block 19,Betul Zeyrek
 PUBH115,Lecture,Thursday,08:30,10:30,0.17-Lecture Theatre,Amina Khan

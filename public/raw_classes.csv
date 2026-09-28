@@ -251,8 +251,8 @@ CSCI251,Advanced Programming Computer Lab,Computer Lab,Computer Lab,AUTM-CSCI251
 CSCI251,Advanced Programming Lecture A,Lecture,Lecture A,AUTM-CSCI251-DB-LA/1,AND,Wednesday,08:30,10:30,4.44-Classroom B,Muath Alrammal,106
 CSCI251,Advanced Programming Lecture B,Lecture,Lecture B,AUTM-CSCI251-DB-LB/1,AND,Thursday,08:30,10:30,6.345-Classroom A 6.34 & 6.35,Muath Alrammal,106
 CSCI291,Engineering Programming 2 Computer Lab,Computer Lab,Computer Lab,AUTM-CSCI291-DB-CL/1,,Friday,10:00,12:00,3.52-Computer Lab (Network),Yasmine Abualroos,106
-CSCI291,Engineering Programming 2 Computer Lab,Computer Lab,Computer Lab,AUTM-CSCI291-DB-CL/2,OR,Wednesday,16:30,18:30,4.45-Computer Lab,Yasmine Abualroos,106
-CSCI291,Engineering Programming 2 Computer Lab,Computer Lab,Computer Lab,AUTM-CSCI291-DB-CL/3,OR,Wednesday,12:30,14:30,3.52-Computer Lab (Network),Yasmine Abualroos,106
+CSCI291,Engineering Programming 2 Computer Lab,Computer Lab,Computer Lab,AUTM-CSCI291-DB-CL/2,OR,Wednesday,16:30,18:30,4.45-Computer Lab,Zeeshan Swaveel,106
+CSCI291,Engineering Programming 2 Computer Lab,Computer Lab,Computer Lab,AUTM-CSCI291-DB-CL/3,OR,Wednesday,12:30,14:30,3.52-Computer Lab (Network),Zeeshan Swaveel,106
 CSCI291,Engineering Programming 2 Computer Lab,Computer Lab,Computer Lab,AUTM-CSCI291-DB-CL/4,OR,Thursday,12:30,14:30,1.52-Computer Lab Single,Hamze Hammami,106
 CSCI291,Engineering Programming 2 Computer Lab,Computer Lab,Computer Lab,AUTM-CSCI291-DB-CL/5,OR,Wednesday,16:30,18:30,1.52-Computer Lab Single,Hamze Hammami,106
 CSCI291,Engineering Programming 2 Computer Lab,Computer Lab,Computer Lab,AUTM-CSCI291-DB-CL/6,OR,Wednesday,12:30,14:30,1.52-Computer Lab Single,Hamze Hammami,106
@@ -484,10 +484,10 @@ ECTE324,Power Engineering 2 Computer Lab (Odd Weeks),Computer Lab,Computer Lab,A
 ECTE324,Power Engineering 2 Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/2,OR,Tuesday,08:30,11:30,1.51-Power Lab,Razveen Kashif,106
 ECTE324,Power Engineering 2 Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/3,OR,Thursday,08:30,11:30,1.51-Power Lab,Razveen Kashif,106
 ECTE324,Power Engineering 2 Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/4,OR,Thursday,08:30,11:30,1.51-Power Lab,Razveen Kashif,106
-ECTE324,Power Engineering 2 Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/5,OR,Tuesday,14:30,17:30,1.51-Power Lab,Habiba Ahmed,106
-ECTE324,Power Engineering 2 Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/6,OR,Tuesday,14:30,17:30,1.51-Power Lab,Habiba Ahmed,106
-ECTE324,Power Engineering 2 Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/7,OR,Wednesday,09:30,12:30,1.51-Power Lab,Adjunct ECTE 5,106
-ECTE324,Power Engineering 2 Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/8,OR,Wednesday,09:30,12:30,1.51-Power Lab,Adjunct ECTE 5,106
+ECTE324,Power Engineering 2 Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/5,OR,Tuesday,14:30,17:30,1.51-Power Lab,Obai Alashram,106
+ECTE324,Power Engineering 2 Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/6,OR,Tuesday,14:30,17:30,1.51-Power Lab,Obai Alashram,106
+ECTE324,Power Engineering 2 Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/7,OR,Wednesday,09:30,12:30,1.51-Power Lab,Obai Alashram,106
+ECTE324,Power Engineering 2 Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ECTE324-DB-CL/8,OR,Wednesday,09:30,12:30,1.51-Power Lab,Obai Alashram,106
 ECTE324,Power Engineering 1 Lecture,Lecture,Lecture,AUTM-ECTE324-DB-L/1,AND,Monday,13:30,15:30,5.18-Classroom A,Mohamad Nassereddine,106
 ECTE324,Power Engineering 1 Lecture,Lecture,Lecture,AUTM-ECTE324-DB-L/2,OR,Tuesday,10:30,12:30,1.72-Block 19,Mohamad Nassereddine,106
 ECTE324,Power Engineering 1 Tutorial,Tutorial,Tutorial,AUTM-ECTE324-DB-T/1,AND,Monday,15:30,17:30,5.18-Classroom A,Habiba Ahmed,106
@@ -517,7 +517,10 @@ ECTE423,Power System Analysis Tutorial,Tutorial,Tutorial,AUTM-ECTE423-DB-T/1,AND
 ECTE477,Autonomous Programming Computer Lab,Computer Lab,Computer Lab,AUTM-ECTE477-DB-CL/1,,Thursday,08:30,11:30,2.51-Project Lab,Hiba Anwar,106
 ECTE477,Autonomous Programming Computer Lab,Computer Lab,Computer Lab,AUTM-ECTE477-DB-CL/2,OR,Friday,14:00,17:00,2.51-Project Lab,Razveen Kashif,106
 ECTE477,Autonomous Programming Computer Lab,Computer Lab,Computer Lab,AUTM-ECTE477-DB-CL/3,OR,Friday,08:00,11:00,2.51-Project Lab,Razveen Kashif,106
-ECTE477,Autonomous Programming Computer Lab,Computer Lab,Computer Lab,AUTM-ECTE477-DB-CL/4,OR,Thursday,12:30,15:30,2.51-Project Lab,Hiba Anwar,106
+ECTE477,Autonomous Programming Computer Lab,Computer Lab,Computer Lab,AUTM-ECTE477-DB-CL/4,OR,Thursday,12:00,15:00,2.51-Project Lab,Hiba Anwar,106
+ECTE477,Autonomous Programming Computer Lab,Computer Lab,Computer Lab,AUTM-ECTE477-DB-CL/5,OR,Wednesday,08:30,11:30,2.51-Project Lab,Hiba Anwar,106
+ECTE477,Autonomous Programming Computer Lab,Computer Lab,Computer Lab,AUTM-ECTE477-DB-CL/6,OR,Tuesday,14:30,17:30,2.51-Project Lab,Hiba Anwar,106
+ECTE477,Autonomous Programming Computer Lab,Computer Lab,Computer Lab,AUTM-ECTE477-DB-CL/7,OR,Thursday,15:30,18:30,2.51-Project Lab,Hiba Anwar,106
 ECTE477,Programming Autonomous Systems Lecture,Lecture,Lecture,AUTM-ECTE477-DB-L/1,AND,Wednesday,11:30,14:30,3.44-Classroom B,Abdsamad Benkrid,106
 ECTE477,Autonomous Programming Tutorial,Tutorial,Tutorial,AUTM-ECTE477-DB-T/1,AND,Wednesday,14:30,15:30,3.52-Computer Lab (Network),Abdsamad Benkrid,106
 ECTE477,Autonomous Programming Tutorial,Tutorial,Tutorial,AUTM-ECTE477-DB-T/2,OR,Wednesday,16:30,17:30,3.52-Computer Lab (Network),Abdsamad Benkrid,106
@@ -533,28 +536,23 @@ EDGZ921,Introduction To Research & Inquiry Lecture,Lecture,Lecture,AUTM-EDGZ921-
 ENG900,Writing for Communication Lecture,Lecture,Lecture,AUTM-ENG 900-DB-L/1,,Friday,18:00,20:00,4.53-Seminar/Tutorial,Sabina Ashraf,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/01,,Wednesday,08:30,10:30,3.53-Physics/Robotics Lab,Deva Prasad,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/02,OR,Wednesday,14:30,16:30,3.53-Physics/Robotics Lab,Deva Prasad,106
-ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/03,OR,Wednesday,10:30,12:30,3.53-Physics/Robotics Lab,Deva Prasad,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/04,OR,Thursday,12:30,14:30,3.53-Physics/Robotics Lab,Deva Prasad,106
-ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/05,OR,Thursday,10:30,12:30,3.53-Physics/Robotics Lab,Deva Prasad,106
-ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/06,OR,Tuesday,10:30,12:30,3.53-Physics/Robotics Lab,Menna Abdelaal,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/07,OR,Tuesday,08:30,10:30,3.53-Physics/Robotics Lab,Akshit Saini,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/08,OR,Friday,16:00,18:00,3.53-Physics/Robotics Lab,Menna Abdelaal,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/09,OR,Friday,10:00,12:00,3.53-Physics/Robotics Lab,Menna Abdelaal,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/10,OR,Wednesday,12:30,14:30,3.53-Physics/Robotics Lab,Menna Abdelaal,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/11,OR,Tuesday,12:30,14:30,3.53-Physics/Robotics Lab,Menna Abdelaal,106
-ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/12,OR,Tuesday,14:30,16:30,3.53-Physics/Robotics Lab,Menna Abdelaal,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/13,OR,Monday,12:30,14:30,3.53-Physics/Robotics Lab,Menna Abdelaal,106
 ENGG102,Fundamentals of Engineering Mechanics Workshop,Workshop,Workshop,AUTM-ENGG102-DB-W/1,AND,Wednesday,14:30,17:30,6.32-Classroom B,Yahya Salah;Abdulqader Hasan;Ayman Ahdy;Sana Amir;Umar Asghar,106
 ENGG102,Fundamentals of Engineering Mechanics Workshop,Workshop,Workshop,AUTM-ENGG102-DB-W/2,OR,Monday,14:30,17:30,6.32-Classroom B,Yahya Salah;Abdulqader Hasan;Ayman Ahdy;Sana Amir;Umar Asghar,106
-ENGG102,Fundamentals of Engineering Mechanics Workshop,Workshop,Workshop,AUTM-ENGG102-DB-W/3,OR,Monday,08:30,11:30,6.32-Classroom B,Yahya Salah;Abdulqader Hasan;Ayman Ahdy;Sana Amir;Umar Asghar,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/01,,Thursday,14:30,16:30,1.52-Computer Lab Single,Adjunct 1,106
-ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/02,OR,Thursday,11:30,13:30,3.45-Computer Lab,Nayab Nadeem,106
+ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/02,OR,Thursday,11:30,13:30,3.45-Computer Lab,Abdullah Khalid,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/03,OR,Friday,10:00,12:00,1.52-Computer Lab Single,Adjunct 1,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/04,OR,Wednesday,14:30,16:30,1.52-Computer Lab Single,Adjunct 1,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/05,OR,Tuesday,16:30,18:30,1.52-Computer Lab Single,Adjunct 1,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/06,OR,Tuesday,16:30,18:30,1.52-Computer Lab Single,Adjunct 1,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/07,OR,Friday,16:00,18:00,1.52-Computer Lab Single,Adjunct 1,106
-ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/08,OR,Thursday,08:30,10:30,4.42-Computer Lab (Single Screen),Nayab Nadeem,106
+ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/08,OR,Thursday,08:30,10:30,4.42-Computer Lab (Single Screen),Abdullah Khalid,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/09,OR,Thursday,12:30,14:30,5.12-Computer Lab,Adjunct 1,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/10,OR,Thursday,12:30,14:30,5.12-Computer Lab,Adjunct 1,106
 ENGG105,Engineering Design for Sustainability Lecture,Lecture,Lecture,AUTM-ENGG105-DB-L/1,AND,Monday,10:30,12:30,4.44-Classroom B,Karol Sikora,106
@@ -576,19 +574,19 @@ ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-C
 ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/04,OR,Wednesday,12:30,14:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo,106
 ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/05,OR,Monday,10:30,12:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo,106
 ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/06,OR,Monday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo,106
-ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/07,OR,Wednesday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Hooman Aminipour,106
-ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/08,OR,Wednesday,14:30,16:30,1.53-Chemistry & Materials Science Lab,Hooman Aminipour,106
-ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/09,OR,Tuesday,14:30,16:30,1.53-Chemistry & Materials Science Lab,Hooman Aminipour,106
-ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/10,OR,Monday,12:30,14:30,1.53-Chemistry & Materials Science Lab,Hooman Aminipour,106
+ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/07,OR,Wednesday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Ayman Ahdy,106
+ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/08,OR,Wednesday,14:30,16:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo,106
+ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/09,OR,Tuesday,14:30,16:30,1.53-Chemistry & Materials Science Lab,Ayman Ahdy,106
+ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/10,OR,Monday,12:30,14:30,1.53-Chemistry & Materials Science Lab,Maryam Shourideh,106
 ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/11,OR,Thursday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Maryam Shourideh,106
 ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/12,OR,Tuesday,08:30,10:30,1.53-Chemistry & Materials Science Lab,Maryam Shourideh,106
-ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/13,OR,Tuesday,10:30,12:30,1.53-Chemistry & Materials Science Lab,Hooman Aminipour,106
+ENGG251,Solid Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG251-DB-CL/13,OR,Tuesday,10:30,12:30,1.53-Chemistry & Materials Science Lab,Yousef Al-Helo,106
 ENGG251,Solid Mechanics Lecture,Lecture,Lecture,AUTM-ENGG251-DB-L/1,AND,Wednesday,12:30,14:30,6.32-Classroom B,Mohammad Yousuf,106
 ENGG251,Solid Mechanics Lecture,Lecture,Lecture,AUTM-ENGG251-DB-L/2,OR,Tuesday,14:30,16:30,5.134-Classroom A 5.13 & 5.14,Mohammad Yousuf,106
 ENGG251,Solid Mechanics Tutorial,Tutorial,Tutorial,AUTM-ENGG251-DB-T/1,AND,Thursday,14:30,16:30,6.28-Seminar/Tutorial,Mohammad Yousuf,106
-ENGG251,Solid Mechanics Tutorial,Tutorial,Tutorial,AUTM-ENGG251-DB-T/2,OR,Friday,08:00,10:00,1.73-Block 19,Adjunct CIVL2,106
-ENGG251,Solid Mechanics Tutorial,Tutorial,Tutorial,AUTM-ENGG251-DB-T/3,OR,Thursday,14:30,16:30,1.83-Block 19,Adjunct CIVL2,106
-ENGG251,Solid Mechanics Tutorial,Tutorial,Tutorial,AUTM-ENGG251-DB-T/4,OR,Friday,10:00,12:00,1.73-Block 19,Adjunct CIVL2,106
+ENGG251,Solid Mechanics Tutorial,Tutorial,Tutorial,AUTM-ENGG251-DB-T/2,OR,Friday,08:00,10:00,1.73-Block 19,Maryam Shourideh,106
+ENGG251,Solid Mechanics Tutorial,Tutorial,Tutorial,AUTM-ENGG251-DB-T/3,OR,Thursday,14:30,16:30,1.83-Block 19,Maryam Shourideh,106
+ENGG251,Solid Mechanics Tutorial,Tutorial,Tutorial,AUTM-ENGG251-DB-T/4,OR,Friday,10:00,12:00,1.73-Block 19,Maryam Shourideh,106
 ENGG251,Solid Mechanics Tutorial,Tutorial,Tutorial,AUTM-ENGG251-DB-T/5,OR,Wednesday,14:30,16:30,1.76-Block 19,Thahsin Saidarakath,106
 ENGG251,Solid Mechanics Tutorial,Tutorial,Tutorial,AUTM-ENGG251-DB-T/6,OR,Wednesday,16:30,18:30,1.76-Block 19,Thahsin Saidarakath,106
 ENGG251,Solid Mechanics Tutorial,Tutorial,Tutorial,AUTM-ENGG251-DB-T/7,OR,Thursday,10:30,12:30,1.71-Block 19,Thahsin Saidarakath,106
@@ -653,7 +651,7 @@ FIN241,International Financial Management Tutorial,Tutorial,Tutorial,AUTM-FIN 24
 FIN923,Portfolio Management Lecture,Lecture,Lecture,AUTM-FIN 923-DB-L/1,,Monday,18:00,22:00,3.46-Classroom A,Burcu Kapar,106
 FIN947,FinTech Applications in Banking and Insurance Lecture,Lecture,Lecture,AUTM-FIN 947-DB-L/1,,Thursday,18:00,22:00,3.46-Classroom A,Gunsel Topbas,106
 FIN950,Socially Responsible Finance Lecture,Lecture,Lecture,AUTM-FIN 950-DB-L/1,,Monday,18:30,22:30,5.18-Classroom A,Vikash Ramiah,106
-FIN950,Socially Responsible Finance Lecture,Lecture,Lecture,AUTM-FIN 950-DB-L/2,OR,Wednesday,18:00,22:00,2.70-Block 19,Vikash Ramiah,106
+FIN950,Socially Responsible Finance Lecture,Lecture,Lecture,AUTM-FIN 950-DB-L/2,OR,Wednesday,18:30,22:30,5.10-Classroom B,Vikash Ramiah,106
 FIN957,Portfolio Simulation Lecture,Lecture,Lecture,AUTM-FIN 957-DB-L/1,,Wednesday,18:00,22:00,5.19-Classroom A,Gunsel Topbas,106
 FIN958,Financial Institutions Lecture,Lecture,Lecture,AUTM-FIN 958-DB-L/1,,Tuesday,18:30,22:30,6.345-Classroom A 6.34 & 6.35,Noor Rizvi,106
 FIN958,Financial Institutions Lecture,Lecture,Lecture,AUTM-FIN 958-DB-L/2,OR,Thursday,18:00,22:00,2.70-Block 19,Noor Rizvi,106
@@ -896,36 +894,37 @@ MARK901,Marketing For Strategic Decisions Lecture,Lecture,Lecture,AUTM-MARK901-D
 MARK901,Marketing For Strategic Decisions Lecture,Lecture,Lecture,AUTM-MARK901-DB-L/3,OR,Thursday,18:00,22:00,5.11-Classroom B,Rumaila Abbas,106
 MARK916,AI Driven Digital Marketing Lecture,Lecture,Lecture,AUTM-MARK916-DB-L/1,,Tuesday,18:00,22:00,5.11-Classroom B,Sourjo Mukherjee,106
 MARK935,Marketing Strategy Lecture,Lecture,Lecture,AUTM-MARK935-DB-L/1,,Monday,18:00,22:00,3.44-Classroom B,Sourjo Mukherjee,106
-MARK935,Marketing Strategy Lecture,Lecture,Lecture,AUTM-MARK935-DB-L/2,OR,Wednesday,18:00,22:00,2.71-Block 19,Sourjo Mukherjee,106
+MARK935,Marketing Strategy Lecture,Lecture,Lecture,AUTM-MARK935-DB-L/2,OR,Wednesday,18:30,22:30,6.345-Classroom A 6.34 & 6.35,Sourjo Mukherjee,106
 MARK940,Marketing Communications Lecture,Lecture,Lecture,AUTM-MARK940-DB-L/1,,Thursday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Prakash Vel,106
 MARK940,Marketing Communications Lecture,Lecture,Lecture,AUTM-MARK940-DB-L/2,OR,Monday,18:00,22:00,5.134-Classroom A 5.13 & 5.14,Frederick Thomas Wehrle,106
 MATH042,Maths for Engineering Lecture,Lecture,Lecture,AUTM-MATH042-DB-L/1,,Tuesday,10:30,12:30,4.44-Classroom B,Ziad Choucair,106
+MATH042,Maths for Engineering Lecture,Lecture,Lecture,AUTM-MATH042-DB-L/2,OR,Tuesday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Ziad Choucair,106
 MATH042,Elements of Engineering Mathematics Workshop A,Workshop,Workshop A,AUTM-MATH042-DB-WA/1,AND,Wednesday,10:30,12:30,3.42-Classroom B,Ziad Choucair,106
 MATH042,Elements of Engineering Mathematics Workshop A,Workshop,Workshop A,AUTM-MATH042-DB-WA/2,OR,Wednesday,10:30,12:30,1.81-Block 19,Abdullah Harb,106
 MATH042,Elements of Engineering Mathematics Workshop A,Workshop,Workshop A,AUTM-MATH042-DB-WA/3,OR,Wednesday,10:30,12:30,2.70-Block 19,Daliya Ashok,106
 MATH042,Elements of Engineering Mathematics Workshop A,Workshop,Workshop A,AUTM-MATH042-DB-WA/4,OR,Wednesday,08:30,10:30,2.70-Block 19,Daliya Ashok,106
+MATH042,Elements of Engineering Mathematics Workshop A,Workshop,Workshop A,AUTM-MATH042-DB-WA/5,OR,Wednesday,08:30,10:30,1.74-Block 19,Abdullah Harb,106
+MATH042,Elements of Engineering Mathematics Workshop A,Workshop,Workshop A,AUTM-MATH042-DB-WA/6,OR,Wednesday,16:30,18:30,1.74-Block 19,Daliya Ashok,106
 MATH042,Elements of Engineering Mathematics Workshop B,Workshop,Workshop B,AUTM-MATH042-DB-WB/1,AND,Thursday,10:30,12:30,3.42-Classroom B,Ziad Choucair,106
 MATH042,Elements of Engineering Mathematics Workshop B,Workshop,Workshop B,AUTM-MATH042-DB-WB/2,OR,Thursday,10:30,12:30,6.38-Classroom B,Abdullah Harb,106
 MATH042,Elements of Engineering Mathematics Workshop B,Workshop,Workshop B,AUTM-MATH042-DB-WB/3,OR,Thursday,10:30,12:30,2.64-Block 19,Daliya Ashok,106
 MATH042,Elements of Engineering Mathematics Workshop B,Workshop,Workshop B,AUTM-MATH042-DB-WB/4,OR,Thursday,08:30,10:30,2.64-Block 19,Daliya Ashok,106
+MATH042,Elements of Engineering Mathematics Workshop B,Workshop,Workshop B,AUTM-MATH042-DB-WB/5,OR,Wednesday,14:30,16:30,1.72-Block 19,Daliya Ashok,106
+MATH042,Elements of Engineering Mathematics Workshop B,Workshop,Workshop B,AUTM-MATH042-DB-WB/6,OR,Friday,10:00,12:00,5.19-Classroom A,Daliya Ashok,106
 MATH043,Maths for Humanities Lecture,Lecture,Lecture,AUTM-MATH043-DB-L/1,,Monday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Sara Abdelaziz,106
 MATH043,Maths for Humanities Workshop,Workshop,Workshop,AUTM-MATH043-DB-W/1,AND,Monday,12:30,14:30,4.48-Classroom B,Dania Dallah,106
 MATH043,Maths for Humanities Workshop,Workshop,Workshop,AUTM-MATH043-DB-W/2,OR,Tuesday,08:30,10:30,6.38-Classroom B,Dania Dallah,106
 MATH043,Maths for Humanities Workshop,Workshop,Workshop,AUTM-MATH043-DB-W/3,OR,Tuesday,14:30,16:30,3.46-Classroom A,Dania Dallah,106
 MATH141,Foundations of Engineering Mathematics Lecture A,Lecture,Lecture A,AUTM-MATH141-DB-LA/1,,Wednesday,08:30,10:30,6.345-Classroom A 6.34 & 6.35,Assane Lo,106
-MATH141,Foundations of Engineering Mathematics Lecture A,Lecture,Lecture A,AUTM-MATH141-DB-LA/2,OR,Monday,08:30,10:30,4.44-Classroom B,Assane Lo,106
 MATH141,Foundations of Engineering Mathematics Lecture A,Lecture,Lecture A,AUTM-MATH141-DB-LA/3,OR,Tuesday,12:30,14:30,5.19-Classroom A,Assane Lo,106
 MATH141,Foundations of Engineering Mathematics Lecture B,Lecture,Lecture B,AUTM-MATH141-DB-LB/1,AND,Friday,14:00,16:00,5.11-Classroom B,Assane Lo,106
-MATH141,Foundations of Engineering Mathematics Lecture B,Lecture,Lecture B,AUTM-MATH141-DB-LB/2,OR,Tuesday,08:30,10:30,4.467-Classroom A 4.46 & 4.47,Assane Lo,106
 MATH141,Foundations of Engineering Mathematics Lecture B,Lecture,Lecture B,AUTM-MATH141-DB-LB/3,OR,Wednesday,10:30,12:30,5.19-Classroom A,Assane Lo,106
 MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/01,AND,Thursday,14:30,16:30,5.18-Classroom A,Ziad Choucair,106
 MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/02,OR,Tuesday,14:30,16:30,6.28-Seminar/Tutorial,Ziad Choucair,106
-MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/03,OR,Wednesday,14:30,16:30,1.72-Block 19,Bakhtawar Baluch,106
 MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/04,OR,Tuesday,14:30,16:30,2.65-Block 19,Bakhtawar Baluch,106
 MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/05,OR,Wednesday,12:30,14:30,1.72-Block 19,Bakhtawar Baluch,106
 MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/06,OR,Thursday,10:30,12:30,2.71-Block 19,Bakhtawar Baluch,106
 MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/07,OR,Thursday,11:30,13:30,5.10-Classroom B,Amritha Chidambram,106
-MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/08,OR,Wednesday,16:30,18:30,1.74-Block 19,Amritha Chidambram,106
 MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/09,OR,Tuesday,10:30,12:30,2.65-Block 19,Amritha Chidambram,106
 MATH291,Advanced Engineering Mathematics Lecture,Lecture,Lecture,AUTM-MATH291-DB-L/1,,Monday,13:30,15:30,4.467-Classroom A 4.46 & 4.47,Ziad Choucair,106
 MATH291,Advanced Engineering Mathematics Lecture,Lecture,Lecture,AUTM-MATH291-DB-L/2,OR,Friday,14:00,16:00,4.44-Classroom B,Ziad Choucair,106
@@ -951,10 +950,10 @@ MBAS900,Fundamentals of Business Analytics Lecture (Class 1),Lecture,Lecture,AUT
 MBAS900,Fundamentals of Business Analytics Lecture (Class 2),Lecture,Lecture,AUTM-MBAS900-DB-L/2,OR,Tuesday,18:00,20:00,6.32-Classroom B,Yiyang Bian;Bingren Sun,106
 MBAS921,"Predictive Analytics and Forecasting Lecture A (Scheduled on 3-Oct, 24-Oct, 14-Nov, 5-Dec)",Lecture,Lecture A,AUTM-MBAS921-DB-LA/1,,Saturday,09:00,16:00,6.40-Computer Lab;6.32-Classroom B,Yiyang Bian,106
 MBAS921,"Predictive Analytics and Forecasting Lecture B (Scheduled on 4-Oct, 25-Oct, 15-Nov, 6-Dec)",Lecture,Lecture B,AUTM-MBAS921-DB-LB/1,AND,Sunday,09:00,16:00,6.40-Computer Lab;6.32-Classroom B,Yiyang Bian,106
-MBAS922,"Applied Machine Learning & AI for Business Lecture A (Scheduled on 26-Sep, 17-Oct, 7-Nov, 28-Nov)",Lecture,Lecture A,AUTM-MBAS922-DB-LA/1,,Saturday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya,106
-MBAS922,"Applied Machine Learning & AI for Business Lecture B (Scheduled on 27-Sep, 18-Oct, 8-Nov, 29-Nov)",Lecture,Lecture B,AUTM-MBAS922-DB-LB/1,AND,Sunday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya,106
-MBAS923,"Big Data Management & Integration Lecture A (Scheduled on 3-Oct, 24-Oct, 14-Nov, 5-Dec)",Lecture,Lecture A,AUTM-MBAS923-DB-LA/1,,Saturday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya,106
-MBAS923,"Big Data Management & Integration Lecture B (Scheduled on 4-Oct, 25-Oct, 15-Nov, 6-Dec)",Lecture,Lecture B,AUTM-MBAS923-DB-LB/1,AND,Sunday,09:00,16:00,3.44-Classroom B,Prithvi Bhattacharya,106
+MBAS922,"Applied Machine Learning & AI for Business Lecture A (Scheduled on 26-Sep, 17-Oct, 7-Nov, 28-Nov)",Lecture,Lecture A,AUTM-MBAS922-DB-LA/1,,Saturday,09:00,16:00,2.50-Computer Lab Single;3.44-Classroom B,Prithvi Bhattacharya,106
+MBAS922,"Applied Machine Learning & AI for Business Lecture B (Scheduled on 27-Sep, 18-Oct, 8-Nov, 29-Nov)",Lecture,Lecture B,AUTM-MBAS922-DB-LB/1,AND,Sunday,09:00,16:00,3.44-Classroom B;2.50-Computer Lab Single,Prithvi Bhattacharya,106
+MBAS923,"Big Data Management & Integration Lecture A (Scheduled on 3-Oct, 24-Oct, 14-Nov, 5-Dec)",Lecture,Lecture A,AUTM-MBAS923-DB-LA/1,,Saturday,09:00,16:00,2.50-Computer Lab Single;3.44-Classroom B,Prithvi Bhattacharya,106
+MBAS923,"Big Data Management & Integration Lecture B (Scheduled on 4-Oct, 25-Oct, 15-Nov, 6-Dec)",Lecture,Lecture B,AUTM-MBAS923-DB-LB/1,AND,Sunday,09:00,16:00,3.44-Classroom B;2.50-Computer Lab Single,Prithvi Bhattacharya,106
 MBAS925,"Prescriptive Analytics and Business Decision Making Lecture A (Scheduled on 26-Sep, 17-Oct, 7-Nov, 28-Nov)",Lecture,Lecture A,AUTM-MBAS925-DB-LA/1,,Saturday,09:00,16:00,5.11-Classroom B,Ziang Wang,106
 MBAS925,"Prescriptive Analytics and Business Decision Making Lecture B (Scheduled on 27-Sep, 18-Oct, 8-Nov, 29-Nov)",Lecture,Lecture B,AUTM-MBAS925-DB-LB/1,AND,Sunday,09:00,16:00,5.11-Classroom B,Ziang Wang,106
 MDT901,"Digital Transformation Strategy and Industry 4.0 Lecture A (Scheduled on 26-Sep, 17-Oct, 7-Nov, 28-Nov, 5-Dec)",Lecture,Lecture A,AUTM-MDT 901-DB-LA/1,,Saturday,10:00,16:00,5.134-Classroom A 5.13 & 5.14,Nkqubela Ruxwana,106
@@ -1050,11 +1049,11 @@ MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AU
 MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/02,OR,Monday,13:30,16:30,1.49-Manufacturing & Workshop Lab,Asarudheen Abdudeen;Muhammad Aghead Al Arnaout,106
 MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/03,OR,Tuesday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Omar Shendy;Masa Albitar,106
 MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/04,OR,Tuesday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Reem Khoury;Akshit Saini,106
-MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/05,OR,Tuesday,14:30,17:30,1.49-Manufacturing & Workshop Lab,Masa Albitar;Akshit Saini,106
+MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/05,OR,Tuesday,14:30,17:30,1.49-Manufacturing & Workshop Lab,Masa Albitar;Muhammad Aghead Al Arnaout,106
 MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/06,OR,Wednesday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Reem Khoury;Akshit Saini,106
 MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/07,OR,Wednesday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Reem Khoury;Asarudheen Abdudeen,106
 MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/08,OR,Wednesday,14:30,17:30,1.49-Manufacturing & Workshop Lab,Akshit Saini;Asarudheen Abdudeen,106
-MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/09,OR,Thursday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Omar Shendy;Masa Albitar,106
+MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/09,OR,Thursday,08:30,11:30,1.49-Manufacturing & Workshop Lab,Masa Albitar;Akshit Saini,106
 MMMB201,Materials Selection for Mechanical Systems Workshop,Workshop,Workshop,AUTM-MMMB201-DB-W/10,OR,Thursday,11:30,14:30,1.49-Manufacturing & Workshop Lab,Omar Shendy;Muhammad Aghead Al Arnaout,106
 MMMB382,Engineering Practice and Experimental Methods Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-MMMB382-DB-CL/1,,Monday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7,106
 MMMB382,Engineering Practice and Experimental Methods Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-MMMB382-DB-CL/2,OR,Monday,08:30,10:30,1.49-Manufacturing & Workshop Lab,Adjunct MECH 7,106
@@ -1081,7 +1080,7 @@ OPS270,Applied Project Management and Decision-Making Tutorial,Tutorial,Tutorial
 OPS802,Operations and Supply Chain Management Lecture,Lecture,Lecture,AUTM-OPS 802-DB-L/1,,Tuesday,18:00,22:00,5.19-Classroom A,Sabreen Wahbeh,106
 OPS802,Operations and Supply Chain Management Lecture,Lecture,Lecture,AUTM-OPS 802-DB-L/2,OR,Wednesday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Sabreen Wahbeh,106
 OPS910,Quantitative Methods for Decision Making Lecture,Lecture,Lecture,AUTM-OPS 910-DB-L/1,,Thursday,18:00,22:00,6.40-Computer Lab;6.32-Classroom B,Yiyang Bian,106
-OPS910,Quantitative Methods for Decision Making Lecture,Lecture,Lecture,AUTM-OPS 910-DB-L/2,OR,Monday,18:00,22:00,5.19-Classroom A,Yiyang Bian,106
+OPS910,Quantitative Methods for Decision Making Lecture,Lecture,Lecture,AUTM-OPS 910-DB-L/2,OR,Monday,18:00,22:00,5.19-Classroom A;6.36-Computer Lab (Single Screen),Yiyang Bian,106
 OPS911,Quantitative Methods for Decision Making Lecture,Lecture,Lecture,AUTM-OPS 911-DB-L/1,,Monday,18:00,22:00,6.32-Classroom B,Balan Sundarakani,106
 OPS920,Contemporary Issues in Supply Chain Management Lecture,Lecture,Lecture,AUTM-OPS 920-DB-L/1,,Tuesday,18:00,22:00,3.44-Classroom B,Lina Gharaibeh,106
 OPS920,Contemporary Issues in Supply Chain Management Lecture,Lecture,Lecture,AUTM-OPS 920-DB-L/2,OR,Wednesday,18:00,22:00,3.44-Classroom B,Lina Gharaibeh,106
@@ -1091,8 +1090,14 @@ PHY040,Physics Computer Lab,Computer Lab,Computer Lab,AUTM-PHY 040-DB-CL/2,OR,Fr
 PHY040,Physics Computer Lab,Computer Lab,Computer Lab,AUTM-PHY 040-DB-CL/3,OR,Thursday,08:30,10:30,3.53-Physics/Robotics Lab,Abdullah Harb,106
 PHY040,Physics Computer Lab,Computer Lab,Computer Lab,AUTM-PHY 040-DB-CL/4,OR,Friday,14:00,16:00,3.53-Physics/Robotics Lab,Abdullah Harb,106
 PHY040,Physics Computer Lab,Computer Lab,Computer Lab,AUTM-PHY 040-DB-CL/5,OR,Wednesday,16:30,18:30,3.53-Physics/Robotics Lab,Roy Duncan Forrest,106
+PHY040,Physics Computer Lab,Computer Lab,Computer Lab,AUTM-PHY 040-DB-CL/6,OR,Tuesday,14:30,16:30,3.53-Physics/Robotics Lab,Abdullah Harb,106
+PHY040,Physics Computer Lab,Computer Lab,Computer Lab,AUTM-PHY 040-DB-CL/7,OR,Tuesday,10:30,12:30,3.53-Physics/Robotics Lab,Roy Duncan Forrest,106
+PHY040,Physics Computer Lab,Computer Lab,Computer Lab,AUTM-PHY 040-DB-CL/8,OR,Wednesday,10:30,12:30,3.53-Physics/Robotics Lab,Roy Duncan Forrest,106
+PHY040,Physics Computer Lab,Computer Lab,Computer Lab,AUTM-PHY 040-DB-CL/9,OR,Thursday,10:30,12:30,3.53-Physics/Robotics Lab,Baharak Tajalli,106
 PHY040,Physics Lecture,Lecture,Lecture,AUTM-PHY 040-DB-L/1,AND,Tuesday,14:30,16:30,3.44-Classroom B,Roy Duncan Forrest,106
+PHY040,Physics Lecture,Lecture,Lecture,AUTM-PHY 040-DB-L/2,OR,Monday,08:30,10:30,6.32-Classroom B,Roy Duncan Forrest,106
 PHY040,Physics Workshop,Workshop,Workshop,AUTM-PHY 040-DB-W/1,AND,Wednesday,14:30,16:30,6.345-Classroom A 6.34 & 6.35,Baharak Tajalli;Abdullah Harb;Roy Duncan Forrest,106
+PHY040,Physics Workshop,Workshop,Workshop,AUTM-PHY 040-DB-W/2,OR,Thursday,16:30,18:30,5.19-Classroom A,Abdullah Harb;Baharak Tajalli;Roy Duncan Forrest,106
 PSYC120,Critical Thinking and Communication Skills in Psychology Lecture,Lecture,Lecture,AUTM-PSYC120-DB-L/1,,Monday,10:30,12:30,2.61.62/63-Combined-Block 19,Melanie Haughton,106
 PSYC120,Critical Thinking and Communication Skills in Psychology Tutorial,Tutorial,Tutorial,AUTM-PSYC120-DB-T/1,AND,Monday,14:30,16:30,5.17-Classroom VC,Stephanie Lorraine Hill,106
 PSYC120,Critical Thinking and Communication Skills in Psychology Tutorial,Tutorial,Tutorial,AUTM-PSYC120-DB-T/2,OR,Tuesday,10:30,12:30,3.42-Classroom B,Stephanie Lorraine Hill,106
@@ -1110,15 +1115,14 @@ PSYC231,Personality Tutorial,Tutorial,Tutorial,AUTM-PSYC231-DB-T/1,AND,Tuesday,1
 PSYC231,Personality Tutorial,Tutorial,Tutorial,AUTM-PSYC231-DB-T/2,OR,Wednesday,12:30,14:30,4.48-Classroom B,Melanie Haughton,106
 PSYC231,Personality Tutorial,Tutorial,Tutorial,AUTM-PSYC231-DB-T/3,OR,Thursday,12:30,14:30,1.79-Block 19,Stephanie Zakhour,106
 PSYC231,Personality Tutorial,Tutorial,Tutorial,AUTM-PSYC231-DB-T/4,OR,Thursday,10:30,12:30,1.79-Block 19,Stephanie Zakhour,106
-PSYC231,Personality Tutorial,Tutorial,Tutorial,AUTM-PSYC231-DB-T/5,OR,Wednesday,10:30,12:30,1.73-Block 19,Stephanie Zakhour,106
 PSYC234,Biological Psychology and Learning Lecture,Lecture,Lecture,AUTM-PSYC234-DB-L/1,,Wednesday,10:30,12:30,5.134-Classroom A 5.13 & 5.14,Oliver Charles Bones,106
 PSYC234,Biological Psychology and Learning Tutorial,Tutorial,Tutorial,AUTM-PSYC234-DB-T/1,AND,Wednesday,14:30,16:30,4.48-Classroom B,Rochelle Martins,106
 PSYC234,Biological Psychology and Learning Tutorial,Tutorial,Tutorial,AUTM-PSYC234-DB-T/2,OR,Thursday,12:30,14:30,3.48-Classroom B,Oliver Charles Bones,106
 PSYC234,Biological Psychology and Learning Tutorial,Tutorial,Tutorial,AUTM-PSYC234-DB-T/3,OR,Thursday,14:30,16:30,3.48-Classroom B,Rochelle Martins,106
 PSYC234,Biological Psychology and Learning Tutorial,Tutorial,Tutorial,AUTM-PSYC234-DB-T/4,OR,Friday,10:00,12:00,1.83-Block 19,Rochelle Martins,106
 PSYC234,Biological Psychology and Learning Tutorial,Tutorial,Tutorial,AUTM-PSYC234-DB-T/5,OR,Thursday,12:30,14:30,1.73-Block 19,Rochelle Martins,106
-PSYC324,Assessment and Intervention Lecture,Lecture,Lecture,AUTM-PSYC324-DB-L/1,,Monday,08:30,10:30,2.71-Block 19,Stephanie Zakhour,106
-PSYC324,Assessment and Intervention Tutorial,Tutorial,Tutorial,AUTM-PSYC324-DB-T/1,AND,Monday,10:30,12:30,2.71-Block 19,Stephanie Zakhour,106
+PSYC324,Assessment and Intervention Lecture,Lecture,Lecture,AUTM-PSYC324-DB-L/1,,Monday,08:30,10:30,2.71-Block 19,Oliver Charles Bones,106
+PSYC324,Assessment and Intervention Tutorial,Tutorial,Tutorial,AUTM-PSYC324-DB-T/1,AND,Monday,10:30,12:30,2.71-Block 19,Oliver Charles Bones,106
 PSYC330,Social Behaviour and Individual Differences Lecture,Lecture,Lecture,AUTM-PSYC330-DB-L/1,,Tuesday,10:30,12:30,1.80-Block 19,Betul Zeyrek,106
 PSYC330,Social Behaviour and Individual Differences Tutorial,Tutorial,Tutorial,AUTM-PSYC330-DB-T/1,AND,Tuesday,14:30,16:30,1.74-Block 19,Betul Zeyrek,106
 PUBH115,Public Health Lecture,Lecture,Lecture,AUTM-PUBH115-DB-L/1,,Thursday,08:30,10:30,0.17-Lecture Theatre,Amina Khan,106
