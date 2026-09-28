@@ -726,6 +726,7 @@ class Scraper:
         backends: List[str],
         force_login: bool,
         raw_output: Optional[Path] = None,
+        raw_json_output: Optional[Path] = None,
         debug_dump_raw: bool = False,
     ):
         self.email = email
@@ -734,11 +735,13 @@ class Scraper:
         self.headless = headless
         self.backends = backends
         self.force_login = force_login
-        # Optional secondary outputs for the vordo data pipeline.
+        # Optional secondary outputs for the vordo / vizla data pipeline.
         # raw_output: preserved-structure CSV alongside classes.csv.
+        # raw_json_output: raw timetableData JSON dump for vizla.
         # debug_dump_raw: unmodified timetableData JSON, for discovering
         # which portal fields carry AND/OR / group / section text.
         self.raw_output = raw_output
+        self.raw_json_output = raw_json_output
         self.debug_dump_raw = debug_dump_raw
         self.supabase = init_supabase()
         self.room_map = fetch_room_mapping(self.supabase)
@@ -832,6 +835,10 @@ class Scraper:
         if self.raw_output is not None:
             raw_rows = self._write_raw_csv(data, self.raw_output)
             log("RAW", f"wrote {raw_rows} raw rows → {self.raw_output}")
+
+        if self.raw_json_output is not None:
+            n_json = self._write_debug_dump(data, self.raw_json_output)
+            log("JSON", f"wrote {n_json} raw entries → {self.raw_json_output}")
 
         return rows > 0
 
@@ -1105,8 +1112,12 @@ def main() -> None:
     )
     parser.add_argument(
         "--both", action="store_true",
-        help="Scrape both normal timetable (classes.csv) and raw timetable (raw_classes.csv) "
+        help="Scrape both normal timetable (classes.csv) and raw timetable (raw_classes.csv + timetable_raw.json) "
              "in a single pass without reloading the browser page.",
+    )
+    parser.add_argument(
+        "--raw-json-output", type=Path, default=None,
+        help="Path to write raw timetableData JSON (default: public/timetable_raw.json when --both is specified)",
     )
     parser.add_argument(
         "--debug-dump-raw", action="store_true",
@@ -1136,6 +1147,8 @@ def main() -> None:
         if args.raw_output is None:
             raw_filename = f"raw_{args.output.name}" if not args.output.name.startswith("raw_") else args.output.name
             args.raw_output = args.output.parent / (raw_filename if raw_filename != args.output.name else "raw_classes.csv")
+        if args.raw_json_output is None:
+            args.raw_json_output = args.output.parent / "timetable_raw.json"
 
     email = _require_env("UOWD_EMAIL")
     passwd = _require_env("UOWD_PASSWORD")
@@ -1148,6 +1161,7 @@ def main() -> None:
         email=email, password=passwd, totp_secret=totp,
         headless=not args.headed, backends=backends, force_login=args.force_login,
         raw_output=args.raw_output.resolve() if args.raw_output else None,
+        raw_json_output=args.raw_json_output.resolve() if args.raw_json_output else None,
         debug_dump_raw=args.debug_dump_raw,
     )
     ok = scraper.run(args.output.resolve())
