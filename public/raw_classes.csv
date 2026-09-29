@@ -1,6 +1,5 @@
 SubCode,SubName,Type,TypeWithSection,TypeFull,SelectionOption,Day,StartTime,EndTime,Location,Lecturer,SemesterId
-ACCY121,Accounting for Decision Making Lecture,Lecture,Lecture,AUTM-ACCY121-DB-L/1,,Friday,10:00,12:00,0.17-Lecture Theatre,Khairul Kamarudin,106
-ACCY121,Accounting for Decision Making Lecture,Lecture,Lecture,AUTM-ACCY121-DB-L/2,OR,Thursday,10:30,12:30,0.17-Lecture Theatre,Khairul Kamarudin,106
+ACCY121,Accounting for Decision Making Lecture,Lecture,Lecture,AUTM-ACCY121-DB-L/2,,Thursday,10:30,12:30,0.17-Lecture Theatre,Khairul Kamarudin,106
 ACCY121,Accounting for Decision Making Lecture,Lecture,Lecture,AUTM-ACCY121-DB-L/3,OR,Thursday,14:30,16:30,0.17-Lecture Theatre,Khairul Kamarudin,106
 ACCY121,Accounting for Decision Making Tutorial,Tutorial,Tutorial,AUTM-ACCY121-DB-T/01,AND,Friday,08:00,10:00,5.17-Classroom VC,Khairul Kamarudin,106
 ACCY121,Accounting for Decision Making Tutorial,Tutorial,Tutorial,AUTM-ACCY121-DB-T/02,OR,Thursday,12:30,14:30,3.42-Classroom B,Yusra Ghani,106
@@ -354,7 +353,9 @@ CSIT123,Computing and Cyber Security Fundamentals Tutorial,Tutorial,Tutorial,AUT
 CSIT123,Computing and Cyber Security Fundamentals Tutorial,Tutorial,Tutorial,AUTM-CSIT123-DB-T/13,OR,Friday,10:00,12:00,6.33-Computer Lab,Deepa Keshavamurthy,106
 CSIT123,Computing and Cyber Security Fundamentals Tutorial,Tutorial,Tutorial,AUTM-CSIT123-DB-T/14,OR,Monday,16:30,18:30,6.33-Computer Lab,Deepa Keshavamurthy,106
 CSIT123,Computing and Cyber Security Fundamentals Tutorial,Tutorial,Tutorial,AUTM-CSIT123-DB-T/15,OR,Tuesday,10:30,12:30,6.33-Computer Lab,Deepa Keshavamurthy,106
+CSIT123,Computing and Cyber Security Fundamentals Tutorial,Tutorial,Tutorial,AUTM-CSIT123-DB-T/16,OR,Wednesday,12:30,14:30,6.33-Computer Lab,Omar Daoudi,106
 CSIT123,Computing and Cyber Security Fundamentals Tutorial,Tutorial,Tutorial,AUTM-CSIT123-DB-T/17,OR,Monday,16:30,18:30,6.39-Computer Lab,Omar Daoudi,106
+CSIT123,Computing and Cyber Security Fundamentals Tutorial,Tutorial,Tutorial,AUTM-CSIT123-DB-T/18,OR,Wednesday,16:30,18:30,6.39-Computer Lab,Omar Daoudi,106
 CSIT123,Computing and Cyber Security Fundamentals Tutorial,Tutorial,Tutorial,AUTM-CSIT123-DB-T/19,OR,Tuesday,16:30,18:30,6.33-Computer Lab,Omar Daoudi,106
 CSIT123,Computing and Cyber Security Fundamentals Tutorial,Tutorial,Tutorial,AUTM-CSIT123-DB-T/20,OR,Monday,14:30,16:30,3.52-Computer Lab (Network),Omar Daoudi,106
 CSIT123,Computing and Cyber Security Fundamentals Tutorial,Tutorial,Tutorial,AUTM-CSIT123-DB-T/21,OR,Tuesday,08:30,10:30,3.52-Computer Lab (Network),Omar Daoudi,106
@@ -532,7 +533,6 @@ EDGP920,Practicum in a School Setting Lecture,Lecture,Lecture,AUTM-EDGP920-DB-L/
 EDGP940,Internship in a Non-School Setting Lecture,Lecture,Lecture,AUTM-EDGP940-DB-L/1,,Monday,15:00,17:00,,Muna Amr,106
 EDGX901,Psychology for Educators Lecture,Lecture,Lecture,AUTM-EDGX901-DB-L/1,,Monday,18:00,22:00,3.42-Classroom B,Muna Amr,106
 EDGZ906,Minor Research Project in Education Lecture,Lecture,Lecture,AUTM-EDGZ906-DB-L/1,,Wednesday,18:00,22:00,6.28-Seminar/Tutorial,Muna Amr,106
-EDGZ921,Introduction To Research & Inquiry Lecture,Lecture,Lecture,AUTM-EDGZ921-DB-L/1,,Thursday,17:00,17:30,4.51-Tutorial Room,"TBA, 10",106
 ENG900,Writing for Communication Lecture,Lecture,Lecture,AUTM-ENG 900-DB-L/1,,Friday,18:00,20:00,4.53-Seminar/Tutorial,Sabina Ashraf,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/01,,Wednesday,08:30,10:30,3.53-Physics/Robotics Lab,Deva Prasad,106
 ENGG102,Fundamentals and Engineering Mechanics Computer Lab,Computer Lab,Computer Lab,AUTM-ENGG102-DB-CL/02,OR,Wednesday,14:30,16:30,3.53-Physics/Robotics Lab,Deva Prasad,106
@@ -654,7 +654,7 @@ FIN950,Socially Responsible Finance Lecture,Lecture,Lecture,AUTM-FIN 950-DB-L/1,
 FIN950,Socially Responsible Finance Lecture,Lecture,Lecture,AUTM-FIN 950-DB-L/2,OR,Wednesday,18:30,22:30,5.10-Classroom B,Vikash Ramiah,106
 FIN957,Portfolio Simulation Lecture,Lecture,Lecture,AUTM-FIN 957-DB-L/1,,Wednesday,18:00,22:00,5.19-Classroom A,Gunsel Topbas,106
 FIN958,Financial Institutions Lecture,Lecture,Lecture,AUTM-FIN 958-DB-L/1,,Tuesday,18:30,22:30,6.345-Classroom A 6.34 & 6.35,Noor Rizvi,106
-FIN958,Financial Institutions Lecture,Lecture,Lecture,AUTM-FIN 958-DB-L/2,OR,Thursday,18:00,22:00,2.70-Block 19,Noor Rizvi,106
+FIN958,Financial Institutions Lecture,Lecture,Lecture,AUTM-FIN 958-DB-L/2,OR,Thursday,18:30,22:30,5.10-Classroom B,Noor Rizvi,106
 GESF000,Global English Skills - Stage 0 Tutorial A,Tutorial,Tutorial A,AUTM-GESF000-DB-TA/1,,Monday,08:30,12:30,4.53-Seminar/Tutorial,Sabina Ashraf,106
 GESF000,Global English Skills - Stage 0 Tutorial B,Tutorial,Tutorial B,AUTM-GESF000-DB-TB/1,AND,Tuesday,08:30,12:30,4.53-Seminar/Tutorial,,106
 GESF000,Global English Skills - Stage 0 Tutorial C,Tutorial,Tutorial C,AUTM-GESF000-DB-TC/1,AND,Wednesday,08:30,12:30,4.53-Seminar/Tutorial,,106
@@ -693,7 +693,7 @@ HUM040,Literacy in A Digital Age: Global Themes Edition Tutorial,Tutorial,Tutori
 HUM040,Literacy in A Digital Age: Global Themes Edition Tutorial,Tutorial,Tutorial,AUTM-HUM 040-DB-T/04,OR,Monday,10:30,12:30,1.79-Block 19,Rania Diab,106
 HUM040,Literacy in A Digital Age: Global Themes Edition Tutorial,Tutorial,Tutorial,AUTM-HUM 040-DB-T/05,OR,Thursday,14:30,16:30,2.71-Block 19,Valeryia Atroshanka,106
 HUM040,Literacy in A Digital Age: Global Themes Edition Tutorial,Tutorial,Tutorial,AUTM-HUM 040-DB-T/06,OR,Thursday,10:30,12:30,2.65-Block 19,Stephanie Martin,106
-HUM040,Literacy in A Digital Age: Global Themes Edition Tutorial,Tutorial,Tutorial,AUTM-HUM 040-DB-T/07,OR,Wednesday,12:30,14:30,2.65-Block 19,Mariyum Chowdhury,106
+HUM040,Literacy in A Digital Age: Global Themes Edition Tutorial,Tutorial,Tutorial,AUTM-HUM 040-DB-T/07,OR,Wednesday,12:30,14:30,2.65-Block 19,Marium Chowdhary,106
 HUM040,Literacy in A Digital Age: Global Themes Edition Tutorial,Tutorial,Tutorial,AUTM-HUM 040-DB-T/08,OR,Tuesday,12:30,14:30,6.38-Classroom B,Cecilia Vallorani,106
 HUM040,Literacy in A Digital Age: Global Themes Edition Tutorial,Tutorial,Tutorial,AUTM-HUM 040-DB-T/09,OR,Tuesday,10:30,12:30,1.81-Block 19,Stephanie Martin,106
 IELT200,IELTS Intensive Tutorial A,Tutorial,Tutorial A,AUTM-IELT200-DB-TA/1,,Monday,18:00,21:00,5.08-Seminar / Tutorial,Ferzana Aslam,106
@@ -808,12 +808,12 @@ LANG040,Academic Language Skills 2 Tutorial B,Tutorial,Tutorial B,AUTM-LANG040-D
 LANG040,Academic Language Skills 2 Tutorial B,Tutorial,Tutorial B,AUTM-LANG040-DB-TB/13,OR,Thursday,12:30,14:30,6.38-Classroom B,Sonia Adams,106
 MAAI801,Foundations of AI & Machine Learning Lecture,Lecture,Lecture,AUTM-MAAI801-DB-L/1,,Monday,18:00,22:00,4.48-Classroom B,Hajer Ben Othman,106
 MAAI802,Programming for AI Applications Lecture (MAAI802/MACS803),Lecture,Lecture,AUTM-MAAI802-DB-L/1,,Thursday,18:00,22:00,5.134-Classroom A 5.13 & 5.14,George Tsaramirsis,106
-MAAI901,Deep Learning for Visual Data Computer Lab,Computer Lab,Computer Lab,AUTM-MAAI901-DB-CL/1,,Tuesday,20:00,22:00,6.36-Computer Lab (Single Screen),Milan Dordevic,106
-MAAI901,Deep Learning for Visual Data Computer Lab,Computer Lab,Computer Lab,AUTM-MAAI901-DB-CL/2,OR,Tuesday,20:00,22:00,6.33-Computer Lab,Konstantinos Sklavenitis,106
-MAAI901,Deep Learning for Visual Data Lecture,Lecture,Lecture,AUTM-MAAI901-DB-L/1,AND,Tuesday,18:00,20:00,6.38-Classroom B,Milan Dordevic,106
-MAAI902,Natural Language Processing & LLMs Computer Lab,Computer Lab,Computer Lab,AUTM-MAAI902-DB-CL/1,,Wednesday,20:00,22:00,3.47-Game Dev Lab Dual Screens,Pallavi Ranjan,106
-MAAI902,Natural Language Processing & LLMs Computer Lab,Computer Lab,Computer Lab,AUTM-MAAI902-DB-CL/2,OR,Wednesday,20:00,22:00,3.52-Computer Lab (Network),Asma Damankesh,106
-MAAI902,Natural Language Processing & LLMs Lecture,Lecture,Lecture,AUTM-MAAI902-DB-L/1,AND,Wednesday,18:00,20:00,3.48-Classroom B,Pallavi Ranjan,106
+MAAI901,Deep Learning for Visual Data Computer Lab,Computer Lab,Computer Lab,AUTM-MAAI901-DB-CL/1,,Tuesday,20:30,22:30,6.36-Computer Lab (Single Screen),Milan Dordevic,106
+MAAI901,Deep Learning for Visual Data Computer Lab,Computer Lab,Computer Lab,AUTM-MAAI901-DB-CL/2,OR,Tuesday,20:30,22:30,6.33-Computer Lab,Konstantinos Sklavenitis,106
+MAAI901,Deep Learning for Visual Data Lecture,Lecture,Lecture,AUTM-MAAI901-DB-L/1,AND,Tuesday,18:30,20:30,4.467-Classroom A 4.46 & 4.47,Milan Dordevic,106
+MAAI902,Natural Language Processing & LLMs Computer Lab,Computer Lab,Computer Lab,AUTM-MAAI902-DB-CL/1,,Wednesday,20:30,22:30,3.47-Game Dev Lab Dual Screens,Pallavi Ranjan,106
+MAAI902,Natural Language Processing & LLMs Computer Lab,Computer Lab,Computer Lab,AUTM-MAAI902-DB-CL/2,OR,Wednesday,20:30,22:30,3.52-Computer Lab (Network),Asma Damankesh,106
+MAAI902,Natural Language Processing & LLMs Lecture,Lecture,Lecture,AUTM-MAAI902-DB-L/1,AND,Wednesday,18:30,20:30,0.17-Lecture Theatre,Pallavi Ranjan,106
 MAAI903,AI Solutions Design and MLOps Lecture,Lecture,Lecture,AUTM-MAAI903-DB-L/1,,Thursday,18:00,22:00,3.48-Classroom B,Patrick Mukala,106
 MAAI904,Agentic AI and Autonomous Software Systems Lecture,Lecture,Lecture,AUTM-MAAI904-DB-L/1,,Friday,18:00,22:00,5.17-Classroom VC,Farhad Oroumchian,106
 MAAI999,"Applied AI Project Lecture A (New Cohort Scheduled on 26-Sep, 17-Oct, 7-Nov, 28-Nov, 5-Dec)",Lecture,Lecture A,AUTM-MAAI999-DB-LA/1,,Saturday,10:00,16:00,3.48-Classroom B,Pallavi Ranjan,106
@@ -916,8 +916,10 @@ MATH043,Maths for Humanities Workshop,Workshop,Workshop,AUTM-MATH043-DB-W/1,AND,
 MATH043,Maths for Humanities Workshop,Workshop,Workshop,AUTM-MATH043-DB-W/2,OR,Tuesday,08:30,10:30,6.38-Classroom B,Dania Dallah,106
 MATH043,Maths for Humanities Workshop,Workshop,Workshop,AUTM-MATH043-DB-W/3,OR,Tuesday,14:30,16:30,3.46-Classroom A,Dania Dallah,106
 MATH141,Foundations of Engineering Mathematics Lecture A,Lecture,Lecture A,AUTM-MATH141-DB-LA/1,,Wednesday,08:30,10:30,6.345-Classroom A 6.34 & 6.35,Assane Lo,106
+MATH141,Foundations of Engineering Mathematics Lecture A,Lecture,Lecture A,AUTM-MATH141-DB-LA/2,OR,Monday,08:30,10:30,4.44-Classroom B,Assane Lo,106
 MATH141,Foundations of Engineering Mathematics Lecture A,Lecture,Lecture A,AUTM-MATH141-DB-LA/3,OR,Tuesday,12:30,14:30,5.19-Classroom A,Assane Lo,106
 MATH141,Foundations of Engineering Mathematics Lecture B,Lecture,Lecture B,AUTM-MATH141-DB-LB/1,AND,Friday,14:00,16:00,5.11-Classroom B,Assane Lo,106
+MATH141,Foundations of Engineering Mathematics Lecture B,Lecture,Lecture B,AUTM-MATH141-DB-LB/2,OR,Thursday,10:30,12:30,6.345-Classroom A 6.34 & 6.35,Assane Lo,106
 MATH141,Foundations of Engineering Mathematics Lecture B,Lecture,Lecture B,AUTM-MATH141-DB-LB/3,OR,Wednesday,10:30,12:30,5.19-Classroom A,Assane Lo,106
 MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/01,AND,Thursday,14:30,16:30,5.18-Classroom A,Ziad Choucair,106
 MATH141,Foundations of Engineering Mathematics Tutorial,Tutorial,Tutorial,AUTM-MATH141-DB-T/02,OR,Tuesday,14:30,16:30,6.28-Seminar/Tutorial,Ziad Choucair,106

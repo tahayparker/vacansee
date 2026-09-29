@@ -1,5 +1,4 @@
 SubCode,Class,Day,StartTime,EndTime,Room,Teacher
-ACCY121,Lecture,Friday,10:00,12:00,0.17-Lecture Theatre,Khairul Kamarudin
 ACCY121,Lecture,Thursday,10:30,12:30,0.17-Lecture Theatre,Khairul Kamarudin
 ACCY121,Lecture,Thursday,14:30,16:30,0.17-Lecture Theatre,Khairul Kamarudin
 ACCY121,Tutorial,Friday,08:00,10:00,5.17-Classroom VC,Khairul Kamarudin
@@ -364,7 +363,9 @@ CSIT123,Tutorial,Tuesday,16:30,18:30,6.39-Computer Lab,Deepa Keshavamurthy
 CSIT123,Tutorial,Friday,10:00,12:00,6.33-Computer Lab,Deepa Keshavamurthy
 CSIT123,Tutorial,Monday,16:30,18:30,6.33-Computer Lab,Deepa Keshavamurthy
 CSIT123,Tutorial,Tuesday,10:30,12:30,6.33-Computer Lab,Deepa Keshavamurthy
+CSIT123,Tutorial,Wednesday,12:30,14:30,6.33-Computer Lab,Omar Daoudi
 CSIT123,Tutorial,Monday,16:30,18:30,6.39-Computer Lab,Omar Daoudi
+CSIT123,Tutorial,Wednesday,16:30,18:30,6.39-Computer Lab,Omar Daoudi
 CSIT123,Tutorial,Tuesday,16:30,18:30,6.33-Computer Lab,Omar Daoudi
 CSIT123,Tutorial,Monday,14:30,16:30,3.52-Computer Lab (Network),Omar Daoudi
 CSIT123,Tutorial,Tuesday,08:30,10:30,3.52-Computer Lab (Network),Omar Daoudi
@@ -549,7 +550,6 @@ EDGC920,Lecture,Tuesday,18:00,22:00,3.42-Classroom B,Afnan Boutrid
 EDGI902,Lecture,Thursday,18:00,22:00,6.28-Seminar/Tutorial,Christopher Tuffnell
 EDGX901,Lecture,Monday,18:00,22:00,3.42-Classroom B,Muna Amr
 EDGZ906,Lecture,Wednesday,18:00,22:00,6.28-Seminar/Tutorial,Muna Amr
-EDGZ921,Lecture,Thursday,17:00,17:30,4.51-Tutorial Room,"TBA, 10"
 ENG900,Lecture,Friday,18:00,20:00,4.53-Seminar/Tutorial,Sabina Ashraf
 ENGG102,Computer Lab,Wednesday,08:30,10:30,3.53-Physics/Robotics Lab,Deva Prasad
 ENGG102,Computer Lab,Wednesday,14:30,16:30,3.53-Physics/Robotics Lab,Deva Prasad
@@ -678,7 +678,7 @@ FIN950,Lecture,Monday,18:30,22:30,5.18-Classroom A,Vikash Ramiah
 FIN950,Lecture,Wednesday,18:30,22:30,5.10-Classroom B,Vikash Ramiah
 FIN957,Lecture,Wednesday,18:00,22:00,5.19-Classroom A,Gunsel Topbas
 FIN958,Lecture,Tuesday,18:30,22:30,6.345-Classroom A 6.34 & 6.35,Noor Rizvi
-FIN958,Lecture,Thursday,18:00,22:00,2.70-Block 19,Noor Rizvi
+FIN958,Lecture,Thursday,18:30,22:30,5.10-Classroom B,Noor Rizvi
 GESF000,Tutorial A,Monday,08:30,12:30,4.53-Seminar/Tutorial,Sabina Ashraf
 GESF000,Tutorial B,Tuesday,08:30,12:30,4.53-Seminar/Tutorial,Unknown
 GESF000,Tutorial C,Wednesday,08:30,12:30,4.53-Seminar/Tutorial,Unknown
@@ -717,7 +717,7 @@ HUM040,Tutorial,Friday,14:00,16:00,6.38-Classroom B,Makram Chtourou
 HUM040,Tutorial,Monday,10:30,12:30,1.79-Block 19,Rania Diab
 HUM040,Tutorial,Thursday,14:30,16:30,2.71-Block 19,Valeryia Atroshanka
 HUM040,Tutorial,Thursday,10:30,12:30,2.65-Block 19,Stephanie Martin
-HUM040,Tutorial,Wednesday,12:30,14:30,2.65-Block 19,Mariyum Chowdhury
+HUM040,Tutorial,Wednesday,12:30,14:30,2.65-Block 19,Marium Chowdhary
 HUM040,Tutorial,Tuesday,12:30,14:30,6.38-Classroom B,Cecilia Vallorani
 HUM040,Tutorial,Tuesday,10:30,12:30,1.81-Block 19,Stephanie Martin
 IELT200,Tutorial A,Monday,18:00,21:00,5.08-Seminar / Tutorial,Ferzana Aslam
@@ -838,12 +838,12 @@ LANG040,Tutorial B,Tuesday,08:30,10:30,5.134-Classroom A 5.13 & 5.14,Ferzana Asl
 LANG040,Tutorial B,Thursday,12:30,14:30,6.38-Classroom B,Sonia Adams
 MAAI801,Lecture,Monday,18:00,22:00,4.48-Classroom B,Hajer Ben Othman
 MAAI802,Lecture,Thursday,18:00,22:00,5.134-Classroom A 5.13 & 5.14,George Tsaramirsis
-MAAI901,Computer Lab,Tuesday,20:00,22:00,6.36-Computer Lab (Single Screen),Milan Dordevic
-MAAI901,Computer Lab,Tuesday,20:00,22:00,6.33-Computer Lab,Konstantinos Sklavenitis
-MAAI901,Lecture,Tuesday,18:00,20:00,6.38-Classroom B,Milan Dordevic
-MAAI902,Computer Lab,Wednesday,20:00,22:00,3.47-Game Dev Lab Dual Screens,Pallavi Ranjan
-MAAI902,Computer Lab,Wednesday,20:00,22:00,3.52-Computer Lab (Network),Asma Damankesh
-MAAI902,Lecture,Wednesday,18:00,20:00,3.48-Classroom B,Pallavi Ranjan
+MAAI901,Computer Lab,Tuesday,20:30,22:30,6.36-Computer Lab (Single Screen),Milan Dordevic
+MAAI901,Computer Lab,Tuesday,20:30,22:30,6.33-Computer Lab,Konstantinos Sklavenitis
+MAAI901,Lecture,Tuesday,18:30,20:30,4.467-Classroom A 4.46 & 4.47,Milan Dordevic
+MAAI902,Computer Lab,Wednesday,20:30,22:30,3.47-Game Dev Lab Dual Screens,Pallavi Ranjan
+MAAI902,Computer Lab,Wednesday,20:30,22:30,3.52-Computer Lab (Network),Asma Damankesh
+MAAI902,Lecture,Wednesday,18:30,20:30,0.17-Lecture Theatre,Pallavi Ranjan
 MAAI903,Lecture,Thursday,18:00,22:00,3.48-Classroom B,Patrick Mukala
 MAAI904,Lecture,Friday,18:00,22:00,5.17-Classroom VC,Farhad Oroumchian
 MAAI999,Lecture A,Saturday,10:00,16:00,3.48-Classroom B,Pallavi Ranjan
@@ -946,8 +946,10 @@ MATH043,Workshop,Monday,12:30,14:30,4.48-Classroom B,Dania Dallah
 MATH043,Workshop,Tuesday,08:30,10:30,6.38-Classroom B,Dania Dallah
 MATH043,Workshop,Tuesday,14:30,16:30,3.46-Classroom A,Dania Dallah
 MATH141,Lecture A,Wednesday,08:30,10:30,6.345-Classroom A 6.34 & 6.35,Assane Lo
+MATH141,Lecture A,Monday,08:30,10:30,4.44-Classroom B,Assane Lo
 MATH141,Lecture A,Tuesday,12:30,14:30,5.19-Classroom A,Assane Lo
 MATH141,Lecture B,Friday,14:00,16:00,5.11-Classroom B,Assane Lo
+MATH141,Lecture B,Thursday,10:30,12:30,6.345-Classroom A 6.34 & 6.35,Assane Lo
 MATH141,Lecture B,Wednesday,10:30,12:30,5.19-Classroom A,Assane Lo
 MATH141,Tutorial,Thursday,14:30,16:30,5.18-Classroom A,Ziad Choucair
 MATH141,Tutorial,Tuesday,14:30,16:30,6.28-Seminar/Tutorial,Ziad Choucair
