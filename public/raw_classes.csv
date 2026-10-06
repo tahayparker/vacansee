@@ -550,15 +550,15 @@ ENGG102,Fundamentals of Engineering Mechanics Workshop,Workshop,Workshop,AUTM-EN
 ENGG102,Fundamentals of Engineering Mechanics Workshop,Workshop,Workshop,AUTM-ENGG102-DB-W/2,OR,Monday,14:30,17:30,6.32-Classroom B,Yahya Salah;Abdulqader Hasan;Ayman Ahdy;Sana Amir;Umar Asghar,106
 ENGG102,Fundamentals of Engineering Mechanics Workshop,Workshop,Workshop,AUTM-ENGG102-DB-W/3,OR,Monday,08:30,11:30,6.32-Classroom B,Abdulqader Hasan;Sana Amir;Umar Asghar;Yahya Salah,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/01,,Thursday,14:30,16:30,1.52-Computer Lab Single,Abdullah Khalid,106
-ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/02,OR,Thursday,11:30,13:30,3.45-Computer Lab,Abdullah Khalid,106
+ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/02,OR,Thursday,11:30,13:30,3.45-Computer Lab,Yahya Salah,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/03,OR,Friday,10:00,12:00,1.52-Computer Lab Single,Abdullah Khalid,106
-ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/04,OR,Wednesday,14:30,16:30,1.52-Computer Lab Single,Abdullah Khalid,106
+ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/04,OR,Wednesday,14:30,16:30,1.52-Computer Lab Single,Eva Barbulescu,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/05,OR,Tuesday,16:30,18:30,1.52-Computer Lab Single,Abdullah Khalid,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/06,OR,Tuesday,16:30,18:30,1.52-Computer Lab Single,Abdullah Khalid,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/07,OR,Friday,16:00,18:00,1.52-Computer Lab Single,Abdullah Khalid,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/08,OR,Thursday,08:30,10:30,4.42-Computer Lab (Single Screen),Abdullah Khalid,106
 ENGG105,Engineering Design for Sustainability Computer Lab (Odd Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/09,OR,Thursday,12:30,14:30,5.12-Computer Lab,Abdullah Khalid,106
-ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/10,OR,Thursday,12:30,14:30,5.12-Computer Lab,Adjunct 1,106
+ENGG105,Engineering Design for Sustainability Computer Lab (Even Weeks),Computer Lab,Computer Lab,AUTM-ENGG105-DB-CL/10,OR,Thursday,12:30,14:30,5.12-Computer Lab,Abdullah Khalid,106
 ENGG105,Engineering Design for Sustainability Lecture,Lecture,Lecture,AUTM-ENGG105-DB-L/1,AND,Monday,10:30,12:30,4.44-Classroom B,Karol Sikora,106
 ENGG105,Engineering Design for Sustainability Lecture,Lecture,Lecture,AUTM-ENGG105-DB-L/2,OR,Monday,12:30,14:30,4.44-Classroom B,Karol Sikora,106
 ENGG105,Engineering Design for Sustainability Lecture,Lecture,Lecture,AUTM-ENGG105-DB-L/3,OR,Wednesday,08:30,10:30,3.44-Classroom B,Hazem Gouda,106
@@ -1085,7 +1085,7 @@ OPS270,Applied Project Management and Decision-Making Tutorial,Tutorial,Tutorial
 OPS802,Operations and Supply Chain Management Lecture,Lecture,Lecture,AUTM-OPS 802-DB-L/1,,Tuesday,18:00,22:00,5.19-Classroom A,Sabreen Wahbeh,106
 OPS802,Operations and Supply Chain Management Lecture,Lecture,Lecture,AUTM-OPS 802-DB-L/2,OR,Wednesday,18:00,22:00,4.467-Classroom A 4.46 & 4.47,Sabreen Wahbeh,106
 OPS910,Quantitative Methods for Decision Making Lecture,Lecture,Lecture,AUTM-OPS 910-DB-L/1,,Thursday,18:00,22:00,6.40-Computer Lab;6.32-Classroom B,Yiyang Bian,106
-OPS910,Quantitative Methods for Decision Making Lecture,Lecture,Lecture,AUTM-OPS 910-DB-L/2,OR,Monday,18:00,22:00,5.19-Classroom A;6.36-Computer Lab (Single Screen),Yiyang Bian,106
+OPS910,Quantitative Methods for Decision Making Lecture,Lecture,Lecture,AUTM-OPS 910-DB-L/2,OR,Monday,18:00,22:00,2.50-Computer Lab Single;5.19-Classroom A,Yiyang Bian,106
 OPS911,Quantitative Methods for Decision Making Lecture,Lecture,Lecture,AUTM-OPS 911-DB-L/1,,Monday,18:00,22:00,6.32-Classroom B,Balan Sundarakani,106
 OPS920,Contemporary Issues in Supply Chain Management Lecture,Lecture,Lecture,AUTM-OPS 920-DB-L/1,,Tuesday,18:00,22:00,3.44-Classroom B,Lina Gharaibeh,106
 OPS920,Contemporary Issues in Supply Chain Management Lecture,Lecture,Lecture,AUTM-OPS 920-DB-L/2,OR,Wednesday,18:00,22:00,3.44-Classroom B,Lina Gharaibeh,106
