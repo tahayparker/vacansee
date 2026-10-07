@@ -25,11 +25,19 @@
       "peak_end": "2027-04-26"
     },
     {
+      "name": "Autumn 2027",
+      "enrolment_start": "2026-11-11",
+      "enrolment_last": "2027-09-20",
+      "final_exam_start": "2027-11-22",
+      "peak_start": "2027-07-05",
+      "peak_end": "2027-09-20"
+    },
+    {
       "name": "Summer 2027",
       "enrolment_start": "2027-06-22",
       "enrolment_last": "2027-07-16",
       "final_exam_start": "2027-08-07",
-      "peak_start": "2027-07-05",
+      "peak_start": "2027-11-22",
       "peak_end": "2027-07-16"
     }
   ]
